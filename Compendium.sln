@@ -179,6 +179,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Sto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Storage.Tests", "tests\Unit\Compendium.Abstractions.Storage.Tests\Compendium.Abstractions.Storage.Tests.csproj", "{585E082A-E775-426B-BEA5-D41D3AF53DE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Caching", "src\Abstractions\Compendium.Abstractions.Caching\Compendium.Abstractions.Caching.csproj", "{4A6496B8-5833-428F-92D7-3EB331F5CA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Caching.Tests", "tests\Unit\Compendium.Abstractions.Caching.Tests\Compendium.Abstractions.Caching.Tests.csproj", "{262B8E91-B53C-49BC-833D-739DD4CFC2E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -460,6 +464,14 @@ Global
 		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262B8E91-B53C-49BC-833D-739DD4CFC2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262B8E91-B53C-49BC-833D-739DD4CFC2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262B8E91-B53C-49BC-833D-739DD4CFC2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262B8E91-B53C-49BC-833D-739DD4CFC2E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE421F00-7FFD-4666-A961-F1FF325ECD34} = {E35C8F52-5000-4427-9589-AEB5987C1AC6}
@@ -543,5 +555,7 @@ Global
 		{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B} = {A2517BFF-352C-4123-81B2-2D848F3FB497}
 		{B4108100-52A7-4680-A0C4-7EB6955DB5F6} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
 		{585E082A-E775-426B-BEA5-D41D3AF53DE7} = {6E0B453A-55CF-4567-ADBD-50CFB84CE629}
+		{4A6496B8-5833-428F-92D7-3EB331F5CA32} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
+		{262B8E91-B53C-49BC-833D-739DD4CFC2E1} = {6E0B453A-55CF-4567-ADBD-50CFB84CE629}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Compendium.Abstractions.Caching</AssemblyName>
+    <RootNamespace>Compendium.Abstractions.Caching</RootNamespace>
+    <PackageId>Compendium.Abstractions.Caching</PackageId>
+    <Description>Caching abstractions for Compendium Framework: ICache port for provider-agnostic key/value caching (Get / Set / Remove / Exists) with TTL.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Compendium.Abstractions.Caching.Tests" />
+  </ItemGroup>
+
+</Project>

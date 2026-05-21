@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Caching\Compendium.Abstractions.Caching.csproj" />
     <ProjectReference Include="..\..\Core\Compendium.Core\Compendium.Core.csproj" />
     <ProjectReference Include="..\..\Application\Compendium.Application\Compendium.Application.csproj" />
     <ProjectReference Include="..\..\Multitenancy\Compendium.Multitenancy\Compendium.Multitenancy.csproj" />
@@ -24,6 +25,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="System.Text.Json" />
 
     <!-- Resilience -->
