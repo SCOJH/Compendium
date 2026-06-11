@@ -2,6 +2,8 @@ using System.Diagnostics;
 using Compendium.Application.CQRS.Behaviors;
 using Compendium.Core.Telemetry;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Compendium.Application.CQRS;
 
@@ -40,15 +42,23 @@ public interface ICommandDispatcher
 public sealed class CommandDispatcher : ICommandDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<CommandDispatcher> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandDispatcher"/> class.
     /// </summary>
     /// <param name="serviceProvider">The service provider for resolving handlers and behaviors.</param>
     /// <exception cref="ArgumentNullException">Thrown when serviceProvider is null.</exception>
+    /// <remarks>
+    /// P0-02: The logger is resolved from <paramref name="serviceProvider"/> rather than injected
+    /// directly so that the existing public single-parameter constructor remains binary- and
+    /// source-compatible for downstream consumers. When the container has no logging configured
+    /// (e.g. in lightweight unit tests) a <see cref="NullLogger{T}"/> is used as a safe fallback.
+    /// </remarks>
     public CommandDispatcher(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        _logger = _serviceProvider.GetService<ILogger<CommandDispatcher>>() ?? NullLogger<CommandDispatcher>.Instance;
     }
 
     /// <summary>
@@ -139,7 +149,20 @@ public sealed class CommandDispatcher : ICommandDispatcher
             activity?.SetTag("exception.type", ex.GetType().FullName);
             activity?.SetTag("exception.message", ex.Message);
 
-            return Result.Failure(Error.Failure("Command.ExecutionFailed", ex.Message));
+            // P0-02: Log the swallowed exception with stack trace BEFORE wrapping it into a
+            // Result.Failure. Without this, production debugging is blind — the exception is
+            // converted to a failure Result and the only trace is on OTel spans.
+            _logger.LogError(
+                ex,
+                "Command handler for {CommandType} threw an unhandled exception after {ElapsedMs}ms; converting to Result.Failure({ErrorCode})",
+                typeof(TCommand).Name,
+                sw.Elapsed.TotalMilliseconds,
+                "Command.ExecutionFailed");
+
+            return Result.Failure(Error.Failure(
+                "Command.ExecutionFailed",
+                ex.Message,
+                BuildExceptionMetadata(ex)));
         }
     }
 
@@ -232,8 +255,37 @@ public sealed class CommandDispatcher : ICommandDispatcher
             activity?.SetTag("exception.type", ex.GetType().FullName);
             activity?.SetTag("exception.message", ex.Message);
 
-            return Result.Failure<TResult>(Error.Failure("Command.ExecutionFailed", ex.Message));
+            // P0-02: Log the swallowed exception with stack trace BEFORE wrapping it into a
+            // Result.Failure. Without this, production debugging is blind — the exception is
+            // converted to a failure Result and the only trace is on OTel spans.
+            _logger.LogError(
+                ex,
+                "Command handler for {CommandType} returning {ResultType} threw an unhandled exception after {ElapsedMs}ms; converting to Result.Failure({ErrorCode})",
+                typeof(TCommand).Name,
+                typeof(TResult).Name,
+                sw.Elapsed.TotalMilliseconds,
+                "Command.ExecutionFailed");
+
+            return Result.Failure<TResult>(Error.Failure(
+                "Command.ExecutionFailed",
+                ex.Message,
+                BuildExceptionMetadata(ex)));
         }
+    }
+
+    /// <summary>
+    /// Builds the error metadata dictionary attached to an execution-failure error, capturing the
+    /// exception type so downstream consumers can discriminate the underlying failure cause without
+    /// parsing the message string. P0-02.
+    /// </summary>
+    /// <param name="exception">The exception that was thrown by the handler pipeline.</param>
+    /// <returns>A read-only metadata dictionary containing the exception type name.</returns>
+    private static IReadOnlyDictionary<string, object> BuildExceptionMetadata(Exception exception)
+    {
+        return new Dictionary<string, object>
+        {
+            ["exceptionType"] = exception.GetType().FullName ?? exception.GetType().Name,
+        };
     }
 
     /// <summary>

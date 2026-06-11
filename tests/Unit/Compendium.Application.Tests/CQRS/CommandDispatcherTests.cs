@@ -8,6 +8,7 @@
 using Compendium.Application.CQRS;
 using Compendium.Application.CQRS.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Compendium.Application.Tests.CQRS;
 
@@ -131,6 +132,116 @@ public class CommandDispatcherTests
         result.IsFailure.Should().BeTrue();
         result.Error.Code.Should().Be("Command.ExecutionFailed");
         result.Error.Message.Should().Contain("kaboom");
+    }
+
+    [Fact]
+    public async Task DispatchAsync_WhenHandlerThrows_LogsExceptionBeforeWrappingInFailure()
+    {
+        // Arrange
+        var thrown = new InvalidOperationException("kaboom");
+        var handler = Substitute.For<ICommandHandler<TestCommand>>();
+        handler.HandleAsync(Arg.Any<TestCommand>(), Arg.Any<CancellationToken>())
+            .Returns<Task<Result>>(_ => throw thrown);
+
+        var logger = new CapturingLogger<CommandDispatcher>();
+        var sp = new ServiceCollection()
+            .AddSingleton(handler)
+            .AddSingleton<ILogger<CommandDispatcher>>(logger)
+            .BuildServiceProvider();
+        var dispatcher = new CommandDispatcher(sp);
+
+        // Act
+        var result = await dispatcher.DispatchAsync(new TestCommand(), CancellationToken.None);
+
+        // Assert — the Result contract is preserved (P0-02: never rethrow)
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Command.ExecutionFailed");
+
+        // Assert — the exception was logged with its stack trace, not silently swallowed
+        var errorEntry = logger.Entries.Should().ContainSingle(e => e.Level == LogLevel.Error).Subject;
+        errorEntry.Exception.Should().BeSameAs(thrown);
+        errorEntry.Message.Should().Contain(nameof(TestCommand));
+
+        // Assert — the exception type is preserved in the error metadata (non-breaking enrichment)
+        result.Error.Metadata.Should().ContainKey("exceptionType");
+        result.Error.Metadata["exceptionType"].Should().Be(typeof(InvalidOperationException).FullName);
+    }
+
+    [Fact]
+    public async Task DispatchAsync_WhenNoLoggerRegistered_StillReturnsFailureWithoutThrowing()
+    {
+        // Arrange — no ILogger registered; dispatcher must fall back to NullLogger and not throw
+        var handler = Substitute.For<ICommandHandler<TestCommand>>();
+        handler.HandleAsync(Arg.Any<TestCommand>(), Arg.Any<CancellationToken>())
+            .Returns<Task<Result>>(_ => throw new InvalidOperationException("kaboom"));
+
+        var sp = new ServiceCollection()
+            .AddSingleton(handler)
+            .BuildServiceProvider();
+        var dispatcher = new CommandDispatcher(sp);
+
+        // Act
+        var result = await dispatcher.DispatchAsync(new TestCommand(), CancellationToken.None);
+
+        // Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Command.ExecutionFailed");
+    }
+
+    [Fact]
+    public async Task DispatchAsyncTResult_WhenHandlerThrows_LogsExceptionBeforeWrappingInFailure()
+    {
+        // Arrange
+        var thrown = new InvalidOperationException("oops");
+        var handler = Substitute.For<ICommandHandler<TestCommandWithResult, int>>();
+        handler.HandleAsync(Arg.Any<TestCommandWithResult>(), Arg.Any<CancellationToken>())
+            .Returns<Task<Result<int>>>(_ => throw thrown);
+
+        var logger = new CapturingLogger<CommandDispatcher>();
+        var sp = new ServiceCollection()
+            .AddSingleton(handler)
+            .AddSingleton<ILogger<CommandDispatcher>>(logger)
+            .BuildServiceProvider();
+        var dispatcher = new CommandDispatcher(sp);
+
+        // Act
+        var result = await dispatcher.DispatchAsync<TestCommandWithResult, int>(
+            new TestCommandWithResult { Value = 1 },
+            CancellationToken.None);
+
+        // Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Command.ExecutionFailed");
+
+        var errorEntry = logger.Entries.Should().ContainSingle(e => e.Level == LogLevel.Error).Subject;
+        errorEntry.Exception.Should().BeSameAs(thrown);
+        errorEntry.Message.Should().Contain(nameof(TestCommandWithResult));
+
+        result.Error.Metadata.Should().ContainKey("exceptionType");
+        result.Error.Metadata["exceptionType"].Should().Be(typeof(InvalidOperationException).FullName);
+    }
+
+    [Fact]
+    public async Task DispatchAsync_WhenHandlerSucceeds_DoesNotLogError()
+    {
+        // Arrange
+        var handler = Substitute.For<ICommandHandler<TestCommand>>();
+        handler.HandleAsync(Arg.Any<TestCommand>(), Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult(Result.Success()));
+
+        var logger = new CapturingLogger<CommandDispatcher>();
+        var sp = new ServiceCollection()
+            .AddSingleton(handler)
+            .AddSingleton<ILogger<CommandDispatcher>>(logger)
+            .BuildServiceProvider();
+        var dispatcher = new CommandDispatcher(sp);
+
+        // Act
+        var result = await dispatcher.DispatchAsync(new TestCommand(), CancellationToken.None);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        logger.Entries.Should().NotContain(e => e.Level == LogLevel.Error);
     }
 
     [Fact]
