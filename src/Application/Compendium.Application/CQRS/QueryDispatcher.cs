@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Compendium.Core.Telemetry;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Compendium.Application.CQRS;
 
@@ -29,15 +31,23 @@ public interface IQueryDispatcher
 public sealed class QueryDispatcher : IQueryDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<QueryDispatcher> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="QueryDispatcher"/> class.
     /// </summary>
     /// <param name="serviceProvider">The service provider for resolving handlers.</param>
     /// <exception cref="ArgumentNullException">Thrown when serviceProvider is null.</exception>
+    /// <remarks>
+    /// P0-02: The logger is resolved from <paramref name="serviceProvider"/> rather than injected
+    /// directly so that the existing public single-parameter constructor remains binary- and
+    /// source-compatible for downstream consumers. When the container has no logging configured
+    /// (e.g. in lightweight unit tests) a <see cref="NullLogger{T}"/> is used as a safe fallback.
+    /// </remarks>
     public QueryDispatcher(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        _logger = _serviceProvider.GetService<ILogger<QueryDispatcher>>() ?? NullLogger<QueryDispatcher>.Instance;
     }
 
     /// <summary>
@@ -116,7 +126,36 @@ public sealed class QueryDispatcher : IQueryDispatcher
             activity?.SetTag("exception.type", ex.GetType().FullName);
             activity?.SetTag("exception.message", ex.Message);
 
-            return Result.Failure<TResult>(Error.Failure("Query.ExecutionFailed", ex.Message));
+            // P0-02: Log the swallowed exception with stack trace BEFORE wrapping it into a
+            // Result.Failure. Without this, production debugging is blind — the exception is
+            // converted to a failure Result and the only trace is on OTel spans.
+            _logger.LogError(
+                ex,
+                "Query handler for {QueryType} returning {ResultType} threw an unhandled exception after {ElapsedMs}ms; converting to Result.Failure({ErrorCode})",
+                typeof(TQuery).Name,
+                typeof(TResult).Name,
+                sw.Elapsed.TotalMilliseconds,
+                "Query.ExecutionFailed");
+
+            return Result.Failure<TResult>(Error.Failure(
+                "Query.ExecutionFailed",
+                ex.Message,
+                BuildExceptionMetadata(ex)));
         }
+    }
+
+    /// <summary>
+    /// Builds the error metadata dictionary attached to an execution-failure error, capturing the
+    /// exception type so downstream consumers can discriminate the underlying failure cause without
+    /// parsing the message string. P0-02.
+    /// </summary>
+    /// <param name="exception">The exception that was thrown by the handler.</param>
+    /// <returns>A read-only metadata dictionary containing the exception type name.</returns>
+    private static IReadOnlyDictionary<string, object> BuildExceptionMetadata(Exception exception)
+    {
+        return new Dictionary<string, object>
+        {
+            ["exceptionType"] = exception.GetType().FullName ?? exception.GetType().Name,
+        };
     }
 }
