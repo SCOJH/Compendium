@@ -185,6 +185,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Cac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Messaging", "src\Abstractions\Compendium.Abstractions.Messaging\Compendium.Abstractions.Messaging.csproj", "{0C879585-0B57-4701-B270-17C3BDE6F043}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Geo", "src\Abstractions\Compendium.Abstractions.Geo\Compendium.Abstractions.Geo.csproj", "{741FB178-868A-4443-99C1-5CCC51F0451F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -478,6 +480,10 @@ Global
 		{0C879585-0B57-4701-B270-17C3BDE6F043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C879585-0B57-4701-B270-17C3BDE6F043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C879585-0B57-4701-B270-17C3BDE6F043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741FB178-868A-4443-99C1-5CCC51F0451F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741FB178-868A-4443-99C1-5CCC51F0451F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741FB178-868A-4443-99C1-5CCC51F0451F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741FB178-868A-4443-99C1-5CCC51F0451F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE421F00-7FFD-4666-A961-F1FF325ECD34} = {E35C8F52-5000-4427-9589-AEB5987C1AC6}
@@ -564,5 +570,6 @@ Global
 		{4A6496B8-5833-428F-92D7-3EB331F5CA32} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
 		{262B8E91-B53C-49BC-833D-739DD4CFC2E1} = {6E0B453A-55CF-4567-ADBD-50CFB84CE629}
 		{0C879585-0B57-4701-B270-17C3BDE6F043} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
+		{741FB178-868A-4443-99C1-5CCC51F0451F} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
 	EndGlobalSection
 EndGlobal
