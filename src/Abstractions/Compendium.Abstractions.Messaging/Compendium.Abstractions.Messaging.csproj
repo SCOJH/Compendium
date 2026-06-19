@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Compendium.Abstractions.Messaging</AssemblyName>
+    <RootNamespace>Compendium.Abstractions.Messaging</RootNamespace>
+    <PackageId>Compendium.Abstractions.Messaging</PackageId>
+    <Description>Conversational messaging abstractions for Compendium Framework: the IMessagingConnector port for two-way chat-platform integrations (Telegram, Slack, Discord, Teams, WhatsApp, generic webhook). Parses + verifies inbound platform webhooks into normalized messages and sends normalized replies; credentials are supplied per call for multi-tenant hosting.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Compendium.Abstractions.Messaging.Tests" />
+  </ItemGroup>
+
+</Project>
