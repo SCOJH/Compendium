@@ -119,8 +119,14 @@ public sealed class LiveProjectionProcessorBackfillTests
     }
 
     [Fact]
-    public async Task MultipleProjections_WithDifferentCheckpoints_UsesMaximumCheckpoint()
+    public async Task MultipleProjections_WithDifferentCheckpoints_ResumesFromMinimumCheckpoint()
     {
+        // The shared read cursor must resume from the MIN of per-projection checkpoints,
+        // not the max: a projection that lagged (e.g. held at a failed event while its
+        // sibling advanced) would otherwise be skipped straight to the max position and
+        // permanently lose the events in between. Already-applied events are skipped by
+        // the per-projection position guard, so resuming low is a no-op for the ahead
+        // projection and a genuine catch-up for the behind one.
         var (eventStore, projectionStore) = SetupStoresForProjectionCheckpoints(
             headPosition: 999L,
             ("TestProjection", 100L),
@@ -132,7 +138,7 @@ public sealed class LiveProjectionProcessorBackfillTests
 
         await processor.InitializeProjectionsAsync(CancellationToken.None);
 
-        processor.GetStatus().LastProcessedPosition.Should().Be(250L);
+        processor.GetStatus().LastProcessedPosition.Should().Be(100L);
         await eventStore.DidNotReceive().GetMaxGlobalPositionAsync(Arg.Any<CancellationToken>());
     }
 
