@@ -67,7 +67,28 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     private readonly ConcurrentDictionary<string, Type> _registeredProjections;
     private readonly ConcurrentDictionary<string, IProjection> _liveProjections;
     private readonly ConcurrentDictionary<string, DateTime> _lastSnapshotTimes;
+
+    // Per-projection last-successfully-applied global position. Checkpoints are
+    // physically per-projection (IProjectionStore.SaveCheckpointAsync keys on name),
+    // so a projection that fails on an event holds its own position while its
+    // siblings advance — no single global cursor can drag a failed projection past
+    // the event it never applied.
+    private readonly ConcurrentDictionary<string, long> _projectionPositions;
+
+    // Consecutive apply-failure counts, keyed by projection name. Reset to absent
+    // on the next successful apply. Crossing MaxProjectionApplyFailures dead-letters.
+    private readonly ConcurrentDictionary<string, int> _projectionFailureCounts;
+
+    // Dead-lettered (halted) projections: name -> reason. A halted projection stops
+    // receiving events (its read model is knowingly stale) so the others can advance
+    // past a poison event; a restart clears this and re-attempts from the checkpoint.
+    private readonly ConcurrentDictionary<string, string> _haltedProjections;
+
     private readonly SemaphoreSlim _processingLock;
+
+    // The stream read cursor: the MIN over all live (non-halted) projection
+    // positions, so an event held back by one projection is re-delivered until it
+    // catches up (already-applied events are skipped per-projection by position).
     private long _lastProcessedPosition;
     private readonly Stopwatch _processingStopwatch;
     private long _totalEventsProcessed;
@@ -96,6 +117,9 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         _registeredProjections = new ConcurrentDictionary<string, Type>();
         _liveProjections = new ConcurrentDictionary<string, IProjection>();
         _lastSnapshotTimes = new ConcurrentDictionary<string, DateTime>();
+        _projectionPositions = new ConcurrentDictionary<string, long>();
+        _projectionFailureCounts = new ConcurrentDictionary<string, int>();
+        _haltedProjections = new ConcurrentDictionary<string, string>();
         _processingLock = new SemaphoreSlim(1, 1);
         _processingStopwatch = new Stopwatch();
         _lastStatsUpdate = DateTime.UtcNow;
@@ -115,6 +139,9 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         _registeredProjections.TryRemove(projectionName, out _);
         _liveProjections.TryRemove(projectionName, out _);
         _lastSnapshotTimes.TryRemove(projectionName, out _);
+        _projectionPositions.TryRemove(projectionName, out _);
+        _projectionFailureCounts.TryRemove(projectionName, out _);
+        _haltedProjections.TryRemove(projectionName, out _);
         _logger.LogInformation("Unregistered projection {ProjectionName} from live processing", projectionName);
     }
 
@@ -141,6 +168,7 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             IsRunning = _processingStopwatch.IsRunning,
             RegisteredProjections = _registeredProjections.Count,
             ActiveProjections = _liveProjections.Count,
+            HaltedProjections = _haltedProjections.Count,
             LastProcessedPosition = _lastProcessedPosition,
             TotalEventsProcessed = _totalEventsProcessed,
             EventsPerSecond = eventsPerSecond,
@@ -240,15 +268,15 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                 _liveProjections[projectionName] = projection;
                 _lastSnapshotTimes[projectionName] = DateTime.UtcNow;
 
-                // Get checkpoint to determine starting position
+                // Get checkpoint to determine this projection's OWN starting position.
+                // Absent checkpoint => 0 (a brand-new projection backfills from the
+                // start; already-applied events are skipped per-projection by position,
+                // and a fresh projection's read model is empty so this is correct).
                 var checkpoint = await _projectionStore.GetCheckpointAsync(projectionName, cancellationToken);
+                _projectionPositions[projectionName] = checkpoint ?? 0L;
                 if (checkpoint.HasValue)
                 {
                     anyCheckpointFound = true;
-                    if (checkpoint.Value > _lastProcessedPosition)
-                    {
-                        _lastProcessedPosition = checkpoint.Value;
-                    }
                 }
 
                 _logger.LogDebug("Initialized projection {ProjectionName} with checkpoint at position {Position}",
@@ -273,14 +301,32 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             {
                 _logger.LogInformation(
                     "No projection checkpoints found; backfilling from position 0 (BackfillFromBeginningOnEmptyCheckpoint=true)");
-                // Leave _lastProcessedPosition at 0 — the polling loop will read from
-                // position > 0 and apply every event in the store.
+                // Leave all positions at 0 — the polling loop reads from position > 0
+                // and applies every event in the store to every projection.
+                _lastProcessedPosition = 0;
             }
             else
             {
-                _lastProcessedPosition = await _eventStore.GetMaxGlobalPositionAsync(cancellationToken);
-                _logger.LogInformation("Starting live processing from current position: {Position}", _lastProcessedPosition);
+                var head = await _eventStore.GetMaxGlobalPositionAsync(cancellationToken);
+                foreach (var name in _liveProjections.Keys)
+                {
+                    _projectionPositions[name] = head;
+                }
+
+                _lastProcessedPosition = head;
+                _logger.LogInformation("Starting live processing from current position: {Position}", head);
             }
+        }
+        else
+        {
+            // Resume from the MIN over per-projection checkpoints, NOT the max: a
+            // projection that legitimately lagged (held at a failed event while its
+            // siblings advanced, then the process restarted) must re-receive the
+            // events it missed. Siblings already past that position skip them by the
+            // per-projection position guard, so re-delivery is a no-op for them.
+            _lastProcessedPosition = _projectionPositions.Values.Min();
+            _logger.LogInformation(
+                "Resuming live processing from min projection checkpoint: {Position}", _lastProcessedPosition);
         }
     }
 
@@ -330,62 +376,110 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     /// <summary>
     /// Processes a batch of events through all live projections.
     /// </summary>
-    private async Task ProcessEventBatchAsync(List<EventData> events, CancellationToken cancellationToken)
+    /// <summary>
+    /// Applies a batch of events to the live projections. Exposed as
+    /// <see langword="internal"/> so tests can drive the checkpoint/halt behaviour
+    /// deterministically without racing the polling loop.
+    /// </summary>
+    internal async Task ProcessEventBatchAsync(List<EventData> events, CancellationToken cancellationToken)
     {
-        if (!events.Any())
+        if (events.Count == 0)
         {
             return;
         }
 
-        var maxPosition = 0L;
-        var processedCount = 0;
-
-        foreach (var eventData in events)
+        // Precompute metadata once per event; events arrive in ascending global order.
+        var prepared = new (EventData Data, EventMetadata Metadata)[events.Count];
+        for (var i = 0; i < events.Count; i++)
         {
-            var metadata = new EventMetadata(
-                eventData.StreamId,
-                eventData.StreamPosition,
-                eventData.GlobalPosition,
-                eventData.Timestamp,
-                eventData.UserId,
-                eventData.TenantId,
-                eventData.Headers
-            );
+            var e = events[i];
+            prepared[i] = (e, new EventMetadata(
+                e.StreamId, e.StreamPosition, e.GlobalPosition,
+                e.Timestamp, e.UserId, e.TenantId, e.Headers));
+        }
 
-            // Apply to all live projections
-            foreach (var (projectionName, projection) in _liveProjections)
+        var maxPosition = events[^1].GlobalPosition;
+        var appliedCount = 0L;
+
+        // Projection-outer / events-inner so each projection advances independently
+        // and STOPS at its own first failure — events must apply in order, so we can
+        // never skip past an event a projection failed on. A failing projection holds
+        // its checkpoint; its siblings are unaffected.
+        foreach (var (projectionName, projection) in _liveProjections)
+        {
+            if (_haltedProjections.ContainsKey(projectionName))
             {
-                try
-                {
-                    await ApplyEventToProjectionAsync(projection, eventData.Event, metadata, cancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Failed to apply event {EventId} to projection {ProjectionName}",
-                        eventData.EventId, projectionName);
-                }
+                // Dead-lettered — stays frozen at its last-good checkpoint.
+                continue;
             }
 
-            maxPosition = Math.Max(maxPosition, eventData.GlobalPosition);
-            processedCount++;
+            foreach (var (data, metadata) in prepared)
+            {
+                var current = _projectionPositions.GetValueOrDefault(projectionName, 0L);
+
+                // Idempotent skip: this projection already applied this position
+                // (re-delivered because the MIN cursor rewound for a lagging sibling).
+                if (data.GlobalPosition <= current)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    await ApplyEventToProjectionAsync(projection, data.Event, metadata, cancellationToken);
+                    _projectionPositions[projectionName] = data.GlobalPosition;
+                    _projectionFailureCounts.TryRemove(projectionName, out _);
+                    appliedCount++;
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    // CRITICAL: do NOT advance this projection's checkpoint past the
+                    // failed event. Hold at `current` and retry on the next pass.
+                    var failures = _projectionFailureCounts.AddOrUpdate(projectionName, 1, (_, c) => c + 1);
+                    _logger.LogError(ex,
+                        "Projection {ProjectionName} failed to apply event {EventId} at position {Position} " +
+                        "(attempt {Attempt}/{Max}); checkpoint held at {Held}",
+                        projectionName, data.EventId, data.GlobalPosition,
+                        failures, _options.MaxProjectionApplyFailures, current);
+
+                    if (failures >= _options.MaxProjectionApplyFailures)
+                    {
+                        var reason =
+                            $"halted at position {data.GlobalPosition} after {failures} consecutive failed attempts: {ex.Message}";
+                        _haltedProjections[projectionName] = reason;
+                        _logger.LogCritical(ex,
+                            "Projection {ProjectionName} DEAD-LETTERED: {Reason}. Its read model is now STALE " +
+                            "until the process is restarted/redeployed; other projections continue past this event.",
+                            projectionName, reason);
+                    }
+
+                    // Stop applying further (later) events to THIS projection this pass.
+                    break;
+                }
+            }
         }
 
-        // Update global position
-        if (maxPosition > _lastProcessedPosition)
-        {
-            _lastProcessedPosition = maxPosition;
-        }
+        _totalEventsProcessed += appliedCount;
 
-        _totalEventsProcessed += processedCount;
+        // Advance the shared read cursor to the MIN over live (non-halted) projections
+        // so an event held back by one projection is re-streamed until it catches up.
+        // If every projection is halted, jump to the batch head to avoid re-reading a
+        // tail nobody will consume.
+        var livePositions = _liveProjections.Keys
+            .Where(name => !_haltedProjections.ContainsKey(name))
+            .Select(name => _projectionPositions.GetValueOrDefault(name, 0L))
+            .ToList();
+        _lastProcessedPosition = livePositions.Count > 0 ? livePositions.Min() : maxPosition;
 
-        // Save checkpoints for all projections
+        // Persist each projection's OWN position (held-back projections included, so a
+        // restart resumes from where each actually is — never past a failed event).
         await SaveCheckpointsAsync(cancellationToken);
 
         // Create snapshots if needed
         await CreateSnapshotsIfNeededAsync(cancellationToken);
 
-        _logger.LogDebug("Processed batch of {EventCount} events, new position: {Position}",
-            processedCount, _lastProcessedPosition);
+        _logger.LogDebug("Processed batch of {EventCount} events ({Applied} applies), cursor: {Position}",
+            events.Count, appliedCount, _lastProcessedPosition);
     }
 
     /// <summary>
@@ -418,12 +512,18 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     }
 
     /// <summary>
-    /// Saves checkpoints for all live projections.
+    /// Saves each live projection's OWN last-applied position as its checkpoint.
+    /// Never writes the shared read cursor here — a projection that failed on an
+    /// event must persist the position BEFORE that event, so a restart re-attempts
+    /// it instead of silently skipping it (the checkpoint-advance-on-error bug).
     /// </summary>
     private async Task SaveCheckpointsAsync(CancellationToken cancellationToken)
     {
         var tasks = _liveProjections.Keys.Select(projectionName =>
-            _projectionStore.SaveCheckpointAsync(projectionName, _lastProcessedPosition, cancellationToken));
+            _projectionStore.SaveCheckpointAsync(
+                projectionName,
+                _projectionPositions.GetValueOrDefault(projectionName, 0L),
+                cancellationToken));
 
         await Task.WhenAll(tasks);
     }
@@ -540,6 +640,13 @@ public class LiveProcessingStatus
     /// Gets or sets the number of active projections.
     /// </summary>
     public int ActiveProjections { get; init; }
+
+    /// <summary>
+    /// Gets the number of projections that have been dead-lettered (halted) after
+    /// repeatedly failing to apply an event. A non-zero value means one or more read
+    /// models are knowingly stale and the process needs attention/redeploy.
+    /// </summary>
+    public int HaltedProjections { get; init; }
 
     /// <summary>
     /// Gets or sets the last processed global position.

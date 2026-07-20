@@ -72,6 +72,32 @@ public class ProjectionOptions
     public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// Gets or sets how many consecutive times the live processor re-attempts
+    /// applying the <i>same</i> event to a projection that keeps throwing before
+    /// it <b>dead-letters</b> (halts) that projection. Default is 5.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The live processor must NEVER advance a projection's checkpoint past an
+    /// event it failed to apply — doing so silently drops that event from the
+    /// read model forever (the class of bug this guards against). Instead the
+    /// projection's checkpoint is held at the last successfully-applied position
+    /// and the event is retried on subsequent polling passes. Transient faults
+    /// (a brief DB blip) recover within a few attempts.
+    /// </para>
+    /// <para>
+    /// A genuinely poisoned event would otherwise retry forever and, because the
+    /// global read cursor is the MIN over live projections, force the processor to
+    /// re-read the tail of the stream on every pass. After this many consecutive
+    /// failures the projection is halted: it stops receiving events (its read
+    /// model is now knowingly stale, logged at Critical), and the other
+    /// projections are freed to advance past the poison event. A restart/redeploy
+    /// clears the halt and re-attempts from the held checkpoint.
+    /// </para>
+    /// </remarks>
+    public int MaxProjectionApplyFailures { get; set; } = 5;
+
+    /// <summary>
     /// Gets or sets whether <see cref="ILiveProjectionProcessor"/> should backfill from
     /// position 0 on first start, when no checkpoints exist for any registered projection.
     /// </summary>
