@@ -21,9 +21,12 @@ public sealed record GitConnection
     public required string Provider { get; init; }
 
     /// <summary>
-    /// Gets the base API URL for self-hosted instances (GitLab on-prem, Gitea,
-    /// GitHub Enterprise Server). <see langword="null"/> targets the provider's
-    /// cloud service.
+    /// Gets the API base URL for self-hosted instances — the full prefix API
+    /// requests are issued against, not the web host root (GitHub Enterprise
+    /// Server: <c>https://ghes.example.com/api/v3</c>; GitLab on-prem:
+    /// <c>https://gitlab.example.com/api/v4</c>). <see langword="null"/>
+    /// targets the provider's cloud service. Adapters must follow this
+    /// convention regardless of their SDK's own base-URL handling.
     /// </summary>
     public Uri? ServerUrl { get; init; }
 

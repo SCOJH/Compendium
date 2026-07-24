@@ -38,6 +38,11 @@
     <PackageVersion Include="NBomber.Http" Version="6.0.0" />
     <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
+    <!-- Compendium.Adapters.GitHub: GitHub App auth (Octokit) + Actions-secret sealing (libsodium).
+         Versions aligned with Nexus.Platform.GitHub, the source of the migrated protocol mechanics. -->
+    <PackageVersion Include="Octokit" Version="14.0.0" />
+    <PackageVersion Include="Sodium.Core" Version="1.4.0" />
+    <PackageVersion Include="WireMock.Net" Version="1.6.9" />
     <!-- Npgsql + StackExchange.Redis remain as transitive pins for in-tree consumers
          (AspNetCore health checks, sample 02). Direct PG/Redis adapter code lives in the
          per-adapter repos (compendium-adapter-postgresql, compendium-adapter-redis). -->
