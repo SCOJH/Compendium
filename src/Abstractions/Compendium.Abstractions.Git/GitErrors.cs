@@ -89,6 +89,16 @@ public static class GitErrors
     }
 
     /// <summary>
+    /// The provider-side installation id does not belong to the platform app
+    /// (never installed, or the installation was deleted). Returned by the
+    /// by-id installation lookup on the credential broker.
+    /// </summary>
+    public static Error InstallationNotFound(string installationId) =>
+        Error.NotFound(
+            $"{Prefix}.InstallationNotFound",
+            $"Installation '{installationId}' was not found for the platform app.");
+
+    /// <summary>
     /// The requested repository does not exist or is not visible to the credential.
     /// </summary>
     public static Error RepositoryNotFound(string repository) =>

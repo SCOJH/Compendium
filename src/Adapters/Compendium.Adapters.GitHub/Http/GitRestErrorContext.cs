@@ -20,6 +20,9 @@ internal sealed record GitRestErrorContext
     /// <summary>Gets the namespace this operation targeted; a 404 maps to <c>Git.NamespaceNotFound</c>.</summary>
     public string? Namespace { get; init; }
 
+    /// <summary>Gets the installation id this operation targeted; a 404 maps to <c>Git.InstallationNotFound</c>.</summary>
+    public string? InstallationId { get; init; }
+
     /// <summary>Gets the resource name a conflict (409/422 "already exists") refers to.</summary>
     public string? ConflictResource { get; init; }
 
@@ -33,4 +36,8 @@ internal sealed record GitRestErrorContext
     /// <summary>Builds a context for a namespace-scoped operation.</summary>
     public static GitRestErrorContext ForNamespace(string @namespace) =>
         new() { Namespace = @namespace, ConflictResource = @namespace };
+
+    /// <summary>Builds a context for a lookup of a single installation by its id.</summary>
+    public static GitRestErrorContext ForInstallation(string installationId) =>
+        new() { InstallationId = installationId };
 }

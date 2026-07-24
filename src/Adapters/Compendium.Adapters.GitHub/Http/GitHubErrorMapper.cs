@@ -51,6 +51,11 @@ internal static class GitHubErrorMapper
                     return GitErrors.NamespaceNotFound(ns);
                 }
 
+                if (context.InstallationId is { } installationId)
+                {
+                    return GitErrors.InstallationNotFound(installationId);
+                }
+
                 return GitErrors.ProviderRejected(Provider, statusCode, detail);
 
             case 409:
@@ -92,6 +97,11 @@ internal static class GitHubErrorMapper
                 if (context.Namespace is { } ns)
                 {
                     return GitErrors.NamespaceNotFound(ns);
+                }
+
+                if (context.InstallationId is { } installationId)
+                {
+                    return GitErrors.InstallationNotFound(installationId);
                 }
 
                 return GitErrors.ProviderRejected(Provider, 404, exception.Message);

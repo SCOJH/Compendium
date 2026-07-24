@@ -127,6 +127,18 @@ public sealed class GitErrorsTests
     }
 
     [Fact]
+    public void InstallationNotFound_MapsToNotFound()
+    {
+        // Arrange / Act
+        var error = GitErrors.InstallationNotFound("555");
+
+        // Assert
+        error.Code.Should().Be("Git.InstallationNotFound");
+        error.Type.Should().Be(ErrorType.NotFound);
+        error.Message.Should().Be("Installation '555' was not found for the platform app.");
+    }
+
+    [Fact]
     public void RepositoryNotFound_MapsToNotFound()
     {
         // Arrange / Act

@@ -95,6 +95,7 @@ public sealed class NullGitServerTests
         AssertNotConfigured(await broker.MintAsync(Connection, new GitAccessTokenScope()));
         AssertNotConfigured(await broker.ValidateAsync(Connection));
         AssertNotConfigured(await broker.ResolveAppInstallationAsync("acme"));
+        AssertNotConfigured(await broker.ResolveAppInstallationByIdAsync("inst-1"));
         AssertNotConfigured(await broker.ListAppInstallationsAsync());
     }
 
