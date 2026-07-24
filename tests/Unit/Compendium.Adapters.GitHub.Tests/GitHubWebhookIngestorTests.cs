@@ -95,7 +95,7 @@ public sealed class GitHubWebhookIngestorTests
     public void Parse_PullRequest_ProducesAPullRequestChangedEvent()
     {
         var body = """
-        {"action":"opened","number":42,"pull_request":{"head":{"ref":"feature"},"base":{"ref":"main"}},
+        {"action":"opened","number":42,"pull_request":{"head":{"ref":"feature","sha":"headsha42"},"base":{"ref":"main"}},
          "repository":{"full_name":"acme/billing"}}
         """;
 
@@ -106,6 +106,21 @@ public sealed class GitHubWebhookIngestorTests
         pr.Number.Should().Be(42);
         pr.SourceReference.Should().Be("feature");
         pr.TargetReference.Should().Be("main");
+        pr.SourceHeadSha.Should().Be("headsha42");
+    }
+
+    [Fact]
+    public void Parse_PullRequestWithoutHeadSha_LeavesSourceHeadShaNull()
+    {
+        var body = """
+        {"action":"opened","number":7,"pull_request":{"head":{"ref":"feature"},"base":{"ref":"main"}},
+         "repository":{"full_name":"acme/billing"}}
+        """;
+
+        var result = _ingestor.Parse(Delivery("pull_request", body), Secret);
+
+        var pr = result.Value.Should().BeOfType<GitWebhookEvent.PullRequestChanged>().Subject;
+        pr.SourceHeadSha.Should().BeNull();
     }
 
     [Fact]
