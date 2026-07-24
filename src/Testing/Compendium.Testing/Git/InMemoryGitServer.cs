@@ -256,6 +256,20 @@ public sealed class InMemoryGitServer :
     }
 
     /// <inheritdoc />
+    public Task<Result<GitInstallationInfo>> ResolveAppInstallationByIdAsync(
+        string installationId, string? appKey = null, CancellationToken cancellationToken = default)
+    {
+        Log("ResolveAppInstallationById", installationId);
+        lock (_gate)
+        {
+            var install = _installations.FirstOrDefault(i => i.InstallationId == installationId);
+            return Task.FromResult(install is null
+                ? Result.Failure<GitInstallationInfo>(GitErrors.InstallationNotFound(installationId))
+                : Result.Success(install));
+        }
+    }
+
+    /// <inheritdoc />
     public Task<Result<IReadOnlyList<GitInstallationInfo>>> ListAppInstallationsAsync(
         string? appKey = null, CancellationToken cancellationToken = default)
     {

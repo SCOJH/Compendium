@@ -304,6 +304,31 @@ public sealed class InMemoryGitServerTests
     }
 
     [Fact]
+    public async Task ResolveAppInstallationById_WhenSeeded_ReturnsInstallation()
+    {
+        // Arrange
+        _server.SeedInstallation(new GitInstallationInfo("inst-1", "acme", GitAccountType.Organization));
+
+        // Act
+        var result = await _server.Credentials.ResolveAppInstallationByIdAsync("inst-1");
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.AccountLogin.Should().Be("acme");
+    }
+
+    [Fact]
+    public async Task ResolveAppInstallationById_WhenAbsent_FailsInstallationNotFound()
+    {
+        // Arrange / Act
+        var result = await _server.Credentials.ResolveAppInstallationByIdAsync("missing");
+
+        // Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Git.InstallationNotFound");
+    }
+
+    [Fact]
     public async Task ListAppInstallations_ReturnsSeededInstallations()
     {
         // Arrange

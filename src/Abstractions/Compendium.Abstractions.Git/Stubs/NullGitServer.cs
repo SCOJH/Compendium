@@ -106,6 +106,11 @@ public sealed class NullGitServer :
         => NotConfiguredTask<GitInstallationInfo>();
 
     /// <inheritdoc />
+    public Task<Result<GitInstallationInfo>> ResolveAppInstallationByIdAsync(
+        string installationId, string? appKey = null, CancellationToken cancellationToken = default)
+        => NotConfiguredTask<GitInstallationInfo>();
+
+    /// <inheritdoc />
     public Task<Result<IReadOnlyList<GitInstallationInfo>>> ListAppInstallationsAsync(
         string? appKey = null, CancellationToken cancellationToken = default)
         => NotConfiguredTask<IReadOnlyList<GitInstallationInfo>>();

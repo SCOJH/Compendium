@@ -157,6 +157,63 @@ public sealed class GitHubCredentialBrokerTests
     }
 
     [Fact]
+    public async Task ResolveAppInstallationById_FindsTheInstallation()
+    {
+        using var harness = new GitHubTestHarness();
+        harness.Server.Given(Request.Create().WithPath("/app/installations/555").UsingGet())
+            .RespondWith(Response.Create().WithStatusCode(200).WithBodyAsJson(new
+            {
+                id = 555,
+                account = new { login = "acme", type = "Organization" },
+                suspended_at = "2026-01-02T03:04:05Z",
+            }));
+
+        var result = await harness.Broker.ResolveAppInstallationByIdAsync("555");
+
+        result.IsSuccess.Should().BeTrue();
+        result.Value.InstallationId.Should().Be("555");
+        result.Value.AccountLogin.Should().Be("acme");
+        result.Value.AccountType.Should().Be(GitAccountType.Organization);
+        result.Value.Suspended.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ResolveAppInstallationById_MapsAUserAccount_AndReportsNotSuspended()
+    {
+        using var harness = new GitHubTestHarness();
+        harness.Server.Given(Request.Create().WithPath("/app/installations/42").UsingGet())
+            .RespondWith(Response.Create().WithStatusCode(200)
+                .WithBodyAsJson(new { id = 42, account = new { login = "octocat", type = "User" } }));
+
+        var result = await harness.Broker.ResolveAppInstallationByIdAsync("42");
+
+        result.Value.AccountType.Should().Be(GitAccountType.User);
+        result.Value.Suspended.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task ResolveAppInstallationById_WhenUnknown_FailsInstallationNotFound()
+    {
+        using var harness = new GitHubTestHarness();
+        harness.Server.Given(Request.Create().WithPath("/app/installations/999").UsingGet())
+            .RespondWith(Response.Create().WithStatusCode(404));
+
+        var result = await harness.Broker.ResolveAppInstallationByIdAsync("999");
+
+        result.Error.Code.Should().Be("Git.InstallationNotFound");
+        result.Error.Type.Should().Be(ErrorType.NotFound);
+    }
+
+    [Fact]
+    public async Task ResolveAppInstallationById_UnknownAppKey_FailsNotConfigured()
+    {
+        using var harness = new GitHubTestHarness();
+
+        (await harness.Broker.ResolveAppInstallationByIdAsync("555", "missing"))
+            .Error.Code.Should().Be("Git.NotConfigured");
+    }
+
+    [Fact]
     public async Task ListAppInstallations_PagesThroughEveryInstallation()
     {
         using var harness = new GitHubTestHarness();

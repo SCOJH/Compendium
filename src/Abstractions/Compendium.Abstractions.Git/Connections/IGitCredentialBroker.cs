@@ -48,6 +48,23 @@ public interface IGitCredentialBroker
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// App-installation mode only: resolves a single installation of the platform
+    /// app by its provider-side id. Unlike <see cref="ResolveAppInstallationAsync"/>
+    /// (which probes by account) and <see cref="ListAppInstallationsAsync"/> (which
+    /// pages the whole list), this is an O(1) point lookup — use it when a caller
+    /// already holds an installation id and only needs to confirm it still belongs
+    /// to the app. Fails with <c>Git.InstallationNotFound</c> when the id does not
+    /// belong to the app (never installed, or the installation was deleted).
+    /// </summary>
+    /// <param name="installationId">The provider-side installation id to resolve.</param>
+    /// <param name="appKey">Selects an app registration; <see langword="null"/> = default app.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    Task<Result<GitInstallationInfo>> ResolveAppInstallationByIdAsync(
+        string installationId,
+        string? appKey = null,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// App-installation mode only: lists every installation of the platform app
     /// across all accounts. Adapters page through the provider API internally
     /// and return the full list. Used by reconciliation jobs to heal missed

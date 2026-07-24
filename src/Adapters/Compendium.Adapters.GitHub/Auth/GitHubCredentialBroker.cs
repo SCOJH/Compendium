@@ -173,6 +173,34 @@ internal sealed class GitHubCredentialBroker : IGitCredentialBroker
     }
 
     /// <inheritdoc />
+    public async Task<Result<GitInstallationInfo>> ResolveAppInstallationByIdAsync(
+        string installationId, string? appKey = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(installationId);
+
+        if (_options.ResolveApp(appKey) is not { } registration)
+        {
+            return Result.Failure<GitInstallationInfo>(GitErrors.NotConfigured(GitHubDefaults.Provider));
+        }
+
+        var jwt = _tokenService.CreateAppJwt(registration);
+        if (jwt.IsFailure)
+        {
+            return Result.Failure<GitInstallationInfo>(jwt.Error);
+        }
+
+        var apiBase = GitHubDefaults.EnsureTrailingSlash(_options.ApiBaseUrl);
+        var installation = await _rest.GetAsync<GitHubInstallationDto>(
+            apiBase, jwt.Value,
+            $"app/installations/{Uri.EscapeDataString(installationId)}",
+            GitRestErrorContext.ForInstallation(installationId), cancellationToken).ConfigureAwait(false);
+
+        return installation.IsFailure
+            ? Result.Failure<GitInstallationInfo>(installation.Error)
+            : Result.Success(installation.Value.ToInstallationInfo());
+    }
+
+    /// <inheritdoc />
     public async Task<Result<IReadOnlyList<GitInstallationInfo>>> ListAppInstallationsAsync(
         string? appKey = null, CancellationToken cancellationToken = default)
     {
