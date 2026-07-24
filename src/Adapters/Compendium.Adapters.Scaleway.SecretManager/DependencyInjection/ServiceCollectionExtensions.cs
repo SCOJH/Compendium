@@ -51,8 +51,8 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton(sp => new ScalewaySecretVault(
             sp.GetRequiredService<ScalewaySecretContainerService>(),
             sp.GetRequiredService<ScalewaySecretVersionService>()));
-        services.TryAddEnumerable(ServiceDescriptor.Singleton<ISecretVault>(
-            sp => sp.GetRequiredService<ScalewaySecretVault>()));
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<ISecretVault, ScalewaySecretVault>(
+            static sp => sp.GetRequiredService<ScalewaySecretVault>()));
 
         return services;
     }

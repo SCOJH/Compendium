@@ -23,14 +23,14 @@ internal sealed class ScalewayTestHarness : IDisposable
 {
     public const string ProjectId = "11111111-2222-3333-4444-555555555555";
 
-    public ScalewayTestHarness()
+    public ScalewayTestHarness(string? defaultProjectId = ProjectId)
     {
         Server = WireMockServer.Start();
         var options = new ScalewaySecretManagerOptions
         {
             ApiBaseUrl = new Uri(Server.Url!),
             DefaultRegion = "fr-par",
-            DefaultProjectId = ProjectId,
+            DefaultProjectId = defaultProjectId,
         };
         Client = new ScalewayApiClient(new TestHttpClientFactory(), Options.Create(options));
         Containers = new ScalewaySecretContainerService(Client);

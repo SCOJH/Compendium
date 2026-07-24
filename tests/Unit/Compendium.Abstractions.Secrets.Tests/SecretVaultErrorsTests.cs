@@ -48,6 +48,61 @@ public sealed class SecretVaultErrorsTests
     }
 
     [Fact]
+    public void NotSupported_WithoutLimitation_OmitsTheMetadataKey()
+    {
+        var error = SecretVaultErrors.NotSupported("scaleway", SecretVaultCapability.ServerSideRotation);
+
+        error.Code.Should().Be("SecretVault.CapabilityNotSupported");
+        error.Metadata.Should().NotContainKey("limitation");
+    }
+
+    [Fact]
+    public void QuotaExceeded_IsUnavailable_WithDetailInMessage()
+    {
+        var error = SecretVaultErrors.QuotaExceeded("scaleway", "1000 secrets per project");
+
+        error.Type.Should().Be(ErrorType.Unavailable);
+        error.Message.Should().Contain("1000 secrets per project");
+    }
+
+    [Fact]
+    public void ProviderRejected_BothDetailBranches_CarryStatusCode()
+    {
+        var bare = SecretVaultErrors.ProviderRejected("scaleway", 500);
+        var detailed = SecretVaultErrors.ProviderRejected("scaleway", 502, "bad gateway");
+
+        bare.Metadata.Should().ContainKey("statusCode").WhoseValue.Should().Be(500);
+        detailed.Message.Should().Contain("bad gateway");
+    }
+
+    [Fact]
+    public void AuthenticationFailed_And_NotConfigured_BothBranches()
+    {
+        SecretVaultErrors.AuthenticationFailed("scaleway").Type.Should().Be(ErrorType.Unauthorized);
+        SecretVaultErrors.AuthenticationFailed("scaleway", "expired").Message.Should().Contain("expired");
+        SecretVaultErrors.NotConfigured().Message.Should().Contain("No secret vault");
+        SecretVaultErrors.NotConfigured("null").Message.Should().Contain("'null'");
+    }
+
+    [Fact]
+    public void Throttled_WithoutRetryAfter_OmitsTheMetadataKey()
+    {
+        var error = SecretVaultErrors.Throttled("scaleway");
+
+        error.Type.Should().Be(ErrorType.TooManyRequests);
+        error.Metadata.Should().NotContainKey("retryAfterSeconds");
+    }
+
+    [Fact]
+    public void NotFoundAndConflictFamilies_UseStableCodes()
+    {
+        SecretVaultErrors.SecretNotFound("s1").Code.Should().Be("SecretVault.SecretNotFound");
+        SecretVaultErrors.VersionNotFound("s1", 3).Code.Should().Be("SecretVault.VersionNotFound");
+        SecretVaultErrors.VersionDisabled("s1", 3).Code.Should().Be("SecretVault.VersionDisabled");
+        SecretVaultErrors.ConflictExists("name", "/p").Code.Should().Be("SecretVault.ConflictExists");
+    }
+
+    [Fact]
     public void EnsureSupported_DeclaredCapability_Succeeds()
     {
         var capabilities = new SecretVaultCapabilities

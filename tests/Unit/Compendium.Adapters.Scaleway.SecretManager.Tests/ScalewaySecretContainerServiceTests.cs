@@ -161,6 +161,78 @@ public sealed class ScalewaySecretContainerServiceTests
     }
 
     [Fact]
+    public async Task Create_WithoutProjectAnywhere_FailsWithNotConfigured()
+    {
+        using var harness = new ScalewayTestHarness(defaultProjectId: null);
+
+        var result = await harness.Containers.CreateAsync(harness.Connection(), new CreateVaultSecret
+        {
+            Name = "orphan",
+            Path = Path,
+        });
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.NotConfigured");
+        harness.Server.LogEntries.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Create_ConnectionTenancy_OverridesTheDefaultProject()
+    {
+        using var harness = new ScalewayTestHarness(defaultProjectId: null);
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets")).UsingPost()
+                .WithBody(b => b!.Contains("tenancy-project")))
+            .RespondWith(Json.Ok(new { id = "sec-t", name = "k", path = "/" }));
+
+        var connection = harness.Connection() with { Tenancy = "tenancy-project" };
+        var result = await harness.Containers.CreateAsync(connection, new CreateVaultSecret
+        {
+            Name = "k",
+            Path = SecretScopePath.Root,
+        });
+
+        result.IsSuccess.Should().BeTrue(result.IsFailure ? result.Error.Message : string.Empty);
+    }
+
+    [Fact]
+    public async Task List_WithoutTagFilter_ReturnsEverythingUnderThePrefix()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets")).UsingGet())
+            .RespondWith(Json.Ok(new
+            {
+                secrets = new object[]
+                {
+                    new { id = "a", name = "one", path = "/nexus", tags = Array.Empty<string>() },
+                    new { id = "b", name = "two", path = "/other", tags = Array.Empty<string>() },
+                },
+                total_count = 2,
+            }));
+
+        var result = await harness.Containers.ListAsync(
+            harness.Connection(), SecretScopePath.From("nexus").Value);
+
+        result.IsSuccess.Should().BeTrue(result.IsFailure ? result.Error.Message : string.Empty);
+        result.Value.Should().ContainSingle(d => d.SecretId == "a");
+    }
+
+    [Fact]
+    public async Task List_ProviderFailure_PropagatesTheError()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets")).UsingGet())
+            .RespondWith(Json.Status(500, new { message = "boom" }));
+
+        var result = await harness.Containers.ListAsync(harness.Connection(), SecretScopePath.Root);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
     public async Task Delete_NotFound_IsIdempotentSuccess()
     {
         using var harness = new ScalewayTestHarness();

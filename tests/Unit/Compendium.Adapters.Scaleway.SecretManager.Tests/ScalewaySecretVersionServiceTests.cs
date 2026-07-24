@@ -137,6 +137,111 @@ public sealed class ScalewaySecretVersionServiceTests
     }
 
     [Fact]
+    public async Task Destroy_HappyPath_And_NotFound()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1")).UsingDelete())
+            .RespondWith(Json.Ok(new { }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/9")).UsingDelete())
+            .RespondWith(Json.Status(404, new { message = "not found" }));
+
+        (await harness.Versions.DestroyAsync(harness.Connection(), "sec-1", 1)).IsSuccess.Should().BeTrue();
+        var missing = await harness.Versions.DestroyAsync(harness.Connection(), "sec-1", 9);
+        missing.IsFailure.Should().BeTrue();
+        missing.Error.Code.Should().Be("SecretVault.VersionNotFound");
+    }
+
+    [Fact]
+    public async Task Access_InvalidBase64Payload_MapsToProviderRejected()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1/access")).UsingGet())
+            .RespondWith(Json.Ok(new { revision = 1, data = "not-base64!!!" }));
+
+        var result = await harness.Versions.AccessAsync(harness.Connection(), "sec-1", 1);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
+    public async Task ListVersions_MissingSecret_MapsToSecretNotFound()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/ghost/versions")).UsingGet())
+            .RespondWith(Json.Status(404, new { message = "not found" }));
+
+        var result = await harness.Versions.ListAsync(harness.Connection(), "ghost");
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.SecretNotFound");
+    }
+
+    [Fact]
+    public async Task Enable_FailureWithMismatchedState_ReturnsTheOriginalError()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1/enable")).UsingPost())
+            .RespondWith(Json.Status(500, new { message = "boom" }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1")).UsingGet())
+            .RespondWith(Json.Ok(new { revision = 1, status = "disabled" }));
+
+        var result = await harness.Versions.EnableAsync(harness.Connection(), "sec-1", 1);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
+    public async Task QuotaError_MapsToQuotaExceeded()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions")).UsingPost())
+            .RespondWith(Json.Status(400, new { message = "quota of versions per secret exceeded" }));
+
+        var result = await harness.Versions.AddAsync(
+            harness.Connection(), "sec-1", SecretMaterial.FromString("x"));
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.QuotaExceeded");
+    }
+
+    [Fact]
+    public async Task NonJsonErrorBody_StillMapsTheStatusCode()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions")).UsingPost())
+            .RespondWith(WireMock.ResponseBuilders.Response.Create()
+                .WithStatusCode(502).WithHeader("Content-Type", "text/html").WithBody("<html>bad gateway</html>"));
+
+        var result = await harness.Versions.AddAsync(
+            harness.Connection(), "sec-1", SecretMaterial.FromString("x"));
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
+    public async Task NetworkFailure_MapsToProviderRejected_NotAnException()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server.Stop();
+
+        var result = await harness.Versions.AccessAsync(harness.Connection(), "sec-1", 1);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
     public async Task ListVersions_PaginatesAndOrdersByRevision()
     {
         using var harness = new ScalewayTestHarness();
