@@ -4,12 +4,18 @@
     <AssemblyName>Compendium.Testing</AssemblyName>
     <RootNamespace>Compendium.Testing</RootNamespace>
     <PackageId>Compendium.Testing</PackageId>
-    <Description>Testing utilities for Compendium Framework: TestContainers integration (PostgreSQL/Redis), test data builders (AutoFixture/Bogus), aggregate testing helpers for Event Sourcing.</Description>
+    <Description>Testing utilities for Compendium Framework: TestContainers integration (PostgreSQL/Redis), test data builders (AutoFixture/Bogus), aggregate testing helpers for Event Sourcing, and the git-server contract-test kit (InMemoryGitServer + GitServerContractTests).</Description>
+    <!-- The xunit metapackage (pulled for the shipped GitServerContractTests kit)
+         flips IsTestProject to true, which makes `dotnet test <sln>` try to run this
+         LIBRARY as a test assembly and crash the testhost. This package ships test
+         utilities; it is not a test project. -->
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Compendium.Core\Compendium.Core.csproj" />
     <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Git\Compendium.Abstractions.Git.csproj" />
     <ProjectReference Include="..\..\Application\Compendium.Application\Compendium.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Compendium.Infrastructure\Compendium.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Multitenancy\Compendium.Multitenancy\Compendium.Multitenancy.csproj" />
@@ -17,6 +23,11 @@
 
   <ItemGroup>
     <PackageReference Include="xunit.abstractions" />
+    <!-- Git contract-test kit (GitServerContractTests): [SkippableFact] per declared capability,
+         FluentAssertions for house-style assertions in inheriting adapter test suites. -->
+    <PackageReference Include="xunit" />
+    <PackageReference Include="Xunit.SkippableFact" />
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Testcontainers" />

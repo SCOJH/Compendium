@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Compendium.Adapters.GitHub</AssemblyName>
+    <RootNamespace>Compendium.Adapters.GitHub</RootNamespace>
+    <PackageId>Compendium.Adapters.GitHub</PackageId>
+    <Description>GitHub adapter for Compendium Framework: a concrete IGitServer implementing the Compendium.Abstractions.Git ports against github.com and GitHub Enterprise Server. Provides GitHub App installation-token auth (RS256 App JWT plus per-installation token minting and caching), repository/tag/release management, CI secrets (libsodium sealed-box encrypted) and variables, deployment environments, repository-ruleset branch policies, teams and collaborators, outbound webhook subscriptions, and fail-closed HMAC-SHA256 inbound webhook ingestion.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Compendium.Core\Compendium.Core.csproj" />
+    <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Git\Compendium.Abstractions.Git.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Octokit" />
+    <PackageReference Include="Sodium.Core" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <!-- Ship the capability matrix alongside the package README so consumers can read the
+       support/limitation table (NamespaceProvisioning=None, PipelineTrigger=Partial, ...). -->
+  <ItemGroup>
+    <None Include="CAPABILITIES.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Compendium.Adapters.GitHub.Tests" />
+    <!-- NSubstitute proxies internal Octokit-facing surfaces during unit tests. -->
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
+</Project>

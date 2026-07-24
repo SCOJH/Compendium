@@ -133,4 +133,14 @@ Adapters extracted from this monorepo (chronological):
 
 All seven heavy adapters now live in their own repositories. The framework's `tests/Integration` no longer requires Docker (per [ADR-0007](0007-integration-test-split-and-inmemory-defaults.md)); per-adapter integration tests live alongside the adapter that owns them. The framework CI's line-coverage gate is now strict at ≥ 90 %.
 
+### In-tree adapters staged for extraction
+
+New adapters may incubate in-tree while their abstraction stabilizes, then follow the same extraction path once the abstraction ships a stable (non-preview) tag:
+
+| Date added in-tree | Adapter | External SDK(s) | Scheduled extraction repo | Extraction trigger |
+|---|---|---|---|---|
+| 2026-07-24 | `Compendium.Adapters.GitHub` | Octokit, Sodium.Core | `compendium-adapter-github` | First stable (non-preview) tag of `Compendium.Abstractions.Git`. |
+
+`Compendium.Adapters.GitHub` is unit-testable end-to-end (WireMock for the REST paths, NSubstitute for the Octokit paths), so unlike the integration-bound adapters above it does not depress the framework's unit-coverage gate and can incubate in-tree without a coverage exemption until the Git abstraction stabilizes.
+
 The convenience meta-package `Compendium.Extensions.ExternalAdapters` (which previously re-exposed Zitadel + Listmonk + LemonSqueezy DI helpers) was removed as part of this transition — consumers wire each adapter directly through its own DI extension method (`AddStripeBilling`, `AddZitadelIdentity`, etc.).
