@@ -4,7 +4,12 @@
     <AssemblyName>Compendium.Testing</AssemblyName>
     <RootNamespace>Compendium.Testing</RootNamespace>
     <PackageId>Compendium.Testing</PackageId>
-    <Description>Testing utilities for Compendium Framework: TestContainers integration (PostgreSQL/Redis), test data builders (AutoFixture/Bogus), aggregate testing helpers for Event Sourcing.</Description>
+    <Description>Testing utilities for Compendium Framework: TestContainers integration (PostgreSQL/Redis), test data builders (AutoFixture/Bogus), aggregate testing helpers for Event Sourcing, and the git-server contract-test kit (InMemoryGitServer + GitServerContractTests).</Description>
+    <!-- The xunit metapackage (pulled for the shipped GitServerContractTests kit)
+         flips IsTestProject to true, which makes `dotnet test <sln>` try to run this
+         LIBRARY as a test assembly and crash the testhost. This package ships test
+         utilities; it is not a test project. -->
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
