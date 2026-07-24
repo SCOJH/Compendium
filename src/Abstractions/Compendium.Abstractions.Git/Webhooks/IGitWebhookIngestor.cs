@@ -85,11 +85,16 @@ public abstract record GitWebhookEvent
     /// <param name="Number">The pull request number.</param>
     /// <param name="SourceReference">The source branch.</param>
     /// <param name="TargetReference">The target branch.</param>
+    /// <param name="SourceHeadSha">
+    /// The head commit SHA of the source branch, when the provider reports it —
+    /// CI/CD consumers need it to build or deploy the exact proposed revision.
+    /// </param>
     public sealed record PullRequestChanged(
         string Action,
         int Number,
         string SourceReference,
-        string TargetReference) : GitWebhookEvent;
+        string TargetReference,
+        string? SourceHeadSha = null) : GitWebhookEvent;
 
     /// <summary>
     /// A pipeline run reached a terminal state.

@@ -101,10 +101,12 @@ internal sealed class GitHubWebhookIngestor : IGitWebhookIngestor
         var pr = GetProperty(root, "pull_request");
         var action = GetString(root, "action") ?? string.Empty;
         var number = GetInt(root, "number") ?? GetInt(pr, "number") ?? 0;
-        var source = GetString(GetProperty(pr, "head"), "ref") ?? string.Empty;
+        var head = GetProperty(pr, "head");
+        var source = GetString(head, "ref") ?? string.Empty;
         var targetRef = GetString(GetProperty(pr, "base"), "ref") ?? string.Empty;
+        var headSha = GetString(head, "sha");
 
-        return new GitWebhookEvent.PullRequestChanged(action, number, source, targetRef)
+        return new GitWebhookEvent.PullRequestChanged(action, number, source, targetRef, headSha)
         {
             DeliveryId = deliveryId,
             Repository = repository,
