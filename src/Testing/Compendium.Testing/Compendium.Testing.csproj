@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Core\Compendium.Core\Compendium.Core.csproj" />
     <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions\Compendium.Abstractions.csproj" />
     <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Git\Compendium.Abstractions.Git.csproj" />
+    <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Secrets\Compendium.Abstractions.Secrets.csproj" />
     <ProjectReference Include="..\..\Application\Compendium.Application\Compendium.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Compendium.Infrastructure\Compendium.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Multitenancy\Compendium.Multitenancy\Compendium.Multitenancy.csproj" />
