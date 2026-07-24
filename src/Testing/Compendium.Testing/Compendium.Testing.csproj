@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Compendium.Core\Compendium.Core.csproj" />
     <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Abstractions\Compendium.Abstractions.Git\Compendium.Abstractions.Git.csproj" />
     <ProjectReference Include="..\..\Application\Compendium.Application\Compendium.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Compendium.Infrastructure\Compendium.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Multitenancy\Compendium.Multitenancy\Compendium.Multitenancy.csproj" />
@@ -17,6 +18,11 @@
 
   <ItemGroup>
     <PackageReference Include="xunit.abstractions" />
+    <!-- Git contract-test kit (GitServerContractTests): [SkippableFact] per declared capability,
+         FluentAssertions for house-style assertions in inheriting adapter test suites. -->
+    <PackageReference Include="xunit" />
+    <PackageReference Include="Xunit.SkippableFact" />
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Testcontainers" />
