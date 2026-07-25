@@ -74,8 +74,8 @@
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
     <!-- Base Testcontainers package used by Compendium.Testing fixtures. The
          provider-specific Testcontainers.PostgreSql/Redis pins moved to the per-adapter repos. -->
-    <PackageVersion Include="Testcontainers" Version="4.11.0" />
-    <PackageVersion Include="Testcontainers.K3s" Version="4.11.0" />
+    <PackageVersion Include="Testcontainers" Version="4.13.0" />
+    <PackageVersion Include="Testcontainers.K3s" Version="4.13.0" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
