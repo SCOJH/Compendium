@@ -1,0 +1,28 @@
+name: agent · réparer la CI
+
+# Appelant de la boucle d'agents. Le workflow réel vit dans
+# `sassy-solutions/Nexus/.github/workflows/agent-fix.yml` ; ici on ne fait que
+# l'appeler avec l'écosystème et les profils de permissions de CE dépôt.
+# Référence : `docs/operations/boucle-agents.md` §4 dans Nexus.
+
+# `workflows:` cite le `name:` du workflow, jamais son nom de fichier — un
+# `workflow_run` qui cite le fichier ne se déclenche jamais, en silence.
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+jobs:
+  reparer:
+    uses: sassy-solutions/Nexus/.github/workflows/agent-fix.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+    with:
+      runner: dotnet
+      ecosysteme: dotnet
+      task: ${{ inputs.task || github.event.client_payload.task }}
+      model: ${{ inputs.model || github.event.client_payload.model }}
+    secrets: inherit

@@ -1,0 +1,29 @@
+name: agent · phases de fin
+
+# Appelant de la boucle d'agents. Le workflow réel vit dans
+# `sassy-solutions/Nexus/.github/workflows/agent-phase.yml` ; ici on ne fait que
+# l'appeler avec l'écosystème et les profils de permissions de CE dépôt.
+# Référence : `docs/operations/boucle-agents.md` §4 dans Nexus.
+
+# Les deux jobs du workflow appelé lisent tous les deux un événement
+# `pull_request` : `merged` sur une branche `agent/*`, `deployed` sur une branche
+# `deploy/live-*`. Le `workflow_run` que le fichier d'origine déclare encore
+# n'est lu par aucun job — inutile de le reproduire.
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  phases:
+    uses: sassy-solutions/Nexus/.github/workflows/agent-phase.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+    with:
+      runner: dotnet
+      ecosysteme: dotnet
+      task: ${{ inputs.task || github.event.client_payload.task }}
+      model: ${{ inputs.model || github.event.client_payload.model }}
+    secrets: inherit

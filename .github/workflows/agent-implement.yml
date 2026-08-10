@@ -1,0 +1,39 @@
+name: agent · implémenter
+
+# Appelant de la boucle d'agents. Le workflow réel vit dans
+# `sassy-solutions/Nexus/.github/workflows/agent-implement.yml` ; ici on ne fait que
+# l'appeler avec l'écosystème et les profils de permissions de CE dépôt.
+# Référence : `docs/operations/boucle-agents.md` §4 dans Nexus.
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Identifiant du ticket"
+        required: true
+      model:
+        description: "Modèle"
+        required: false
+        default: opus
+      turns:
+        description: "Budget de tours"
+        required: false
+        default: "150"
+  repository_dispatch:
+    types: [agent-implement]
+
+jobs:
+  implementer:
+    uses: sassy-solutions/Nexus/.github/workflows/agent-implement.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+    with:
+      runner: dotnet
+      ecosysteme: dotnet
+      task: ${{ inputs.task || github.event.client_payload.task }}
+      model: ${{ inputs.model || github.event.client_payload.model }}
+      turns: ${{ inputs.turns || github.event.client_payload.turns }}
+    secrets: inherit

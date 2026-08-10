@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet build:*)",
+      "Write(docs/analysis/**)",
+      "Edit(docs/analysis/**)",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(wc:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Write(**)",
+      "Edit(**)"
+    ],
+    "deny": [
+      "Bash(git commit:*)",
+      "Bash(git add:*)",
+      "Bash(terraform:*)",
+      "Bash(kubectl:*)",
+      "Bash(helm:*)",
+      "Bash(argocd:*)",
+      "Bash(scw:*)",
+      "Bash(aws:*)",
+      "Bash(docker push:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh workflow:*)",
+      "Bash(git push:*)",
+      "Edit(.github/workflows/**)",
+      "Read(./.env)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.config/scw/**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/kubeconfig*)"
+    ]
+  }
+}

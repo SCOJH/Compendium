@@ -1,0 +1,33 @@
+name: agent · répondre aux relectures
+
+# Appelant de la boucle d'agents. Le workflow réel vit dans
+# `sassy-solutions/Nexus/.github/workflows/agent-review.yml` ; ici on ne fait que
+# l'appeler avec l'écosystème et les profils de permissions de CE dépôt.
+# Référence : `docs/operations/boucle-agents.md` §4 dans Nexus.
+
+on:
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+  # agent-approve relance ici quand il conclut qu'un commentaire n'est pas une
+  # approbation mais une remarque à traiter.
+  repository_dispatch:
+    types: [agent-review]
+
+jobs:
+  repondre:
+    uses: sassy-solutions/Nexus/.github/workflows/agent-review.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: read
+    with:
+      runner: dotnet
+      ecosysteme: dotnet
+      task: ${{ inputs.task || github.event.client_payload.task }}
+      model: ${{ inputs.model || github.event.client_payload.model }}
+    secrets: inherit
