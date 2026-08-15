@@ -91,7 +91,7 @@ jobs:
         run: docfx build docs/docfx.json
 
       - name: Upload site artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs-site
           path: docs/_site/
@@ -103,7 +103,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Download site artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: docs-site
           path: site/
