@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Compendium.Abstractions.Geo</AssemblyName>
+    <RootNamespace>Compendium.Abstractions.Geo</RootNamespace>
+    <PackageId>Compendium.Abstractions.Geo</PackageId>
+    <Description>Geospatial abstractions for Compendium Framework: provider-agnostic ports for geocoding (address ↔ coordinates) and route matrices (real road distances + durations between origins and destinations). Adapters target Google Maps Platform, Mapbox, OpenRouteService, etc.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Compendium.Abstractions\Compendium.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Compendium.Abstractions.Geo.Tests" />
+  </ItemGroup>
+
+</Project>
