@@ -13,7 +13,7 @@ Thanks for your interest in Compendium! This document explains how to work on th
 ### Build and test
 
 ```bash
-git clone https://github.com/sassy-solutions/compendium.git
+git clone https://github.com/SCOJH/Compendium.git
 cd compendium
 dotnet restore Compendium.sln
 dotnet build Compendium.sln --configuration Release
@@ -74,7 +74,7 @@ Releases are automated via GitHub Actions on tag push: see `.github/workflows/re
 
 ## Reporting bugs / feature requests
 
-Open an issue at [sassy-solutions/compendium/issues](https://github.com/sassy-solutions/compendium/issues).
+Open an issue at [SCOJH/Compendium/issues](https://github.com/SCOJH/Compendium/issues).
 
 For security vulnerabilities, please use private disclosure via GitHub Security Advisories.
 
