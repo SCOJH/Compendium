@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/sassy-solutions/compendium
+    repoURL: https://github.com/SCOJH/Compendium
     targetRevision: main
     path: deploy/sandbox/helm
     helm:
