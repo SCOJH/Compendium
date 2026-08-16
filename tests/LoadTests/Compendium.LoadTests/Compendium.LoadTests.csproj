@@ -12,7 +12,11 @@
   <ItemGroup>
     <PackageReference Include="NBomber" />
     <PackageReference Include="NBomber.Http" />
-  </ItemGroup>
+      <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../../src/Abstractions/Compendium.Abstractions/Compendium.Abstractions.csproj" />

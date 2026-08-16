@@ -18,7 +18,11 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="6.0.2" />
   <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.1" />
-  </ItemGroup>
+      <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../../src/Core/Compendium.Core/Compendium.Core.csproj" />
