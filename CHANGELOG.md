@@ -247,8 +247,8 @@ First public preview release of Compendium, extracted from the
 - Git history preserved from the originating Nexus monorepo via `git filter-repo`.
 - Full MIT license.
 
-[Unreleased]: https://github.com/sassy-solutions/compendium/compare/v1.0.0-preview.4...HEAD
-[1.0.0-preview.4]: https://github.com/sassy-solutions/compendium/releases/tag/v1.0.0-preview.4
-[1.0.0-preview.3]: https://github.com/sassy-solutions/compendium/releases/tag/v1.0.0-preview.3
-[1.0.0-preview.2]: https://github.com/sassy-solutions/compendium/releases/tag/v1.0.0-preview.2
-[1.0.0-preview.1]: https://github.com/sassy-solutions/compendium/releases/tag/v1.0.0-preview.1
+[Unreleased]: https://github.com/SCOJH/Compendium/compare/v1.0.0-preview.4...HEAD
+[1.0.0-preview.4]: https://github.com/SCOJH/Compendium/releases/tag/v1.0.0-preview.4
+[1.0.0-preview.3]: https://github.com/SCOJH/Compendium/releases/tag/v1.0.0-preview.3
+[1.0.0-preview.2]: https://github.com/SCOJH/Compendium/releases/tag/v1.0.0-preview.2
+[1.0.0-preview.1]: https://github.com/SCOJH/Compendium/releases/tag/v1.0.0-preview.1

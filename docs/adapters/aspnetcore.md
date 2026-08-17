@@ -27,7 +27,7 @@ app.UseMiddleware<TenantValidationMiddleware>();
 app.Run();
 ```
 
-`TenantValidationMiddlewareOptions` (see [`TenantValidationMiddleware.cs`](https://github.com/sassy-solutions/compendium/blob/main/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs)):
+`TenantValidationMiddlewareOptions` (see [`TenantValidationMiddleware.cs`](https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs)):
 
 | Option | Default | Description |
 |---|---|---|

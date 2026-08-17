@@ -2,7 +2,7 @@
 
 This page walks you through building a tiny event-sourced service with Compendium: prerequisites, install, define an aggregate, wire DI, dispatch a command, and read a projection. Plan ~10 minutes; longer if it's your first event-sourced .NET app.
 
-If you'd rather read working code, jump straight to [`samples/01-QuickStart-OrderAggregate`](https://github.com/sassy-solutions/compendium/tree/main/samples/01-QuickStart-OrderAggregate). Everything below is taken from that sample.
+If you'd rather read working code, jump straight to [`samples/01-QuickStart-OrderAggregate`](https://github.com/SCOJH/Compendium/tree/main/samples/01-QuickStart-OrderAggregate). Everything below is taken from that sample.
 
 ## 1. Prerequisites
 
@@ -205,7 +205,7 @@ Console.WriteLine(summary.Value);
 
 - **[Concepts](concepts/event-sourcing.md)** — the *why* behind aggregates, projections, and the result pattern.
 - **[Adapters](adapters/postgresql.md)** — wire a real event store, multi-tenancy, AI provider, billing, or auth.
-- **[Samples](https://github.com/sassy-solutions/compendium/tree/main/samples)** — three runnable projects:
+- **[Samples](https://github.com/SCOJH/Compendium/tree/main/samples)** — three runnable projects:
   - `01-QuickStart-OrderAggregate` — the code on this page, in a single file you can `dotnet run`.
   - `02-MultiTenant-WithPostgres` — same model against a real Postgres event store, scoped per tenant.
   - `03-AI-WithOpenRouter` — Compendium's provider-agnostic `IAIProvider` against OpenRouter (with offline fallback).

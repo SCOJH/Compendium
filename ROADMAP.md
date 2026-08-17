@@ -55,8 +55,8 @@ We say no often, and we say it on purpose. The following are **not** planned, in
 
 ## How to influence the roadmap
 
-- **Open a Discussion** under the [Roadmap](https://github.com/sassy-solutions/compendium/discussions/categories/roadmap) category (or under `Ideas` if Roadmap doesn't exist yet).
-- **Vote with 👍** on issues tagged [`roadmap-input`](https://github.com/sassy-solutions/compendium/issues?q=is%3Aissue+label%3Aroadmap-input).
+- **Open a Discussion** under the [Roadmap](https://github.com/SCOJH/Compendium/discussions/categories/roadmap) category (or under `Ideas` if Roadmap doesn't exist yet).
+- **Vote with 👍** on issues tagged [`roadmap-input`](https://github.com/SCOJH/Compendium/issues?q=is%3Aissue+label%3Aroadmap-input).
 - **Contribute** — see [CONTRIBUTING.md](CONTRIBUTING.md). Roadmap items are open to community implementation; coordinate via the relevant Discussion or issue first.
 
 ## Past releases
