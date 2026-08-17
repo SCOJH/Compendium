@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/multi-tenancy.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/multi-tenancy.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -98,7 +98,7 @@
 <li>A claim in the JWT (<code>tenant_id</code>, <code>org_id</code>, or in our case <code>urn:zitadel:iam:org:id</code>)</li>
 </ul>
 <p>When more than one source is present, Compendium <strong>requires them to agree</strong>. A request with <code>X-Tenant-ID: acme</code> and a JWT for tenant <code>globex</code> is rejected outright — that combination usually means a misconfigured proxy or a confused-deputy attack.</p>
-<p>The middleware that enforces this lives in <code>Compendium.Adapters.AspNetCore</code>. From <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs"><code>TenantValidationMiddleware.cs</code></a>:</p>
+<p>The middleware that enforces this lives in <code>Compendium.Adapters.AspNetCore</code>. From <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs"><code>TenantValidationMiddleware.cs</code></a>:</p>
 <pre><code class="lang-csharp">// Extract tenant identifiers from all sources
 var sources = ExtractTenantSources(context);
 
@@ -116,7 +116,7 @@ if (validationResult.IsFailure)
     return;
 }
 </code></pre>
-<p>The configurable bits (which header, which JWT claims, which paths to skip) live on <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs#L226"><code>TenantValidationMiddlewareOptions</code></a>.</p>
+<p>The configurable bits (which header, which JWT claims, which paths to skip) live on <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs#L226"><code>TenantValidationMiddlewareOptions</code></a>.</p>
 <h2 id="tenantcontext-is-per-request-scoped-di">TenantContext is per-request, scoped DI</h2>
 <p>Once validated, the resolved tenant lives on a scoped <code>TenantContext</code>:</p>
 <pre><code>HTTP Request
@@ -168,13 +168,13 @@ if (validationResult.IsFailure)
 <li><a href="hexagonal-architecture.html">Hexagonal Architecture</a> — <code>TenantContext</code> is itself a port, with concrete implementations in adapters</li>
 <li><a href="event-sourcing.html">Event Sourcing</a> — events carry <code>AggregateId</code>; tenancy is enforced by the store, not by the event</li>
 <li><a href="../adr/0004-multi-tenancy-strategy.html">ADR 0004</a> — the decision and trade-offs</li>
-<li><a href="https://github.com/sassy-solutions/compendium/tree/main/samples/02-MultiTenant-WithPostgres"><code>samples/02-MultiTenant-WithPostgres</code></a> — runnable two-tenant example</li>
+<li><a href="https://github.com/SCOJH/Compendium/tree/main/samples/02-MultiTenant-WithPostgres"><code>samples/02-MultiTenant-WithPostgres</code></a> — runnable two-tenant example</li>
 </ul>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/multi-tenancy.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/multi-tenancy.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
@@ -191,7 +191,7 @@ if (validationResult.IsFailure)
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
         </div>
       </div>
     </footer>

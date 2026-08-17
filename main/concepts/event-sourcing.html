@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/event-sourcing.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/event-sourcing.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -118,7 +118,7 @@
 <p>The aggregate decides <em>whether</em> an action is allowed and emits the events describing what happened. The event store guarantees durable, ordered persistence. Projections rebuild the read shapes the rest of the application needs.</p>
 <h2 id="the-primitives-compendium-gives-you">The primitives Compendium gives you</h2>
 <h3 id="idomainevent"><code>IDomainEvent</code></h3>
-<p>A small, mandatory contract for everything written to the log. From <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs"><code>src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs</code></a>:</p>
+<p>A small, mandatory contract for everything written to the log. From <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs"><code>src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs</code></a>:</p>
 <pre><code class="lang-csharp">public interface IDomainEvent
 {
     Guid EventId { get; }
@@ -131,7 +131,7 @@
 </code></pre>
 <p>Every event carries enough metadata to be replayed deterministically and to resolve concurrency conflicts via <code>AggregateVersion</code>.</p>
 <h3 id="aggregateroottid"><code>AggregateRoot&lt;TId&gt;</code></h3>
-<p>The write model base class. From <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs"><code>src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs</code></a>:</p>
+<p>The write model base class. From <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs"><code>src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs</code></a>:</p>
 <pre><code class="lang-csharp">public abstract class AggregateRoot&lt;TId&gt; : Entity&lt;TId&gt;, IDisposable
     where TId : notnull
 {
@@ -145,7 +145,7 @@
 </code></pre>
 <p>Aggregates raise events when business rules are satisfied and never write to a database directly. The infrastructure layer is responsible for persisting <code>DomainEvents</code> after a successful command.</p>
 <h3 id="projections">Projections</h3>
-<p>Projections are the read side. They consume events from the store and write to whatever shape your queries need (a SQL table, a Redis key, an in-memory dictionary). Compendium ships projection scaffolding under <code>Compendium.Infrastructure.Projections</code> — see <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Infrastructure/Compendium.Infrastructure/Projections/README.md"><code>src/Infrastructure/Compendium.Infrastructure/Projections/README.md</code></a> for details.</p>
+<p>Projections are the read side. They consume events from the store and write to whatever shape your queries need (a SQL table, a Redis key, an in-memory dictionary). Compendium ships projection scaffolding under <code>Compendium.Infrastructure.Projections</code> — see <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Infrastructure/Compendium.Infrastructure/Projections/README.md"><code>src/Infrastructure/Compendium.Infrastructure/Projections/README.md</code></a> for details.</p>
 <p>A projection should be <strong>idempotent</strong>: replaying the same event twice must not corrupt the read model. This is what makes safe rebuilds, retries, and disaster recovery possible.</p>
 <h2 id="versioning">Versioning</h2>
 <p>Real systems evolve. The <code>EventVersion</code> field on <code>IDomainEvent</code> lets you ship breaking event-schema changes without rewriting history:</p>
@@ -154,7 +154,7 @@
 <li>Old events stay on disk at their original version.</li>
 <li><code>IEventUpcaster</code> implementations transform old versions into the latest shape <em>at read time</em>.</li>
 </ul>
-<p>See <a href="https://github.com/sassy-solutions/compendium/tree/ca25347/src/Core/Compendium.Core/EventSourcing"><code>src/Core/Compendium.Core/EventSourcing/</code></a> for the upcaster contracts.</p>
+<p>See <a href="https://github.com/SCOJH/Compendium/tree/ca25347/src/Core/Compendium.Core/EventSourcing"><code>src/Core/Compendium.Core/EventSourcing/</code></a> for the upcaster contracts.</p>
 <h2 id="snapshots">Snapshots</h2>
 <p>For aggregates with very long histories, replaying every event on every load is wasteful. Compendium supports periodic snapshots — capture the materialized aggregate state at version <em>N</em>, and only replay events after <em>N</em> on subsequent loads. This is opt-in: most aggregates do not need it.</p>
 <h2 id="where-to-go-next">Where to go next</h2>
@@ -163,13 +163,13 @@
 <li><a href="hexagonal-architecture.html">Hexagonal Architecture</a> — how aggregates stay decoupled from infrastructure</li>
 <li><a href="multi-tenancy.html">Multi-tenancy</a> — how events stay scoped to the right tenant</li>
 <li><a href="../adr/0005-event-sourcing-vs-state.html">ADR 0005 — Event sourcing over state-stored</a> — the decision and trade-offs</li>
-<li><a href="https://github.com/sassy-solutions/compendium/tree/main/samples/01-QuickStart-OrderAggregate"><code>samples/01-QuickStart-OrderAggregate</code></a> — a runnable in-memory example</li>
+<li><a href="https://github.com/SCOJH/Compendium/tree/main/samples/01-QuickStart-OrderAggregate"><code>samples/01-QuickStart-OrderAggregate</code></a> — a runnable in-memory example</li>
 </ul>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/event-sourcing.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/event-sourcing.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
@@ -186,7 +186,7 @@
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
         </div>
       </div>
     </footer>

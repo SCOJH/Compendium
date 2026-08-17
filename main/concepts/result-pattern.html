@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/result-pattern.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/result-pattern.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -100,7 +100,7 @@
 </ol>
 <p>The trade-off is verbosity: every fallible call now has an explicit branch. We accept that. For the long discussion, see <a href="../adr/0001-result-pattern.html">ADR 0001 — Result pattern over exceptions</a>.</p>
 <h2 id="the-shape">The shape</h2>
-<p>From <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs"><code>src/Core/Compendium.Core/Results/Result.cs</code></a>:</p>
+<p>From <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs"><code>src/Core/Compendium.Core/Results/Result.cs</code></a>:</p>
 <pre><code class="lang-csharp">public class Result
 {
     public bool IsSuccess { get; }
@@ -115,7 +115,7 @@
 </code></pre>
 <p><code>Result&lt;T&gt;</code> adds <code>Value</code> (only safe to read when <code>IsSuccess</code>).</p>
 <h2 id="errors-are-values">Errors are values</h2>
-<p>From <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/Error.cs"><code>src/Core/Compendium.Core/Results/Error.cs</code></a>:</p>
+<p>From <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/Error.cs"><code>src/Core/Compendium.Core/Results/Error.cs</code></a>:</p>
 <pre><code class="lang-csharp">public sealed class Error : ValueObject
 {
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.None);
@@ -146,7 +146,7 @@ if (orderResult.IsFailure) return orderResult.Error;
 
 return Result.Success();
 </code></pre>
-<p>For richer composition (<code>Map</code>, <code>Bind</code>, <code>Tap</code>, etc.) see <a href="https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/"><code>Result.Extensions.cs</code></a> — but use them sparingly. Loud explicit branching is usually clearer than a chain of monadic operators.</p>
+<p>For richer composition (<code>Map</code>, <code>Bind</code>, <code>Tap</code>, etc.) see <a href="https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/"><code>Result.Extensions.cs</code></a> — but use them sparingly. Loud explicit branching is usually clearer than a chain of monadic operators.</p>
 <h2 id="anti-patterns">Anti-patterns</h2>
 <p>A few mistakes to avoid:</p>
 <ul>
@@ -165,7 +165,7 @@ return Result.Success();
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/concepts/result-pattern.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/concepts/result-pattern.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
@@ -182,7 +182,7 @@ return Result.Success();
     <footer class="border-top text-secondary">
       <div class="container-xxl">
         <div class="flex-fill">
-          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
         </div>
       </div>
     </footer>
