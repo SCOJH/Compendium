@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class KubernetesSandboxOptions | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class KubernetesSandboxOptions | Compendium — .NET event-sourcing framework ">
+      
+      <meta name="description" content="Adapter-level defaults for . These are the values used when the per-run  does not override them, and the values that govern adapter behavior that is not represented on the neutral port (RBAC service account, resource limits, network policy, PVC).">
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/new/main/apiSpec/new?filename=Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions.md&amp;value=---%0Auid%3A%20Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions">
+
+
+
+  <h1 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions" class="text-break">
+Class KubernetesSandboxOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Compendium.html">Compendium</a>.<a class="xref" href="Compendium.Adapters.html">Adapters</a>.<a class="xref" href="Compendium.Adapters.Kubernetes.html">Kubernetes</a>.<a class="xref" href="Compendium.Adapters.Kubernetes.Sandbox.html">Sandbox</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Compendium.Adapters.Kubernetes.Sandbox.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Adapter-level defaults for <a class="xref" href="Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.html">KubernetesAgentSandbox</a>. These are
+the values used when the per-run <a class="xref" href="Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.html">SandboxOptions</a>
+does not override them, and the values that govern adapter behavior that is
+not represented on the neutral port (RBAC service account, resource limits,
+network policy, PVC).</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class KubernetesSandboxOptions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">KubernetesSandboxOptions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>All quantities are CPU/memory strings in the standard Kubernetes resource
+format (<code>500m</code>, <code>1Gi</code>, ...). Validation is deferred to the API
+server.</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_SectionName" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.SectionName">
+  SectionName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Configuration section name used with <code>IConfiguration.GetSection</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string SectionName = &quot;Compendium:CodingAgents:KubernetesSandbox&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ContainerName_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ContainerName*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ContainerName" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ContainerName">
+  ContainerName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the container name inside the pod. Used by <code>exec</code> calls.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ContainerName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_CpuLimit_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.CpuLimit*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_CpuLimit" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.CpuLimit">
+  CpuLimit
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the CPU limit for the sandbox container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string CpuLimit { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_CpuRequest_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.CpuRequest*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_CpuRequest" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.CpuRequest">
+  CpuRequest
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the CPU request for the sandbox container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string CpuRequest { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_DefaultCommandTimeout_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.DefaultCommandTimeout*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_DefaultCommandTimeout" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.DefaultCommandTimeout">
+  DefaultCommandTimeout
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the maximum wall-clock duration any single <code>exec</code> may
+run for before the adapter terminates the channel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan DefaultCommandTimeout { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_DeleteGracePeriodSeconds_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.DeleteGracePeriodSeconds*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_DeleteGracePeriodSeconds" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.DeleteGracePeriodSeconds">
+  DeleteGracePeriodSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the grace period passed to the API server when deleting the
+pod on dispose. Zero forces immediate deletion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int DeleteGracePeriodSeconds { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_Image_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.Image*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_Image" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.Image">
+  Image
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the OCI image to run inside the sandbox pod. Should be a
+pinned digest in production.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Image { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_KubeConfigPath_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.KubeConfigPath*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_KubeConfigPath" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.KubeConfigPath">
+  KubeConfigPath
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the kubeconfig path the client falls back to when the
+process is not running inside a Kubernetes cluster (e.g. local dev). Null
+means &quot;use in-cluster config, then default discovery&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? KubeConfigPath { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_MemoryLimit_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.MemoryLimit*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_MemoryLimit" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.MemoryLimit">
+  MemoryLimit
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the memory limit for the sandbox container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string MemoryLimit { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_MemoryRequest_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.MemoryRequest*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_MemoryRequest" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.MemoryRequest">
+  MemoryRequest
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the memory request for the sandbox container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string MemoryRequest { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_Namespace_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.Namespace*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_Namespace" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.Namespace">
+  Namespace
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the default namespace pods are provisioned in when the per-run
+<a class="xref" href="Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.html#Compendium_Abstractions_CodingAgents_Sandbox_SandboxOptions_Namespace">Namespace</a>
+is null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Namespace { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodAnnotations_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodAnnotations*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodAnnotations" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodAnnotations">
+  PodAnnotations
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets additional annotations applied to every pod created by this adapter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, string&gt;? PodAnnotations { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodLabels_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodLabels*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodLabels" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodLabels">
+  PodLabels
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets additional labels applied to every pod created by this adapter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, string&gt;? PodLabels { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodNamePrefix_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodNamePrefix*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodNamePrefix" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodNamePrefix">
+  PodNamePrefix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a prefix used for generated pod names. Pod names are derived as
+<code>{PodNamePrefix}-{shortGuid}</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PodNamePrefix { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodReadyTimeout_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodReadyTimeout*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_PodReadyTimeout" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.PodReadyTimeout">
+  PodReadyTimeout
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the maximum time the adapter waits for the pod to reach
+<code>Running</code> after creation, before failing <code>StartAsync</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan PodReadyTimeout { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ReadOnlyRootFilesystem_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ReadOnlyRootFilesystem*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ReadOnlyRootFilesystem" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ReadOnlyRootFilesystem">
+  ReadOnlyRootFilesystem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the root filesystem inside the
+container is read-only. Defaults to <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>; the writable
+workspace is mounted at <a class="xref" href="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.html#Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkingDirectory">WorkingDirectory</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReadOnlyRootFilesystem { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_RunAsGroup_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.RunAsGroup*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_RunAsGroup" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.RunAsGroup">
+  RunAsGroup
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the GID the container runs as.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long RunAsGroup { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_RunAsUser_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.RunAsUser*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_RunAsUser" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.RunAsUser">
+  RunAsUser
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the UID the container runs as (non-root). Defaults to
+<code>10001</code> to match the bundled <code>coding-agent-sandbox</code> image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long RunAsUser { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ServiceAccountName_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ServiceAccountName*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_ServiceAccountName" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.ServiceAccountName">
+  ServiceAccountName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the service account name pods run as. Should have RBAC scoped
+to only what the sandbox requires (typically no cluster permissions at all).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ServiceAccountName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkingDirectory_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkingDirectory*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkingDirectory" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkingDirectory">
+  WorkingDirectory
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the working directory inside the container the agent is rooted at.
+Overridable by <a class="xref" href="Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.html#Compendium_Abstractions_CodingAgents_Sandbox_SandboxOptions_WorkingDirectory">WorkingDirectory</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string WorkingDirectory { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkspaceStorageClassName_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkspaceStorageClassName*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkspaceStorageClassName" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkspaceStorageClassName">
+  WorkspaceStorageClassName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the storage class name backing the ephemeral PVC, when
+<a class="xref" href="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.html#Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkspaceStorageRequest">WorkspaceStorageRequest</a> is set. Null means &quot;cluster default&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? WorkspaceStorageClassName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkspaceStorageRequest_" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkspaceStorageRequest*"></a>
+
+  <h3 id="Compendium_Adapters_Kubernetes_Sandbox_KubernetesSandboxOptions_WorkspaceStorageRequest" data-uid="Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.WorkspaceStorageRequest">
+  WorkspaceStorageRequest
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the storage request for the ephemeral workspace volume. When
+null, an in-memory <code>emptyDir</code> backs the workspace; when set, an
+ephemeral generic PVC is used so the workspace survives container
+restarts within the pod's lifetime.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? WorkspaceStorageRequest { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Adapters/Compendium.Adapters.Kubernetes.Sandbox/KubernetesSandboxOptions.cs/#L22" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

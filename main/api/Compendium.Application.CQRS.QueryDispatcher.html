@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Application_CQRS_QueryDispatcher" data-uid="Compendium.Application.CQRS.QueryDispatcher" class="text-break">
-Class QueryDispatcher  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L29"><i class="bi bi-code-slash"></i></a>
+Class QueryDispatcher  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -161,7 +161,7 @@ to resolve query handlers and execute queries with proper error handling.</p>
 
   <h3 id="Compendium_Application_CQRS_QueryDispatcher__ctor_System_IServiceProvider_" data-uid="Compendium.Application.CQRS.QueryDispatcher.#ctor(System.IServiceProvider)">
   QueryDispatcher(IServiceProvider)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Application.CQRS.QueryDispatcher.html">QueryDispatcher</a> class.</p>
@@ -186,6 +186,12 @@ to resolve query handlers and execute queries with proper error handling.</p>
 
 
 
+  <h4 class="section" id="Compendium_Application_CQRS_QueryDispatcher__ctor_System_IServiceProvider__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>P0-02: The logger is resolved from <code class="paramref">serviceProvider</code> rather than injected
+directly so that the existing public single-parameter constructor remains binary- and
+source-compatible for downstream consumers. When the container has no logging configured
+(e.g. in lightweight unit tests) a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.abstractions.nulllogger-1">NullLogger&lt;T&gt;</a> is used as a safe fallback.</p>
+</div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
@@ -204,7 +210,7 @@ to resolve query handlers and execute queries with proper error handling.</p>
 
   <h3 id="Compendium_Application_CQRS_QueryDispatcher_DispatchAsync__2___0_System_Threading_CancellationToken_" data-uid="Compendium.Application.CQRS.QueryDispatcher.DispatchAsync``2(``0,System.Threading.CancellationToken)">
   DispatchAsync&lt;TQuery, TResult&gt;(TQuery, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L61"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Dispatches a query to retrieve data through its registered handler.</p>
@@ -255,7 +261,7 @@ to resolve query handlers and execute queries with proper error handling.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L29" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/QueryDispatcher.cs/#L31" class="edit-link">Edit this page</a>
         </div>
 
 

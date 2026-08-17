@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class NullGitServer | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class NullGitServer | Compendium — .NET event-sourcing framework ">
+      
+      <meta name="description" content="Fail-fast stub for hosts without a configured git server: every operation returns Git.NotConfigured and the capability matrix is empty. Register it in the unconfigured DI branch so a misconfigured deployment fails loudly per-request instead of throwing, and never with fake data.">
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/new/main/apiSpec/new?filename=Compendium_Abstractions_Git_Stubs_NullGitServer.md&amp;value=---%0Auid%3A%20Compendium.Abstractions.Git.Stubs.NullGitServer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer">
+
+
+
+  <h1 id="Compendium_Abstractions_Git_Stubs_NullGitServer" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer" class="text-break">
+Class NullGitServer  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Compendium.html">Compendium</a>.<a class="xref" href="Compendium.Abstractions.html">Abstractions</a>.<a class="xref" href="Compendium.Abstractions.Git.html">Git</a>.<a class="xref" href="Compendium.Abstractions.Git.Stubs.html">Stubs</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Compendium.Abstractions.Git.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Fail-fast stub for hosts without a configured git server: every operation
+returns <code>Git.NotConfigured</code> and the capability matrix is empty. Register
+it in the unconfigured DI branch so a misconfigured deployment fails loudly
+per-request instead of throwing, and never with fake data.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class NullGitServer : IGitServer, IGitCredentialBroker, IGitRepositoryService, IGitPipelineService, IGitCiConfigurationService, IGitEnvironmentService, IGitBranchPolicyService, IGitAccessControlService, IGitWebhookService, IGitWebhookIngestor, IGitNamespaceProvisioner</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">NullGitServer</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Compendium.Abstractions.Git.IGitServer.html">IGitServer</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html">IGitCredentialBroker</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Repositories.IGitRepositoryService.html">IGitRepositoryService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html">IGitPipelineService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.html">IGitCiConfigurationService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Environments.IGitEnvironmentService.html">IGitEnvironmentService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.html">IGitBranchPolicyService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.html">IGitAccessControlService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookService.html">IGitWebhookService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html">IGitWebhookIngestor</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.html">IGitNamespaceProvisioner</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ProviderName" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ProviderName">
+  ProviderName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The provider discriminator reported by the stub.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string ProviderName = &quot;null&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_AccessControl_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.AccessControl*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_AccessControl" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.AccessControl">
+  AccessControl
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the teams and repository access port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitAccessControlService AccessControl { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.html">IGitAccessControlService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_BranchPolicies_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.BranchPolicies*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_BranchPolicies" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.BranchPolicies">
+  BranchPolicies
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the branch protection policies port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitBranchPolicyService BranchPolicies { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.html">IGitBranchPolicyService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Capabilities_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Capabilities*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Capabilities" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Capabilities">
+  Capabilities
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the adapter's declared capability matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GitServerCapabilities Capabilities { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.html">GitServerCapabilities</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_CiConfiguration_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CiConfiguration*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_CiConfiguration" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CiConfiguration">
+  CiConfiguration
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the CI secrets/variables port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitCiConfigurationService CiConfiguration { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.html">IGitCiConfigurationService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Credentials_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Credentials*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Credentials" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Credentials">
+  Credentials
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the credential minting/validation/discovery port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitCredentialBroker Credentials { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html">IGitCredentialBroker</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Environments_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Environments*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Environments" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Environments">
+  Environments
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the deployment-environments port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitEnvironmentService Environments { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Environments.IGitEnvironmentService.html">IGitEnvironmentService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_NamespaceProvisioner_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.NamespaceProvisioner*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_NamespaceProvisioner" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.NamespaceProvisioner">
+  NamespaceProvisioner
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the optional namespace provisioning port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitNamespaceProvisioner NamespaceProvisioner { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.html">IGitNamespaceProvisioner</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Pipelines_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Pipelines*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Pipelines" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Pipelines">
+  Pipelines
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the CI pipeline port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitPipelineService Pipelines { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html">IGitPipelineService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Provider_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Provider*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Provider" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Provider">
+  Provider
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the provider identifier used for dispatch (e.g. <code>&quot;github&quot;</code>,
+<code>&quot;gitlab&quot;</code>, <code>&quot;gitea&quot;</code>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Provider { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Repositories_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Repositories*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Repositories" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Repositories">
+  Repositories
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the repository lifecycle and read port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitRepositoryService Repositories { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Repositories.IGitRepositoryService.html">IGitRepositoryService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_WebhookIngestor_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.WebhookIngestor*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_WebhookIngestor" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.WebhookIngestor">
+  WebhookIngestor
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the inbound webhook verification/parsing port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitWebhookIngestor WebhookIngestor { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html">IGitWebhookIngestor</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Webhooks_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Webhooks*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Webhooks" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Webhooks">
+  Webhooks
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the outgoing webhook subscription port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitWebhookService Webhooks { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookService.html">IGitWebhookService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_AddTeamMemberAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.AddTeamMemberAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_AddTeamMemberAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_String_System_String_Compendium_Abstractions_Git_AccessControl_GitTeamRole_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.AddTeamMemberAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.String,System.String,Compendium.Abstractions.Git.AccessControl.GitTeamRole,System.Threading.CancellationToken)">
+  AddTeamMemberAsync(GitConnection, string, string, string, GitTeamRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a user to a team (or updates their role in it).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; AddTeamMemberAsync(GitConnection connection, string @namespace, string teamSlug, string username, GitTeamRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>teamSlug</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitTeamRole.html">GitTeamRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ApplyAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ApplyAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ApplyAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Protection_GitBranchPolicyRequest_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ApplyAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest,System.Threading.CancellationToken)">
+  ApplyAsync(GitConnection, GitRepositoryRef, GitBranchPolicyRequest, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies a protection policy. When a policy with the same
+<a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.html#Compendium_Abstractions_Git_Protection_GitBranchPolicyRequest_Pattern">Pattern</a> already exists, it is
+updated (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitBranchPolicy&gt;&gt; ApplyAsync(GitConnection connection, GitRepositoryRef repository, GitBranchPolicyRequest request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.html">GitBranchPolicyRequest</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicy.html">GitBranchPolicy</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateFromTemplateAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateFromTemplateAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateFromTemplateAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_CreateRepositoryFromTemplate_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateFromTemplateAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate,System.Threading.CancellationToken)">
+  CreateFromTemplateAsync(GitConnection, CreateRepositoryFromTemplate, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a repository from a template repository. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_RepositoryFromTemplate">RepositoryFromTemplate</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRepository&gt;&gt; CreateFromTemplateAsync(GitConnection connection, CreateRepositoryFromTemplate request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate.html">CreateRepositoryFromTemplate</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateNamespaceAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateNamespaceAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateNamespaceAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Provisioning_CreateGitNamespace_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateNamespaceAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Provisioning.CreateGitNamespace,System.Threading.CancellationToken)">
+  CreateNamespaceAsync(GitConnection, CreateGitNamespace, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a namespace. Fails with <code>Git.Conflict</code> when the slug is
+already taken.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitNamespace&gt;&gt; CreateNamespaceAsync(GitConnection connection, CreateGitNamespace request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Provisioning.CreateGitNamespace.html">CreateGitNamespace</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Provisioning.GitNamespace.html">GitNamespace</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateReleaseAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateReleaseAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateReleaseAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Repositories_CreateGitRelease_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateReleaseAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Repositories.CreateGitRelease,System.Threading.CancellationToken)">
+  CreateReleaseAsync(GitConnection, GitRepositoryRef, CreateGitRelease, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Publishes a release. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_TagsAndReleases">TagsAndReleases</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRelease&gt;&gt; CreateReleaseAsync(GitConnection connection, GitRepositoryRef repository, CreateGitRelease request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.CreateGitRelease.html">CreateGitRelease</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRelease.html">GitRelease</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateTagAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateTagAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_CreateTagAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.CreateTagAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.String,System.Threading.CancellationToken)">
+  CreateTagAsync(GitConnection, GitRepositoryRef, string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a tag. When <code class="paramref">commitSha</code> is null, tags the head
+of the default branch. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_TagsAndReleases">TagsAndReleases</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitTag&gt;&gt; CreateTagAsync(GitConnection connection, GitRepositoryRef repository, string tagName, string? commitSha = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>tagName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>commitSha</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitTag.html">GitTag</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  DeleteAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes the environment. Deleting an absent environment succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteAsync(GitConnection connection, GitRepositoryRef repository, string environmentName, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>environmentName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Webhooks_GitWebhookTarget_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Webhooks.GitWebhookTarget,System.String,System.Threading.CancellationToken)">
+  DeleteAsync(GitConnection, GitWebhookTarget, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L280"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a subscription by identifier. Deleting an absent subscription
+succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteAsync(GitConnection connection, GitWebhookTarget target, string subscriptionId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>target</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.html">GitWebhookTarget</a></dt>
+    <dd></dd>
+    <dt><code>subscriptionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteSecretAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteSecretAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteSecretAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteSecretAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteSecretAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI secret at <code class="paramref">scope</code>. Deleting an absent
+secret succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteSecretAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteVariableAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteVariableAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_DeleteVariableAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.DeleteVariableAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteVariableAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI variable at <code class="paramref">scope</code>. Deleting an absent
+variable succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteVariableAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Environments_EnsureGitEnvironment_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Environments.EnsureGitEnvironment,System.Threading.CancellationToken)">
+  EnsureAsync(GitConnection, GitRepositoryRef, EnsureGitEnvironment, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the environment when absent, updates it otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitDeploymentEnvironment&gt;&gt; EnsureAsync(GitConnection connection, GitRepositoryRef repository, EnsureGitEnvironment request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Environments.EnsureGitEnvironment.html">EnsureGitEnvironment</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.html">GitDeploymentEnvironment</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Webhooks_GitWebhookTarget_Compendium_Abstractions_Git_Webhooks_EnsureGitWebhook_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Webhooks.GitWebhookTarget,Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook,System.Threading.CancellationToken)">
+  EnsureAsync(GitConnection, GitWebhookTarget, EnsureGitWebhook, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the subscription when absent (matched by URL), updates it
+otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitWebhookSubscription&gt;&gt; EnsureAsync(GitConnection connection, GitWebhookTarget target, EnsureGitWebhook request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>target</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.html">GitWebhookTarget</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook.html">EnsureGitWebhook</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription.html">GitWebhookSubscription</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureTeamAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureTeamAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_EnsureTeamAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_Compendium_Abstractions_Git_AccessControl_EnsureGitTeam_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.EnsureTeamAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,Compendium.Abstractions.Git.AccessControl.EnsureGitTeam,System.Threading.CancellationToken)">
+  EnsureTeamAsync(GitConnection, string, EnsureGitTeam, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the team when absent, updates it otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitTeam&gt;&gt; EnsureTeamAsync(GitConnection connection, string @namespace, EnsureGitTeam request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.EnsureGitTeam.html">EnsureGitTeam</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitTeam.html">GitTeam</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_FileExistsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.FileExistsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_FileExistsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.FileExistsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.String,System.Threading.CancellationToken)">
+  FileExistsAsync(GitConnection, GitRepositoryRef, string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether <code class="paramref">path</code> exists in the repository at
+<code class="paramref">gitRef</code> (default branch when null). Used e.g. to
+verify a repository finished bootstrapping before tagging a release.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;bool&gt;&gt; FileExistsAsync(GitConnection connection, GitRepositoryRef repository, string path, string? gitRef = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>gitRef</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_GetAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.GetAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_GetAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.GetAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  GetAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a repository by reference. Fails with <code>Git.RepositoryNotFound</code>
+when absent or not visible to the credential.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRepository&gt;&gt; GetAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_GetRunAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.GetRunAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_GetRunAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.GetRunAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  GetRunAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a single pipeline run by identifier. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineStatus">PipelineStatus</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitPipelineRun&gt;&gt; GetRunAsync(GitConnection connection, GitRepositoryRef repository, string runId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>runId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRun.html">GitPipelineRun</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAppInstallationsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAppInstallationsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAppInstallationsAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAppInstallationsAsync(System.String,System.Threading.CancellationToken)">
+  ListAppInstallationsAsync(string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: lists every installation of the platform app
+across all accounts. Adapters page through the provider API internally
+and return the full list. Used by reconciliation jobs to heal missed
+webhooks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitInstallationInfo&gt;&gt;&gt; ListAppInstallationsAsync(string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  ListAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repository's deployment environments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitDeploymentEnvironment&gt;&gt;&gt; ListAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.html">GitDeploymentEnvironment</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.Threading.CancellationToken)">
+  ListAsync(GitConnection, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repositories of <code class="paramref">namespace</code> visible to the
+connection's credential.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitRepository&gt;&gt;&gt; ListAsync(GitConnection connection, string @namespace, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListBranchesAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListBranchesAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListBranchesAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListBranchesAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  ListBranchesAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repository's branches.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitBranch&gt;&gt;&gt; ListBranchesAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitBranch.html">GitBranch</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListCommitsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListCommitsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListCommitsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Int32_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListCommitsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Int32,System.Threading.CancellationToken)">
+  ListCommitsAsync(GitConnection, GitRepositoryRef, string?, int, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists recent commits, newest first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitCommit&gt;&gt;&gt; ListCommitsAsync(GitConnection connection, GitRepositoryRef repository, string? reference, int limit, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd><p>The connection to operate with.</p>
+</dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd><p>The repository to read.</p>
+</dd>
+    <dt><code>reference</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Optional branch/ref/SHA to list from; the default branch when null or empty.</p>
+</dd>
+    <dt><code>limit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>Maximum number of commits returned (a single page).</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitCommit.html">GitCommit</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListRunsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListRunsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListRunsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_ListGitPipelineRuns_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListRunsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns,System.Threading.CancellationToken)">
+  ListRunsAsync(GitConnection, GitRepositoryRef, ListGitPipelineRuns, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists pipeline runs, newest first. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineStatus">PipelineStatus</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitPipelineRun&gt;&gt;&gt; ListRunsAsync(GitConnection connection, GitRepositoryRef repository, ListGitPipelineRuns query, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>query</code> <a class="xref" href="Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns.html">ListGitPipelineRuns</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRun.html">GitPipelineRun</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListTagsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListTagsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ListTagsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ListTagsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  ListTagsAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repository's tags.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitTag&gt;&gt;&gt; ListTagsAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitTag.html">GitTag</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_MintAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.MintAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_MintAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Connections_GitAccessTokenScope_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.MintAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Connections.GitAccessTokenScope,System.Threading.CancellationToken)">
+  MintAsync(GitConnection, GitAccessTokenScope?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Mints a short-lived, ready-to-use token for the connection, optionally
+narrowed by <code class="paramref">scope</code>. Adapters cache minted tokens per
+credential identity and re-mint before expiry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitAccessToken&gt;&gt; MintAsync(GitConnection connection, GitAccessTokenScope? scope = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitAccessTokenScope.html">GitAccessTokenScope</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitAccessToken.html">GitAccessToken</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_Parse_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Parse*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_Parse_Compendium_Abstractions_Git_Webhooks_GitWebhookDelivery_System_String_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.Parse(Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery,System.String)">
+  Parse(GitWebhookDelivery, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Verifies the delivery signature against <code class="paramref">secret</code>
+(fail-closed: missing or invalid signatures return
+<code>Git.WebhookSignatureInvalid</code>) and parses the payload. Event types
+the platform does not consume parse to
+<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported.html">GitWebhookEvent.Unsupported</a> — callers acknowledge those
+with a 2xx and never retry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Result&lt;GitWebhookEvent&gt; Parse(GitWebhookDelivery delivery, string secret)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>delivery</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.html">GitWebhookDelivery</a></dt>
+    <dd></dd>
+    <dt><code>secret</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.html">GitWebhookEvent</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_RemoveAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.RemoveAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_RemoveAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.RemoveAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  RemoveAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a policy by identifier. Removing an absent policy succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; RemoveAsync(GitConnection connection, GitRepositoryRef repository, string policyId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>policyId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_RemoveUserFromRepositoryAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.RemoveUserFromRepositoryAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_RemoveUserFromRepositoryAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.RemoveUserFromRepositoryAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  RemoveUserFromRepositoryAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a user's direct access to a repository. Removing absent access
+succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; RemoveUserFromRepositoryAsync(GitConnection connection, GitRepositoryRef repository, string username, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ResolveAppInstallationAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ResolveAppInstallationAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ResolveAppInstallationAsync_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ResolveAppInstallationAsync(System.String,System.String,System.Threading.CancellationToken)">
+  ResolveAppInstallationAsync(string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: discovers the platform app's installation on
+a namespace. Fails with <code>Git.AppNotInstalled</code> (metadata carries
+<code>installUrl</code>) when the app is not installed there.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitInstallationInfo&gt;&gt; ResolveAppInstallationAsync(string @namespace, string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The organization/group or user login to probe.</p>
+</dd>
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ResolveAppInstallationByIdAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ResolveAppInstallationByIdAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ResolveAppInstallationByIdAsync_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ResolveAppInstallationByIdAsync(System.String,System.String,System.Threading.CancellationToken)">
+  ResolveAppInstallationByIdAsync(string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: resolves a single installation of the platform
+app by its provider-side id. Unlike <a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html#Compendium_Abstractions_Git_Connections_IGitCredentialBroker_ResolveAppInstallationAsync_System_String_System_String_System_Threading_CancellationToken_">ResolveAppInstallationAsync(string, string?, CancellationToken)</a>
+(which probes by account) and <a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html#Compendium_Abstractions_Git_Connections_IGitCredentialBroker_ListAppInstallationsAsync_System_String_System_Threading_CancellationToken_">ListAppInstallationsAsync(string?, CancellationToken)</a> (which
+pages the whole list), this is an O(1) point lookup — use it when a caller
+already holds an installation id and only needs to confirm it still belongs
+to the app. Fails with <code>Git.InstallationNotFound</code> when the id does not
+belong to the app (never installed, or the installation was deleted).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitInstallationInfo&gt;&gt; ResolveAppInstallationByIdAsync(string installationId, string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>installationId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The provider-side installation id to resolve.</p>
+</dd>
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetSecretsAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetSecretsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetSecretsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetSecretsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetSecretsAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI secrets at <code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiSecrets">CiSecrets</a> (repository scope),
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_NamespaceSecrets">NamespaceSecrets</a> (namespace scope), or
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_EnvironmentSecrets">EnvironmentSecrets</a> (environment scope).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetSecretsAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; secrets, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>secrets</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetTeamRepositoryRoleAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetTeamRepositoryRoleAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetTeamRepositoryRoleAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_String_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_AccessControl_GitRepositoryRole_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetTeamRepositoryRoleAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.String,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.AccessControl.GitRepositoryRole,System.Threading.CancellationToken)">
+  SetTeamRepositoryRoleAsync(GitConnection, string, string, GitRepositoryRef, GitRepositoryRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L256"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Grants (or updates) a team's role on a repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetTeamRepositoryRoleAsync(GitConnection connection, string @namespace, string teamSlug, GitRepositoryRef repository, GitRepositoryRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>teamSlug</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.html">GitRepositoryRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetUserRepositoryRoleAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetUserRepositoryRoleAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetUserRepositoryRoleAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_Compendium_Abstractions_Git_AccessControl_GitRepositoryRole_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetUserRepositoryRoleAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,Compendium.Abstractions.Git.AccessControl.GitRepositoryRole,System.Threading.CancellationToken)">
+  SetUserRepositoryRoleAsync(GitConnection, GitRepositoryRef, string, GitRepositoryRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Grants (or updates) an individual user's role on a repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetUserRepositoryRoleAsync(GitConnection connection, GitRepositoryRef repository, string username, GitRepositoryRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.html">GitRepositoryRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetVariablesAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetVariablesAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_SetVariablesAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.SetVariablesAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetVariablesAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI variables (plaintext configuration) at
+<code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiVariables">CiVariables</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetVariablesAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; variables, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>variables</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_TriggerAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.TriggerAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_TriggerAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_TriggerGitPipeline_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.TriggerAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline,System.Threading.CancellationToken)">
+  TriggerAsync(GitConnection, GitRepositoryRef, TriggerGitPipeline, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggers a pipeline run. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineTrigger">PipelineTrigger</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitPipelineRunHandle&gt;&gt; TriggerAsync(GitConnection connection, GitRepositoryRef repository, TriggerGitPipeline request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline.html">TriggerGitPipeline</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.html">GitPipelineRunHandle</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Compendium_Abstractions_Git_Stubs_NullGitServer_TriggerAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_TriggerGitPipeline_System_Threading_CancellationToken__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Some providers do not return a run identifier on trigger (GitHub's
+<code>workflow_dispatch</code> is fire-and-forget): the handle's
+<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.html#Compendium_Abstractions_Git_Pipelines_GitPipelineRunHandle_RunId">RunId</a> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> there
+and callers correlate via <a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html#Compendium_Abstractions_Git_Pipelines_IGitPipelineService_ListRunsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_ListGitPipelineRuns_System_Threading_CancellationToken_">ListRunsAsync(GitConnection, GitRepositoryRef, ListGitPipelineRuns, CancellationToken)</a>. Each adapter
+documents this in its CAPABILITIES.md.</p>
+</div>
+
+
+
+
+  <a id="Compendium_Abstractions_Git_Stubs_NullGitServer_ValidateAsync_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ValidateAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_Stubs_NullGitServer_ValidateAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.Stubs.NullGitServer.ValidateAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.Threading.CancellationToken)">
+  ValidateAsync(GitConnection, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Validates the connection's credential and reports the identity behind it.
+Fails with <code>Git.AuthenticationFailed</code> when the credential is
+expired, revoked, or malformed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitConnectionIdentity&gt;&gt; ValidateAsync(GitConnection connection, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnectionIdentity.html">GitConnectionIdentity</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/Stubs/NullGitServer.cs/#L27" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

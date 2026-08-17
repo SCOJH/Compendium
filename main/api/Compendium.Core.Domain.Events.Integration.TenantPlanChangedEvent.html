@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent" class="text-break">
-Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L108"><i class="bi bi-code-slash"></i></a>
+Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L140"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset)">
-  TenantPlanChangedEvent(string, string, string?, string, string, DateTimeOffset)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent__ctor_System_String_System_String_System_String_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.DateTimeOffset)">
+  TenantPlanChangedEvent(string, string?, string, string, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L140"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant's plan is changed.</p>
@@ -192,14 +192,11 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantPlanChangedEvent(string TenantId, string Name, string? OldPlan, string NewPlan, string ChangeType, DateTimeOffset ChangedAt)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantPlanChangedEvent(string Name, string? OldPlan, string NewPlan, string ChangeType, DateTimeOffset ChangedAt)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -228,6 +225,48 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset)">
+  TenantPlanChangedEvent(string, string, string?, string, string, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantPlanChangedEvent(string TenantId, string Name, string? OldPlan, string NewPlan, string ChangeType, DateTimeOffset ChangedAt)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>OldPlan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>NewPlan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>ChangeType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>ChangedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -236,7 +275,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_ChangeType" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.ChangeType">
   ChangeType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L144"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The type of change (upgrade, downgrade, renewal).</p>
@@ -268,7 +307,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_ChangedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.ChangedAt">
   ChangedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L145"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the plan was changed.</p>
@@ -300,7 +339,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L155"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -332,7 +371,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L141"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -364,7 +403,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_NewPlan" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.NewPlan">
   NewPlan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The new plan.</p>
@@ -396,7 +435,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantPlanChangedEvent_OldPlan" data-uid="Compendium.Core.Domain.Events.Integration.TenantPlanChangedEvent.OldPlan">
   OldPlan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The previous plan.</p>
@@ -428,7 +467,7 @@ Class TenantPlanChangedEvent  <a class="header-action link-secondary" title="Vie
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L108" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L140" class="edit-link">Edit this page</a>
         </div>
 
 

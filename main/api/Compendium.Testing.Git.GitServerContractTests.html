@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class GitServerContractTests | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class GitServerContractTests | Compendium — .NET event-sourcing framework ">
+      
+      <meta name="description" content="The behavioral contract every  adapter must satisfy. Inherit in the adapter&#39;s test suite and provide the fixture members; tests for capabilities the adapter does not declare are skipped automatically (capability honesty is itself asserted: a declared capability must work).  subscribes to this contract, keeping the fake and real adapters aligned.">
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/new/main/apiSpec/new?filename=Compendium_Testing_Git_GitServerContractTests.md&amp;value=---%0Auid%3A%20Compendium.Testing.Git.GitServerContractTests%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Compendium.Testing.Git.GitServerContractTests">
+
+
+
+  <h1 id="Compendium_Testing_Git_GitServerContractTests" data-uid="Compendium.Testing.Git.GitServerContractTests" class="text-break">
+Class GitServerContractTests  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Compendium.html">Compendium</a>.<a class="xref" href="Compendium.Testing.html">Testing</a>.<a class="xref" href="Compendium.Testing.Git.html">Git</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Compendium.Testing.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The behavioral contract every <a class="xref" href="Compendium.Abstractions.Git.IGitServer.html">IGitServer</a> adapter must satisfy.
+Inherit in the adapter's test suite and provide the fixture members; tests
+for capabilities the adapter does not declare are skipped automatically
+(capability honesty is itself asserted: a declared capability must work).
+<a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html">InMemoryGitServer</a> subscribes to this contract, keeping the
+fake and real adapters aligned.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class GitServerContractTests</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">GitServerContractTests</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Connection_" data-uid="Compendium.Testing.Git.GitServerContractTests.Connection*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Connection" data-uid="Compendium.Testing.Git.GitServerContractTests.Connection">
+  Connection
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a connection with valid credentials for <a class="xref" href="Compendium.Testing.Git.GitServerContractTests.html#Compendium_Testing_Git_GitServerContractTests_Server">Server</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract GitConnection Connection { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Namespace_" data-uid="Compendium.Testing.Git.GitServerContractTests.Namespace*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Namespace" data-uid="Compendium.Testing.Git.GitServerContractTests.Namespace">
+  Namespace
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a namespace where the connection can create repositories.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract string Namespace { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Server_" data-uid="Compendium.Testing.Git.GitServerContractTests.Server*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Server" data-uid="Compendium.Testing.Git.GitServerContractTests.Server">
+  Server
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the server under test.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract IGitServer Server { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.IGitServer.html">IGitServer</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_TemplateRepository_" data-uid="Compendium.Testing.Git.GitServerContractTests.TemplateRepository*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_TemplateRepository" data-uid="Compendium.Testing.Git.GitServerContractTests.TemplateRepository">
+  TemplateRepository
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a template repository that exists and can be instantiated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract GitRepositoryRef TemplateRepository { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_WebhookSecret_" data-uid="Compendium.Testing.Git.GitServerContractTests.WebhookSecret*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_WebhookSecret" data-uid="Compendium.Testing.Git.GitServerContractTests.WebhookSecret">
+  WebhookSecret
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the webhook secret used when building signed deliveries.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract string WebhookSecret { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_ApplyBranchPolicy_IsIdempotent_" data-uid="Compendium.Testing.Git.GitServerContractTests.ApplyBranchPolicy_IsIdempotent*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_ApplyBranchPolicy_IsIdempotent" data-uid="Compendium.Testing.Git.GitServerContractTests.ApplyBranchPolicy_IsIdempotent">
+  ApplyBranchPolicy_IsIdempotent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applying the same branch policy twice is idempotent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task ApplyBranchPolicy_IsIdempotent()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Capabilities_DeclaresTheServerProvider_" data-uid="Compendium.Testing.Git.GitServerContractTests.Capabilities_DeclaresTheServerProvider*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Capabilities_DeclaresTheServerProvider" data-uid="Compendium.Testing.Git.GitServerContractTests.Capabilities_DeclaresTheServerProvider">
+  Capabilities_DeclaresTheServerProvider()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared provider must match the facade discriminator and never be empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Fact]
+public void Capabilities_DeclaresTheServerProvider()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_CreateDelivery_" data-uid="Compendium.Testing.Git.GitServerContractTests.CreateDelivery*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_CreateDelivery_System_Boolean_" data-uid="Compendium.Testing.Git.GitServerContractTests.CreateDelivery(System.Boolean)">
+  CreateDelivery(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a raw webhook delivery for <a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html#Compendium_Abstractions_Git_Webhooks_IGitWebhookIngestor_Parse_Compendium_Abstractions_Git_Webhooks_GitWebhookDelivery_System_String_">Parse(GitWebhookDelivery, string)</a>:
+signed with <a class="xref" href="Compendium.Testing.Git.GitServerContractTests.html#Compendium_Testing_Git_GitServerContractTests_WebhookSecret">WebhookSecret</a> when <code class="paramref">validSignature</code>
+is true, deliberately mis-signed otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract GitWebhookDelivery CreateDelivery(bool validSignature)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>validSignature</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.html">GitWebhookDelivery</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_CreateFromTemplate_RoundTrips_AndDuplicateFails_" data-uid="Compendium.Testing.Git.GitServerContractTests.CreateFromTemplate_RoundTrips_AndDuplicateFails*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_CreateFromTemplate_RoundTrips_AndDuplicateFails" data-uid="Compendium.Testing.Git.GitServerContractTests.CreateFromTemplate_RoundTrips_AndDuplicateFails">
+  CreateFromTemplate_RoundTrips_AndDuplicateFails()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Repository creation from a template round-trips through Get, and repeating the name conflicts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task CreateFromTemplate_RoundTrips_AndDuplicateFails()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_EnsureEnvironment_IsIdempotent_" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureEnvironment_IsIdempotent*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_EnsureEnvironment_IsIdempotent" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureEnvironment_IsIdempotent">
+  EnsureEnvironment_IsIdempotent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ensuring the same environment twice is idempotent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task EnsureEnvironment_IsIdempotent()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported_" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported">
+  EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>An undeclared capability must fail with the standard machine code, never throw.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public void EnsureSupported_UndeclaredCapability_FailsWithCapabilityNotSupported()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_EnsureWebhook_SameUrl_IsIdempotent_" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureWebhook_SameUrl_IsIdempotent*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_EnsureWebhook_SameUrl_IsIdempotent" data-uid="Compendium.Testing.Git.GitServerContractTests.EnsureWebhook_SameUrl_IsIdempotent">
+  EnsureWebhook_SameUrl_IsIdempotent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ensuring the same webhook URL twice yields a single subscription.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task EnsureWebhook_SameUrl_IsIdempotent()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Get_AbsentRepository_FailsWithRepositoryNotFound_" data-uid="Compendium.Testing.Git.GitServerContractTests.Get_AbsentRepository_FailsWithRepositoryNotFound*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Get_AbsentRepository_FailsWithRepositoryNotFound" data-uid="Compendium.Testing.Git.GitServerContractTests.Get_AbsentRepository_FailsWithRepositoryNotFound">
+  Get_AbsentRepository_FailsWithRepositoryNotFound()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reading an absent repository fails with RepositoryNotFound, never throws.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task Get_AbsentRepository_FailsWithRepositoryNotFound()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Ingestor_InvalidSignature_IsRejected_" data-uid="Compendium.Testing.Git.GitServerContractTests.Ingestor_InvalidSignature_IsRejected*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Ingestor_InvalidSignature_IsRejected" data-uid="Compendium.Testing.Git.GitServerContractTests.Ingestor_InvalidSignature_IsRejected">
+  Ingestor_InvalidSignature_IsRejected()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The ingestor is fail-closed: an invalid signature is rejected before parsing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public void Ingestor_InvalidSignature_IsRejected()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Ingestor_ValidSignature_ParsesToNeutralEvent_" data-uid="Compendium.Testing.Git.GitServerContractTests.Ingestor_ValidSignature_ParsesToNeutralEvent*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Ingestor_ValidSignature_ParsesToNeutralEvent" data-uid="Compendium.Testing.Git.GitServerContractTests.Ingestor_ValidSignature_ParsesToNeutralEvent">
+  Ingestor_ValidSignature_ParsesToNeutralEvent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A correctly signed delivery parses to a neutral event with a delivery id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public void Ingestor_ValidSignature_ParsesToNeutralEvent()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Mint_ReturnsUsableShortLivedToken_" data-uid="Compendium.Testing.Git.GitServerContractTests.Mint_ReturnsUsableShortLivedToken*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Mint_ReturnsUsableShortLivedToken" data-uid="Compendium.Testing.Git.GitServerContractTests.Mint_ReturnsUsableShortLivedToken">
+  Mint_ReturnsUsableShortLivedToken()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Minted tokens are non-empty, not yet expired, and carry a basic-auth username.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task Mint_ReturnsUsableShortLivedToken()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_NewRepositoryName_" data-uid="Compendium.Testing.Git.GitServerContractTests.NewRepositoryName*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_NewRepositoryName" data-uid="Compendium.Testing.Git.GitServerContractTests.NewRepositoryName">
+  NewRepositoryName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Generates a unique repository name for a test run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual string NewRepositoryName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_SetSecrets_Succeeds_AndDeleteIsIdempotent_" data-uid="Compendium.Testing.Git.GitServerContractTests.SetSecrets_Succeeds_AndDeleteIsIdempotent*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_SetSecrets_Succeeds_AndDeleteIsIdempotent" data-uid="Compendium.Testing.Git.GitServerContractTests.SetSecrets_Succeeds_AndDeleteIsIdempotent">
+  SetSecrets_Succeeds_AndDeleteIsIdempotent()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Secrets set at repository scope succeed and deleting an absent secret is idempotent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task SetSecrets_Succeeds_AndDeleteIsIdempotent()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned_" data-uid="Compendium.Testing.Git.GitServerContractTests.TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned" data-uid="Compendium.Testing.Git.GitServerContractTests.TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned">
+  TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggering a pipeline succeeds; when a run id is returned, its status is readable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SkippableFact(new Type[] { })]
+public Task TriggerPipeline_Succeeds_AndRunIsReadableWhenIdReturned()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_GitServerContractTests_Validate_ValidCredential_ReportsIdentity_" data-uid="Compendium.Testing.Git.GitServerContractTests.Validate_ValidCredential_ReportsIdentity*"></a>
+
+  <h3 id="Compendium_Testing_Git_GitServerContractTests_Validate_ValidCredential_ReportsIdentity" data-uid="Compendium.Testing.Git.GitServerContractTests.Validate_ValidCredential_ReportsIdentity">
+  Validate_ValidCredential_ReportsIdentity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A valid credential validates and reports an identity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Fact]
+public Task Validate_ValidCredential_ReportsIdentity()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/GitServerContractTests.cs/#L30" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

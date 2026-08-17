@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor" class="text-break">
-Class LiveProjectionProcessor  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L60"><i class="bi bi-code-slash"></i></a>
+Class LiveProjectionProcessor  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -179,7 +179,7 @@ Maintains projection state and ensures eventual consistency.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor__ctor_Compendium_Infrastructure_Projections_IStreamingEventStore_Compendium_Infrastructure_Projections_IProjectionStore_System_IServiceProvider_Microsoft_Extensions_Logging_ILogger_Compendium_Infrastructure_Projections_LiveProjectionProcessor__Microsoft_Extensions_Options_IOptions_Compendium_Infrastructure_Projections_ProjectionOptions__" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor.#ctor(Compendium.Infrastructure.Projections.IStreamingEventStore,Compendium.Infrastructure.Projections.IProjectionStore,System.IServiceProvider,Microsoft.Extensions.Logging.ILogger{Compendium.Infrastructure.Projections.LiveProjectionProcessor},Microsoft.Extensions.Options.IOptions{Compendium.Infrastructure.Projections.ProjectionOptions})">
   LiveProjectionProcessor(IStreamingEventStore, IProjectionStore, IServiceProvider, ILogger&lt;LiveProjectionProcessor&gt;, IOptions&lt;ProjectionOptions&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L105"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Infrastructure.Projections.LiveProjectionProcessor.html">LiveProjectionProcessor</a> class.</p>
@@ -228,7 +228,7 @@ Maintains projection state and ensures eventual consistency.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor_ExecuteAsync_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor.ExecuteAsync(System.Threading.CancellationToken)">
   ExecuteAsync(CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L181"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This method is called when the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice">IHostedService</a> starts. The implementation should return a task that represents
@@ -271,7 +271,7 @@ the lifetime of the long running operation(s) being performed.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor_GetStatus" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor.GetStatus">
   GetStatus()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the status of live projection processing.</p>
@@ -304,7 +304,7 @@ the lifetime of the long running operation(s) being performed.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor_RegisterProjection__1" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor.RegisterProjection``1">
   RegisterProjection&lt;TProjection&gt;()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers a projection for live processing. The projection instance is resolved
@@ -339,7 +339,7 @@ a service (typically a singleton) before this call.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProjectionProcessor_UnregisterProjection_System_String_" data-uid="Compendium.Infrastructure.Projections.LiveProjectionProcessor.UnregisterProjection(System.String)">
   UnregisterProjection(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L137"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Unregisters a projection from live processing.</p>
@@ -372,7 +372,7 @@ a service (typically a singleton) before this call.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L60" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L60" class="edit-link">Edit this page</a>
         </div>
 
 

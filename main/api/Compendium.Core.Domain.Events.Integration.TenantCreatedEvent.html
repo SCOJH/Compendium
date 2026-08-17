@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent" class="text-break">
-Class TenantCreatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L19"><i class="bi bi-code-slash"></i></a>
+Class TenantCreatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean)">
-  TenantCreatedEvent(string, string, string, string?, string?, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent__ctor_System_String_System_String_System_String_System_String_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.#ctor(System.String,System.String,System.String,System.String,System.Boolean)">
+  TenantCreatedEvent(string, string, string?, string?, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant is created.</p>
@@ -192,14 +192,11 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantCreatedEvent(string TenantId, string Name, string Identifier, string? OwnerId, string? Plan, bool IsActive)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantCreatedEvent(string Name, string Identifier, string? OwnerId, string? Plan, bool IsActive)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -228,6 +225,48 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+  TenantCreatedEvent(string, string, string, string?, string?, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantCreatedEvent(string TenantId, string Name, string Identifier, string? OwnerId, string? Plan, bool IsActive)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Identifier</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>OwnerId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Plan</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>IsActive</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -236,7 +275,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -268,7 +307,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_Identifier" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.Identifier">
   Identifier
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unique identifier/slug for the tenant.</p>
@@ -300,7 +339,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_IsActive" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.IsActive">
   IsActive
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the tenant is active.</p>
@@ -332,7 +371,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -364,7 +403,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_OwnerId" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.OwnerId">
   OwnerId
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The identifier of the tenant owner.</p>
@@ -396,7 +435,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantCreatedEvent_Plan" data-uid="Compendium.Core.Domain.Events.Integration.TenantCreatedEvent.Plan">
   Plan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The subscription plan of the tenant.</p>
@@ -428,7 +467,7 @@ Class TenantCreatedEvent  <a class="header-action link-secondary" title="View so
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L19" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L26" class="edit-link">Edit this page</a>
         </div>
 
 

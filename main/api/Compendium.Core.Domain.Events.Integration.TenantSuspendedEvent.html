@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent" class="text-break">
-Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L56"><i class="bi bi-code-slash"></i></a>
+Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent__ctor_System_String_System_String_System_String_System_DateTimeOffset_System_Nullable_System_DateTimeOffset__" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.#ctor(System.String,System.String,System.String,System.DateTimeOffset,System.Nullable{System.DateTimeOffset})">
-  TenantSuspendedEvent(string, string, string, DateTimeOffset, DateTimeOffset?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent__ctor_System_String_System_String_System_DateTimeOffset_System_Nullable_System_DateTimeOffset__" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.#ctor(System.String,System.String,System.DateTimeOffset,System.Nullable{System.DateTimeOffset})">
+  TenantSuspendedEvent(string, string, DateTimeOffset, DateTimeOffset?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant is suspended.</p>
@@ -192,14 +192,11 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantSuspendedEvent(string TenantId, string Name, string Reason, DateTimeOffset SuspendedAt, DateTimeOffset? SuspendedUntil)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantSuspendedEvent(string Name, string Reason, DateTimeOffset SuspendedAt, DateTimeOffset? SuspendedUntil)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -225,6 +222,46 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent__ctor_System_String_System_String_System_String_System_DateTimeOffset_System_Nullable_System_DateTimeOffset__" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.#ctor(System.String,System.String,System.String,System.DateTimeOffset,System.Nullable{System.DateTimeOffset})">
+  TenantSuspendedEvent(string, string, string, DateTimeOffset, DateTimeOffset?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantSuspendedEvent(string TenantId, string Name, string Reason, DateTimeOffset SuspendedAt, DateTimeOffset? SuspendedUntil)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Reason</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>SuspendedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+    <dt><code>SuspendedUntil</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a>?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -233,7 +270,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L87"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -265,7 +302,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L74"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -297,7 +334,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent_Reason" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.Reason">
   Reason
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The reason for suspension.</p>
@@ -329,7 +366,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent_SuspendedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.SuspendedAt">
   SuspendedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L76"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the tenant was suspended.</p>
@@ -361,7 +398,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSuspendedEvent_SuspendedUntil" data-uid="Compendium.Core.Domain.Events.Integration.TenantSuspendedEvent.SuspendedUntil">
   SuspendedUntil
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L77"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp until which the tenant is suspended, if temporary.</p>
@@ -393,7 +430,7 @@ Class TenantSuspendedEvent  <a class="header-action link-secondary" title="View 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L56" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73" class="edit-link">Edit this page</a>
         </div>
 
 

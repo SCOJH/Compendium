@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent" class="text-break">
-Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L149"><i class="bi bi-code-slash"></i></a>
+Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L191"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent__ctor_System_String_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.#ctor(System.String,System.String,System.String,System.DateTimeOffset,System.String)">
-  TenantUserRemovedEvent(string, string, string, DateTimeOffset, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent__ctor_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.#ctor(System.String,System.String,System.DateTimeOffset,System.String)">
+  TenantUserRemovedEvent(string, string, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L191"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a user is removed from a tenant.</p>
@@ -192,14 +192,11 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantUserRemovedEvent(string TenantId, string UserId, string Email, DateTimeOffset RemovedAt, string? RemovedBy)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantUserRemovedEvent(string UserId, string Email, DateTimeOffset RemovedAt, string? RemovedBy)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>UserId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The unique identifier of the user.</p>
 </dd>
@@ -225,6 +222,46 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent__ctor_System_String_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.#ctor(System.String,System.String,System.String,System.DateTimeOffset,System.String)">
+  TenantUserRemovedEvent(string, string, string, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantUserRemovedEvent(string TenantId, string UserId, string Email, DateTimeOffset RemovedAt, string? RemovedBy)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>UserId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Email</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>RemovedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+    <dt><code>RemovedBy</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -233,7 +270,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent_Email" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.Email">
   Email
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L193"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The user's email address.</p>
@@ -265,7 +302,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L205"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -297,7 +334,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent_RemovedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.RemovedAt">
   RemovedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L194"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the user was removed.</p>
@@ -329,7 +366,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent_RemovedBy" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.RemovedBy">
   RemovedBy
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L195"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The identifier of the user who removed this user.</p>
@@ -361,7 +398,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRemovedEvent_UserId" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRemovedEvent.UserId">
   UserId
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L192"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unique identifier of the user.</p>
@@ -393,7 +430,7 @@ Class TenantUserRemovedEvent  <a class="header-action link-secondary" title="Vie
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L149" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L191" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent" class="text-break">
-Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L213"><i class="bi bi-code-slash"></i></a>
+Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L270"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent__ctor_System_String_System_String_System_String_System_Int64_System_Int64_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.DateTimeOffset)">
-  TenantQuotaExceededEvent(string, string, string, long, long, DateTimeOffset)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L213"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent__ctor_System_String_System_String_System_Int64_System_Int64_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.#ctor(System.String,System.String,System.Int64,System.Int64,System.DateTimeOffset)">
+  TenantQuotaExceededEvent(string, string, long, long, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L270"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant exceeds a quota or limit.</p>
@@ -192,14 +192,11 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantQuotaExceededEvent(string TenantId, string Name, string QuotaType, long CurrentUsage, long Limit, DateTimeOffset ExceededAt)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantQuotaExceededEvent(string Name, string QuotaType, long CurrentUsage, long Limit, DateTimeOffset ExceededAt)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -228,6 +225,48 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent__ctor_System_String_System_String_System_String_System_Int64_System_Int64_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.#ctor(System.String,System.String,System.String,System.Int64,System.Int64,System.DateTimeOffset)">
+  TenantQuotaExceededEvent(string, string, string, long, long, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantQuotaExceededEvent(string TenantId, string Name, string QuotaType, long CurrentUsage, long Limit, DateTimeOffset ExceededAt)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>QuotaType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>CurrentUsage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+    <dt><code>Limit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+    <dt><code>ExceededAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -236,7 +275,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_CurrentUsage" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.CurrentUsage">
   CurrentUsage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L273"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The current usage value.</p>
@@ -268,7 +307,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L285"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -300,7 +339,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_ExceededAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.ExceededAt">
   ExceededAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L275"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the quota was exceeded.</p>
@@ -332,7 +371,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_Limit" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.Limit">
   Limit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L218"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L274"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The quota limit.</p>
@@ -364,7 +403,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -396,7 +435,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantQuotaExceededEvent_QuotaType" data-uid="Compendium.Core.Domain.Events.Integration.TenantQuotaExceededEvent.QuotaType">
   QuotaType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L272"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The type of quota exceeded (e.g., storage, users, API calls).</p>
@@ -428,7 +467,7 @@ Class TenantQuotaExceededEvent  <a class="header-action link-secondary" title="V
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L213" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L270" class="edit-link">Edit this page</a>
         </div>
 
 

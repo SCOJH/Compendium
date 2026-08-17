@@ -4,7 +4,7 @@
     "changefreq": "weekly",
     "priority": 0.5
   },
-  "source_base_path": "/home/runner/work/compendium/compendium/docs",
+  "source_base_path": "/home/runner/work/Compendium/Compendium/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -27,60 +27,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "adapters/lemonsqueezy.md",
+      "source_relative_path": "adapters/external.md",
       "output": {
         ".html": {
-          "relative_path": "adapters/lemonsqueezy.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/listmonk.md",
-      "output": {
-        ".html": {
-          "relative_path": "adapters/listmonk.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/openrouter.md",
-      "output": {
-        ".html": {
-          "relative_path": "adapters/openrouter.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/postgresql.md",
-      "output": {
-        ".html": {
-          "relative_path": "adapters/postgresql.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/redis.md",
-      "output": {
-        ".html": {
-          "relative_path": "adapters/redis.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/stripe.md",
-      "output": {
-        ".html": {
-          "relative_path": "adapters/stripe.html"
+          "relative_path": "adapters/external.html"
         }
       },
       "version": ""
@@ -89,21 +39,11 @@
       "type": "Toc",
       "source_relative_path": "adapters/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "adapters/toc.html"
-        },
         ".json": {
           "relative_path": "adapters/toc.json"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "adapters/zitadel.md",
-      "output": {
+        },
         ".html": {
-          "relative_path": "adapters/zitadel.html"
+          "relative_path": "adapters/toc.html"
         }
       },
       "version": ""
@@ -170,6 +110,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "adr/0006-multi-repo-adapter-split.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0006-multi-repo-adapter-split.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0007-integration-test-split.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0007-integration-test-split.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "adr/README.md",
       "output": {
         ".html": {
@@ -182,11 +142,11 @@
       "type": "Toc",
       "source_relative_path": "adr/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "adr/toc.html"
-        },
         ".json": {
           "relative_path": "adr/toc.json"
+        },
+        ".html": {
+          "relative_path": "adr/toc.html"
         }
       },
       "version": ""
@@ -1271,6 +1231,328 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Caching.CachingErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Caching.CachingErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Caching.CachingErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Caching.CachingErrors.yml\" sourcestartlinenumber=\"1\">Provides standardized error definitions for caching operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Caching.ICache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Caching.ICache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Caching.ICache",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Caching.ICache.yml\" sourcestartlinenumber=\"1\">Provides provider-agnostic key/value caching operations with TTL.\nImplementations may target backends such as in-memory dictionaries, Redis, Memcached,\nor distributed caches behind <code>IDistributedCache</code>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Caching.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Caching.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Caching",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done.yml\" sourcestartlinenumber=\"1\">Terminal event for a run. Always exactly one is emitted.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Error.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Error.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Error",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Error.yml\" sourcestartlinenumber=\"1\">A non-fatal error reported by the agent or runtime. The stream may\ncontinue after an <xref href=\"Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Error\" data-throw-if-not-resolved=\"false\"></xref> event; a fatal failure is signalled\nby <xref href=\"Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done\" data-throw-if-not-resolved=\"false\"></xref> with a non-success error.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Output.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Output.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Output",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Output.yml\" sourcestartlinenumber=\"1\">A chunk of textual output (stdout / chat content) produced by the agent.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolCall.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolCall.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolCall",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolCall.yml\" sourcestartlinenumber=\"1\">The agent invoked a tool / function. Emitted before the tool runs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolResult",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolResult.yml\" sourcestartlinenumber=\"1\">The result of a previously-emitted <xref href=\"Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.ToolCall\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.yml\" sourcestartlinenumber=\"1\">A neutral, vendor-agnostic event emitted by an ICodingAgentRuntime\nwhile streaming a run. Adapters translate vendor-specific stream formats\n(NDJSON, SSE, custom CLI output) into this discriminated union.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Events.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Events.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Events",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.yml\" sourcestartlinenumber=\"1\">Template-method base for runtimes that drive a CLI-based coding agent\n(Claude Code, Codex, Cursor CLI, ...). The base orchestrates:</p>\n<ol><li>provision the sandbox via <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.CreateSandbox(Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions)\" data-throw-if-not-resolved=\"false\"></xref> + <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox.StartAsync(Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>;</li><li>build the command line via <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.BuildCommand(Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions%2cCompendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest)\" data-throw-if-not-resolved=\"false\"></xref>;</li><li>build the environment via <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.BuildEnvironment(Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions%2cCompendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest)\" data-throw-if-not-resolved=\"false\"></xref>;</li><li>spawn the CLI via <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.SpawnAndStreamLinesAsync(Compendium.Abstractions.CodingAgents.Runtime.CliCommand%2cSystem.Collections.Generic.IReadOnlyDictionary%7bSystem.String%2cSystem.String%7d%2cCompendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref> (overridable for tests / non-process sandboxes);</li><li>parse each output line via <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.ParseStreamLine(Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine)\" data-throw-if-not-resolved=\"false\"></xref>;</li><li>emit a terminal <xref href=\"Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent.Done\" data-throw-if-not-resolved=\"false\"></xref>;</li><li>dispose the sandbox.</li></ol>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CliCommand",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CliCommand.yml\" sourcestartlinenumber=\"1\">A resolved CLI invocation: the executable to run and the argument vector.\nUsed by <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime\" data-throw-if-not-resolved=\"false\"></xref> as the output of\n<xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.BuildCommand(Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions%2cCompendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliStream.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CliStream",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CliStream.yml\" sourcestartlinenumber=\"1\">The output stream of a CLI process.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine.yml\" sourcestartlinenumber=\"1\">A single line read from a spawned CLI's output, tagged with the stream\nit came from. Passed to <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime.ParseStreamLine(Compendium.Abstractions.CodingAgents.Runtime.CliStreamLine)\" data-throw-if-not-resolved=\"false\"></xref>\nso adapters can decide how to translate stdout vs. stderr.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest.yml\" sourcestartlinenumber=\"1\">The per-invocation input to <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime.RunAsync(Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions%2cCompendium.Abstractions.CodingAgents.Runtime.CodingAgentRunRequest%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>:\nthe prompt to give the agent and any optional metadata for tracing,\nresumption, and tenant scoping.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions.yml\" sourcestartlinenumber=\"1\">Configures a single coding-agent run: which engine to use, where it runs,\nwhat skills/MCP servers are mounted, and how it authenticates.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime.yml\" sourcestartlinenumber=\"1\">Provides streaming execution of a coding agent. Implementations wrap a\nconcrete engine (Claude Code, Codex, Cursor CLI, ...) and translate its\noutput into the neutral <xref href=\"Compendium.Abstractions.CodingAgents.Events.CodingAgentStreamEvent\" data-throw-if-not-resolved=\"false\"></xref> stream.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Runtime.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Runtime",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox.yml\" sourcestartlinenumber=\"1\">An isolated environment in which a coding agent CLI runs. Provides\ncommand execution and basic file operations against the sandbox's working\ntree. Implementations may target a local working directory, a container,\nor a Kubernetes pod.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind.yml\" sourcestartlinenumber=\"1\">Identifies how an <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> isolates the coding agent's\nfilesystem and process tree.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.yml\" sourcestartlinenumber=\"1\">Configures how an <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> is provisioned for a single\nagent run. Adapter implementations interpret the kind-specific fields\n(<xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.Image\" data-throw-if-not-resolved=\"false\"></xref>, <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions.Namespace\" data-throw-if-not-resolved=\"false\"></xref>, etc.) — fields that do not\napply to a given <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind\" data-throw-if-not-resolved=\"false\"></xref> are ignored.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Sandbox.SandboxResult",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.CodingAgents.Sandbox.SandboxResult.yml\" sourcestartlinenumber=\"1\">The outcome of executing a single shell command inside an\n<xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.CodingAgents.Sandbox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.CodingAgents.Sandbox",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Abstractions.Crm.CrmErrors.yml",
       "output": {
         ".html": {
@@ -1957,6 +2239,1294 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.GeoErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.GeoErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.GeoErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.GeoErrors.yml\" sourcestartlinenumber=\"1\">Standardized error definitions for geospatial operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.IGeocoder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.IGeocoder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.IGeocoder",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.IGeocoder.yml\" sourcestartlinenumber=\"1\">Provider-agnostic geocoding: resolves a postal address to coordinates and back.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.IRouteMatrixProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.IRouteMatrixProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.IRouteMatrixProvider",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.IRouteMatrixProvider.yml\" sourcestartlinenumber=\"1\">Provider-agnostic route matrix: real travel distance and duration for every\norigin × destination pair (the input a route optimizer needs to plan real routes,\nas opposed to straight-line distance).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.GeoCoordinate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.GeoCoordinate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.GeoCoordinate",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.GeoCoordinate.yml\" sourcestartlinenumber=\"1\">A WGS-84 geographic coordinate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.GeocodeResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.GeocodeResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.GeocodeResult",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.GeocodeResult.yml\" sourcestartlinenumber=\"1\">The resolved location for an address (or reverse-geocoded coordinate).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrix.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrix.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.RouteMatrix",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.RouteMatrix.yml\" sourcestartlinenumber=\"1\">A dense matrix of travel costs for every origin × destination pair, returned by\n<xref href=\"Compendium.Abstractions.Geo.IRouteMatrixProvider\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrixElement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrixElement.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.RouteMatrixElement",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.RouteMatrixElement.yml\" sourcestartlinenumber=\"1\">The travel cost between one origin and one destination.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrixOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.RouteMatrixOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.RouteMatrixOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.RouteMatrixOptions.yml\" sourcestartlinenumber=\"1\">Options governing a route-matrix computation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.TravelMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.TravelMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models.TravelMode",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Geo.Models.TravelMode.yml\" sourcestartlinenumber=\"1\">The mode of travel used when computing distances and durations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Geo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Geo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Geo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.EnsureGitTeam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.EnsureGitTeam.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl.EnsureGitTeam",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.AccessControl.EnsureGitTeam.yml\" sourcestartlinenumber=\"1\">Request to create or update a team.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl.GitRepositoryRole",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.yml\" sourcestartlinenumber=\"1\">A neutral repository access role. Adapters map onto their native role set\nand document lossy mappings in their CAPABILITIES.md.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitTeam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitTeam.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl.GitTeam",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.AccessControl.GitTeam.yml\" sourcestartlinenumber=\"1\">A team on a namespace.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitTeamRole.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.GitTeamRole.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl.GitTeamRole",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.AccessControl.GitTeamRole.yml\" sourcestartlinenumber=\"1\">A user's role inside a team.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl.IGitAccessControlService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.yml\" sourcestartlinenumber=\"1\">Teams and repository access management on a namespace. Only meaningful for\norganization namespaces — adapters fail with <code>Git.CapabilityNotSupported</code>\non user accounts. Requires\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.TeamsAndPermissions\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.AccessControl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.AccessControl.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.AccessControl",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Capabilities.GitCapability",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Capabilities.GitCapability.yml\" sourcestartlinenumber=\"1\">The optional capabilities a git-server adapter may support. Adapters declare\ntheir support level per capability in <xref href=\"Compendium.Abstractions.Git.Capabilities.GitServerCapabilities\" data-throw-if-not-resolved=\"false\"></xref>;\noperations relying on an unsupported capability fail with\n<code>Git.CapabilityNotSupported</code> instead of throwing.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.yml\" sourcestartlinenumber=\"1\">The support level an adapter declares for a <xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapabilitySupport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitCapabilitySupport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Capabilities.GitCapabilitySupport",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Capabilities.GitCapabilitySupport.yml\" sourcestartlinenumber=\"1\">An adapter's declared support for a single capability.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Capabilities.GitServerCapabilities",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.yml\" sourcestartlinenumber=\"1\">The declarative capability matrix of a git-server adapter. Consumers use it\nto drive UI affordances (hide or disable unsupported features with a reason)\nand adapters use <xref href=\"Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.EnsureSupported(Compendium.Abstractions.Git.Capabilities.GitCapability)\" data-throw-if-not-resolved=\"false\"></xref> to fail uniformly.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Capabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Capabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Capabilities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Environment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Environment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Environment",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Environment.yml\" sourcestartlinenumber=\"1\">Environment-scoped configuration on a repository's deployment environment.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Namespace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Namespace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Namespace",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Namespace.yml\" sourcestartlinenumber=\"1\">Namespace-scoped (organization/group) configuration, shared by the\nnamespace's repositories.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Repository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Repository.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Repository",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Repository.yml\" sourcestartlinenumber=\"1\">Repository-scoped configuration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.yml\" sourcestartlinenumber=\"1\">Where a CI secret or variable lives, as a closed union: on a repository, on\na namespace (organization/group), or on a deployment environment of a\nrepository.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.yml\" sourcestartlinenumber=\"1\">CI secrets and variables management. Secrets are write-only on every\nprovider — values can be set and deleted but never read back. Adapters\nperform any provider-required client-side encryption (GitHub: libsodium\nsealed box) transparently.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.CiConfiguration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.CiConfiguration",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccessToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccessToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitAccessToken",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitAccessToken.yml\" sourcestartlinenumber=\"1\">A ready-to-use, short-lived token minted for a <xref href=\"Compendium.Abstractions.Git.Connections.GitConnection\" data-throw-if-not-resolved=\"false\"></xref>.\nUsable against the provider's API and for git-over-HTTPS via\n<xref href=\"Compendium.Abstractions.Git.Connections.GitAccessToken.HttpBasicUsername\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccessTokenScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccessTokenScope.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitAccessTokenScope",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitAccessTokenScope.yml\" sourcestartlinenumber=\"1\">Optional narrowing applied when minting a token (GitHub: <code>repository_ids</code>\n— at most 500 — plus a <code>permissions</code> subset). Providers without token\nscoping ignore the request; they declare\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.ScopedTokenMinting\" data-throw-if-not-resolved=\"false\"></xref> as unsupported.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccountType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitAccountType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitAccountType",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitAccountType.yml\" sourcestartlinenumber=\"1\">The kind of account a namespace or credential identity refers to.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitConnection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitConnection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitConnection",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitConnection.yml\" sourcestartlinenumber=\"1\">Identifies which git server to talk to and with what credential. Every port\nmethod takes a connection explicitly — ports are stateless singletons and a\nsingle adapter instance serves any number of tenants.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitConnectionIdentity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitConnectionIdentity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitConnectionIdentity",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitConnectionIdentity.yml\" sourcestartlinenumber=\"1\">The identity behind a validated credential.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.AppInstallation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.AppInstallation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitCredential.AppInstallation",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitCredential.AppInstallation.yml\" sourcestartlinenumber=\"1\">A platform-owned app installed on the customer namespace (GitHub App\ninstallation). The adapter mints short-lived tokens from the app's\nprivate key; no durable secret is stored per connection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.OAuthAccessToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.OAuthAccessToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitCredential.OAuthAccessToken",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitCredential.OAuthAccessToken.yml\" sourcestartlinenumber=\"1\">An OAuth user access token (user-to-server), used to act as — or verify\nthe identity of — a specific human.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.PersonalAccessToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.PersonalAccessToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitCredential.PersonalAccessToken",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitCredential.PersonalAccessToken.yml\" sourcestartlinenumber=\"1\">A caller-supplied user personal access token, held in memory for the\nduration of the call only — never persisted, logged, or cached.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.ServiceAccountToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.ServiceAccountToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitCredential.ServiceAccountToken",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitCredential.ServiceAccountToken.yml\" sourcestartlinenumber=\"1\">A durable machine token (GitLab group access token, Gitea/Forgejo bot\nPAT, Azure DevOps service principal secret).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitCredential.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitCredential",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitCredential.yml\" sourcestartlinenumber=\"1\">The credential material of a <xref href=\"Compendium.Abstractions.Git.Connections.GitConnection\" data-throw-if-not-resolved=\"false\"></xref>, as a closed union.\nToken-bearing members redact their material in <code>ToString()</code> so a logged\nconnection never leaks a secret.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.GitInstallationInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.GitInstallationInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.GitInstallationInfo",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.GitInstallationInfo.yml\" sourcestartlinenumber=\"1\">A platform-app installation on a customer account.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.IGitCredentialBroker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections.IGitCredentialBroker",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Connections.IGitCredentialBroker.yml\" sourcestartlinenumber=\"1\">Mints, validates, and discovers credentials for git connections. This is the\nauth seam of the abstraction: app-installation providers (GitHub) mint\nephemeral installation tokens from the platform app's private key, while\ntoken-based providers (GitLab, Gitea) wrap the connection's durable token.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Connections.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Connections.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Connections",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Environments.EnsureGitEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Environments.EnsureGitEnvironment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Environments.EnsureGitEnvironment",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Environments.EnsureGitEnvironment.yml\" sourcestartlinenumber=\"1\">Request to create or update a deployment environment.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.yml\" sourcestartlinenumber=\"1\">A deployment environment on a repository.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Environments.IGitEnvironmentService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Environments.IGitEnvironmentService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Environments.IGitEnvironmentService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Environments.IGitEnvironmentService.yml\" sourcestartlinenumber=\"1\">Deployment-environment management on a repository (GitHub Environments,\nGitLab environments). Requires\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.DeploymentEnvironments\" data-throw-if-not-resolved=\"false\"></xref>.\nEnvironment-scoped secrets are set via\n<xref href=\"Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService\" data-throw-if-not-resolved=\"false\"></xref> with an\n<xref href=\"Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.Environment\" data-throw-if-not-resolved=\"false\"></xref> scope.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Environments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Environments.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Environments",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.GitErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.GitErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.GitErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.GitErrors.yml\" sourcestartlinenumber=\"1\">Provides standardized error definitions for git-server operations. Adapters\nmap provider responses onto these errors so consumers can handle failures\nuniformly across providers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.IGitServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.IGitServer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.IGitServer",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.IGitServer.yml\" sourcestartlinenumber=\"1\">The git-server facade: one instance per provider adapter, carrying the\nprovider discriminator, the declarative capability matrix, and the\nconcern-scoped ports. Consumers resolve <code>IEnumerable&lt;IGitServer&gt;</code>\nand dispatch on <xref href=\"Compendium.Abstractions.Git.IGitServer.Provider\" data-throw-if-not-resolved=\"false\"></xref> (the sub-ports are also registered\nindividually for single-concern consumers).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineRun.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineRun.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.GitPipelineRun",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.GitPipelineRun.yml\" sourcestartlinenumber=\"1\">A pipeline run as reported by the provider.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.yml\" sourcestartlinenumber=\"1\">The immediate result of triggering a pipeline.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.GitPipelineStatus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.GitPipelineStatus",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.GitPipelineStatus.yml\" sourcestartlinenumber=\"1\">The neutral status of a pipeline run. Adapters map provider states onto this\nset and use <xref href=\"Compendium.Abstractions.Git.Pipelines.GitPipelineStatus.Unknown\" data-throw-if-not-resolved=\"false\"></xref> for states with no equivalent.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.IGitPipelineService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.IGitPipelineService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.IGitPipelineService.yml\" sourcestartlinenumber=\"1\">CI pipeline operations: trigger runs and read their status.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns.yml\" sourcestartlinenumber=\"1\">Filters for <xref href=\"Compendium.Abstractions.Git.Pipelines.IGitPipelineService.ListRunsAsync(Compendium.Abstractions.Git.Connections.GitConnection%2cCompendium.Abstractions.Git.Repositories.GitRepositoryRef%2cCompendium.Abstractions.Git.Pipelines.ListGitPipelineRuns%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline.yml\" sourcestartlinenumber=\"1\">Request to trigger a pipeline run.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Pipelines.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Pipelines.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Pipelines",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Protection.GitBranchPolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Protection.GitBranchPolicy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Protection.GitBranchPolicy",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Protection.GitBranchPolicy.yml\" sourcestartlinenumber=\"1\">An applied branch protection policy.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.yml\" sourcestartlinenumber=\"1\">A neutral branch protection policy request.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Protection.IGitBranchPolicyService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.yml\" sourcestartlinenumber=\"1\">Branch protection policies on a repository. The policy model is neutral:\nadapters map it onto their native mechanism (GitHub: repository rulesets;\nGitLab: protected branches + push rules) and document lossy mappings in\ntheir CAPABILITIES.md. Requires\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.BranchPolicies\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Protection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Protection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Protection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Provisioning.CreateGitNamespace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Provisioning.CreateGitNamespace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Provisioning.CreateGitNamespace",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Provisioning.CreateGitNamespace.yml\" sourcestartlinenumber=\"1\">Request to create a namespace.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Provisioning.GitNamespace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Provisioning.GitNamespace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Provisioning.GitNamespace",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Provisioning.GitNamespace.yml\" sourcestartlinenumber=\"1\">A created namespace.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.yml\" sourcestartlinenumber=\"1\">OPTIONAL capability: creates the namespace (organization/group) itself.\nTrivial on GitLab (<code>POST /groups</code>) and Gitea (<code>POST /orgs</code>);\non github.com it requires an enterprise-owner user token and is declared\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.Partial\" data-throw-if-not-resolved=\"false\"></xref> at best; absent on\nAzure DevOps. Always check\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.NamespaceProvisioning\" data-throw-if-not-resolved=\"false\"></xref> first.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Provisioning.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Provisioning.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Provisioning",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.CreateGitRelease.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.CreateGitRelease.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.CreateGitRelease",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.CreateGitRelease.yml\" sourcestartlinenumber=\"1\">Request to publish a release.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate.yml\" sourcestartlinenumber=\"1\">Request to create a repository from a template/scaffold repository.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitBranch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitBranch.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitBranch",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitBranch.yml\" sourcestartlinenumber=\"1\">A branch on a repository.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitCommit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitCommit.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitCommit",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitCommit.yml\" sourcestartlinenumber=\"1\">A single commit, surfaced so a caller can pick a commit to deploy.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRelease.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRelease.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitRelease",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitRelease.yml\" sourcestartlinenumber=\"1\">A published release.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRepository.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitRepository",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitRepository.yml\" sourcestartlinenumber=\"1\">A repository as reported by the provider.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRepositoryRef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitRepositoryRef",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitRepositoryRef.yml\" sourcestartlinenumber=\"1\">Identifies a repository by its namespace (organization/group/user login) and name.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.GitTag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.GitTag.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.GitTag",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.GitTag.yml\" sourcestartlinenumber=\"1\">A tag on a repository.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.IGitRepositoryService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.IGitRepositoryService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories.IGitRepositoryService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Repositories.IGitRepositoryService.yml\" sourcestartlinenumber=\"1\">Repository lifecycle and read operations: create from template, inspect\ncontents, list commits/branches/tags, create tags and releases.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Repositories.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Repositories.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Repositories",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Stubs.NullGitServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Stubs.NullGitServer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Stubs.NullGitServer",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Stubs.NullGitServer.yml\" sourcestartlinenumber=\"1\">Fail-fast stub for hosts without a configured git server: every operation\nreturns <code>Git.NotConfigured</code> and the capability matrix is empty. Register\nit in the unconfigured DI branch so a misconfigured deployment fails loudly\nper-request instead of throwing, and never with fake data.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Stubs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Stubs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Stubs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook.yml\" sourcestartlinenumber=\"1\">Request to create or update a webhook subscription.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitConnectionChangeKind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitConnectionChangeKind.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitConnectionChangeKind",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitConnectionChangeKind.yml\" sourcestartlinenumber=\"1\">The kind of change reported by <xref href=\"Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.ConnectionChanged\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.yml\" sourcestartlinenumber=\"1\">A raw inbound webhook delivery as received over HTTP.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.ConnectionChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.ConnectionChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.ConnectionChanged",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.ConnectionChanged.yml\" sourcestartlinenumber=\"1\">The platform app's installation on an account changed (installed,\nsuspended, unsuspended, repositories added/removed, or uninstalled).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PipelineRunCompleted.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PipelineRunCompleted.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PipelineRunCompleted",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PipelineRunCompleted.yml\" sourcestartlinenumber=\"1\">A pipeline run reached a terminal state.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PullRequestChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PullRequestChanged.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PullRequestChanged",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.PullRequestChanged.yml\" sourcestartlinenumber=\"1\">A pull/merge request changed state.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Push.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Push.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Push",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Push.yml\" sourcestartlinenumber=\"1\">Commits were pushed to a branch.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.TagPushed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.TagPushed.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.TagPushed",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.TagPushed.yml\" sourcestartlinenumber=\"1\">A tag was pushed.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported.yml\" sourcestartlinenumber=\"1\">An event type the platform does not consume. Acknowledge with a 2xx and\ndo not retry.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookEvent",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.yml\" sourcestartlinenumber=\"1\">A neutral, provider-agnostic inbound webhook event, as a closed union for\nexhaustive pattern matching.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription.yml\" sourcestartlinenumber=\"1\">A webhook subscription as reported by the provider.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Namespace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Namespace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Namespace",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Namespace.yml\" sourcestartlinenumber=\"1\">A namespace-level (organization/group) webhook.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Repository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Repository.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Repository",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.Repository.yml\" sourcestartlinenumber=\"1\">A repository-level webhook.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.GitWebhookTarget",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.yml\" sourcestartlinenumber=\"1\">Where a webhook subscription lives, as a closed union.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.yml\" sourcestartlinenumber=\"1\">Inbound side of webhooks: verifies a raw delivery's signature and parses it\ninto the neutral <xref href=\"Compendium.Abstractions.Git.Webhooks.GitWebhookEvent\" data-throw-if-not-resolved=\"false\"></xref> union. Pure and synchronous —\nit owns no HTTP endpoint; the host maps its own route and hands the raw\nbody/headers here. Requires\n<xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.WebhookIngestion\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.IGitWebhookService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.IGitWebhookService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks.IGitWebhookService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Git.Webhooks.IGitWebhookService.yml\" sourcestartlinenumber=\"1\">Outgoing webhook subscription management on a repository or namespace.\nRequires <xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapability.WebhookManagement\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.Webhooks.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.Webhooks.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git.Webhooks",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Git.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Git.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Git",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Abstractions.Identity.AdminUserProvisioningRequest.yml",
       "output": {
         ".html": {
@@ -2499,6 +4069,202 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Compendium.Abstractions.Jobs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.IMessagingConnector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.IMessagingConnector.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.IMessagingConnector",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.IMessagingConnector.yml\" sourcestartlinenumber=\"1\">Provider-agnostic, two-way connector to a conversational messaging platform\n(Telegram, Slack, Discord, Microsoft Teams, WhatsApp, or a generic webhook).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.MessagingErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.MessagingErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.MessagingErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.MessagingErrors.yml\" sourcestartlinenumber=\"1\">Standardized error definitions for conversational messaging operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.MessagingPlatforms.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.MessagingPlatforms.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.MessagingPlatforms",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.MessagingPlatforms.yml\" sourcestartlinenumber=\"1\">Well-known platform identifiers returned by <xref href=\"Compendium.Abstractions.Messaging.IMessagingConnector.Platform\" data-throw-if-not-resolved=\"false\"></xref>.\nOpen by design — a new connector may use any stable lowercase identifier.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.AttachmentKinds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.AttachmentKinds.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.AttachmentKinds",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.AttachmentKinds.yml\" sourcestartlinenumber=\"1\">Well-known <xref href=\"Compendium.Abstractions.Messaging.Models.MessageAttachment.Kind\" data-throw-if-not-resolved=\"false\"></xref> values.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.ChannelAck.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.ChannelAck.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.ChannelAck",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.ChannelAck.yml\" sourcestartlinenumber=\"1\">A verbatim HTTP response a connector asks the host to return, used for platform verification\nhandshakes that require echoing a token before message delivery is enabled.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.ChannelCredentials.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.ChannelCredentials.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.ChannelCredentials",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.ChannelCredentials.yml\" sourcestartlinenumber=\"1\">An opaque bag of per-tenant credentials supplied to a connector at call time (bot token,\nsigning secret, app id, ...). Kept generic so each platform reads the keys it needs; the host\npopulates it from its secret store for the tenant owning the inbound conversation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundEnvelope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundEnvelope.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.InboundEnvelope",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.InboundEnvelope.yml\" sourcestartlinenumber=\"1\">The result of parsing an inbound webhook: the normalized messages it carried (possibly none)\nplus an optional platform handshake response the host must echo back.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundMessage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.InboundMessage",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.InboundMessage.yml\" sourcestartlinenumber=\"1\">A normalized inbound message extracted from a platform webhook. Platform-specific shapes\n(Telegram update, Slack event, Discord interaction, ...) are projected onto this common type.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.InboundRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.InboundRequest",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.InboundRequest.yml\" sourcestartlinenumber=\"1\">A raw inbound webhook request as received by the host, decoupled from any web framework so\nconnectors can verify signatures and parse payloads without an ASP.NET dependency.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.MessageAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.MessageAttachment.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.MessageAttachment",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.MessageAttachment.yml\" sourcestartlinenumber=\"1\">A media or file attachment carried by an inbound or outbound message.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.OutboundMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.OutboundMessage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.OutboundMessage",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.OutboundMessage.yml\" sourcestartlinenumber=\"1\">A normalized message to deliver to a platform conversation. Connectors translate this into the\nplatform's native send call.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.OutboundReceipt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.OutboundReceipt.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models.OutboundReceipt",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Messaging.Models.OutboundReceipt.yml\" sourcestartlinenumber=\"1\">The outcome of an outbound delivery.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Messaging.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Messaging.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Messaging",
       "Summary": null
     },
     {
@@ -3231,6 +4997,356 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities.yml\" sourcestartlinenumber=\"1\">The declarative capability matrix of a secret-vault adapter. Consumers use\nit to drive UI affordances (hide or disable unsupported features with a\nreason) and adapters use <xref href=\"Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities.EnsureSupported(Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability)\" data-throw-if-not-resolved=\"false\"></xref> to fail uniformly.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability.yml\" sourcestartlinenumber=\"1\">The optional capabilities a secret-vault adapter can declare. Consumers use\nthe declared matrix to drive UI affordances and to select providers;\nadapters use <xref href=\"Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilities.EnsureSupported(Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability)\" data-throw-if-not-resolved=\"false\"></xref> to fail\nuniformly when an undeclared capability is invoked.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilityLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilityLevel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilityLevel",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilityLevel.yml\" sourcestartlinenumber=\"1\">The support level an adapter declares for a <xref href=\"Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapability\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilitySupport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilitySupport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilitySupport",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Capabilities.SecretVaultCapabilitySupport.yml\" sourcestartlinenumber=\"1\">An adapter's declared support for a single capability.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Capabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Capabilities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultConnection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultConnection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Connections.SecretVaultConnection",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Connections.SecretVaultConnection.yml\" sourcestartlinenumber=\"1\">Everything an adapter needs to reach one vault tenancy on one provider.\nPassed explicitly to every port method so adapters stay stateless\nsingletons and a single adapter instance can serve many tenancies\n(platform-owned today, per-tenant or BYO-vault later) without contract\nchanges.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.ApiToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.ApiToken.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.ApiToken",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.ApiToken.yml\" sourcestartlinenumber=\"1\">A durable API token or key (Scaleway IAM API key secret, Vault token,\ncloud key-vault access key).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.None.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.None.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.None",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.None.yml\" sourcestartlinenumber=\"1\">No credential material: for in-memory and null vaults, or adapters that\nauthenticate ambiently (workload identity, instance profile).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Connections.SecretVaultCredential",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Connections.SecretVaultCredential.yml\" sourcestartlinenumber=\"1\">The credential material of a <xref href=\"Compendium.Abstractions.Secrets.Connections.SecretVaultConnection\" data-throw-if-not-resolved=\"false\"></xref>, as a\nclosed union. Token-bearing members redact their material in\n<code>ToString()</code> so a logged connection never leaks a secret.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Connections.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Connections.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Connections",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.ISecretVault.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.ISecretVault.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.ISecretVault",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.ISecretVault.yml\" sourcestartlinenumber=\"1\">The secret-vault facade: one instance per provider adapter, carrying the\nprovider discriminator, the declarative capability matrix, and the\nconcern-scoped ports. Consumers resolve <code>IEnumerable&lt;ISecretVault&gt;</code>\nand dispatch on <xref href=\"Compendium.Abstractions.Secrets.ISecretVault.Provider\" data-throw-if-not-resolved=\"false\"></xref> (the sub-ports are also registered\nindividually for single-concern consumers).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.CreateVaultSecret.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.CreateVaultSecret.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.CreateVaultSecret",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.CreateVaultSecret.yml\" sourcestartlinenumber=\"1\">The request to create a secret container (which holds versions, but no\nmaterial yet — write the first version with\n<xref href=\"Compendium.Abstractions.Secrets.Services.ISecretVersionService.AddAsync(Compendium.Abstractions.Secrets.Connections.SecretVaultConnection%2cSystem.String%2cCompendium.Abstractions.Secrets.Model.SecretMaterial%2cSystem.String%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.SecretMaterial.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.SecretMaterial.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.SecretMaterial",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.SecretMaterial.yml\" sourcestartlinenumber=\"1\">The payload of one secret version. Wraps the raw bytes so the value can\nnever leak through <code>ToString()</code> (logging, interpolation, exception\nmessages). No zeroing guarantees are made — the .NET GC copies freely —\nso treat any process that held a material as having seen the plaintext.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.SecretScopePath.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.SecretScopePath.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.SecretScopePath",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.SecretScopePath.yml\" sourcestartlinenumber=\"1\">A validated hierarchical path (<code>/segment/segment/...</code>) locating a\nsecret inside a vault tenancy. The path is organizational only — callers\ndefine their own layout conventions; adapters map it onto the provider's\nfolder/path concept (or a name prefix when the provider has none). The\npath is never the secret's identity: consumers must address secrets by the\nprovider-side id returned at creation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretDescriptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretDescriptor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.VaultSecretDescriptor",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.VaultSecretDescriptor.yml\" sourcestartlinenumber=\"1\">A secret container as the provider reports it. Carries no material.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretVersion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.VaultSecretVersion",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.VaultSecretVersion.yml\" sourcestartlinenumber=\"1\">One immutable version of a secret, identified by its monotonically\nincreasing <xref href=\"Compendium.Abstractions.Secrets.Model.VaultSecretVersion.Revision\" data-throw-if-not-resolved=\"false\"></xref> (1-based). A revision number is never\nreused, which is what makes <code>(secretId, revision)</code> a stable value\nreference for history and rollback.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretVersionStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.VaultSecretVersionStatus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model.VaultSecretVersionStatus",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Model.VaultSecretVersionStatus.yml\" sourcestartlinenumber=\"1\">The lifecycle state of a single secret version.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Model.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Model.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Model",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.SecretVaultErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.SecretVaultErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.SecretVaultErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.SecretVaultErrors.yml\" sourcestartlinenumber=\"1\">Provides standardized error definitions for secret-vault operations.\nAdapters map provider responses onto these errors so consumers can handle\nfailures uniformly across providers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Services.ISecretContainerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Services.ISecretContainerService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Services.ISecretContainerService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Services.ISecretContainerService.yml\" sourcestartlinenumber=\"1\">Secret container lifecycle: create, describe, list, delete. Containers\nhold versions (<xref href=\"Compendium.Abstractions.Secrets.Services.ISecretVersionService\" data-throw-if-not-resolved=\"false\"></xref>); they carry no\nmaterial themselves.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Services.ISecretVersionService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Services.ISecretVersionService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Services.ISecretVersionService",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Services.ISecretVersionService.yml\" sourcestartlinenumber=\"1\">Immutable secret versions. Every read addresses an explicit revision —\nthe port has no &quot;latest&quot; concept, deliberately: which revision is current\nis the caller's metadata, so history stays stable and rollback is a\nre-pointing of references, independent of provider-side mutable state.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Services.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Services",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Stubs.NullSecretVault.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Stubs.NullSecretVault.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Stubs.NullSecretVault",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Secrets.Stubs.NullSecretVault.yml\" sourcestartlinenumber=\"1\">The fail-fast vault registered when no provider is configured: every\noperation fails with <code>SecretVault.NotConfigured</code>. Keeps consumers\nhonest — a missing configuration surfaces as a uniform, diagnosable error\ninstead of a null reference or a silent no-op.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.Stubs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.Stubs.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets.Stubs",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Secrets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Secrets.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Secrets",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Abstractions.Speech.ISpeechToText.yml",
       "output": {
         ".html": {
@@ -3423,6 +5539,146 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Compendium.Abstractions.Speech",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.IObjectStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.IObjectStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.IObjectStore",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.IObjectStore.yml\" sourcestartlinenumber=\"1\">Provides provider-agnostic object/blob storage operations.\nImplementations target backends such as AWS S3, Azure Blob Storage, Google Cloud Storage,\nMinIO, or local filesystems.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ListOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.ListOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.ListOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ListOptions.yml\" sourcestartlinenumber=\"1\">Specifies options for listing objects in an object store.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ListPage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.ListPage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.ListPage",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ListPage.yml\" sourcestartlinenumber=\"1\">Represents a single page of results returned by <xref href=\"Compendium.Abstractions.Storage.IObjectStore.ListAsync(Compendium.Abstractions.Storage.Models.ListOptions%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.ObjectInfo",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectInfo.yml\" sourcestartlinenumber=\"1\">Describes an object stored in an object store.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectMetadata.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.ObjectMetadata",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectMetadata.yml\" sourcestartlinenumber=\"1\">Describes metadata applied to an object on upload.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectStream.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.ObjectStream",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectStream.yml\" sourcestartlinenumber=\"1\">Represents the content of an object together with its metadata, returned by\n<xref href=\"Compendium.Abstractions.Storage.IObjectStore.GetAsync(System.String%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.PresignedAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.PresignedAction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models.PresignedAction",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.PresignedAction.yml\" sourcestartlinenumber=\"1\">Specifies the action allowed by a presigned URL.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.StorageErrors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.StorageErrors.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage.StorageErrors",
+      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.StorageErrors.yml\" sourcestartlinenumber=\"1\">Provides standardized error definitions for object-storage operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Abstractions.Storage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Abstractions.Storage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Abstractions.Storage",
       "Summary": null
     },
     {
@@ -3889,716 +6145,352 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.LemonSqueezy.Configuration.LemonSqueezyOptions.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.DependencyInjection.ServiceCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.LemonSqueezy.Configuration.LemonSqueezyOptions.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.DependencyInjection.ServiceCollectionExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.LemonSqueezy.Configuration.LemonSqueezyOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.LemonSqueezy.Configuration.LemonSqueezyOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for LemonSqueezy adapter.</p>\n"
+      "Title": "Compendium.Adapters.ClaudeCode.DependencyInjection.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.ClaudeCode.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI extensions for registering the Claude Code coding-agent adapter.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.LemonSqueezy.Configuration.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.DependencyInjection.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.LemonSqueezy.Configuration.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.DependencyInjection.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.LemonSqueezy.Configuration",
+      "Title": "Compendium.Adapters.ClaudeCode.DependencyInjection",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.LemonSqueezy.DependencyInjection.ServiceCollectionExtensions.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntime.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.LemonSqueezy.DependencyInjection.ServiceCollectionExtensions.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntime.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.LemonSqueezy.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.LemonSqueezy.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering LemonSqueezy adapter services.</p>\n"
+      "Title": "Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntime",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntime.yml\" sourcestartlinenumber=\"1\"><xref href=\"Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime\" data-throw-if-not-resolved=\"false\"></xref> implementation that drives the\n<code>claude</code> CLI. Composes the <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CliCodingAgentRuntime\" data-throw-if-not-resolved=\"false\"></xref>\nbase: builds the argv from <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions.Parameters\" data-throw-if-not-resolved=\"false\"></xref>,\nparses the CLI's <code>stream-json</code> NDJSON output via\n<xref href=\"Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeStreamParser\" data-throw-if-not-resolved=\"false\"></xref>, and provisions an\n<xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> appropriate for the requested\n<xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.SandboxKind\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.LemonSqueezy.DependencyInjection.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntimeDefaults.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.LemonSqueezy.DependencyInjection.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntimeDefaults.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.LemonSqueezy.DependencyInjection",
+      "Title": "Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntimeDefaults",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.ClaudeCode.Runtime.ClaudeCodeRuntimeDefaults.yml\" sourcestartlinenumber=\"1\">Constants used by the Claude Code adapter: the engine identifier exposed\nvia <xref href=\"Compendium.Abstractions.CodingAgents.Runtime.ICodingAgentRuntime.Engine\" data-throw-if-not-resolved=\"false\"></xref>, the default executable name,\nand the recognised parameter keys read from\n<xref href=\"Compendium.Abstractions.CodingAgents.Runtime.CodingAgentRuntimeOptions.Parameters\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.Runtime.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Adapters.ClaudeCode.Runtime",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Listmonk.Configuration.ListmonkOptions.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.Sandbox.LocalAgentSandbox.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.Listmonk.Configuration.ListmonkOptions.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.Sandbox.LocalAgentSandbox.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.Listmonk.Configuration.ListmonkOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Listmonk.Configuration.ListmonkOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the Listmonk email service adapter.</p>\n"
+      "Title": "Compendium.Adapters.ClaudeCode.Sandbox.LocalAgentSandbox",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.ClaudeCode.Sandbox.LocalAgentSandbox.yml\" sourcestartlinenumber=\"1\">A minimal <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> that runs commands directly on the\nhost, rooted at a chosen working directory. Provides file-system scoping\nbut no kernel-level isolation. Intended for local development and tests\nagainst the Claude Code CLI when a Kubernetes sandbox is not available.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Listmonk.Configuration.yml",
+      "source_relative_path": "api/Compendium.Adapters.ClaudeCode.Sandbox.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.Listmonk.Configuration.html"
+          "relative_path": "api/Compendium.Adapters.ClaudeCode.Sandbox.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.Listmonk.Configuration",
+      "Title": "Compendium.Adapters.ClaudeCode.Sandbox",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Listmonk.DependencyInjection.ServiceCollectionExtensions.yml",
+      "source_relative_path": "api/Compendium.Adapters.GitHub.Configuration.GitHubAdapterOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.Listmonk.DependencyInjection.ServiceCollectionExtensions.html"
+          "relative_path": "api/Compendium.Adapters.GitHub.Configuration.GitHubAdapterOptions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.Listmonk.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Listmonk.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering Listmonk services in the dependency injection container.</p>\n"
+      "Title": "Compendium.Adapters.GitHub.Configuration.GitHubAdapterOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.GitHub.Configuration.GitHubAdapterOptions.yml\" sourcestartlinenumber=\"1\">Options for the GitHub adapter. Holds the platform's GitHub App registration(s)\nused to mint installation tokens and to build install URLs, plus the REST API\nbase URL for github.com (overridden per connection for GitHub Enterprise Server\nvia <xref href=\"Compendium.Abstractions.Git.Connections.GitConnection.ServerUrl\" data-throw-if-not-resolved=\"false\"></xref>).</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Listmonk.DependencyInjection.yml",
+      "source_relative_path": "api/Compendium.Adapters.GitHub.Configuration.GitHubAppRegistration.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.Listmonk.DependencyInjection.html"
+          "relative_path": "api/Compendium.Adapters.GitHub.Configuration.GitHubAppRegistration.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.Listmonk.DependencyInjection",
+      "Title": "Compendium.Adapters.GitHub.Configuration.GitHubAppRegistration",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.GitHub.Configuration.GitHubAppRegistration.yml\" sourcestartlinenumber=\"1\">A single GitHub App registration: the identity and private key used to mint\nApp JWTs and installation tokens, the slug used to build the install URL, and\nthe webhook signing secret.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Adapters.GitHub.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Adapters.GitHub.Configuration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Adapters.GitHub.Configuration",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.ModelConfig.yml",
+      "source_relative_path": "api/Compendium.Adapters.GitHub.DependencyInjection.ServiceCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.ModelConfig.html"
+          "relative_path": "api/Compendium.Adapters.GitHub.DependencyInjection.ServiceCollectionExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.OpenRouter.Configuration.ModelConfig",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.OpenRouter.Configuration.ModelConfig.yml\" sourcestartlinenumber=\"1\">Configuration for a specific model.</p>\n"
+      "Title": "Compendium.Adapters.GitHub.DependencyInjection.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.GitHub.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI extensions for registering the GitHub <xref href=\"Compendium.Abstractions.Git.IGitServer\" data-throw-if-not-resolved=\"false\"></xref> adapter.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.OpenRouterOptions.yml",
+      "source_relative_path": "api/Compendium.Adapters.GitHub.DependencyInjection.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.OpenRouterOptions.html"
+          "relative_path": "api/Compendium.Adapters.GitHub.DependencyInjection.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.OpenRouter.Configuration.OpenRouterOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.OpenRouter.Configuration.OpenRouterOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the OpenRouter AI provider.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.OpenRouter.Configuration.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.OpenRouter.Configuration",
+      "Title": "Compendium.Adapters.GitHub.DependencyInjection",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.OpenRouter.DependencyInjection.ServiceCollectionExtensions.yml",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.ServiceCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.OpenRouter.DependencyInjection.ServiceCollectionExtensions.html"
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.ServiceCollectionExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.OpenRouter.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.OpenRouter.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for configuring OpenRouter services.</p>\n"
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI helpers for <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref>. Consumers register the\nadapter once via <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.ServiceCollectionExtensions.AddKubernetesAgentSandbox(Microsoft.Extensions.DependencyInjection.IServiceCollection%2cSystem.Action%7bCompendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions%7d)\" data-throw-if-not-resolved=\"false\"></xref>; downstream coding-agent\nruntimes resolve <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory\" data-throw-if-not-resolved=\"false\"></xref> to mint a fresh\nsandbox per run.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.OpenRouter.DependencyInjection.yml",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.OpenRouter.DependencyInjection.html"
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.OpenRouter.DependencyInjection",
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlConnectionStringBuilder.yml",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlConnectionStringBuilder.html"
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlConnectionStringBuilder",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlConnectionStringBuilder.yml\" sourcestartlinenumber=\"1\">Helper class for building PostgreSQL connection strings with optimized pooling parameters.\nEnhances base connection strings with Npgsql-specific pooling configuration.</p>\n"
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory.yml\" sourcestartlinenumber=\"1\">Produces fresh <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> instances on demand. Each\ncall returns an un-started sandbox; the caller is responsible for invoking\n<xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox.StartAsync(Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref> and <xref href=\"System.IAsyncDisposable.DisposeAsync\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlOptions.yml",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlOptions.html"
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Configuration.PostgreSqlOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for PostgreSQL event store.</p>\n"
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.yml\" sourcestartlinenumber=\"1\"><xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref> backed by an ephemeral Kubernetes pod. Each\ninstance owns exactly one pod: <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.StartAsync(Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref> creates it and waits\nfor <code>Running</code>; subsequent calls run inside it through\n<code>kubectl exec</code>-equivalent API streams; <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox.DisposeAsync\" data-throw-if-not-resolved=\"false\"></xref>\ndeletes the pod (best-effort) so resources are released even if the caller\nfaulted.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.yml",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxFactory.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Configuration.html"
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxFactory.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Configuration",
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxFactory",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxFactory.yml\" sourcestartlinenumber=\"1\">Default implementation of <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.IKubernetesAgentSandboxFactory\" data-throw-if-not-resolved=\"false\"></xref> that\nreuses a single <xref href=\"k8s.IKubernetes\" data-throw-if-not-resolved=\"false\"></xref> client across every sandbox it\nproduces (the client is thread-safe and connection-pooled).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Kubernetes.Sandbox.KubernetesSandboxOptions.yml\" sourcestartlinenumber=\"1\">Adapter-level defaults for <xref href=\"Compendium.Adapters.Kubernetes.Sandbox.KubernetesAgentSandbox\" data-throw-if-not-resolved=\"false\"></xref>. These are\nthe values used when the per-run <xref href=\"Compendium.Abstractions.CodingAgents.Sandbox.SandboxOptions\" data-throw-if-not-resolved=\"false\"></xref>\ndoes not override them, and the values that govern adapter behavior that is\nnot represented on the neutral port (RBAC service account, resource limits,\nnetwork policy, PVC).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Adapters.Kubernetes.Sandbox.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Adapters.Kubernetes.Sandbox",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.DependencyInjection.ServiceCollectionExtensions.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.Configuration.ScalewaySecretManagerOptions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.DependencyInjection.ServiceCollectionExtensions.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.Configuration.ScalewaySecretManagerOptions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering PostgreSQL adapters in the dependency injection container.</p>\n"
+      "Title": "Compendium.Adapters.Scaleway.SecretManager.Configuration.ScalewaySecretManagerOptions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Scaleway.SecretManager.Configuration.ScalewaySecretManagerOptions.yml\" sourcestartlinenumber=\"1\">Adapter options. Deliberately credential-free: the IAM secret key travels\nin the <xref href=\"Compendium.Abstractions.Secrets.Connections.SecretVaultConnection\" data-throw-if-not-resolved=\"false\"></xref>\npassed to every call, so one adapter instance serves any number of\ntenancies and no secret lives in host configuration.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.DependencyInjection.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.Configuration.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.DependencyInjection.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.Configuration.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.DependencyInjection",
+      "Title": "Compendium.Adapters.Scaleway.SecretManager.Configuration",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlEventStore.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.ServiceCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlEventStore.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.ServiceCollectionExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlEventStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlEventStore.yml\" sourcestartlinenumber=\"1\">PostgreSQL implementation of IEventStore using Dapper for high performance.\nProvides ACID compliance, optimistic concurrency control, and multi-tenancy support.</p>\n"
+      "Title": "Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI extensions for registering the Scaleway Secret Manager\n<xref href=\"Compendium.Abstractions.Secrets.ISecretVault\" data-throw-if-not-resolved=\"false\"></xref> adapter.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlStreamingEventStore.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlStreamingEventStore.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.DependencyInjection.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlStreamingEventStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.EventStore.PostgreSqlStreamingEventStore.yml\" sourcestartlinenumber=\"1\">PostgreSQL implementation of IStreamingEventStore with optimized streaming capabilities for projections.\nExtends the base PostgreSqlEventStore with efficient streaming methods.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.EventStore.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.EventStore",
+      "Title": "Compendium.Adapters.Scaleway.SecretManager.DependencyInjection",
       "Summary": null
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionCheckpointStore.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.ScalewaySecretVault.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionCheckpointStore.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.ScalewaySecretVault.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionCheckpointStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionCheckpointStore.yml\" sourcestartlinenumber=\"1\">PostgreSQL implementation of IProjectionCheckpointStore for per-aggregate projection checkpointing.\nStores checkpoint positions with composite key (projection_id, aggregate_id) for independent rebuild tracking.</p>\n"
+      "Title": "Compendium.Adapters.Scaleway.SecretManager.ScalewaySecretVault",
+      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Scaleway.SecretManager.ScalewaySecretVault.yml\" sourcestartlinenumber=\"1\">The Scaleway Secret Manager <xref href=\"Compendium.Abstractions.Secrets.ISecretVault\" data-throw-if-not-resolved=\"false\"></xref>: a stateless\nsingleton facade over the regional v1beta1 API. See CAPABILITIES.md for\nthe declared matrix and its limitations.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionStore.yml",
+      "source_relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionStore.html"
+          "relative_path": "api/Compendium.Adapters.Scaleway.SecretManager.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Projections.PostgreSqlProjectionStore.yml\" sourcestartlinenumber=\"1\">PostgreSQL implementation of IProjectionStore with optimized checkpoint and snapshot management.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Projections.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Projections",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.PostgreSqlSagaServiceCollectionExtensions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.PostgreSqlSagaServiceCollectionExtensions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.PostgreSqlSagaServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.PostgreSqlSagaServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI helpers to wire the PostgreSQL <xref href=\"Compendium.Abstractions.Sagas.ProcessManagers.IProcessManagerRepository\" data-throw-if-not-resolved=\"false\"></xref> implementation.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Sagas.DependencyInjection",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.PostgresProcessManagerRepository.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.PostgresProcessManagerRepository.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Sagas.PostgresProcessManagerRepository",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Sagas.PostgresProcessManagerRepository.yml\" sourcestartlinenumber=\"1\">PostgreSQL implementation of <xref href=\"Compendium.Abstractions.Sagas.ProcessManagers.IProcessManagerRepository\" data-throw-if-not-resolved=\"false\"></xref>. Persists\nprocess-manager metadata, a JSON snapshot of state (best-effort, optional), and the\nper-step status table. Multi-tenant aware via <xref href=\"Compendium.Multitenancy.ITenantContext\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Sagas.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Sagas",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for PostgreSQL Row-Level Security (RLS) support.\nCOMP-023: Multi-Tenancy Security Hardening</p>\n<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"4\">These extensions provide defense-in-depth security by setting database-level\ntenant context for RLS policies. RLS provides protection against:</p>\n<ul sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"6\">\n<li sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"6\">Application bugs that bypass tenant filtering</li>\n<li sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"7\">Direct database access (admin tools, reporting)</li>\n<li sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"8\">SQL injection attacks</li>\n</ul>\n<p sourcefile=\"api/Compendium.Adapters.PostgreSQL.Security.RowLevelSecurityExtensions.yml\" sourcestartlinenumber=\"10\">IMPORTANT: RLS is an OPTIONAL security enhancement. The Compendium framework\nalready enforces 100% tenant isolation at the application level.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.PostgreSQL.Security.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.PostgreSQL.Security.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.PostgreSQL.Security",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Configuration.RedisOptions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Configuration.RedisOptions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Configuration.RedisOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Redis.Configuration.RedisOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for Redis connections and behavior.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Configuration.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Configuration.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Configuration",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.DependencyInjection.ServiceCollectionExtensions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.DependencyInjection.ServiceCollectionExtensions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Redis.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering Redis adapters in the dependency injection container.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.DependencyInjection.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.DependencyInjection.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.DependencyInjection",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Idempotency.RedisIdempotencyStore.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Idempotency.RedisIdempotencyStore.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Idempotency.RedisIdempotencyStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Redis.Idempotency.RedisIdempotencyStore.yml\" sourcestartlinenumber=\"1\">Redis implementation of IIdempotencyStore for distributed idempotency tracking.\nProvides high-performance, distributed storage for operation results with configurable TTL.\nAll infrastructure failures (Redis connection, serialization, timeouts) are surfaced via\n<xref href=\"Compendium.Core.Results.Result%601\" data-throw-if-not-resolved=\"false\"></xref> failures rather than exceptions, matching the Compendium Result pattern.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Idempotency.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Idempotency.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Idempotency",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Projections.RedisProjectionCheckpointStore.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Projections.RedisProjectionCheckpointStore.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Projections.RedisProjectionCheckpointStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Redis.Projections.RedisProjectionCheckpointStore.yml\" sourcestartlinenumber=\"1\">Redis implementation of IProjectionCheckpointStore for high-performance projection checkpointing.\nUses Redis hash sets to store checkpoint positions with automatic expiration support.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Redis.Projections.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Redis.Projections.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Redis.Projections",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Stripe.Configuration.StripeOptions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Stripe.Configuration.StripeOptions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Stripe.Configuration.StripeOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Stripe.Configuration.StripeOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the Stripe billing adapter.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Stripe.Configuration.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Stripe.Configuration.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Stripe.Configuration",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Stripe.DependencyInjection.ServiceCollectionExtensions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Stripe.DependencyInjection.ServiceCollectionExtensions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Stripe.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Stripe.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering the Stripe billing adapter services.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Stripe.DependencyInjection.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Stripe.DependencyInjection.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Stripe.DependencyInjection",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Authentication.ZitadelClaimsTransformation.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Authentication.ZitadelClaimsTransformation.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Authentication.ZitadelClaimsTransformation",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Zitadel.Authentication.ZitadelClaimsTransformation.yml\" sourcestartlinenumber=\"1\">Transforms Zitadel-specific claims into standard claims for the application.\nThis enables mapping of Zitadel organization IDs to tenant contexts.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Authentication.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Authentication.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Authentication",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Configuration.ZitadelEndUserOptions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Configuration.ZitadelEndUserOptions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Configuration.ZitadelEndUserOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Zitadel.Configuration.ZitadelEndUserOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the Zitadel End-User adapter.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Configuration.ZitadelOptions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Configuration.ZitadelOptions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Configuration.ZitadelOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Zitadel.Configuration.ZitadelOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the Zitadel adapter.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Configuration.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Configuration.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Configuration",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.DependencyInjection.ServiceCollectionExtensions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.DependencyInjection.ServiceCollectionExtensions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.DependencyInjection.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Zitadel.DependencyInjection.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering Zitadel services in the dependency injection container.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.DependencyInjection.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.DependencyInjection.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.DependencyInjection",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Health.ZitadelHealthCheck.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Health.ZitadelHealthCheck.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Health.ZitadelHealthCheck",
-      "Summary": "<p sourcefile=\"api/Compendium.Adapters.Zitadel.Health.ZitadelHealthCheck.yml\" sourcestartlinenumber=\"1\">Health check for Zitadel Identity Provider connectivity.\nVerifies the OIDC discovery endpoint is accessible and configuration is valid.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Adapters.Zitadel.Health.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Adapters.Zitadel.Health.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Adapters.Zitadel.Health",
+      "Title": "Compendium.Adapters.Scaleway.SecretManager",
       "Summary": null
     },
     {
@@ -6857,58 +8749,44 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersConfigurationSections.yml",
+      "source_relative_path": "api/Compendium.Infrastructure.Caching.InMemoryCache.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersConfigurationSections.html"
+          "relative_path": "api/Compendium.Infrastructure.Caching.InMemoryCache.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Extensions.ExternalAdapters.ExternalAdaptersConfigurationSections",
-      "Summary": "<p sourcefile=\"api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersConfigurationSections.yml\" sourcestartlinenumber=\"1\">Configuration section names for external adapters.</p>\n"
+      "Title": "Compendium.Infrastructure.Caching.InMemoryCache",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Caching.InMemoryCache.yml\" sourcestartlinenumber=\"1\">In-memory implementation of <xref href=\"Compendium.Abstractions.Caching.ICache\" data-throw-if-not-resolved=\"false\"></xref> backed by\n<xref href=\"Microsoft.Extensions.Caching.Memory.IMemoryCache\" data-throw-if-not-resolved=\"false\"></xref>. Suitable for single-process scenarios, tests,\nand framework E2E samples. For multi-instance deployments, use a distributed\nadapter (e.g. <code>Compendium.Adapters.Redis</code>).</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersOptions.yml",
+      "source_relative_path": "api/Compendium.Infrastructure.Caching.ServiceCollectionExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersOptions.html"
+          "relative_path": "api/Compendium.Infrastructure.Caching.ServiceCollectionExtensions.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Extensions.ExternalAdapters.ExternalAdaptersOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Extensions.ExternalAdapters.ExternalAdaptersOptions.yml\" sourcestartlinenumber=\"1\">Unified configuration options for all external adapters.</p>\n"
+      "Title": "Compendium.Infrastructure.Caching.ServiceCollectionExtensions",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Caching.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">DI extension methods for registering the in-memory <xref href=\"Compendium.Abstractions.Caching.ICache\" data-throw-if-not-resolved=\"false\"></xref> adapter.</p>\n"
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Extensions.ExternalAdapters.ServiceCollectionExtensions.yml",
+      "source_relative_path": "api/Compendium.Infrastructure.Caching.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Compendium.Extensions.ExternalAdapters.ServiceCollectionExtensions.html"
+          "relative_path": "api/Compendium.Infrastructure.Caching.html"
         }
       },
       "version": "",
       "Uid": null,
       "IsMRef": true,
-      "Title": "Compendium.Extensions.ExternalAdapters.ServiceCollectionExtensions",
-      "Summary": "<p sourcefile=\"api/Compendium.Extensions.ExternalAdapters.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for registering all external adapter services.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Extensions.ExternalAdapters.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Extensions.ExternalAdapters.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Extensions.ExternalAdapters",
+      "Title": "Compendium.Infrastructure.Caching",
       "Summary": null
     },
     {
@@ -6980,6 +8858,20 @@
       "IsMRef": true,
       "Title": "Compendium.Infrastructure.EventSourcing.InMemorySnapshotStore",
       "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.EventSourcing.InMemorySnapshotStore.yml\" sourcestartlinenumber=\"1\">In-memory implementation of ISnapshotStore for testing and development purposes.\nProvides thread-safe snapshot storage with multi-tenancy support.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.yml\" sourcestartlinenumber=\"1\">In-memory implementation of <xref href=\"Compendium.Infrastructure.Projections.IStreamingEventStore\" data-throw-if-not-resolved=\"false\"></xref> for testing\nand InMemory-backed framework E2E scenarios.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -7105,6 +8997,34 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "Compendium.Infrastructure.EventSourcing",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.yml\" sourcestartlinenumber=\"1\">In-memory implementation of <xref href=\"Compendium.Application.Idempotency.IIdempotencyStore\" data-throw-if-not-resolved=\"false\"></xref> for testing\nand InMemory-backed framework E2E scenarios. Thread-safe; expiring entries\nare pruned lazily on read.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Idempotency.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Idempotency.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Idempotency",
       "Summary": null
     },
     {
@@ -7666,6 +9586,34 @@
       "IsMRef": true,
       "Title": "Compendium.Infrastructure.Projections.IStreamingEventStore",
       "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.IStreamingEventStore.yml\" sourcestartlinenumber=\"1\">Extended event store interface that supports streaming operations for projections.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Projections.InMemoryProjectionCheckpointStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Projections.InMemoryProjectionCheckpointStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Projections.InMemoryProjectionCheckpointStore",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.InMemoryProjectionCheckpointStore.yml\" sourcestartlinenumber=\"1\">In-memory implementation of <xref href=\"Compendium.Infrastructure.EventSourcing.IProjectionCheckpointStore\" data-throw-if-not-resolved=\"false\"></xref> for testing\nand InMemory-backed framework E2E scenarios. Thread-safe via <xref href=\"System.Collections.Concurrent.ConcurrentDictionary%602\" data-throw-if-not-resolved=\"false\"></xref>;\ndata lives for the lifetime of the instance (no persistence).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Projections.InMemoryProjectionStore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Projections.InMemoryProjectionStore.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Projections.InMemoryProjectionStore",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.InMemoryProjectionStore.yml\" sourcestartlinenumber=\"1\">In-memory implementation of <xref href=\"Compendium.Infrastructure.Projections.IProjectionStore\" data-throw-if-not-resolved=\"false\"></xref> for testing and\nInMemory-backed framework E2E scenarios.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -8747,6 +10695,90 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Git.GitServerContractTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Git.GitServerContractTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Git.GitServerContractTests",
+      "Summary": "<p sourcefile=\"api/Compendium.Testing.Git.GitServerContractTests.yml\" sourcestartlinenumber=\"1\">The behavioral contract every <xref href=\"Compendium.Abstractions.Git.IGitServer\" data-throw-if-not-resolved=\"false\"></xref> adapter must satisfy.\nInherit in the adapter's test suite and provide the fixture members; tests\nfor capabilities the adapter does not declare are skipped automatically\n(capability honesty is itself asserted: a declared capability must work).\n<xref href=\"Compendium.Testing.Git.InMemoryGitServer\" data-throw-if-not-resolved=\"false\"></xref> subscribes to this contract, keeping the\nfake and real adapters aligned.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Git.InMemoryGitServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Git.InMemoryGitServer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Git.InMemoryGitServer",
+      "Summary": "<p sourcefile=\"api/Compendium.Testing.Git.InMemoryGitServer.yml\" sourcestartlinenumber=\"1\">Full-fidelity in-memory <xref href=\"Compendium.Abstractions.Git.IGitServer\" data-throw-if-not-resolved=\"false\"></xref> fake for tests and dev mode.\nDeclares every capability as <xref href=\"Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.Full\" data-throw-if-not-resolved=\"false\"></xref> and keeps\nall state in memory: repositories created from templates, secret NAMES\n(values are discarded — mirroring the write-only semantics of real\nproviders), variables, deployment environments, branch policies, teams,\nwebhook subscriptions, and pipeline runs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Git.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Git.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Git",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Secrets.InMemorySecretVault.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Secrets.InMemorySecretVault.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Secrets.InMemorySecretVault",
+      "Summary": "<p sourcefile=\"api/Compendium.Testing.Secrets.InMemorySecretVault.yml\" sourcestartlinenumber=\"1\">A full-fidelity in-memory <xref href=\"Compendium.Abstractions.Secrets.ISecretVault\" data-throw-if-not-resolved=\"false\"></xref> for tests and dev\nhosts: immutable monotonic revisions, enable/disable/destroy semantics,\npath-prefix listing and tag filters, thread-safe, with a call log for\ninteraction assertions. Subscribes to <xref href=\"Compendium.Testing.Secrets.SecretVaultContractTests\" data-throw-if-not-resolved=\"false\"></xref>\nso the fake and real adapters stay behaviorally aligned.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Secrets.SecretVaultContractTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Secrets.SecretVaultContractTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Secrets.SecretVaultContractTests",
+      "Summary": "<p sourcefile=\"api/Compendium.Testing.Secrets.SecretVaultContractTests.yml\" sourcestartlinenumber=\"1\">The behavioral contract every <xref href=\"Compendium.Abstractions.Secrets.ISecretVault\" data-throw-if-not-resolved=\"false\"></xref> adapter must\nsatisfy. Inherit in the adapter's test suite and provide the fixture\nmembers; tests for capabilities the adapter does not declare are skipped\nautomatically (capability honesty is itself asserted: a declared\ncapability must work). <xref href=\"Compendium.Testing.Secrets.InMemorySecretVault\" data-throw-if-not-resolved=\"false\"></xref> subscribes to\nthis contract, keeping the fake and real adapters aligned. Passing this\nsuite is what makes swapping vault backends safe.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Testing.Secrets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Testing.Secrets.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Testing.Secrets",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Testing.TestHelpers.ApplicationTestHelpers.yml",
       "output": {
         ".html": {
@@ -8791,11 +10823,11 @@
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "api/toc.html"
-        },
         ".json": {
           "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
         }
       },
       "version": ""
@@ -8844,11 +10876,11 @@
       "type": "Toc",
       "source_relative_path": "concepts/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "concepts/toc.html"
-        },
         ".json": {
           "relative_path": "concepts/toc.json"
+        },
+        ".html": {
+          "relative_path": "concepts/toc.html"
         }
       },
       "version": ""
@@ -8869,6 +10901,16 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operations/coding-agent-sandbox.md",
+      "output": {
+        ".html": {
+          "relative_path": "operations/coding-agent-sandbox.html"
         }
       },
       "version": ""
@@ -8914,14 +10956,24 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "testing/perf-testing.md",
+      "output": {
+        ".html": {
+          "relative_path": "testing/perf-testing.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "toc.html"
-        },
         ".json": {
           "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
         }
       },
       "version": ""

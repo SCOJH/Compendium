@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Infrastructure_Projections_IStreamingEventStore" data-uid="Compendium.Infrastructure.Projections.IStreamingEventStore" class="text-break">
-Interface IStreamingEventStore  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L15"><i class="bi bi-code-slash"></i></a>
+Interface IStreamingEventStore  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -153,7 +153,7 @@ Interface IStreamingEventStore  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Infrastructure_Projections_IStreamingEventStore_GetEventCountAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Projections.IStreamingEventStore.GetEventCountAsync(System.String,System.Threading.CancellationToken)">
   GetEventCountAsync(string?, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the total count of events for estimating rebuild progress.</p>
@@ -195,7 +195,7 @@ Interface IStreamingEventStore  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Infrastructure_Projections_IStreamingEventStore_GetMaxGlobalPositionAsync_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Projections.IStreamingEventStore.GetMaxGlobalPositionAsync(System.Threading.CancellationToken)">
   GetMaxGlobalPositionAsync(CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the highest global position in the event store.</p>
@@ -234,7 +234,7 @@ Interface IStreamingEventStore  <a class="header-action link-secondary" title="V
 
   <h3 id="Compendium_Infrastructure_Projections_IStreamingEventStore_StreamEventsAsync_System_String_System_Int64_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Projections.IStreamingEventStore.StreamEventsAsync(System.String,System.Int64,System.Threading.CancellationToken)">
   StreamEventsAsync(string?, long, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Streams events from all streams starting from a global position.
@@ -252,7 +252,7 @@ Used for projection rebuilds and live processing.</p>
     <dd><p>Optional stream identifier to filter by specific stream.</p>
 </dd>
     <dt><code>fromPosition</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
-    <dd><p>The global position to start from (inclusive).</p>
+    <dd><p>The global position to start from (exclusive — events with positions <code>&gt; fromPosition</code> are yielded).</p>
 </dd>
     <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
     <dd><p>The cancellation token.</p>
@@ -280,7 +280,7 @@ Used for projection rebuilds and live processing.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/IStreamingEventStore.cs/#L15" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent" class="text-break">
-Class TenantDeletedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L89"><i class="bi bi-code-slash"></i></a>
+Class TenantDeletedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L116"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent__ctor_System_String_System_String_System_DateTimeOffset_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.#ctor(System.String,System.String,System.DateTimeOffset,System.Boolean)">
-  TenantDeletedEvent(string, string, DateTimeOffset, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent__ctor_System_String_System_DateTimeOffset_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.#ctor(System.String,System.DateTimeOffset,System.Boolean)">
+  TenantDeletedEvent(string, DateTimeOffset, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L116"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant is deleted.</p>
@@ -192,14 +192,11 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantDeletedEvent(string TenantId, string Name, DateTimeOffset DeletedAt, bool IsSoftDelete)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantDeletedEvent(string Name, DateTimeOffset DeletedAt, bool IsSoftDelete)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -222,6 +219,44 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent__ctor_System_String_System_String_System_DateTimeOffset_System_Boolean_" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.#ctor(System.String,System.String,System.DateTimeOffset,System.Boolean)">
+  TenantDeletedEvent(string, string, DateTimeOffset, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantDeletedEvent(string TenantId, string Name, DateTimeOffset DeletedAt, bool IsSoftDelete)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>DeletedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+    <dt><code>IsSoftDelete</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -230,7 +265,7 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent_DeletedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.DeletedAt">
   DeletedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L118"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the tenant was deleted.</p>
@@ -262,7 +297,7 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -294,7 +329,7 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent_IsSoftDelete" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.IsSoftDelete">
   IsSoftDelete
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this is a soft delete or hard delete.</p>
@@ -326,7 +361,7 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantDeletedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantDeletedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -358,7 +393,7 @@ Class TenantDeletedEvent  <a class="header-action link-secondary" title="View so
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L89" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L116" class="edit-link">Edit this page</a>
         </div>
 
 

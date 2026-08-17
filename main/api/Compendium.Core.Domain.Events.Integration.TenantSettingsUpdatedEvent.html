@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent" class="text-break">
-Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L192"><i class="bi bi-code-slash"></i></a>
+Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L244"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent__ctor_System_String_System_String_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.#ctor(System.String,System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.DateTimeOffset,System.String)">
-  TenantSettingsUpdatedEvent(string, string, string, IReadOnlyDictionary&lt;string, string?&gt;, DateTimeOffset, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent__ctor_System_String_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.DateTimeOffset,System.String)">
+  TenantSettingsUpdatedEvent(string, string, IReadOnlyDictionary&lt;string, string?&gt;, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L244"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when tenant settings are updated.</p>
@@ -192,14 +192,11 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantSettingsUpdatedEvent(string TenantId, string Name, string SettingsCategory, IReadOnlyDictionary&lt;string, string?&gt; ChangedSettings, DateTimeOffset UpdatedAt, string? UpdatedBy)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantSettingsUpdatedEvent(string Name, string SettingsCategory, IReadOnlyDictionary&lt;string, string?&gt; ChangedSettings, DateTimeOffset UpdatedAt, string? UpdatedBy)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the tenant.</p>
 </dd>
@@ -228,6 +225,48 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent__ctor_System_String_System_String_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.#ctor(System.String,System.String,System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.DateTimeOffset,System.String)">
+  TenantSettingsUpdatedEvent(string, string, string, IReadOnlyDictionary&lt;string, string?&gt;, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L252"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantSettingsUpdatedEvent(string TenantId, string Name, string SettingsCategory, IReadOnlyDictionary&lt;string, string?&gt; ChangedSettings, DateTimeOffset UpdatedAt, string? UpdatedBy)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>SettingsCategory</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>ChangedSettings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>UpdatedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+    <dt><code>UpdatedBy</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -236,7 +275,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_ChangedSettings" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.ChangedSettings">
   ChangedSettings
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L247"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The settings that were changed (key-value pairs).</p>
@@ -268,7 +307,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -300,7 +339,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L245"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -332,7 +371,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_SettingsCategory" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.SettingsCategory">
   SettingsCategory
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L246"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The category of settings that was updated.</p>
@@ -364,7 +403,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_UpdatedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.UpdatedAt">
   UpdatedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L248"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the settings were updated.</p>
@@ -396,7 +435,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantSettingsUpdatedEvent_UpdatedBy" data-uid="Compendium.Core.Domain.Events.Integration.TenantSettingsUpdatedEvent.UpdatedBy">
   UpdatedBy
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L249"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The identifier of the user who updated the settings.</p>
@@ -428,7 +467,7 @@ Class TenantSettingsUpdatedEvent  <a class="header-action link-secondary" title=
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L192" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L244" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Application_CQRS_CommandDispatcher" data-uid="Compendium.Application.CQRS.CommandDispatcher" class="text-break">
-Class CommandDispatcher  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L40"><i class="bi bi-code-slash"></i></a>
+Class CommandDispatcher  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -161,7 +161,7 @@ to resolve command handlers and execute commands with proper error handling and 
 
   <h3 id="Compendium_Application_CQRS_CommandDispatcher__ctor_System_IServiceProvider_" data-uid="Compendium.Application.CQRS.CommandDispatcher.#ctor(System.IServiceProvider)">
   CommandDispatcher(IServiceProvider)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Application.CQRS.CommandDispatcher.html">CommandDispatcher</a> class.</p>
@@ -186,6 +186,12 @@ to resolve command handlers and execute commands with proper error handling and 
 
 
 
+  <h4 class="section" id="Compendium_Application_CQRS_CommandDispatcher__ctor_System_IServiceProvider__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>P0-02: The logger is resolved from <code class="paramref">serviceProvider</code> rather than injected
+directly so that the existing public single-parameter constructor remains binary- and
+source-compatible for downstream consumers. When the container has no logging configured
+(e.g. in lightweight unit tests) a <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.abstractions.nulllogger-1">NullLogger&lt;T&gt;</a> is used as a safe fallback.</p>
+</div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
@@ -204,7 +210,7 @@ to resolve command handlers and execute commands with proper error handling and 
 
   <h3 id="Compendium_Application_CQRS_CommandDispatcher_DispatchAsync__1___0_System_Threading_CancellationToken_" data-uid="Compendium.Application.CQRS.CommandDispatcher.DispatchAsync``1(``0,System.Threading.CancellationToken)">
   DispatchAsync&lt;TCommand&gt;(TCommand, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Dispatches a command that doesn't return a value through its registered handler and pipeline behaviors.</p>
@@ -252,7 +258,7 @@ to resolve command handlers and execute commands with proper error handling and 
 
   <h3 id="Compendium_Application_CQRS_CommandDispatcher_DispatchAsync__2___0_System_Threading_CancellationToken_" data-uid="Compendium.Application.CQRS.CommandDispatcher.DispatchAsync``2(``0,System.Threading.CancellationToken)">
   DispatchAsync&lt;TCommand, TResult&gt;(TCommand, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L177"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Dispatches a command that returns a value through its registered handler and pipeline behaviors.</p>
@@ -303,7 +309,7 @@ to resolve command handlers and execute commands with proper error handling and 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L40" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/CommandDispatcher.cs/#L42" class="edit-link">Edit this page</a>
         </div>
 
 

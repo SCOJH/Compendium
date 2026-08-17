@@ -111,6 +111,19 @@ Contains positioning, timing, and context information.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Infrastructure.Projections.InMemoryProjectionCheckpointStore.html">InMemoryProjectionCheckpointStore</a></dt>
+      <dd><p>In-memory implementation of <a class="xref" href="Compendium.Infrastructure.EventSourcing.IProjectionCheckpointStore.html">IProjectionCheckpointStore</a> for testing
+and InMemory-backed framework E2E scenarios. Thread-safe via <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2">ConcurrentDictionary&lt;TKey, TValue&gt;</a>;
+data lives for the lifetime of the instance (no persistence).</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Infrastructure.Projections.InMemoryProjectionStore.html">InMemoryProjectionStore</a></dt>
+      <dd><p>In-memory implementation of <a class="xref" href="Compendium.Infrastructure.Projections.IProjectionStore.html">IProjectionStore</a> for testing and
+InMemory-backed framework E2E scenarios.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="Compendium.Infrastructure.Projections.LiveProcessingStatus.html">LiveProcessingStatus</a></dt>
       <dd><p>Status information for live projection processing.</p>
 </dd>

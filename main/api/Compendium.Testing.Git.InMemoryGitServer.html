@@ -1,0 +1,2490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class InMemoryGitServer | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class InMemoryGitServer | Compendium — .NET event-sourcing framework ">
+      
+      <meta name="description" content="Full-fidelity in-memory  fake for tests and dev mode. Declares every capability as  and keeps all state in memory: repositories created from templates, secret NAMES (values are discarded — mirroring the write-only semantics of real providers), variables, deployment environments, branch policies, teams, webhook subscriptions, and pipeline runs.">
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/new/main/apiSpec/new?filename=Compendium_Testing_Git_InMemoryGitServer.md&amp;value=---%0Auid%3A%20Compendium.Testing.Git.InMemoryGitServer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Compendium.Testing.Git.InMemoryGitServer">
+
+
+
+  <h1 id="Compendium_Testing_Git_InMemoryGitServer" data-uid="Compendium.Testing.Git.InMemoryGitServer" class="text-break">
+Class InMemoryGitServer  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Compendium.html">Compendium</a>.<a class="xref" href="Compendium.Testing.html">Testing</a>.<a class="xref" href="Compendium.Testing.Git.html">Git</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Compendium.Testing.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Full-fidelity in-memory <a class="xref" href="Compendium.Abstractions.Git.IGitServer.html">IGitServer</a> fake for tests and dev mode.
+Declares every capability as <a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapabilityLevel.html#Compendium_Abstractions_Git_Capabilities_GitCapabilityLevel_Full">Full</a> and keeps
+all state in memory: repositories created from templates, secret NAMES
+(values are discarded — mirroring the write-only semantics of real
+providers), variables, deployment environments, branch policies, teams,
+webhook subscriptions, and pipeline runs.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class InMemoryGitServer : IGitServer, IGitCredentialBroker, IGitRepositoryService, IGitPipelineService, IGitCiConfigurationService, IGitEnvironmentService, IGitBranchPolicyService, IGitAccessControlService, IGitWebhookService, IGitWebhookIngestor, IGitNamespaceProvisioner</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">InMemoryGitServer</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Compendium.Abstractions.Git.IGitServer.html">IGitServer</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html">IGitCredentialBroker</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Repositories.IGitRepositoryService.html">IGitRepositoryService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html">IGitPipelineService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.html">IGitCiConfigurationService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Environments.IGitEnvironmentService.html">IGitEnvironmentService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.html">IGitBranchPolicyService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.html">IGitAccessControlService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookService.html">IGitWebhookService</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html">IGitWebhookIngestor</a></div>
+      <div><a class="xref" href="Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.html">IGitNamespaceProvisioner</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Compendium_Testing_Git_InMemoryGitServer_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Thread-safe. Test hooks: <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_SeedInstallation_Compendium_Abstractions_Git_Connections_GitInstallationInfo_">SeedInstallation(GitInstallationInfo)</a>,
+<a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_SeedRepository_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Boolean_">SeedRepository(GitRepositoryRef, bool)</a>, <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_SeedFile_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_">SeedFile(GitRepositoryRef, string)</a>,
+<a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_CompleteRun_System_String_Compendium_Abstractions_Git_Pipelines_GitPipelineStatus_">CompleteRun(string, GitPipelineStatus)</a>, and the <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_Calls">Calls</a> log. Inbound webhook
+deliveries are parsed from a simple JSON envelope signed by equality with
+the shared secret via the <code>X-InMemory-Signature</code> header (fail-closed).</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ProviderName" data-uid="Compendium.Testing.Git.InMemoryGitServer.ProviderName">
+  ProviderName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The provider discriminator reported by the fake.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string ProviderName = &quot;in-memory&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_WellKnownWebhookSecret" data-uid="Compendium.Testing.Git.InMemoryGitServer.WellKnownWebhookSecret">
+  WellKnownWebhookSecret
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The webhook secret accepted by <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_Parse_Compendium_Abstractions_Git_Webhooks_GitWebhookDelivery_System_String_">Parse(GitWebhookDelivery, string)</a> when signing test deliveries.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string WellKnownWebhookSecret = &quot;in-memory-webhook-secret&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_AccessControl_" data-uid="Compendium.Testing.Git.InMemoryGitServer.AccessControl*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_AccessControl" data-uid="Compendium.Testing.Git.InMemoryGitServer.AccessControl">
+  AccessControl
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the teams and repository access port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitAccessControlService AccessControl { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.AccessControl.IGitAccessControlService.html">IGitAccessControlService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_BranchPolicies_" data-uid="Compendium.Testing.Git.InMemoryGitServer.BranchPolicies*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_BranchPolicies" data-uid="Compendium.Testing.Git.InMemoryGitServer.BranchPolicies">
+  BranchPolicies
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the branch protection policies port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitBranchPolicyService BranchPolicies { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Protection.IGitBranchPolicyService.html">IGitBranchPolicyService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Calls_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Calls*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Calls" data-uid="Compendium.Testing.Git.InMemoryGitServer.Calls">
+  Calls
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a snapshot of the operations performed, as
+<code>&quot;MethodName arg1 arg2&quot;</code> entries, for order/interaction assertions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; Calls { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Capabilities_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Capabilities*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Capabilities" data-uid="Compendium.Testing.Git.InMemoryGitServer.Capabilities">
+  Capabilities
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the adapter's declared capability matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GitServerCapabilities Capabilities { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitServerCapabilities.html">GitServerCapabilities</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CiConfiguration_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CiConfiguration*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CiConfiguration" data-uid="Compendium.Testing.Git.InMemoryGitServer.CiConfiguration">
+  CiConfiguration
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the CI secrets/variables port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitCiConfigurationService CiConfiguration { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.html">IGitCiConfigurationService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Credentials_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Credentials*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Credentials" data-uid="Compendium.Testing.Git.InMemoryGitServer.Credentials">
+  Credentials
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the credential minting/validation/discovery port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitCredentialBroker Credentials { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html">IGitCredentialBroker</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_DefaultIdentity_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DefaultIdentity*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_DefaultIdentity" data-uid="Compendium.Testing.Git.InMemoryGitServer.DefaultIdentity">
+  DefaultIdentity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the identity reported by <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_ValidateAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_Threading_CancellationToken_">ValidateAsync(GitConnection, CancellationToken)</a> for
+token-based credentials.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GitConnectionIdentity DefaultIdentity { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnectionIdentity.html">GitConnectionIdentity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Environments_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Environments*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Environments" data-uid="Compendium.Testing.Git.InMemoryGitServer.Environments">
+  Environments
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the deployment-environments port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitEnvironmentService Environments { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Environments.IGitEnvironmentService.html">IGitEnvironmentService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_InitialFiles_" data-uid="Compendium.Testing.Git.InMemoryGitServer.InitialFiles*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_InitialFiles" data-uid="Compendium.Testing.Git.InMemoryGitServer.InitialFiles">
+  InitialFiles
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the paths seeded into every repository created from a template, so
+bootstrap-marker checks (<code>.bootstrapped</code>) succeed in dev mode
+without an explicit <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_SeedFile_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_">SeedFile(GitRepositoryRef, string)</a> call.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; InitialFiles { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_NamespaceProvisioner_" data-uid="Compendium.Testing.Git.InMemoryGitServer.NamespaceProvisioner*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_NamespaceProvisioner" data-uid="Compendium.Testing.Git.InMemoryGitServer.NamespaceProvisioner">
+  NamespaceProvisioner
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the optional namespace provisioning port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitNamespaceProvisioner NamespaceProvisioner { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Provisioning.IGitNamespaceProvisioner.html">IGitNamespaceProvisioner</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Pipelines_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Pipelines*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Pipelines" data-uid="Compendium.Testing.Git.InMemoryGitServer.Pipelines">
+  Pipelines
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the CI pipeline port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitPipelineService Pipelines { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html">IGitPipelineService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Provider_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Provider*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Provider" data-uid="Compendium.Testing.Git.InMemoryGitServer.Provider">
+  Provider
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the provider identifier used for dispatch (e.g. <code>&quot;github&quot;</code>,
+<code>&quot;gitlab&quot;</code>, <code>&quot;gitea&quot;</code>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Provider { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Repositories_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Repositories*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Repositories" data-uid="Compendium.Testing.Git.InMemoryGitServer.Repositories">
+  Repositories
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the repository lifecycle and read port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitRepositoryService Repositories { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Repositories.IGitRepositoryService.html">IGitRepositoryService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_WebhookIngestor_" data-uid="Compendium.Testing.Git.InMemoryGitServer.WebhookIngestor*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_WebhookIngestor" data-uid="Compendium.Testing.Git.InMemoryGitServer.WebhookIngestor">
+  WebhookIngestor
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the inbound webhook verification/parsing port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitWebhookIngestor WebhookIngestor { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookIngestor.html">IGitWebhookIngestor</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Webhooks_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Webhooks*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Webhooks" data-uid="Compendium.Testing.Git.InMemoryGitServer.Webhooks">
+  Webhooks
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the outgoing webhook subscription port.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGitWebhookService Webhooks { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Abstractions.Git.Webhooks.IGitWebhookService.html">IGitWebhookService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_AddTeamMemberAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.AddTeamMemberAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_AddTeamMemberAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_String_System_String_Compendium_Abstractions_Git_AccessControl_GitTeamRole_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.AddTeamMemberAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.String,System.String,Compendium.Abstractions.Git.AccessControl.GitTeamRole,System.Threading.CancellationToken)">
+  AddTeamMemberAsync(GitConnection, string, string, string, GitTeamRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L765"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a user to a team (or updates their role in it).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; AddTeamMemberAsync(GitConnection connection, string @namespace, string teamSlug, string username, GitTeamRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>teamSlug</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitTeamRole.html">GitTeamRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ApplyAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ApplyAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ApplyAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Protection_GitBranchPolicyRequest_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ApplyAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest,System.Threading.CancellationToken)">
+  ApplyAsync(GitConnection, GitRepositoryRef, GitBranchPolicyRequest, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L685"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies a protection policy. When a policy with the same
+<a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.html#Compendium_Abstractions_Git_Protection_GitBranchPolicyRequest_Pattern">Pattern</a> already exists, it is
+updated (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitBranchPolicy&gt;&gt; ApplyAsync(GitConnection connection, GitRepositoryRef repository, GitBranchPolicyRequest request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicyRequest.html">GitBranchPolicyRequest</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Protection.GitBranchPolicy.html">GitBranchPolicy</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CompleteRun_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CompleteRun*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CompleteRun_System_String_Compendium_Abstractions_Git_Pipelines_GitPipelineStatus_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CompleteRun(System.String,Compendium.Abstractions.Git.Pipelines.GitPipelineStatus)">
+  CompleteRun(string, GitPipelineStatus)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Transitions a pipeline run created by <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_TriggerAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_TriggerGitPipeline_System_Threading_CancellationToken_">TriggerAsync(GitConnection, GitRepositoryRef, TriggerGitPipeline, CancellationToken)</a> to a
+terminal status. Returns false when the run is unknown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CompleteRun(string runId, GitPipelineStatus status)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>runId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>status</code> <a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineStatus.html">GitPipelineStatus</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CreateFromTemplateAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateFromTemplateAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CreateFromTemplateAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_CreateRepositoryFromTemplate_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateFromTemplateAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate,System.Threading.CancellationToken)">
+  CreateFromTemplateAsync(GitConnection, CreateRepositoryFromTemplate, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L286"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a repository from a template repository. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_RepositoryFromTemplate">RepositoryFromTemplate</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRepository&gt;&gt; CreateFromTemplateAsync(GitConnection connection, CreateRepositoryFromTemplate request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.CreateRepositoryFromTemplate.html">CreateRepositoryFromTemplate</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CreateNamespaceAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateNamespaceAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CreateNamespaceAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Provisioning_CreateGitNamespace_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateNamespaceAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Provisioning.CreateGitNamespace,System.Threading.CancellationToken)">
+  CreateNamespaceAsync(GitConnection, CreateGitNamespace, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L919"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a namespace. Fails with <code>Git.Conflict</code> when the slug is
+already taken.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitNamespace&gt;&gt; CreateNamespaceAsync(GitConnection connection, CreateGitNamespace request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Provisioning.CreateGitNamespace.html">CreateGitNamespace</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Provisioning.GitNamespace.html">GitNamespace</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CreateReleaseAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateReleaseAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CreateReleaseAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Repositories_CreateGitRelease_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateReleaseAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Repositories.CreateGitRelease,System.Threading.CancellationToken)">
+  CreateReleaseAsync(GitConnection, GitRepositoryRef, CreateGitRelease, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L429"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Publishes a release. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_TagsAndReleases">TagsAndReleases</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRelease&gt;&gt; CreateReleaseAsync(GitConnection connection, GitRepositoryRef repository, CreateGitRelease request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.CreateGitRelease.html">CreateGitRelease</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRelease.html">GitRelease</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_CreateTagAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateTagAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_CreateTagAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.CreateTagAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.String,System.Threading.CancellationToken)">
+  CreateTagAsync(GitConnection, GitRepositoryRef, string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L390"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a tag. When <code class="paramref">commitSha</code> is null, tags the head
+of the default branch. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_TagsAndReleases">TagsAndReleases</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitTag&gt;&gt; CreateTagAsync(GitConnection connection, GitRepositoryRef repository, string tagName, string? commitSha = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>tagName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>commitSha</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitTag.html">GitTag</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_DeleteAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_DeleteAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  DeleteAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L648"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes the environment. Deleting an absent environment succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteAsync(GitConnection connection, GitRepositoryRef repository, string environmentName, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>environmentName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_DeleteAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_DeleteAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Webhooks_GitWebhookTarget_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Webhooks.GitWebhookTarget,System.String,System.Threading.CancellationToken)">
+  DeleteAsync(GitConnection, GitWebhookTarget, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L837"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a subscription by identifier. Deleting an absent subscription
+succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteAsync(GitConnection connection, GitWebhookTarget target, string subscriptionId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>target</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.html">GitWebhookTarget</a></dt>
+    <dd></dd>
+    <dt><code>subscriptionId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_DeleteSecretAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteSecretAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_DeleteSecretAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteSecretAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteSecretAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L543"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI secret at <code class="paramref">scope</code>. Deleting an absent
+secret succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteSecretAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_DeleteVariableAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteVariableAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_DeleteVariableAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.DeleteVariableAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteVariableAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L580"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI variable at <code class="paramref">scope</code>. Deleting an absent
+variable succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; DeleteVariableAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_EnsureAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_EnsureAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Environments_EnsureGitEnvironment_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Environments.EnsureGitEnvironment,System.Threading.CancellationToken)">
+  EnsureAsync(GitConnection, GitRepositoryRef, EnsureGitEnvironment, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L626"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the environment when absent, updates it otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitDeploymentEnvironment&gt;&gt; EnsureAsync(GitConnection connection, GitRepositoryRef repository, EnsureGitEnvironment request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Environments.EnsureGitEnvironment.html">EnsureGitEnvironment</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Environments.GitDeploymentEnvironment.html">GitDeploymentEnvironment</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_EnsureAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_EnsureAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Webhooks_GitWebhookTarget_Compendium_Abstractions_Git_Webhooks_EnsureGitWebhook_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Webhooks.GitWebhookTarget,Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook,System.Threading.CancellationToken)">
+  EnsureAsync(GitConnection, GitWebhookTarget, EnsureGitWebhook, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L815"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the subscription when absent (matched by URL), updates it
+otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitWebhookSubscription&gt;&gt; EnsureAsync(GitConnection connection, GitWebhookTarget target, EnsureGitWebhook request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>target</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookTarget.html">GitWebhookTarget</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.EnsureGitWebhook.html">EnsureGitWebhook</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookSubscription.html">GitWebhookSubscription</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_EnsureTeamAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureTeamAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_EnsureTeamAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_Compendium_Abstractions_Git_AccessControl_EnsureGitTeam_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.EnsureTeamAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,Compendium.Abstractions.Git.AccessControl.EnsureGitTeam,System.Threading.CancellationToken)">
+  EnsureTeamAsync(GitConnection, string, EnsureGitTeam, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L748"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates the team when absent, updates it otherwise (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitTeam&gt;&gt; EnsureTeamAsync(GitConnection connection, string @namespace, EnsureGitTeam request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.EnsureGitTeam.html">EnsureGitTeam</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitTeam.html">GitTeam</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_FileExistsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.FileExistsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_FileExistsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.FileExistsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.String,System.Threading.CancellationToken)">
+  FileExistsAsync(GitConnection, GitRepositoryRef, string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L337"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks whether <code class="paramref">path</code> exists in the repository at
+<code class="paramref">gitRef</code> (default branch when null). Used e.g. to
+verify a repository finished bootstrapping before tagging a release.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;bool&gt;&gt; FileExistsAsync(GitConnection connection, GitRepositoryRef repository, string path, string? gitRef = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>gitRef</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_GetAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_GetAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  GetAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L310"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a repository by reference. Fails with <code>Git.RepositoryNotFound</code>
+when absent or not visible to the credential.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitRepository&gt;&gt; GetAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_GetRunAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetRunAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_GetRunAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetRunAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  GetRunAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L489"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a single pipeline run by identifier. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineStatus">PipelineStatus</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitPipelineRun&gt;&gt; GetRunAsync(GitConnection connection, GitRepositoryRef repository, string runId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>runId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRun.html">GitPipelineRun</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_GetSecretNames_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetSecretNames*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_GetSecretNames_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetSecretNames(Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope)">
+  GetSecretNames(GitConfigurationScope)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L600"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the secret NAMES stored at a scope (test-inspection hook — real
+providers cannot read secrets back either).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyCollection&lt;string&gt; GetSecretNames(GitConfigurationScope scope)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_GetVariables_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetVariables*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_GetVariables_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_" data-uid="Compendium.Testing.Git.InMemoryGitServer.GetVariables(Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope)">
+  GetVariables(GitConfigurationScope)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L612"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the variables stored at a scope (test-inspection hook).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, string&gt; GetVariables(GitConfigurationScope scope)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListAppInstallationsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListAppInstallationsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListAppInstallationsAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListAppInstallationsAsync(System.String,System.Threading.CancellationToken)">
+  ListAppInstallationsAsync(string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: lists every installation of the platform app
+across all accounts. Adapters page through the provider API internally
+and return the full list. Used by reconciliation jobs to heal missed
+webhooks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitInstallationInfo&gt;&gt;&gt; ListAppInstallationsAsync(string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.Threading.CancellationToken)">
+  ListAsync(GitConnection, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repositories of <code class="paramref">namespace</code> visible to the
+connection's credential.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitRepository&gt;&gt;&gt; ListAsync(GitConnection connection, string @namespace, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepository.html">GitRepository</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListBranchesAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListBranchesAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListBranchesAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListBranchesAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  ListBranchesAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L370"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repository's branches.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitBranch&gt;&gt;&gt; ListBranchesAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitBranch.html">GitBranch</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListCommitsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListCommitsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListCommitsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Int32_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListCommitsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Int32,System.Threading.CancellationToken)">
+  ListCommitsAsync(GitConnection, GitRepositoryRef, string?, int, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L351"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists recent commits, newest first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitCommit&gt;&gt;&gt; ListCommitsAsync(GitConnection connection, GitRepositoryRef repository, string? reference, int limit, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd><p>The connection to operate with.</p>
+</dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd><p>The repository to read.</p>
+</dd>
+    <dt><code>reference</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Optional branch/ref/SHA to list from; the default branch when null or empty.</p>
+</dd>
+    <dt><code>limit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>Maximum number of commits returned (a single page).</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitCommit.html">GitCommit</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListRunsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListRunsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListRunsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_ListGitPipelineRuns_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListRunsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns,System.Threading.CancellationToken)">
+  ListRunsAsync(GitConnection, GitRepositoryRef, ListGitPipelineRuns, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L503"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists pipeline runs, newest first. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineStatus">PipelineStatus</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitPipelineRun&gt;&gt;&gt; ListRunsAsync(GitConnection connection, GitRepositoryRef repository, ListGitPipelineRuns query, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>query</code> <a class="xref" href="Compendium.Abstractions.Git.Pipelines.ListGitPipelineRuns.html">ListGitPipelineRuns</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRun.html">GitPipelineRun</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ListTagsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListTagsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ListTagsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ListTagsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Threading.CancellationToken)">
+  ListTagsAsync(GitConnection, GitRepositoryRef, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L411"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Lists the repository's tags.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;IReadOnlyList&lt;GitTag&gt;&gt;&gt; ListTagsAsync(GitConnection connection, GitRepositoryRef repository, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Repositories.GitTag.html">GitTag</a>&gt;&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_MintAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.MintAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_MintAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Connections_GitAccessTokenScope_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.MintAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Connections.GitAccessTokenScope,System.Threading.CancellationToken)">
+  MintAsync(GitConnection, GitAccessTokenScope?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Mints a short-lived, ready-to-use token for the connection, optionally
+narrowed by <code class="paramref">scope</code>. Adapters cache minted tokens per
+credential identity and re-mint before expiry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitAccessToken&gt;&gt; MintAsync(GitConnection connection, GitAccessTokenScope? scope = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitAccessTokenScope.html">GitAccessTokenScope</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitAccessToken.html">GitAccessToken</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_Parse_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Parse*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_Parse_Compendium_Abstractions_Git_Webhooks_GitWebhookDelivery_System_String_" data-uid="Compendium.Testing.Git.InMemoryGitServer.Parse(Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery,System.String)">
+  Parse(GitWebhookDelivery, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L864"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Verifies the delivery signature against <code class="paramref">secret</code>
+(fail-closed: missing or invalid signatures return
+<code>Git.WebhookSignatureInvalid</code>) and parses the payload. Event types
+the platform does not consume parse to
+<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.Unsupported.html">GitWebhookEvent.Unsupported</a> — callers acknowledge those
+with a 2xx and never retry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Result&lt;GitWebhookEvent&gt; Parse(GitWebhookDelivery delivery, string secret)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>delivery</code> <a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookDelivery.html">GitWebhookDelivery</a></dt>
+    <dd></dd>
+    <dt><code>secret</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Webhooks.GitWebhookEvent.html">GitWebhookEvent</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_RemoveAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.RemoveAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_RemoveAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.RemoveAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  RemoveAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L707"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a policy by identifier. Removing an absent policy succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; RemoveAsync(GitConnection connection, GitRepositoryRef repository, string policyId, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>policyId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_RemoveUserFromRepositoryAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.RemoveUserFromRepositoryAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_RemoveUserFromRepositoryAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.RemoveUserFromRepositoryAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,System.Threading.CancellationToken)">
+  RemoveUserFromRepositoryAsync(GitConnection, GitRepositoryRef, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L796"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a user's direct access to a repository. Removing absent access
+succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; RemoveUserFromRepositoryAsync(GitConnection connection, GitRepositoryRef repository, string username, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ResolveAppInstallationAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ResolveAppInstallationAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ResolveAppInstallationAsync_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ResolveAppInstallationAsync(System.String,System.String,System.Threading.CancellationToken)">
+  ResolveAppInstallationAsync(string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: discovers the platform app's installation on
+a namespace. Fails with <code>Git.AppNotInstalled</code> (metadata carries
+<code>installUrl</code>) when the app is not installed there.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitInstallationInfo&gt;&gt; ResolveAppInstallationAsync(string @namespace, string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The organization/group or user login to probe.</p>
+</dd>
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ResolveAppInstallationByIdAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ResolveAppInstallationByIdAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ResolveAppInstallationByIdAsync_System_String_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ResolveAppInstallationByIdAsync(System.String,System.String,System.Threading.CancellationToken)">
+  ResolveAppInstallationByIdAsync(string, string?, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L259"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>App-installation mode only: resolves a single installation of the platform
+app by its provider-side id. Unlike <a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html#Compendium_Abstractions_Git_Connections_IGitCredentialBroker_ResolveAppInstallationAsync_System_String_System_String_System_Threading_CancellationToken_">ResolveAppInstallationAsync(string, string?, CancellationToken)</a>
+(which probes by account) and <a class="xref" href="Compendium.Abstractions.Git.Connections.IGitCredentialBroker.html#Compendium_Abstractions_Git_Connections_IGitCredentialBroker_ListAppInstallationsAsync_System_String_System_Threading_CancellationToken_">ListAppInstallationsAsync(string?, CancellationToken)</a> (which
+pages the whole list), this is an O(1) point lookup — use it when a caller
+already holds an installation id and only needs to confirm it still belongs
+to the app. Fails with <code>Git.InstallationNotFound</code> when the id does not
+belong to the app (never installed, or the installation was deleted).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitInstallationInfo&gt;&gt; ResolveAppInstallationByIdAsync(string installationId, string? appKey = null, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>installationId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The provider-side installation id to resolve.</p>
+</dd>
+    <dt><code>appKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Selects an app registration; <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> = default app.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SeedFile_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedFile*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SeedFile_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedFile(Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String)">
+  SeedFile(GitRepositoryRef, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seeds a file path into a repository so <a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_FileExistsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_System_String_System_Threading_CancellationToken_">FileExistsAsync(GitConnection, GitRepositoryRef, string, string?, CancellationToken)</a> reports it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SeedFile(GitRepositoryRef repository, string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>path</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SeedInstallation_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedInstallation*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SeedInstallation_Compendium_Abstractions_Git_Connections_GitInstallationInfo_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedInstallation(Compendium.Abstractions.Git.Connections.GitInstallationInfo)">
+  SeedInstallation(GitInstallationInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers a platform-app installation so
+<a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_ResolveAppInstallationAsync_System_String_System_String_System_Threading_CancellationToken_">ResolveAppInstallationAsync(string, string?, CancellationToken)</a> and
+<a class="xref" href="Compendium.Testing.Git.InMemoryGitServer.html#Compendium_Testing_Git_InMemoryGitServer_ListAppInstallationsAsync_System_String_System_Threading_CancellationToken_">ListAppInstallationsAsync(string?, CancellationToken)</a> can discover it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SeedInstallation(GitInstallationInfo installation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>installation</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitInstallationInfo.html">GitInstallationInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SeedRepository_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedRepository*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SeedRepository_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_Boolean_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SeedRepository(Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.Boolean)">
+  SeedRepository(GitRepositoryRef, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seeds an existing repository without going through the template flow.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SeedRepository(GitRepositoryRef repository, bool @private = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>private</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SetSecretsAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetSecretsAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SetSecretsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetSecretsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetSecretsAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L523"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI secrets at <code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiSecrets">CiSecrets</a> (repository scope),
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_NamespaceSecrets">NamespaceSecrets</a> (namespace scope), or
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_EnvironmentSecrets">EnvironmentSecrets</a> (environment scope).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetSecretsAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; secrets, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>secrets</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SetTeamRepositoryRoleAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetTeamRepositoryRoleAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SetTeamRepositoryRoleAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_String_System_String_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_AccessControl_GitRepositoryRole_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetTeamRepositoryRoleAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.String,System.String,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.AccessControl.GitRepositoryRole,System.Threading.CancellationToken)">
+  SetTeamRepositoryRoleAsync(GitConnection, string, string, GitRepositoryRef, GitRepositoryRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L771"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Grants (or updates) a team's role on a repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetTeamRepositoryRoleAsync(GitConnection connection, string @namespace, string teamSlug, GitRepositoryRef repository, GitRepositoryRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>namespace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>teamSlug</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.html">GitRepositoryRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SetUserRepositoryRoleAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetUserRepositoryRoleAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SetUserRepositoryRoleAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_System_String_Compendium_Abstractions_Git_AccessControl_GitRepositoryRole_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetUserRepositoryRoleAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,System.String,Compendium.Abstractions.Git.AccessControl.GitRepositoryRole,System.Threading.CancellationToken)">
+  SetUserRepositoryRoleAsync(GitConnection, GitRepositoryRef, string, GitRepositoryRole, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L777"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Grants (or updates) an individual user's role on a repository.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetUserRepositoryRoleAsync(GitConnection connection, GitRepositoryRef repository, string username, GitRepositoryRole role, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>username</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>role</code> <a class="xref" href="Compendium.Abstractions.Git.AccessControl.GitRepositoryRole.html">GitRepositoryRole</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_SetVariablesAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetVariablesAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_SetVariablesAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.SetVariablesAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetVariablesAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L560"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI variables (plaintext configuration) at
+<code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiVariables">CiVariables</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&gt; SetVariablesAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; variables, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>variables</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_TriggerAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.TriggerAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_TriggerAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_TriggerGitPipeline_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.TriggerAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.Repositories.GitRepositoryRef,Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline,System.Threading.CancellationToken)">
+  TriggerAsync(GitConnection, GitRepositoryRef, TriggerGitPipeline, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L461"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggers a pipeline run. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_PipelineTrigger">PipelineTrigger</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitPipelineRunHandle&gt;&gt; TriggerAsync(GitConnection connection, GitRepositoryRef repository, TriggerGitPipeline request, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>repository</code> <a class="xref" href="Compendium.Abstractions.Git.Repositories.GitRepositoryRef.html">GitRepositoryRef</a></dt>
+    <dd></dd>
+    <dt><code>request</code> <a class="xref" href="Compendium.Abstractions.Git.Pipelines.TriggerGitPipeline.html">TriggerGitPipeline</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.html">GitPipelineRunHandle</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Compendium_Testing_Git_InMemoryGitServer_TriggerAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_TriggerGitPipeline_System_Threading_CancellationToken__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Some providers do not return a run identifier on trigger (GitHub's
+<code>workflow_dispatch</code> is fire-and-forget): the handle's
+<a class="xref" href="Compendium.Abstractions.Git.Pipelines.GitPipelineRunHandle.html#Compendium_Abstractions_Git_Pipelines_GitPipelineRunHandle_RunId">RunId</a> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a> there
+and callers correlate via <a class="xref" href="Compendium.Abstractions.Git.Pipelines.IGitPipelineService.html#Compendium_Abstractions_Git_Pipelines_IGitPipelineService_ListRunsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_Repositories_GitRepositoryRef_Compendium_Abstractions_Git_Pipelines_ListGitPipelineRuns_System_Threading_CancellationToken_">ListRunsAsync(GitConnection, GitRepositoryRef, ListGitPipelineRuns, CancellationToken)</a>. Each adapter
+documents this in its CAPABILITIES.md.</p>
+</div>
+
+
+
+
+  <a id="Compendium_Testing_Git_InMemoryGitServer_ValidateAsync_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ValidateAsync*"></a>
+
+  <h3 id="Compendium_Testing_Git_InMemoryGitServer_ValidateAsync_Compendium_Abstractions_Git_Connections_GitConnection_System_Threading_CancellationToken_" data-uid="Compendium.Testing.Git.InMemoryGitServer.ValidateAsync(Compendium.Abstractions.Git.Connections.GitConnection,System.Threading.CancellationToken)">
+  ValidateAsync(GitConnection, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Validates the connection's credential and reports the identity behind it.
+Fails with <code>Git.AuthenticationFailed</code> when the credential is
+expired, revoked, or malformed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;GitConnectionIdentity&gt;&gt; ValidateAsync(GitConnection connection, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnectionIdentity.html">GitConnectionIdentity</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Testing/Compendium.Testing/Git/InMemoryGitServer.cs/#L39" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

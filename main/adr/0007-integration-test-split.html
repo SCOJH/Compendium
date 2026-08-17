@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0007. Refactor integration tests for adapter extraction | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0007. Refactor integration tests for adapter extraction | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/adr/0007-integration-test-split.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="0007-refactor-integration-tests-for-adapter-extraction">0007. Refactor integration tests for adapter extraction</h1>
+
+<ul>
+<li>Status: Accepted</li>
+<li>Date: 2026-05-14</li>
+<li>Deciders: @sassy-solutions/maintainers</li>
+</ul>
+<h2 id="context">Context</h2>
+<p><a href="0006-multi-repo-adapter-split.html">ADR-0006</a> split five heavy adapters into per-adapter repositories. Two remain in this repository — <code>Compendium.Adapters.PostgreSQL</code> and <code>Compendium.Adapters.Redis</code> — because their tests are entangled with the framework's <code>tests/Integration/Compendium.IntegrationTests/</code> suite.</p>
+<p>An audit of that suite (2026-05-14) classified the 24 test classes :</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Files</th>
+<th>Tests</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Generic / InMemory</td>
+<td>8</td>
+<td>43</td>
+<td>CQRS pipelines, choreography, telemetry — already use in-memory</td>
+</tr>
+<tr>
+<td>Truly PG-specific</td>
+<td>3</td>
+<td>20</td>
+<td><code>PostgreSqlEventStoreIntegrationTests</code>, <code>PostgresProcessManagerStateReloadTests</code>, <code>ProjectionManagerIntegrationTests</code> (checkpoint table)</td>
+</tr>
+<tr>
+<td>Truly Redis-specific</td>
+<td>2</td>
+<td>10</td>
+<td><code>RedisIdempotencyStoreIntegrationTests</code>, <code>ConcurrentIdempotencyE2ETests</code></td>
+</tr>
+<tr>
+<td>Framework testing via PG</td>
+<td>10</td>
+<td>47</td>
+<td><code>OrderLifecycle</code>, <code>MultiTenancy</code>, <code>ProjectionRebuild</code>, <code>SagaRetry</code>, <code>Concurrency</code>, <code>ErrorHandling</code>, <code>LiveProjection</code>, <code>Security/TenantIsolation</code>, <code>SnapshotMidStream</code>, <code>ProjectionRebuildEdgeCases</code></td>
+</tr>
+<tr>
+<td>Framework testing via PG+Redis</td>
+<td>1</td>
+<td>6</td>
+<td><code>IdempotencyE2ETests</code></td>
+</tr>
+</tbody>
+</table>
+<p>The &quot;Framework testing via PG/Redis&quot; category is the problem. These tests aren't checking what PostgreSQL or Redis does — they're checking what the framework does, with PG/Redis as a concrete storage implementation. They were written against PG because (a) it was available and (b) <code>InMemoryEventStore</code> didn't (and arguably still doesn't) satisfy all the semantic constraints they exercise.</p>
+<p>Without resolving this, extracting <code>Compendium.Adapters.PostgreSQL</code> either :</p>
+<ol>
+<li><strong>Leaves the framework with no end-to-end coverage of CQRS / sagas / projections.</strong> A regression in <code>ProcessManagerOrchestrator</code> would not be caught by any test that lives in this repo. Unacceptable.</li>
+<li><strong>Duplicates the entire integration suite into both <code>compendium-adapter-postgresql</code> and <code>compendium-adapter-redis</code>.</strong> Maintenance burden, drift hazard, and confusion about which copy is canonical.</li>
+</ol>
+<h2 id="decision">Decision</h2>
+<p>Refactor <code>tests/Integration/Compendium.IntegrationTests/</code> so that <strong>all framework-behaviour E2E scenarios use the in-memory implementations by default</strong>, and lift the PG- and Redis-specific tests out to the respective adapter repositories.</p>
+<p>Concretely :</p>
+<ol>
+<li><p>The framework's <code>InMemoryEventStore</code>, <code>InMemoryIdempotencyStore</code>, and <code>InMemoryProjectionCheckpointStore</code> must satisfy the same semantic contracts that the framework's E2E scenarios exercise. Specifically:</p>
+<ul>
+<li>Optimistic concurrency on <code>AppendEventsAsync(expectedVersion)</code> returning <code>Conflict</code>.</li>
+<li>Projection rebuild from a position checkpoint (idempotent re-replay).</li>
+<li>Snapshot mid-stream (rehydration from snapshot + tail events).</li>
+<li>Tenant isolation (per-tenant streams).</li>
+<li>Idempotency-key TTL semantics.</li>
+</ul>
+<p>Any gap between InMemory and Postgres semantics is treated as a framework bug, not an adapter feature.</p>
+</li>
+<li><p>Framework-behaviour E2E tests (10 PG + 1 PG/Redis + 0 Redis-only) get refactored to construct <code>InMemoryEventStore</code> / <code>InMemoryIdempotencyStore</code> instead of taking the PG/Redis fixture. They live in <code>tests/Integration/Compendium.IntegrationTests/</code>.</p>
+</li>
+<li><p>Adapter-specific tests (3 PG + 2 Redis) move to the adapter repositories :</p>
+<ul>
+<li><code>compendium-adapter-postgresql/tests/Integration/Compendium.Adapters.PostgreSQL.IntegrationTests/</code></li>
+<li><code>compendium-adapter-redis/tests/Integration/Compendium.Adapters.Redis.IntegrationTests/</code>
+These keep their <code>[RequiresDockerFact]</code> markers and the existing fixtures (<code>PostgreSqlFixture</code>, <code>RedisFixture</code>) which move with them.</li>
+</ul>
+</li>
+<li><p>Each adapter repo also gets <strong>one smoke E2E</strong> (<code>OrderLifecycleSmokeE2ETests</code> for PG, <code>IdempotencySmokeE2ETests</code> for Redis) — a representative scenario from the framework's E2E suite, ported to use the real adapter. This is the cross-cutting contract test that proves &quot;the framework still works when wired through this adapter&quot;.</p>
+</li>
+<li><p>The framework's <code>tests/Integration/Compendium.IntegrationTests/Fixtures/</code> directory keeps only InMemory-related fixtures. <code>PostgreSqlFixture.cs</code>, <code>RedisFixture.cs</code>, and <code>RequiresDockerAttribute.cs</code> move to the adapter repos (the docker attribute is duplicated; it's a 60-line file with no logical owner besides &quot;tests that need Docker&quot;).</p>
+</li>
+</ol>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li><strong>Framework can release v1.0.0 with a fully unit+integration-tested behaviour surface that requires no Docker.</strong> Contributors run <code>dotnet test</code> locally without infrastructure.</li>
+<li><strong>Each adapter repo owns its own integration verification.</strong> A PR to <code>compendium-adapter-postgresql</code> runs its own smoke E2E + adapter-specific tests; not coupled to framework CI.</li>
+<li><strong>No duplication of the framework E2E corpus.</strong> The 47+6 framework tests live in one place — the framework repo — using InMemory.</li>
+<li><strong>Forces the InMemory implementations to be first-class citizens.</strong> Any gap is a real bug. Today they may be silently weaker than PG; making them equal makes the framework more testable for downstream consumers (who can use InMemory in <em>their</em> tests).</li>
+</ul>
+<h3 id="negative">Negative</h3>
+<ul>
+<li><strong>InMemory has to actually match Postgres semantics for the assertions the tests make.</strong> This may require non-trivial implementation work — projection checkpoint storage, snapshot persistence, etc. Estimated 1-2 days for the InMemory upgrades.</li>
+<li><strong>The smoke E2E in each adapter repo duplicates ONE scenario.</strong> Accepted — the duplication is bounded and intentional, and exists precisely to verify the adapter against a known-good framework behaviour.</li>
+<li><strong><code>[RequiresDockerFact]</code> semantics needs to live in two repos.</strong> Minor duplication; the file is 60 LOC with no logic.</li>
+</ul>
+<h3 id="neutral">Neutral</h3>
+<ul>
+<li>The &quot;Framework testing via PG&quot; tests <strong>lose visibility into PG-specific edge cases</strong>. That's correct — those edge cases belong in adapter-specific tests, which the adapter repo owns. If a PG SERIALIZABLE-level concurrency bug exists, it should be a test in <code>compendium-adapter-postgresql</code>, not a framework test.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><strong>Path A : duplicate the suite into both adapter repos.</strong> Rejected — see Negative #2.</li>
+<li><strong>Path C : leave PG+Redis in the framework forever.</strong> Rejected — ADR-0006 explicitly schedules their extraction. Indefinite delay is implicit reversal.</li>
+<li><strong>Run framework E2E tests against both InMemory and Postgres via <code>[Theory] [InlineData(typeof(InMemoryEventStore))] [InlineData(typeof(PostgresEventStore))]</code>.</strong> Rejected — the framework would still depend on the PostgreSQL package; doesn't help extraction. Could be done as a separate adapter-repo concern.</li>
+<li><strong>Use Testcontainers' PostgreSqlContainer in framework CI but consume Compendium.Adapters.PostgreSQL via NuGet.</strong> Rejected — same problem (framework still pulls in the adapter package transitively for tests).</li>
+</ul>
+<h2 id="migration-plan">Migration plan</h2>
+<ol>
+<li><strong>PR — InMemory semantic gaps audit.</strong> Test-only: for each framework E2E currently using PG, write the equivalent against InMemory and observe what breaks. Document the gaps.</li>
+<li><strong>PR(s) — InMemory implementation upgrades.</strong> Address each gap: optimistic concurrency, projection checkpoint store, snapshot store, tenant isolation. One PR per concern. Existing PG-using tests stay green throughout.</li>
+<li><strong>PR — refactor framework E2E to InMemory.</strong> The 10 PG-using tests and 1 PG+Redis test switch fixtures. PG-specific tests are not touched.</li>
+<li><strong>PR — extract <code>compendium-adapter-postgresql</code> repo.</strong> Same pattern as the five previous extractions: filter-repo for src + adapter-specific tests + fixture; new sln; NuGet metadata; tag preview.9.</li>
+<li><strong>PR — extract <code>compendium-adapter-redis</code> repo.</strong> Same.</li>
+<li><strong>PR — framework cleanup.</strong> Remove the PG/Redis src dirs and adapter-specific tests; flip the framework gate to ≥90% line on the unit-testable surface (no exceptions); update CHANGELOG.</li>
+<li><strong>Tag <code>v1.0.0</code> on framework + each adapter repo.</strong></li>
+</ol>
+<p>ETA : 2–3 days of focused work.</p>
+<h2 id="how-to-use-this-adr">How to use this ADR</h2>
+<p>When opening a PR that touches <code>tests/Integration/Compendium.IntegrationTests/</code>, the rule is :</p>
+<ul>
+<li>Adding a test for <strong>framework behaviour</strong> (CQRS pipeline, sagas, projections, security, multi-tenancy) → write it against InMemory.</li>
+<li>Adding a test for <strong>adapter behaviour</strong> (transaction semantics, schema migrations, vendor quirks) → it goes in the adapter repo, not here.</li>
+</ul>
+<p>When in doubt : if the test would still make sense against an in-memory store, it's a framework test. If it specifically requires the adapter's vendor behaviour, it's an adapter test.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/adr/0007-integration-test-split.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0006. Split heavy adapters into per-adapter repositories | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0006. Split heavy adapters into per-adapter repositories | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/adr/0006-multi-repo-adapter-split.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="0006-split-heavy-adapters-into-per-adapter-repositories">0006. Split heavy adapters into per-adapter repositories</h1>
+
+<ul>
+<li>Status: Accepted</li>
+<li>Date: 2026-05-10</li>
+<li>Accepted: 2026-05-14</li>
+<li>Deciders: @sassy-solutions/maintainers</li>
+</ul>
+<h2 id="context">Context</h2>
+<p>Compendium ships seven &quot;heavy&quot; adapters today, all living in the framework monorepo :</p>
+<table>
+<thead>
+<tr>
+<th>Adapter</th>
+<th>LOC</th>
+<th>External SDK</th>
+<th>Release driver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Compendium.Adapters.PostgreSQL</code></td>
+<td>3 692</td>
+<td>Npgsql</td>
+<td>own pace</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.Zitadel</code></td>
+<td>3 752</td>
+<td>(HTTP)</td>
+<td>Zitadel API churn</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.LemonSqueezy</code></td>
+<td>2 826</td>
+<td>(HTTP)</td>
+<td>LS API churn</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.Listmonk</code></td>
+<td>1 546</td>
+<td>(HTTP)</td>
+<td>Listmonk API churn</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.Stripe</code></td>
+<td>1 052</td>
+<td>Stripe.NET</td>
+<td>Stripe.NET releases (~weekly)</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.OpenRouter</code></td>
+<td>935</td>
+<td>(HTTP)</td>
+<td>OpenRouter API churn</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.Redis</code></td>
+<td>816</td>
+<td>StackExchange.Redis</td>
+<td>own pace</td>
+</tr>
+</tbody>
+</table>
+<p>Plus two thin glue adapters that have no external SDK and tightly track the framework :</p>
+<table>
+<thead>
+<tr>
+<th>Adapter</th>
+<th>LOC</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Compendium.Adapters.AspNetCore</code></td>
+<td>1 121</td>
+<td>middleware, ProblemDetails mappers, DI helpers</td>
+</tr>
+<tr>
+<td><code>Compendium.Adapters.Shared</code></td>
+<td>30</td>
+<td>log-redaction helpers, etc.</td>
+</tr>
+</tbody>
+</table>
+<p>This shape has accumulated three frictions :</p>
+<ol>
+<li><strong>Coverage measurement is dragged down by the integration-bound adapters.</strong> After the May 2026 unit-coverage campaign every project sits ≥ 90 % except <code>Compendium.Adapters.PostgreSQL</code> (36 % — its DB-bound types are by design covered only by Docker integration tests, not unit). The aggregate global is pulled to 88.4 %, which makes a clean &quot;≥ 90 %&quot; CI gate impossible without per-project rules. See <a href="../testing/coverage-campaign-2026-05.md">the testing campaign log</a>.</li>
+<li><strong>External SDK churn forces framework releases.</strong> A weekly <code>Stripe.NET</code> patch bump bubbles up as a Compendium NuGet release ; consumers of the framework who don't care about Stripe still have to absorb it.</li>
+<li><strong>Cross-cutting test boundaries.</strong> Integration tests for <code>PostgreSQL</code> (Testcontainers + Postgres images), <code>Redis</code>, <code>Zitadel</code> (HTTP fixtures) all sit in the framework's <code>tests/Integration</code> and slow / complicate the framework CI.</li>
+</ol>
+<p>We need a structure that decouples the framework's release cadence from the long tail of vendor-specific code without sacrificing the strict hexagonal layering decided in <a href="0002-hexagonal-architecture.html">ADR 0002</a>.</p>
+<h2 id="decision">Decision</h2>
+<p>Split the seven heavy adapters into <strong>one repository per adapter</strong>, leaving the thin glue adapters in the framework monorepo.</p>
+<h3 id="scope-of-the-split">Scope of the split</h3>
+<p><strong>Extracted (one repo each, named <code>compendium-adapter-&lt;vendor&gt;</code>)</strong> :</p>
+<ul>
+<li><code>compendium-adapter-postgresql</code></li>
+<li><code>compendium-adapter-zitadel</code></li>
+<li><code>compendium-adapter-lemonsqueezy</code></li>
+<li><code>compendium-adapter-listmonk</code></li>
+<li><code>compendium-adapter-stripe</code></li>
+<li><code>compendium-adapter-openrouter</code></li>
+<li><code>compendium-adapter-redis</code></li>
+</ul>
+<p><strong>Stays in <code>compendium</code></strong> :</p>
+<ul>
+<li><code>Compendium.Core</code>, <code>Compendium.Application</code>, <code>Compendium.Abstractions.*</code>, <code>Compendium.Infrastructure</code>, <code>Compendium.Multitenancy</code>, <code>Compendium.Testing</code></li>
+<li><code>Compendium.Adapters.AspNetCore</code> — no external SDK, evolves lock-step with <code>Compendium.Application</code>.</li>
+<li><code>Compendium.Adapters.Shared</code> — 30 LOC of cross-adapter helpers ; promote to a small <code>Compendium.Adapters.Common</code> NuGet <em>only when a second consumer needs it</em>.</li>
+</ul>
+<h3 id="per-adapter-repository-contract">Per-adapter repository contract</h3>
+<p>Each extracted adapter repo :</p>
+<ol>
+<li>Depends on the published <code>Compendium.Abstractions.*</code> NuGet (whichever ports it implements).</li>
+<li>Ships its own NuGet : <code>Compendium.Adapters.&lt;Vendor&gt;</code> and <code>Compendium.Adapters.&lt;Vendor&gt;.Tests</code> is internal.</li>
+<li>Owns its <strong>own integration tests</strong> (Testcontainers, vendor sandboxes) so the framework CI no longer carries Docker images for <code>pg</code> / <code>redis</code>.</li>
+<li>Sets a <strong>CI line-coverage gate of 90 %</strong> on the unit-testable surface ; types that genuinely require a live external system are covered by integration tests in the same repo.</li>
+<li>Follows the <strong>same testing conventions</strong> as the framework (xUnit 2.9, FluentAssertions 6.12, NSubstitute 5.1, AAA explicit comments, Result-pattern assertions, <code>IAsyncLifetime</code> fixtures, no Moq / no <code>Assert.*</code> / no <code>Thread.Sleep</code>). Codified in the <code>compendium-test-author</code> skill, which the template ships with.</li>
+<li>Tracks the framework via <a href="https://docs.renovatebot.com/">Renovate</a> ; a Compendium release auto-opens a PR in every adapter repo within 24 h ; the adapter repo's CI must stay green or the PR blocks.</li>
+</ol>
+<p>A starter template lives at <code>templates/adapter-dotnet/</code> in this repository (see PR opening this ADR). It is the canonical seed for a new adapter repo : copy, rename <code>&lt;Vendor&gt;</code>, push to a fresh GitHub repo, set up NuGet publishing.</p>
+<h3 id="migration-order-suggestion-not-binding">Migration order (suggestion, not binding)</h3>
+<ol>
+<li><strong>Compendium.Adapters.Stripe</strong> first — heaviest external-SDK churn, smallest domain footprint, validates the workflow.</li>
+<li><strong>Compendium.Adapters.PostgreSQL</strong> — biggest coverage win on the framework side ; once extracted, the framework's global line coverage rises from 88.4 % to ~95 %, making a strict 90 % gate possible.</li>
+<li><strong>Compendium.Adapters.Redis</strong> — small, integration-bound, similar shape to PG.</li>
+<li>The remaining four (<code>Zitadel</code>, <code>LemonSqueezy</code>, <code>Listmonk</code>, <code>OpenRouter</code>) follow once the workflow is proven.</li>
+</ol>
+<p>Each migration is its own PR pair (one in <code>compendium</code> removing the project, one in the new repo bringing it in with full history via <code>git filter-repo</code>).</p>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li><strong>Independent release cadence per adapter.</strong> A Stripe.NET bump no longer triggers a framework release.</li>
+<li><strong>Coverage gate becomes clean.</strong> Once PostgreSQL leaves, framework global goes from 88.4 % → ~95 %, and a strict per-project ≥ 90 % gate is achievable without exemptions.</li>
+<li><strong>Smaller, vendor-focused PRs.</strong> Reviewers don't need to context-switch between framework internals and <code>Stripe.WebhookSignature</code> minutiae.</li>
+<li><strong>CI cost.</strong> Framework CI no longer pulls Postgres / Redis images — faster pipelines, less GitHub Actions minutes.</li>
+<li><strong>Discoverability.</strong> Each adapter repo has its own README, examples, support contract.</li>
+<li><strong>Open-source contribution surface.</strong> Easier for outside contributors to focus on one vendor.</li>
+</ul>
+<h3 id="negative--trade-offs">Negative / Trade-offs</h3>
+<ul>
+<li><strong>Cross-cutting changes to abstractions multiply in cost.</strong> A modification to <code>IEventStore</code> or <code>IDomainEvent</code> in <code>Compendium.Abstractions</code> becomes N PRs (one per adapter repo) instead of one. Mitigated by :
+<ul>
+<li><strong>Strict semver discipline</strong> on <code>Compendium.Abstractions.*</code> — breaking changes trigger major-version bumps and are batched.</li>
+<li><strong>Renovate auto-PR</strong> to every adapter repo on every Compendium release ; review burden distributed but mechanical.</li>
+<li>A &quot;release train&quot; pattern : Compendium ships, adapters auto-PR within 24 h, central dashboard tracks who's behind.</li>
+</ul>
+</li>
+<li><strong>Local-dev experience worsens</strong> for someone modifying both framework and adapter at once. Mitigated by a <code>dotnet add reference</code> &quot;linked-mode&quot; documented in the template README — point the adapter project at a local <code>Compendium.Abstractions.csproj</code> instead of the NuGet during local hacking.</li>
+<li><strong>Repo proliferation.</strong> Eight repos to maintain instead of one. Each gets its own Dependabot, Renovate, branch protection, secrets, NuGet publishing token. Mitigated by the template baking all of this in.</li>
+<li><strong>Documentation is now distributed.</strong> A user looking at &quot;what does Compendium support?&quot; has to crawl multiple READMEs. Mitigated by an adapter index page on the framework's <code>docs/adapters/</code>.</li>
+<li><strong>Migration cost.</strong> Each extraction is at least a half-day of work : history transplant, NuGet pipeline, branch protection, Dependabot, Renovate, badges, README, sample. We pay this once per adapter and never again.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><strong>Status quo : keep the monorepo.</strong> Rejected — the three frictions above (coverage gate impossible, framework releases coupled to vendor SDK churn, slow CI) are a permanent tax that compounds with every adapter we add.</li>
+<li><strong>Multi-package repository (one repo, many NuGets, separate release lines).</strong> Rejected — possible with paths-filter on Actions and per-project versioning, but it doesn't address the CI-time cost of Docker images, doesn't simplify ownership / contribution, and still ties every release to the same git history. Worth it only if we expected ≤ 2 adapters.</li>
+<li><strong>Plugin-style runtime discovery</strong> (adapters loaded at runtime via assembly probing). Rejected — adds a layer of indirection nobody asked for, breaks AOT publishing, and doesn't solve the source-organisation question.</li>
+<li><strong>Submodules</strong> (one repo, adapters pulled as git submodules). Rejected — submodules are notoriously painful for contributors, don't help CI parallelism, and confuse most modern tooling (Renovate, GitHub Search, code navigation in IDEs).</li>
+</ul>
+<h2 id="how-to-use-the-template">How to use the template</h2>
+<p>Generate a new repository from <a href="https://github.com/sassy-solutions/template-compendium-adapter-dotnet"><code>sassy-solutions/template-compendium-adapter-dotnet</code></a> (it's a GitHub template repo):</p>
+<ol>
+<li><strong>Use this template</strong> → name the new repo <code>compendium-adapter-&lt;vendor&gt;</code>.</li>
+<li>The <code>template-cleanup</code> workflow auto-renames <code>Sample</code> → <code>&lt;Vendor&gt;</code> on first push.</li>
+<li>Add the <code>NUGET_API_KEY</code> secret (org-level secret with <code>Compendium.*</code> glob recommended).</li>
+<li>Implement the adapter, write tests to the 90% line gate.</li>
+<li>Tag <code>v1.0.0-preview.N</code> (continuing the framework's sequence for that PackageId) → publishes to nuget.org.</li>
+</ol>
+<h2 id="migration-log">Migration log</h2>
+<p>Adapters extracted from this monorepo (chronological):</p>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Adapter</th>
+<th>New repo</th>
+<th>First standalone version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-05-12</td>
+<td>Stripe</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-stripe"><code>compendium-adapter-stripe</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-13</td>
+<td>OpenRouter</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-openrouter"><code>compendium-adapter-openrouter</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-13</td>
+<td>Listmonk</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-listmonk"><code>compendium-adapter-listmonk</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-13</td>
+<td>LemonSqueezy</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-lemonsqueezy"><code>compendium-adapter-lemonsqueezy</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-13</td>
+<td>Zitadel</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-zitadel"><code>compendium-adapter-zitadel</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-14</td>
+<td>PostgreSQL</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-postgresql"><code>compendium-adapter-postgresql</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+<tr>
+<td>2026-05-14</td>
+<td>Redis</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-redis"><code>compendium-adapter-redis</code></a></td>
+<td><code>1.0.0-preview.9</code></td>
+</tr>
+</tbody>
+</table>
+<p>All seven heavy adapters now live in their own repositories. The framework's <code>tests/Integration</code> no longer requires Docker (per <a href="0007-integration-test-split-and-inmemory-defaults.md">ADR-0007</a>); per-adapter integration tests live alongside the adapter that owns them. The framework CI's line-coverage gate is now strict at ≥ 90 %.</p>
+<h3 id="in-tree-adapters-staged-for-extraction">In-tree adapters staged for extraction</h3>
+<p>New adapters may incubate in-tree while their abstraction stabilizes, then follow the same extraction path once the abstraction ships a stable (non-preview) tag:</p>
+<table>
+<thead>
+<tr>
+<th>Date added in-tree</th>
+<th>Adapter</th>
+<th>External SDK(s)</th>
+<th>Scheduled extraction repo</th>
+<th>Extraction trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-07-24</td>
+<td><code>Compendium.Adapters.GitHub</code></td>
+<td>Octokit, Sodium.Core</td>
+<td><code>compendium-adapter-github</code></td>
+<td>First stable (non-preview) tag of <code>Compendium.Abstractions.Git</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>Compendium.Adapters.GitHub</code> is unit-testable end-to-end (WireMock for the REST paths, NSubstitute for the Octokit paths), so unlike the integration-bound adapters above it does not depress the framework's unit-coverage gate and can incubate in-tree without a coverage exemption until the Git abstraction stabilizes.</p>
+<p>The convenience meta-package <code>Compendium.Extensions.ExternalAdapters</code> (which previously re-exposed Zitadel + Listmonk + LemonSqueezy DI helpers) was removed as part of this transition — consumers wire each adapter directly through its own DI extension method (<code>AddStripeBilling</code>, <code>AddZitadelIdentity</code>, etc.).</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/adr/0006-multi-repo-adapter-split.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

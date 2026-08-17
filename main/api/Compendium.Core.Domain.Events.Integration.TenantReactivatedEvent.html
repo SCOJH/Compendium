@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent" class="text-break">
-Class TenantReactivatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73"><i class="bi bi-code-slash"></i></a>
+Class TenantReactivatedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L95"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,12 +182,48 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent__ctor_System_String_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.#ctor(System.String,System.String,System.DateTimeOffset)">
-  TenantReactivatedEvent(string, string, DateTimeOffset)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent__ctor_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.#ctor(System.String,System.DateTimeOffset)">
+  TenantReactivatedEvent(string, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L95"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a tenant is reactivated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantReactivatedEvent(string Name, DateTimeOffset ReactivatedAt)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the tenant.</p>
+</dd>
+    <dt><code>ReactivatedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd><p>The timestamp when the tenant was reactivated.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent__ctor_System_String_System_String_System_DateTimeOffset_" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.#ctor(System.String,System.String,System.DateTimeOffset)">
+  TenantReactivatedEvent(string, string, DateTimeOffset)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -198,14 +234,11 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
+    <dd></dd>
     <dt><code>Name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The name of the tenant.</p>
-</dd>
+    <dd></dd>
     <dt><code>ReactivatedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
-    <dd><p>The timestamp when the tenant was reactivated.</p>
-</dd>
+    <dd></dd>
   </dl>
 
 
@@ -227,7 +260,7 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -259,7 +292,7 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent_Name" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name of the tenant.</p>
@@ -291,7 +324,7 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantReactivatedEvent_ReactivatedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantReactivatedEvent.ReactivatedAt">
   ReactivatedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the tenant was reactivated.</p>
@@ -323,7 +356,7 @@ Class TenantReactivatedEvent  <a class="header-action link-secondary" title="Vie
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L73" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L95" class="edit-link">Edit this page</a>
         </div>
 
 

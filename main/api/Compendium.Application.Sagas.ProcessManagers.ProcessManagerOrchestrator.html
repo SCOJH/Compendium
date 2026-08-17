@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator" class="text-break">
-Class ProcessManagerOrchestrator  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L18"><i class="bi bi-code-slash"></i></a>
+Class ProcessManagerOrchestrator  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -162,7 +162,7 @@ to <a class="xref" href="Compendium.Abstractions.Sagas.ProcessManagers.IProcessM
 
   <h3 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator__ctor_Compendium_Abstractions_Sagas_ProcessManagers_IProcessManagerRepository_Compendium_Abstractions_Sagas_ProcessManagers_IProcessManagerStepExecutor_" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.#ctor(Compendium.Abstractions.Sagas.ProcessManagers.IProcessManagerRepository,Compendium.Abstractions.Sagas.ProcessManagers.IProcessManagerStepExecutor)">
   ProcessManagerOrchestrator(IProcessManagerRepository, IProcessManagerStepExecutor)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.html">ProcessManagerOrchestrator</a> class.</p>
@@ -202,7 +202,7 @@ to <a class="xref" href="Compendium.Abstractions.Sagas.ProcessManagers.IProcessM
 
   <h3 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator_CompensateAsync_System_Guid_System_Threading_CancellationToken_" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.CompensateAsync(System.Guid,System.Threading.CancellationToken)">
   CompensateAsync(Guid, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Runs compensation for a process manager: each completed step is undone in reverse
@@ -246,7 +246,7 @@ the saga reaches <code>Compensated</code>; on partial failure it is left in <cod
 
   <h3 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator_ExecuteStepAsync_System_Guid_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.ExecuteStepAsync(System.Guid,System.String,System.Threading.CancellationToken)">
   ExecuteStepAsync(Guid, string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Executes a single named step of a process manager. On failure, the step is marked
@@ -294,7 +294,7 @@ to retry transient failures before triggering compensation.</p>
 
   <h3 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator_GetAsync_System_Guid_System_Threading_CancellationToken_" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.GetAsync(System.Guid,System.Threading.CancellationToken)">
   GetAsync(Guid, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Retrieves a process manager by id.</p>
@@ -336,7 +336,7 @@ to retry transient failures before triggering compensation.</p>
 
   <h3 id="Compendium_Application_Sagas_ProcessManagers_ProcessManagerOrchestrator_StartAsync_Compendium_Abstractions_Sagas_ProcessManagers_IProcessManager_System_Threading_CancellationToken_" data-uid="Compendium.Application.Sagas.ProcessManagers.ProcessManagerOrchestrator.StartAsync(Compendium.Abstractions.Sagas.ProcessManagers.IProcessManager,System.Threading.CancellationToken)">
   StartAsync(IProcessManager, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Persists a freshly-constructed process manager and returns its identifier.
@@ -380,7 +380,7 @@ factory or static <code>Create</code> method) and supplying its initial state.</
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L18" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/Sagas/ProcessManagers/ProcessManagerOrchestrator.cs/#L18" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Performance testing | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Performance testing | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/testing/perf-testing.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="performance-testing">Performance testing</h1>
+
+<p>Compendium has <strong>zero wall-clock assertions in its xUnit test suites</strong>. Performance is measured with <a href="https://benchmarkdotnet.org/">BenchmarkDotNet</a> in dedicated projects under <code>tests/Perf/</code>.</p>
+<h2 id="why">Why</h2>
+<p>Wall-clock assertions like <code>stopwatch.ElapsedMilliseconds.Should().BeLessThan(N)</code> are a known anti-pattern in unit-test suites:</p>
+<ul>
+<li>Self-hosted runners, GitHub-hosted runners, developer laptops, and coverage-instrumented runs all have different baseline performance. A threshold tuned for one will flake on another.</li>
+<li>Concurrency on shared CI fluctuates: a noisy neighbour pod gets you a 3× slowdown one run, a 1× the next.</li>
+<li>&quot;Relaxing&quot; the threshold to suppress the flake doesn't measure anything useful — it just hides regressions until they're catastrophic.</li>
+<li>xUnit runs each test once; you cannot get a statistically meaningful number from a single sample.</li>
+</ul>
+<p>The historical workaround was <code>gh pr merge --admin</code> to bypass the flake. That's not a durable solution: it normalises ignoring CI, and once one test is flaky everyone stops trusting CI.</p>
+<h2 id="where-benchmarks-live">Where benchmarks live</h2>
+<pre><code>tests/Perf/
+├── Compendium.Core.PerfTests/
+│   ├── Compendium.Core.PerfTests.csproj
+│   ├── Program.cs                          (BenchmarkRunner entry point)
+│   ├── Fixtures.cs                         (minimal test fixtures)
+│   └── Benchmarks/
+│       ├── ResultBenchmarks.cs             (Result, Error, extensions)
+│       ├── DomainPrimitiveBenchmarks.cs    (Entity, ValueObject, AggregateRoot)
+│       ├── DomainRuleBenchmarks.cs         (BusinessRule, Specification)
+│       └── EventBenchmarks.cs              (DomainEvent, IntegrationEvent)
+└── Compendium.Infrastructure.PerfTests/
+    ├── Compendium.Infrastructure.PerfTests.csproj
+    ├── Program.cs
+    └── Benchmarks/
+        ├── EncryptionBenchmarks.cs         (AES encrypt / decrypt)
+        └── ResilienceBenchmarks.cs         (CircuitBreaker, RetryPolicy)
+</code></pre>
+<h2 id="running">Running</h2>
+<p>Run all benchmarks for a project:</p>
+<pre><code class="lang-bash">dotnet run -c Release --project tests/Perf/Compendium.Core.PerfTests
+</code></pre>
+<p>Filter to one benchmark class:</p>
+<pre><code class="lang-bash">dotnet run -c Release --project tests/Perf/Compendium.Core.PerfTests -- --filter '*ValueObject*'
+</code></pre>
+<p>BenchmarkDotNet emits <code>BenchmarkDotNet.Artifacts/results/*.md</code> files with allocation tables and timing distributions.</p>
+<h2 id="ci">CI</h2>
+<p><code>.github/workflows/perf-bench.yml</code> runs the benchmark projects nightly at 03:00 UTC and on manual dispatch. The results are uploaded as workflow artifacts (90-day retention). The workflow is <strong>informational</strong> — it does not gate any PR. Regressions are caught by comparing artifacts across runs.</p>
+<p>The unit-test CI workflow (<code>.github/workflows/ci.yml</code>) does <strong>not</strong> run benchmarks. Benchmarks take minutes per method (BenchmarkDotNet runs each iteration N times to converge on a statistical mean); they would dominate PR-time CI.</p>
+<h2 id="policy">Policy</h2>
+<p>If you're tempted to add <code>stopwatch.ElapsedMilliseconds.Should().BeLessThan(N)</code> to a test, <strong>don't</strong>. Either:</p>
+<ol>
+<li><strong>Write a BenchmarkDotNet method</strong> in the appropriate <code>tests/Perf/*.PerfTests</code> project. Use <code>[Benchmark]</code> for the hot path; <code>[GlobalSetup]</code> for expensive prep; <code>[MemoryDiagnoser]</code> for allocation tracking; <code>[Params]</code> for varying input sizes.</li>
+<li><strong>Remove the timing concern from the test entirely.</strong> The functional assertions still belong in the xUnit test. The timing assertion does not.</li>
+</ol>
+<p>If the unit-test suite finds an actual performance regression — for example, a method went from O(n) to O(n²) — the failure mode should be:</p>
+<ul>
+<li><code>dotnet test</code> takes 30+ seconds instead of &lt;1 second → triggers a separate investigation (the test runtime is itself the signal).</li>
+<li>Or: a BenchmarkDotNet regression in the nightly run (preferred — gives you a number, not a yes/no).</li>
+</ul>
+<h2 id="migration-notes">Migration notes</h2>
+<p>This policy was introduced when migrating away from a pattern of CI flakes caused by 15+ wall-clock assertions across <code>Compendium.Core.Tests</code> and <code>Compendium.Infrastructure.Tests</code>. The original tests were:</p>
+<ul>
+<li>10 <code>*_PerformanceTest_*</code> methods in <code>Compendium.Core.Tests</code> (Result, Error, Entity, ValueObject, AggregateRoot, BusinessRule, DomainEvent, IntegrationEvent, Specification, ResultExtensions)</li>
+<li>4 <code>*_PerformanceTest_*</code> methods in <code>Compendium.Infrastructure.Tests</code> (ProjectionManager, Encryption, CircuitBreaker, RetryPolicy)</li>
+<li>5 inline <code>Stopwatch.ElapsedMilliseconds.Should().BeLessThan(...)</code> assertions bolted onto otherwise-functional tests (InMemoryEventStore, LockingStrategy, TracingService, MetricsCollector)</li>
+</ul>
+<p>The pure micro-benchmarks were migrated to <code>tests/Perf/</code>. The functional tests had their timing assertions removed; their correctness checks remain.</p>
+<h2 id="not-yet-migrated">Not yet migrated</h2>
+<ul>
+<li><code>ProjectionManager</code> throughput benchmark — the original 10,000-event scenario needs an <code>IEventStore</code> + <code>IEventDeserializer</code> setup that doesn't currently fit cleanly into a BenchmarkDotNet <code>[GlobalSetup]</code>. Tracked as follow-up; the original xUnit version was deleted (functional coverage is already provided by other tests in <code>ProjectionManagerTests</code>).</li>
+<li><code>InMemoryEventStore</code> 1k/10k batch throughput benchmark — same reasoning; follow-up.</li>
+</ul>
+<p>When migrating these, add a new benchmark class in <code>tests/Perf/Compendium.Infrastructure.PerfTests/Benchmarks/</code>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/testing/perf-testing.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

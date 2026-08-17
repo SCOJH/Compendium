@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Coding-agent sandbox (Kubernetes) | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Coding-agent sandbox (Kubernetes) | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/operations/coding-agent-sandbox.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="coding-agent-sandbox-kubernetes">Coding-agent sandbox (Kubernetes)</h1>
+
+<p><code>Compendium.Adapters.Kubernetes.Sandbox</code> implements
+<code>Compendium.Abstractions.CodingAgents.Sandbox.IAgentSandbox</code> against a real
+Kubernetes cluster. Each agent run gets its own ephemeral pod: created on
+<code>StartAsync</code>, driven through <code>exec</code> for the duration of the run, and deleted
+on dispose (even when the caller faults). It is the runtime substrate the
+Claude Code / Codex / Gemini / OpenCode runtimes plug into via POM-427's
+<code>ICodingAgentRuntime</code> port.</p>
+<p>This doc covers operator-facing concerns: provisioning, security posture,
+RBAC, NetworkPolicy, image, and observability.</p>
+<hr>
+<h2 id="architecture">Architecture</h2>
+<pre><code>[ ICodingAgentRuntime ] -- options --&gt; [ IKubernetesAgentSandboxFactory ]
+                                                 |
+                                            Create()
+                                                 v
+[ IAgentSandbox ] -- StartAsync -----&gt; creates Pod (RBAC: runtime SA)
+                  -- ExecBash -------&gt; kubectl exec into the pod
+                  -- Read/Write/Edit-&gt; exec base64 round-trip
+                  -- DisposeAsync ---&gt; deletes Pod (best-effort)
+</code></pre>
+<p>The sandbox does <strong>not</strong> require any in-cluster permissions for the agent
+itself — <code>automountServiceAccountToken=false</code> is set on every pod. The
+calling service (the runtime workload) holds the RBAC that lets it
+create/exec/delete pods inside the sandbox namespace.</p>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="1-cluster-prerequisites">1. Cluster prerequisites</h3>
+<p>Apply the Helm chart (or the standalone manifests) shipped with the repo:</p>
+<pre><code class="lang-bash">helm upgrade --install compendium-coding-agent-sandbox \
+  ./deploy/sandbox/helm \
+  --create-namespace \
+  --set namespace=coding-agents \
+  --set runtimeRbac.subjects[0].name=compendium-runtime \
+  --set runtimeRbac.subjects[0].namespace=compendium-system
+</code></pre>
+<p>This provisions:</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Namespace</code></td>
+<td><code>coding-agents</code>, labelled with PodSecurity <code>restricted</code>.</td>
+</tr>
+<tr>
+<td><code>ServiceAccount</code></td>
+<td><code>coding-agent-sandbox</code>, no permissions, no auto-mounted token.</td>
+</tr>
+<tr>
+<td><code>NetworkPolicy</code></td>
+<td>Default-deny ingress; egress restricted to DNS + HTTPS:443.</td>
+</tr>
+<tr>
+<td>(optional) <code>CiliumNetworkPolicy</code></td>
+<td>FQDN allowlist for Anthropic / OpenAI / GitHub.</td>
+</tr>
+<tr>
+<td><code>Role</code>/<code>RoleBinding</code></td>
+<td>Grants the runtime workload <code>pods</code> + <code>pods/exec</code> CRUD in this NS only.</td>
+</tr>
+</tbody>
+</table>
+<p>For ArgoCD-based clusters, see <code>deploy/sandbox/argocd-application.yaml</code>.</p>
+<h3 id="2-build-the-sandbox-image">2. Build the sandbox image</h3>
+<pre><code class="lang-bash">docker build \
+  -f deploy/sandbox/coding-agent.Dockerfile \
+  -t ghcr.io/sassy-solutions/compendium/coding-agent-sandbox:1.0.0 \
+  --build-arg INSTALL_DOTNET=false \
+  deploy/sandbox
+docker push ghcr.io/sassy-solutions/compendium/coding-agent-sandbox:1.0.0
+</code></pre>
+<p>The image is intentionally minimal: <code>bash</code>, <code>git</code>, <code>curl</code>, <code>node</code>, <code>python</code>,
+plus an optional <code>.NET SDK</code> overlay (<code>--build-arg INSTALL_DOTNET=true</code>). It
+runs as UID/GID <code>10001:10001</code> and matches the adapter defaults — override
+<code>AGENT_UID</code>/<code>AGENT_GID</code> at build time if you have organisation-specific UID
+allocations. Pin the image by digest in production.</p>
+<h3 id="3-wire-the-adapter-in-the-host">3. Wire the adapter in the host</h3>
+<pre><code class="lang-csharp">using Compendium.Adapters.Kubernetes.Sandbox.DependencyInjection;
+
+services.AddKubernetesAgentSandbox(opt =&gt;
+{
+    opt.Image = &quot;ghcr.io/sassy-solutions/compendium/coding-agent-sandbox:1.0.0&quot;;
+    opt.Namespace = &quot;coding-agents&quot;;
+    opt.ServiceAccountName = &quot;coding-agent-sandbox&quot;;
+    opt.CpuLimit = &quot;2&quot;;
+    opt.MemoryLimit = &quot;2Gi&quot;;
+    opt.PodReadyTimeout = TimeSpan.FromMinutes(2);
+    opt.DefaultCommandTimeout = TimeSpan.FromMinutes(10);
+});
+</code></pre>
+<p>The Kubernetes client is registered as a singleton only if one is not already
+present, so a multi-tenant namespace-provisioning module that already
+provides <code>IKubernetes</code> keeps full control of authentication.</p>
+<h3 id="4-use-it-from-a-runtime">4. Use it from a runtime</h3>
+<pre><code class="lang-csharp">public sealed class ClaudeCodeRuntime : CliCodingAgentRuntime
+{
+    private readonly IKubernetesAgentSandboxFactory _sandboxFactory;
+    public ClaudeCodeRuntime(IKubernetesAgentSandboxFactory factory) =&gt; _sandboxFactory = factory;
+
+    public override string Engine =&gt; &quot;claude-code&quot;;
+
+    protected override IAgentSandbox CreateSandbox(CodingAgentRuntimeOptions options)
+        =&gt; _sandboxFactory.Create();
+
+    // ... BuildCommand / ParseStreamLine ...
+}
+</code></pre>
+<h2 id="security-posture">Security posture</h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Posture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Container user</td>
+<td><code>runAsNonRoot=true</code>, UID/GID 10001 (configurable).</td>
+</tr>
+<tr>
+<td>Privilege escalation</td>
+<td><code>allowPrivilegeEscalation=false</code>, <code>privileged=false</code>.</td>
+</tr>
+<tr>
+<td>Capabilities</td>
+<td><code>drop: [ALL]</code>.</td>
+</tr>
+<tr>
+<td>Root filesystem</td>
+<td><code>readOnlyRootFilesystem=true</code>; only <code>/workspace</code> is writable.</td>
+</tr>
+<tr>
+<td>Seccomp</td>
+<td><code>RuntimeDefault</code>.</td>
+</tr>
+<tr>
+<td>Service-account token mount</td>
+<td>Disabled (<code>automountServiceAccountToken=false</code>).</td>
+</tr>
+<tr>
+<td>Network egress</td>
+<td>Default deny + HTTPS allowlist; FQDN allowlist on Cilium.</td>
+</tr>
+<tr>
+<td>Network ingress</td>
+<td>Default deny.</td>
+</tr>
+<tr>
+<td>Resource limits</td>
+<td>CPU + memory limits always set; safe defaults <code>1 CPU / 1Gi</code>.</td>
+</tr>
+<tr>
+<td>Run timeout</td>
+<td>Per-command timeout, defaults to 10 min, configurable.</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td><code>DisposeAsync</code> deletes the pod even if the caller throws.</td>
+</tr>
+</tbody>
+</table>
+<p>The pod <strong>cannot</strong> call the Kubernetes API by design. Anything sensitive
+(API keys for Anthropic / OpenAI / GitHub) is injected as plain environment
+variables through <code>SandboxOptions.Environment</code> by the runtime. Source these
+from your secret store (e.g. ExternalSecrets) and pass them via the runtime's
+auth dictionary, not via a mounted secret.</p>
+<h2 id="tenancy">Tenancy</h2>
+<p>Pass <code>SandboxOptions.TenantId</code> on every run; the adapter stamps the pod with
+<code>compendium.io/tenant=&lt;id&gt;</code>. Combine with per-tenant namespaces (override
+<code>SandboxOptions.Namespace</code>) when stronger isolation is required — Helm's
+<code>namespace</code> value applies to a single namespace; provision one chart release
+per tenant for hard isolation.</p>
+<h2 id="observability">Observability</h2>
+<ul>
+<li>All pods carry <code>compendium.io/component=coding-agent-sandbox</code> and
+<code>app.kubernetes.io/managed-by=compendium</code>. Scrape per these labels.</li>
+<li>The adapter logs at <code>Warning</code> when the best-effort pod delete fails on
+dispose (keep an alert on a non-zero rate).</li>
+<li>For longer-term audit, enable Kubernetes audit logs on <code>pods/exec</code>
+inside the sandbox namespace.</li>
+</ul>
+<h2 id="failure-modes--errors">Failure modes &amp; errors</h2>
+<p>The adapter surfaces failures through the standard <code>Result</code> pattern with
+error codes prefixed <code>sandbox.kubernetes.*</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pod_create_failed</code></td>
+<td>API server rejected the pod (quota, admission webhook, image policy).</td>
+</tr>
+<tr>
+<td><code>pod_read_failed</code></td>
+<td>API server unreachable mid-readiness poll.</td>
+</tr>
+<tr>
+<td><code>pod_terminal</code></td>
+<td>Pod went <code>Failed</code>/<code>Succeeded</code> before becoming <code>Running</code>.</td>
+</tr>
+<tr>
+<td><code>pod_ready_timeout</code></td>
+<td>Pod never reached <code>Running</code> within <code>PodReadyTimeout</code>.</td>
+</tr>
+<tr>
+<td><code>exec_failed</code></td>
+<td><code>pods/exec</code> upgrade or stream failed.</td>
+</tr>
+<tr>
+<td><code>toolchain_missing</code></td>
+<td>The container image lacks <code>base64</code> (image hardening regression).</td>
+</tr>
+<tr>
+<td><code>file_not_found</code></td>
+<td>Read/edit target doesn't exist.</td>
+</tr>
+<tr>
+<td><code>read_failed</code> / <code>write_failed</code></td>
+<td>Generic file IO error inside the pod.</td>
+</tr>
+<tr>
+<td><code>decode_failed</code></td>
+<td>Returned bytes weren't valid base64 (shell corruption).</td>
+</tr>
+<tr>
+<td><code>edit_no_match</code> / <code>edit_not_unique</code></td>
+<td>Edit guarantees broken — substring wasn't found, or matched &gt;1.</td>
+</tr>
+<tr>
+<td><code>already_started</code> / <code>not_started</code> / <code>disposed</code></td>
+<td>Lifecycle misuse.</td>
+</tr>
+</tbody>
+</table>
+<p>When a <code>Result&lt;SandboxResult&gt;</code> is <code>Success</code> but <code>ExitCode != 0</code>, the
+command itself failed — the sandbox dispatched it correctly. Inspect
+<code>Stderr</code> / <code>ExitCode</code> on the result.</p>
+<h2 id="tests">Tests</h2>
+<ul>
+<li><strong>Unit tests</strong> (<code>tests/Unit/Compendium.Adapters.Kubernetes.Sandbox.Tests</code>)
+exercise <code>PodSpecFactory</code>, naming, DI registration, and architecture guards
+— no cluster required.</li>
+<li><strong>Integration tests</strong>
+(<code>tests/Integration/Compendium.Adapters.Kubernetes.Sandbox.IntegrationTests</code>)
+spin up a single-node k3s via Testcontainers and exercise the full
+exec/read/write/edit cycle. They auto-skip when Docker isn't available, so
+the suite is safe to run on contributors' laptops.</li>
+</ul>
+<pre><code class="lang-bash">dotnet test tests/Unit/Compendium.Adapters.Kubernetes.Sandbox.Tests/
+dotnet test tests/Integration/Compendium.Adapters.Kubernetes.Sandbox.IntegrationTests/
+</code></pre>
+<h2 id="related-adrs--tickets">Related ADRs / tickets</h2>
+<ul>
+<li>POM-427 — <code>IAgentSandbox</code> / <code>IAgentRuntimeRegistry</code> ports (merged).</li>
+<li>POM-431 — this adapter.</li>
+<li>POM-B1 — <code>IAgent</code> / <code>StandardAgent</code> ReAct primitives that consume this
+sandbox transitively through <code>ICodingAgentRuntime</code>.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/operations/coding-agent-sandbox.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

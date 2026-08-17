@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IGitCiConfigurationService | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IGitCiConfigurationService | Compendium — .NET event-sourcing framework ">
+      
+      <meta name="description" content="CI secrets and variables management. Secrets are write-only on every provider — values can be set and deleted but never read back. Adapters perform any provider-required client-side encryption (GitHub: libsodium sealed box) transparently.">
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/new/main/apiSpec/new?filename=Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService.md&amp;value=---%0Auid%3A%20Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService">
+
+
+
+  <h1 id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService" class="text-break">
+Interface IGitCiConfigurationService  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Compendium.html">Compendium</a>.<a class="xref" href="Compendium.Abstractions.html">Abstractions</a>.<a class="xref" href="Compendium.Abstractions.Git.html">Git</a>.<a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.html">CiConfiguration</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Compendium.Abstractions.Git.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>CI secrets and variables management. Secrets are write-only on every
+provider — values can be set and deleted but never read back. Adapters
+perform any provider-required client-side encryption (GitHub: libsodium
+sealed box) transparently.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IGitCiConfigurationService</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_DeleteSecretAsync_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.DeleteSecretAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_DeleteSecretAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.DeleteSecretAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteSecretAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI secret at <code class="paramref">scope</code>. Deleting an absent
+secret succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DeleteSecretAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_DeleteVariableAsync_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.DeleteVariableAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_DeleteVariableAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.DeleteVariableAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.String,System.Threading.CancellationToken)">
+  DeleteVariableAsync(GitConnection, GitConfigurationScope, string, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Deletes a CI variable at <code class="paramref">scope</code>. Deleting an absent
+variable succeeds (idempotent).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; DeleteVariableAsync(GitConnection connection, GitConfigurationScope scope, string name, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_SetSecretsAsync_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.SetSecretsAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_SetSecretsAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.SetSecretsAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetSecretsAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI secrets at <code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiSecrets">CiSecrets</a> (repository scope),
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_NamespaceSecrets">NamespaceSecrets</a> (namespace scope), or
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_EnvironmentSecrets">EnvironmentSecrets</a> (environment scope).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; SetSecretsAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; secrets, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>secrets</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_SetVariablesAsync_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.SetVariablesAsync*"></a>
+
+  <h3 id="Compendium_Abstractions_Git_CiConfiguration_IGitCiConfigurationService_SetVariablesAsync_Compendium_Abstractions_Git_Connections_GitConnection_Compendium_Abstractions_Git_CiConfiguration_GitConfigurationScope_System_Collections_Generic_IReadOnlyDictionary_System_String_System_String__System_Threading_CancellationToken_" data-uid="Compendium.Abstractions.Git.CiConfiguration.IGitCiConfigurationService.SetVariablesAsync(Compendium.Abstractions.Git.Connections.GitConnection,Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String},System.Threading.CancellationToken)">
+  SetVariablesAsync(GitConnection, GitConfigurationScope, IReadOnlyDictionary&lt;string, string&gt;, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or updates CI variables (plaintext configuration) at
+<code class="paramref">scope</code>. Requires
+<a class="xref" href="Compendium.Abstractions.Git.Capabilities.GitCapability.html#Compendium_Abstractions_Git_Capabilities_GitCapability_CiVariables">CiVariables</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Result&gt; SetVariablesAsync(GitConnection connection, GitConfigurationScope scope, IReadOnlyDictionary&lt;string, string&gt; variables, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>connection</code> <a class="xref" href="Compendium.Abstractions.Git.Connections.GitConnection.html">GitConnection</a></dt>
+    <dd></dd>
+    <dt><code>scope</code> <a class="xref" href="Compendium.Abstractions.Git.CiConfiguration.GitConfigurationScope.html">GitConfigurationScope</a></dt>
+    <dd></dd>
+    <dt><code>variables</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result.html">Result</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Abstractions/Compendium.Abstractions.Git/CiConfiguration/IGitCiConfigurationService.cs/#L19" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

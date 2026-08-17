@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent" class="text-break">
-Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L170"><i class="bi bi-code-slash"></i></a>
+Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -182,9 +182,9 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <a id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.#ctor*"></a>
 
-  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset,System.String)">
-  TenantUserRoleChangedEvent(string, string, string, string, string, DateTimeOffset, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L170"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent__ctor_System_String_System_String_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.DateTimeOffset,System.String)">
+  TenantUserRoleChangedEvent(string, string, string, string, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Integration event raised when a user's role is changed within a tenant.</p>
@@ -192,14 +192,11 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TenantUserRoleChangedEvent(string TenantId, string UserId, string Email, string OldRole, string NewRole, DateTimeOffset ChangedAt, string? ChangedBy)</code></pre>
+    <pre><code class="lang-csharp hljs">public TenantUserRoleChangedEvent(string UserId, string Email, string OldRole, string NewRole, DateTimeOffset ChangedAt, string? ChangedBy)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd><p>The unique identifier of the tenant.</p>
-</dd>
     <dt><code>UserId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The unique identifier of the user.</p>
 </dd>
@@ -231,6 +228,50 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
 
 
+  <a id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent__ctor_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.#ctor*"></a>
+
+  <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent__ctor_System_String_System_String_System_String_System_String_System_String_System_DateTimeOffset_System_String_" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.#ctor(System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset,System.String)">
+  TenantUserRoleChangedEvent(string, string, string, string, string, DateTimeOffset, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L226"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Backward-compatible constructor that also sets <a class="xref" href="Compendium.Core.Domain.Events.IntegrationEventBase.html#Compendium_Core_Domain_Events_IntegrationEventBase_TenantId">TenantId</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TenantUserRoleChangedEvent(string TenantId, string UserId, string Email, string OldRole, string NewRole, DateTimeOffset ChangedAt, string? ChangedBy)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TenantId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>UserId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>Email</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>OldRole</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>NewRole</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>ChangedAt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetimeoffset">DateTimeOffset</a></dt>
+    <dd></dd>
+    <dt><code>ChangedBy</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="properties">Properties
 </h2>
 
@@ -239,7 +280,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_ChangedAt" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.ChangedAt">
   ChangedAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L222"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The timestamp when the role was changed.</p>
@@ -271,7 +312,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_ChangedBy" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.ChangedBy">
   ChangedBy
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The identifier of the user who changed the role.</p>
@@ -303,7 +344,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_Email" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.Email">
   Email
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L219"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The user's email address.</p>
@@ -335,7 +376,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_EventType" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.EventType">
   EventType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L233"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the name of the event type for serialization and routing purposes.</p>
@@ -367,7 +408,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_NewRole" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.NewRole">
   NewRole
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L221"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The new role.</p>
@@ -399,7 +440,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_OldRole" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.OldRole">
   OldRole
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L220"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The previous role.</p>
@@ -431,7 +472,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 
   <h3 id="Compendium_Core_Domain_Events_Integration_TenantUserRoleChangedEvent_UserId" data-uid="Compendium.Core.Domain.Events.Integration.TenantUserRoleChangedEvent.UserId">
   UserId
-  <a class="header-action link-secondary" title="View source" href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L218"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unique identifier of the user.</p>
@@ -463,7 +504,7 @@ Class TenantUserRoleChangedEvent  <a class="header-action link-secondary" title=
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/sassy-solutions/compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L170" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Events/Integration/TenancyIntegrationEvents.cs/#L217" class="edit-link">Edit this page</a>
         </div>
 
 

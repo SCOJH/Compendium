@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>External adapters | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="External adapters | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/sassy-solutions/compendium/blob/main/docs/adapters/external.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="external-adapters">External adapters</h1>
+
+<p>Heavy adapters that ship from their own repositories per <a href="../adr/0006-multi-repo-adapter-split.html">ADR-0006</a>. Each is released independently from the framework on its own version cadence.</p>
+<table>
+<thead>
+<tr>
+<th>Adapter</th>
+<th>Repository</th>
+<th>NuGet package</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stripe</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-stripe">sassy-solutions/compendium-adapter-stripe</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.Stripe"><code>Compendium.Adapters.Stripe</code></a></td>
+<td>Billing: subscriptions, checkouts, customer portal, HMAC-signed webhooks</td>
+</tr>
+<tr>
+<td>LemonSqueezy</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-lemonsqueezy">sassy-solutions/compendium-adapter-lemonsqueezy</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.LemonSqueezy"><code>Compendium.Adapters.LemonSqueezy</code></a></td>
+<td>Billing: subscriptions, checkouts, license keys, webhooks (JSON:API)</td>
+</tr>
+<tr>
+<td>Zitadel</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-zitadel">sassy-solutions/compendium-adapter-zitadel</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.Zitadel"><code>Compendium.Adapters.Zitadel</code></a></td>
+<td>Identity: users, tokens, organizations (multi-tenant)</td>
+</tr>
+<tr>
+<td>Listmonk</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-listmonk">sassy-solutions/compendium-adapter-listmonk</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.Listmonk"><code>Compendium.Adapters.Listmonk</code></a></td>
+<td>Email: transactional, newsletters, subscribers</td>
+</tr>
+<tr>
+<td>OpenRouter</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-openrouter">sassy-solutions/compendium-adapter-openrouter</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.OpenRouter"><code>Compendium.Adapters.OpenRouter</code></a></td>
+<td>AI: access to 100+ LLMs through one OpenAI-compatible API</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-postgresql">sassy-solutions/compendium-adapter-postgresql</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.PostgreSQL"><code>Compendium.Adapters.PostgreSQL</code></a></td>
+<td>Event store, projection store, idempotency, row-level tenant isolation</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><a href="https://github.com/sassy-solutions/compendium-adapter-redis">sassy-solutions/compendium-adapter-redis</a></td>
+<td><a href="https://www.nuget.org/packages/Compendium.Adapters.Redis"><code>Compendium.Adapters.Redis</code></a></td>
+<td>Distributed cache, idempotency store, locking</td>
+</tr>
+</tbody>
+</table>
+<h2 id="writing-a-new-adapter">Writing a new adapter</h2>
+<p>Generate a new repository from the <a href="https://github.com/sassy-solutions/template-compendium-adapter-dotnet"><code>template-compendium-adapter-dotnet</code></a> GitHub template. The template ships:</p>
+<ul>
+<li>xUnit + FluentAssertions + NSubstitute + AutoFixture + Bogus test stack</li>
+<li>90 % line-coverage CI gate</li>
+<li>MinVer-driven versioning from git tags</li>
+<li>Tag-triggered NuGet publishing (nuget.org + GitHub Packages)</li>
+<li>Renovate + Dependabot configs</li>
+<li><code>compendium-test-author</code> skill and <code>/tests</code> / <code>/coverage</code> slash commands</li>
+</ul>
+<p>See the template README for the full bootstrap procedure.</p>
+<h2 id="in-framework-adapters">In-framework adapters</h2>
+<p>The only adapter that remains in the framework monorepo:</p>
+<ul>
+<li><a href="aspnetcore.html"><code>Compendium.Adapters.AspNetCore</code></a> — thin glue (middleware, ProblemDetails mappers, DI helpers). No external SDK; evolves in lock-step with <code>Compendium.Application</code>.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/sassy-solutions/compendium/blob/main/docs/adapters/external.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/sassy-solutions/compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
