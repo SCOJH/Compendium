@@ -55,6 +55,13 @@ jobs:
       - name: Build samples
         run: dotnet build samples/ -c Release
 
+      # NEX-REF-06 — la même garde qu'au moment de publier, mais sur la PR.
+      # Un projet packable qui oublie son <MinVerTagPrefix> ne casse pas le
+      # build : MinVer lui donne 0.0.0-alpha.0.N sans rien dire, et c'est la
+      # release qui le découvre en publiant. Ici, ça rougit sur la PR.
+      - name: Every packable project declares a release train
+        run: bash scripts/verify-package-trains.sh
+
       - name: Enforce 90% line coverage gate
         # Per ADR-0006: with the heavy integration-bound adapters extracted to their
         # own repos, the framework's aggregate line coverage is well above 90 % and

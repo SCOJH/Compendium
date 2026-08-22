@@ -10,7 +10,13 @@
 # Usage:
 #   scripts/verify-package-trains.sh [src-directory]   (default: src)
 #
-# Exit status: 0 when every packable project declares a train, 1 otherwise.
+# Exit status: 0 when every packable project declares a train, 1 otherwise —
+# including when it finds no project at all. A gate that passes on an empty scan
+# is not a gate: it reports "all clear" precisely when it has checked nothing.
+#
+# Deliberately bash-3.2 compatible (no `declare -A`): macOS ships bash 3.2, and
+# a gate a developer cannot run on their own machine only ever gets run where it
+# is too late to be useful.
 
 set -uo pipefail
 
@@ -19,7 +25,8 @@ src_dir=${1:-src}
 [[ -d $src_dir ]] || { echo "verify-package-trains: no such directory: $src_dir" >&2; exit 2; }
 
 missing=()
-declare -A train_of=()
+# "prefix<TAB>name" per line — a plain array, so this runs on bash 3.2 too.
+found=()
 
 while IFS= read -r csproj; do
   name=$(basename "$csproj" .csproj)
@@ -32,7 +39,7 @@ while IFS= read -r csproj; do
   if [[ -z $prefix ]]; then
     missing+=("$csproj")
   else
-    train_of[$name]=$prefix
+    found+=("$prefix	$name")
   fi
 done < <(find "$src_dir" -name '*.csproj' | sort)
 
@@ -46,7 +53,18 @@ if [[ ${#missing[@]} -gt 0 ]]; then
   exit 1
 fi
 
-echo "${#train_of[@]} packable project(s), all on a declared train:"
-for name in $(printf '%s\n' "${!train_of[@]}" | sort); do
-  printf '  %-28s %s\n' "${train_of[$name]}" "$name"
-done | sort
+# Zero is a failure, not a clean bill of health. It means the scan found nothing
+# to check — a wrong directory, a `find` that returned nothing, a repository
+# layout that moved — and reporting success there is how a broken gate stays
+# invisible for months.
+if [[ ${#found[@]} -eq 0 ]]; then
+  echo "verify-package-trains: found no packable Compendium.* project under '$src_dir'." >&2
+  echo "This is reported as a failure on purpose: the scan checked nothing, so it" >&2
+  echo "cannot say anything is correct. Check the directory, or the layout." >&2
+  exit 1
+fi
+
+echo "${#found[@]} packable project(s), all on a declared train:"
+printf '%s\n' "${found[@]}" | sort | while IFS='	' read -r prefix name; do
+  printf '  %-28s %s\n' "$prefix" "$name"
+done
