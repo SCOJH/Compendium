@@ -232,13 +232,74 @@ public sealed class ScalewaySecretVersionServiceTests
     [Fact]
     public async Task NetworkFailure_MapsToProviderRejected_NotAnException()
     {
-        using var harness = new ScalewayTestHarness();
-        harness.Server.Stop();
+        using var handler = new ConnectionRefusedHandler();
+        using var harness = new ScalewayTestHarness(handler: handler);
 
         var result = await harness.Versions.AccessAsync(harness.Connection(), "sec-1", 1);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+    }
+
+    [Fact]
+    public async Task Access_ProviderFailure_IsNotDisambiguated()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/3/access")).UsingGet())
+            .RespondWith(Json.Status(500, new { message = "boom" }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/3")).UsingGet())
+            .RespondWith(Json.Status(404, new { message = "not found" }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1")).UsingGet())
+            .RespondWith(Json.Status(404, new { message = "not found" }));
+
+        var result = await harness.Versions.AccessAsync(harness.Connection(), "sec-1", 3);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+        result.Error.Metadata["statusCode"].Should().Be(500);
+
+        // A downed provider is not probed further: the access call is the only
+        // request that leaves.
+        harness.Server.LogEntries.Should().ContainSingle();
+    }
+
+    [Fact]
+    public async Task Access_ProviderFailure_IsNotMaskedAsDisabled()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/3/access")).UsingGet())
+            .RespondWith(Json.Status(500, new { message = "boom" }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/3")).UsingGet())
+            .RespondWith(Json.Ok(new { revision = 3, status = "disabled" }));
+
+        var result = await harness.Versions.AccessAsync(harness.Connection(), "sec-1", 3);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+        result.Error.Metadata["statusCode"].Should().Be(500);
+    }
+
+    [Fact]
+    public async Task Enable_ProviderFailure_IsNotSwallowedAsSuccess()
+    {
+        using var harness = new ScalewayTestHarness();
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1/enable")).UsingPost())
+            .RespondWith(Json.Status(500, new { message = "boom" }));
+        harness.Server
+            .Given(Request.Create().WithPath(ScalewayTestHarness.Api("secrets/sec-1/versions/1")).UsingGet())
+            .RespondWith(Json.Ok(new { revision = 1, status = "enabled" }));
+
+        var result = await harness.Versions.EnableAsync(harness.Connection(), "sec-1", 1);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+        result.Error.Metadata["statusCode"].Should().Be(500);
     }
 
     [Fact]
@@ -263,5 +324,16 @@ public sealed class ScalewaySecretVersionServiceTests
         result.IsSuccess.Should().BeTrue(result.IsFailure ? result.Error.Message : string.Empty);
         result.Value.Select(v => v.Revision).Should().ContainInOrder(1L, 2L);
         result.Value[0].Status.Should().Be(VaultSecretVersionStatus.Destroyed);
+    }
+
+    /// <summary>
+    /// A transport that always refuses the connection. The fault is produced by
+    /// the handler, not by racing a socket shutdown, so it is deterministic.
+    /// </summary>
+    private sealed class ConnectionRefusedHandler : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken) =>
+            throw new HttpRequestException("connection refused");
     }
 }

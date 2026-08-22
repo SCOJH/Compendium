@@ -41,7 +41,7 @@ The aggregate decides *whether* an action is allowed and emits the events descri
 
 ### `IDomainEvent`
 
-A small, mandatory contract for everything written to the log. From [`src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs):
+A small, mandatory contract for everything written to the log. From [`src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs):
 
 ```csharp
 public interface IDomainEvent
@@ -59,7 +59,7 @@ Every event carries enough metadata to be replayed deterministically and to reso
 
 ### `AggregateRoot<TId>`
 
-The write model base class. From [`src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs):
+The write model base class. From [`src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs):
 
 ```csharp
 public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
@@ -78,7 +78,7 @@ Aggregates raise events when business rules are satisfied and never write to a d
 
 ### Projections
 
-Projections are the read side. They consume events from the store and write to whatever shape your queries need (a SQL table, a Redis key, an in-memory dictionary). Compendium ships projection scaffolding under `Compendium.Infrastructure.Projections` — see [`src/Infrastructure/Compendium.Infrastructure/Projections/README.md`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Infrastructure/Compendium.Infrastructure/Projections/README.md) for details.
+Projections are the read side. They consume events from the store and write to whatever shape your queries need (a SQL table, a Redis key, an in-memory dictionary). Compendium ships projection scaffolding under `Compendium.Infrastructure.Projections` — see [`src/Infrastructure/Compendium.Infrastructure/Projections/README.md`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Infrastructure/Compendium.Infrastructure/Projections/README.md) for details.
 
 A projection should be **idempotent**: replaying the same event twice must not corrupt the read model. This is what makes safe rebuilds, retries, and disaster recovery possible.
 
@@ -90,7 +90,7 @@ Real systems evolve. The `EventVersion` field on `IDomainEvent` lets you ship br
 - Old events stay on disk at their original version.
 - `IEventUpcaster` implementations transform old versions into the latest shape *at read time*.
 
-See [`src/Core/Compendium.Core/EventSourcing/`](https://github.com/sassy-solutions/compendium/tree/ca25347/src/Core/Compendium.Core/EventSourcing) for the upcaster contracts.
+See [`src/Core/Compendium.Core/EventSourcing/`](https://github.com/SCOJH/Compendium/tree/ca25347/src/Core/Compendium.Core/EventSourcing) for the upcaster contracts.
 
 ## Snapshots
 
@@ -102,4 +102,4 @@ For aggregates with very long histories, replaying every event on every load is 
 - [Hexagonal Architecture](hexagonal-architecture.md) — how aggregates stay decoupled from infrastructure
 - [Multi-tenancy](multi-tenancy.md) — how events stay scoped to the right tenant
 - [ADR 0005 — Event sourcing over state-stored](../adr/0005-event-sourcing-vs-state.md) — the decision and trade-offs
-- [`samples/01-QuickStart-OrderAggregate`](https://github.com/sassy-solutions/compendium/tree/main/samples/01-QuickStart-OrderAggregate) — a runnable in-memory example
+- [`samples/01-QuickStart-OrderAggregate`](https://github.com/SCOJH/Compendium/tree/main/samples/01-QuickStart-OrderAggregate) — a runnable in-memory example
