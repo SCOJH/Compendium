@@ -31,11 +31,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transitive dependencies now belong to the per-adapter repositories. `Npgsql` and
   `StackExchange.Redis` pins are kept for the in-tree health-check probes in
   `Compendium.Adapters.AspNetCore` and for `samples/02-MultiTenant-WithPostgres`.
+- **Adapter-specific fix entries moved out of this changelog.** Entries that
+  described behaviour of the seven extracted adapters were describing code this
+  repository no longer builds or publishes. They now belong to the changelog of
+  the repository that owns each adapter. This changelog documents only the
+  packages published from here.
 - **Framework `tests/Integration` no longer requires Docker.** Per ADR-0007, all
   framework E2E tests run on the `InMemory*` implementations (event store, streaming,
   projection, idempotency, snapshot, process-manager). Adapter-specific integration
   tests (Testcontainers + real PG/Redis) now live alongside the adapter that owns
   them in the per-adapter repos.
+
+### Removed
+
+- **`Compendium.Abstractions.Storage` is no longer built or published from this
+  repository.** The same `PackageId` was produced by two repositories on two
+  feeds: this one on nuget.org (`1.0.x` train) and `SCOJH/storage` on its GitHub
+  feed (`1.1.x` train). A package name must designate a single source, so this
+  repository drops it: `src/Abstractions/Compendium.Abstractions.Storage/` and
+  its test project are deleted and removed from `Compendium.sln`. `SCOJH/storage`
+  is now the sole owner of the name. Nothing in this repository referenced the
+  project — it was packed and pushed without ever being consumed here.
+  Consumers: move to `Compendium.Abstractions.Storage` `1.1.x` from the
+  `SCOJH/storage` feed. The `1.0.x` versions already on nuget.org stay listed
+  and restorable — they are marked deprecated there, pointing at the `1.1.x`
+  package as the alternative, so an existing restore warns instead of breaking.
 
 ### CI
 
@@ -57,38 +77,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   when Docker is unavailable), and operator docs
   (`docs/operations/coding-agent-sandbox.md`). Unblocks the Claude Code /
   Codex / Gemini / OpenCode runtimes.
+- **`IOrganizationService.GetOrganizationByNameAsync`** on the public
+  identity-abstractions surface (`Compendium.Abstractions.Identity`). Lets an
+  identity-provider adapter resolve an organization by name and reuse the
+  existing id when creation comes back as a conflict, so a provisioning saga
+  can be retried without leaving orphan organizations behind.
 - **Typed state reload on `IProcessManagerRepository`.** New
   `Task<Result<IProcessManager<TState>>> GetByIdAsync<TState>(Guid id, ct)` overload
   rehydrates a saga's persisted state into the original typed shape so resumed steps
   can detect already-completed external work (the foundation for idempotent saga
-  retries). Implemented for `PostgresProcessManagerRepository`
-  (deserializes the existing `state_json` column) and `InMemoryProcessManagerRepository`
-  (returns the original instance, with a `Conflict` error on type mismatch).
+  retries). Implemented in this repository for `InMemoryProcessManagerRepository`
+  (returns the original instance, with a `Conflict` error on type mismatch);
+  the relational implementation ships from the repository that owns that adapter.
   Existing untyped `GetByIdAsync(Guid id, ct)` is unchanged.
-
-### Fixed
-
-- `Compendium.Adapters.Zitadel.ZitadelOrganizationIdentityProvisioner` now treats
-  the "user already exists" conflict from Zitadel as a recoverable state. When
-  `IUserService.CreateUserAsync` returns `ErrorType.Conflict`, the provisioner
-  falls back to `GetUserByEmailAsync` and reuses the existing user id for the
-  org-membership step. Without this, every subsequent organization provision
-  for the same admin email left an orphan Zitadel org behind and stuck the
-  upstream Nexus aggregate in `Provisioning` state. Other failure types
-  (validation, unauthorized, network) still propagate as before.
-- `Compendium.Adapters.Zitadel.ZitadelOrganizationIdentityProvisioner` now also
-  treats "resource already exists" conflicts on the Organization, Project, and
-  OIDC App creation steps as recoverable, mirroring the user-conflict handling
-  already in place. On Conflict for org/project, the provisioner falls back to
-  a lookup by name and reuses the existing id. For OIDC apps, the provisioner
-  fails fast with `Zitadel.OidcAppExistsButSecretLost` because the client
-  secret is only returned once by Zitadel and cannot be safely re-derived from
-  a lookup. Operators must manually rotate the OIDC secret in Zitadel and
-  re-run provisioning. Without these changes, every retry of a saga that got
-  past the user step but failed later left orphan Zitadel resources behind.
-  Adds `IOrganizationService.GetOrganizationByNameAsync` to the public
-  identity-abstractions surface so consumers can implement the same idempotent
-  pattern against other identity providers.
 
 ### Added
 
