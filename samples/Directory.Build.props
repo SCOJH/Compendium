@@ -3,7 +3,10 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <!-- Samples are runnable demos, not published packages. -->
+    <!-- Samples are runnable demos, not published packages. They still inherit
+         MinVer from the root props, so they follow the core train rather than
+         falling back to 0.0.0-alpha; the version is cosmetic here. -->
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>

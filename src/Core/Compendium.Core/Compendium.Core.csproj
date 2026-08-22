@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Core</AssemblyName>
     <RootNamespace>Compendium.Core</RootNamespace>
     <PackageId>Compendium.Core</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Core domain primitives and patterns for Compendium Framework: Entity, AggregateRoot, ValueObject, Result Pattern, Specifications. Zero dependencies.</Description>
   </PropertyGroup>
 

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Analytics</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Analytics</RootNamespace>
     <PackageId>Compendium.Abstractions.Analytics</PackageId>
+    <MinVerTagPrefix>analytics-v</MinVerTagPrefix>
     <Description>Product analytics abstractions for Compendium Framework: IProductAnalytics. Provider-agnostic interfaces for tracking events, identifying users, grouping, and aliasing across analytics backends (PostHog, Mixpanel, Amplitude).</Description>
   </PropertyGroup>
 

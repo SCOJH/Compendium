@@ -46,9 +46,17 @@
     <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
-  <!-- MinVer: semantic versioning from git tags (prefix: compendium-v) -->
+  <!-- MinVer: semantic versioning from git tags.
+
+       There is deliberately no tag prefix here. A single prefix gave all 35
+       packages one version, so a fix in one of them had to be shipped as a
+       release of the other 34 and the version number stopped saying what had
+       changed. Each project under src/ now declares its own release train in
+       its own .csproj: packages that nothing else in the repository depends on
+       get a train of their own, and the ones that are only ever shipped
+       together share the "core-v" train. scripts/verify-package-trains.sh
+       fails when a packable project declares no train. -->
   <PropertyGroup>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
     <MinVerDefaultPreReleaseIdentifiers>preview.0</MinVerDefaultPreReleaseIdentifiers>
   </PropertyGroup>
   <ItemGroup>

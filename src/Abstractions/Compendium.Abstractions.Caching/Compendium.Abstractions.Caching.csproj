@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Caching</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Caching</RootNamespace>
     <PackageId>Compendium.Abstractions.Caching</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Caching abstractions for Compendium Framework: ICache port for provider-agnostic key/value caching (Get / Set / Remove / Exists) with TTL.</Description>
   </PropertyGroup>
 

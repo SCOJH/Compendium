@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.FeatureFlags</AssemblyName>
     <RootNamespace>Compendium.Abstractions.FeatureFlags</RootNamespace>
     <PackageId>Compendium.Abstractions.FeatureFlags</PackageId>
+    <MinVerTagPrefix>featureflags-v</MinVerTagPrefix>
     <Description>Feature flag and experimentation abstractions for Compendium Framework: IFeatureFlags port for boolean flags, typed variants and experiment assignments. Provider-agnostic interface for GrowthBook, Flagsmith, LaunchDarkly and other feature flag providers.</Description>
   </PropertyGroup>
 

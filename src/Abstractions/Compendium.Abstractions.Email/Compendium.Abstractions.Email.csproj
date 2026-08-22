@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Email</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Email</RootNamespace>
     <PackageId>Compendium.Abstractions.Email</PackageId>
+    <MinVerTagPrefix>email-v</MinVerTagPrefix>
     <Description>Email abstractions for Compendium Framework: IEmailService, INewsletterService. Provider-agnostic interfaces for transactional emails, templated emails, and newsletter subscription management.</Description>
   </PropertyGroup>
 

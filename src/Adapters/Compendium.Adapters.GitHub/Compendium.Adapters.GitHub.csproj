@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Adapters.GitHub</AssemblyName>
     <RootNamespace>Compendium.Adapters.GitHub</RootNamespace>
     <PackageId>Compendium.Adapters.GitHub</PackageId>
+    <MinVerTagPrefix>adapter-github-v</MinVerTagPrefix>
     <Description>GitHub adapter for Compendium Framework: a concrete IGitServer implementing the Compendium.Abstractions.Git ports against github.com and GitHub Enterprise Server. Provides GitHub App installation-token auth (RS256 App JWT plus per-installation token minting and caching), repository/tag/release management, CI secrets (libsodium sealed-box encrypted) and variables, deployment environments, repository-ruleset branch policies, teams and collaborators, outbound webhook subscriptions, and fail-closed HMAC-SHA256 inbound webhook ingestion.</Description>
   </PropertyGroup>
 

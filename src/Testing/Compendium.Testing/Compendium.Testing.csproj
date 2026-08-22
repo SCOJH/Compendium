@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Testing</AssemblyName>
     <RootNamespace>Compendium.Testing</RootNamespace>
     <PackageId>Compendium.Testing</PackageId>
+    <MinVerTagPrefix>testing-v</MinVerTagPrefix>
     <Description>Testing utilities for Compendium Framework: TestContainers integration (PostgreSQL/Redis), test data builders (AutoFixture/Bogus), aggregate testing helpers for Event Sourcing, and the git-server contract-test kit (InMemoryGitServer + GitServerContractTests).</Description>
     <!-- The xunit metapackage (pulled for the shipped GitServerContractTests kit)
          flips IsTestProject to true, which makes `dotnet test <sln>` try to run this

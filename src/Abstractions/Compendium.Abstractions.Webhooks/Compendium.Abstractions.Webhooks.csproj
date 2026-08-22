@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Webhooks</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Webhooks</RootNamespace>
     <PackageId>Compendium.Abstractions.Webhooks</PackageId>
+    <MinVerTagPrefix>webhooks-v</MinVerTagPrefix>
     <Description>Webhook abstractions for Compendium Framework: IWebhookSender. Provider-agnostic interface for fan-out of integration events to external consumer endpoints with signatures and retries (e.g. Svix, raw HTTP).</Description>
   </PropertyGroup>
 

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.AI</AssemblyName>
     <RootNamespace>Compendium.Abstractions.AI</RootNamespace>
     <PackageId>Compendium.Abstractions.AI</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>AI/LLM abstractions for Compendium Framework: IAIProvider, IPromptRegistry, IContextBuilder. Provider-agnostic interfaces for AI completions, embeddings, and prompt management.</Description>
   </PropertyGroup>
 

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Realtime</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Realtime</RootNamespace>
     <PackageId>Compendium.Abstractions.Realtime</PackageId>
+    <MinVerTagPrefix>realtime-v</MinVerTagPrefix>
     <Description>Realtime channel abstractions for Compendium Framework: IRealtimeChannel. Provider-agnostic port for realtime messaging, subscriber authorization, and presence (Pusher, Ably, SignalR, etc.).</Description>
   </PropertyGroup>
 

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Speech</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Speech</RootNamespace>
     <PackageId>Compendium.Abstractions.Speech</PackageId>
+    <MinVerTagPrefix>speech-v</MinVerTagPrefix>
     <Description>Speech abstractions for Compendium Framework: ISpeechToText. Provider-agnostic interfaces for speech-to-text transcription (batch + streaming) across Whisper, Deepgram, and similar engines.</Description>
   </PropertyGroup>
 

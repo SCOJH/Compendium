@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Documents</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Documents</RootNamespace>
     <PackageId>Compendium.Abstractions.Documents</PackageId>
+    <MinVerTagPrefix>documents-v</MinVerTagPrefix>
     <Description>Document parsing abstractions for Compendium Framework: IDocumentParser. Provider-agnostic interface for OCR and structured document extraction (receipts, invoices, IDs).</Description>
   </PropertyGroup>
 
