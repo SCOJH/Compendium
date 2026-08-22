@@ -31,6 +31,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   transitive dependencies now belong to the per-adapter repositories. `Npgsql` and
   `StackExchange.Redis` pins are kept for the in-tree health-check probes in
   `Compendium.Adapters.AspNetCore` and for `samples/02-MultiTenant-WithPostgres`.
+- **One release train per package instead of one for the whole repository.** A
+  single MinVer tag prefix gave all thirty-five packages one version, so a fix
+  in one shipped as a release of the other thirty-four and the version number
+  stopped saying what had changed. Each project under `src/` now declares its
+  own `<MinVerTagPrefix>`; the ten projects another project here depends on
+  share the `core-v` train, the twenty-five nothing depends on get one each.
+  Tagging `geo-v1.0.6` releases `Compendium.Abstractions.Geo` and nothing else.
+  Release tags are now `<train>-v<version>`; the old `v<version>` tags no longer
+  trigger a release. See `docs/operations/release-trains.md`.
+- **Publication gates: provenance and republication.** Two packages are public
+  whose nuspec records a commit that is on no tag, so they went through neither
+  the test gate nor the coverage gate and cannot be rebuilt.
+  `scripts/verify-package-provenance.sh` now refuses to publish a package whose
+  recorded commit is missing, unknown to the repository, different from the one
+  being built, or on no tag. `scripts/verify-package-not-published.sh` replaces
+  `dotnet nuget push --skip-duplicate`, which turned a republication into a
+  silent no-op; a version that already exists on the feed is now a red run.
 - **Adapter-specific fix entries moved out of this changelog.** Entries that
   described behaviour of the seven extracted adapters were describing code this
   repository no longer builds or publishes. They now belong to the changelog of
