@@ -200,7 +200,9 @@ internal sealed class ScalewaySecretVersionService : ISecretVersionService
     /// Only a refusal is ambiguous enough to be worth a second read: reading
     /// the version metadata cannot make a provider outage more precise, and
     /// letting it try turns an outage into <c>VersionDisabled</c>,
-    /// <c>SecretNotFound</c>, or — worse — into a success.
+    /// <c>SecretNotFound</c>, or — worse — into a success. The 4xx the mapping
+    /// already classified (401/403, 429, a quota 400/412) are not ambiguous
+    /// either: they carry no <c>statusCode</c>, so they are left alone too.
     /// </summary>
     private static bool IsClientRefusal(Error error) =>
         error.Type is ErrorType.NotFound ||
