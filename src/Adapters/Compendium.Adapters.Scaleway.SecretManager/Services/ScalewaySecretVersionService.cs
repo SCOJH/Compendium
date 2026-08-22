@@ -87,7 +87,7 @@ internal sealed class ScalewaySecretVersionService : ISecretVersionService
 
         // The provider refuses access to disabled versions with the same 4xx
         // shape as a missing one; disambiguate through the version metadata.
-        if (result.Error.Type is ErrorType.NotFound or ErrorType.Failure)
+        if (IsClientRefusal(result.Error))
         {
             var version = await GetVersionAsync(connection, secretId, revision, cancellationToken).ConfigureAwait(false);
             if (version.IsSuccess && version.Value.Status == VaultSecretVersionStatus.Disabled)
@@ -179,13 +179,33 @@ internal sealed class ScalewaySecretVersionService : ISecretVersionService
         }
 
         // The provider rejects a no-op transition; the contract requires
-        // idempotency, so "already in the target state" is a success.
+        // idempotency, so "already in the target state" is a success. A server
+        // fault is not a rejection: the write may well have been lost, so it
+        // stays a failure and the probe is not even sent.
+        if (!IsClientRefusal(result.Error))
+        {
+            return Result.Failure(result.Error);
+        }
+
         var version = await GetVersionAsync(connection, secretId, revision, cancellationToken).ConfigureAwait(false);
         var target = enable ? VaultSecretVersionStatus.Enabled : VaultSecretVersionStatus.Disabled;
         return version.IsSuccess && version.Value.Status == target
             ? Result.Success()
             : Result.Failure(result.Error);
     }
+
+    /// <summary>
+    /// Whether the provider refused the request itself (a 4xx) rather than
+    /// failing to serve it (a 5xx, or a transport fault carrying status 0).
+    /// Only a refusal is ambiguous enough to be worth a second read: reading
+    /// the version metadata cannot make a provider outage more precise, and
+    /// letting it try turns an outage into <c>VersionDisabled</c>,
+    /// <c>SecretNotFound</c>, or — worse — into a success.
+    /// </summary>
+    private static bool IsClientRefusal(Error error) =>
+        error.Type is ErrorType.NotFound ||
+        (error.Metadata.TryGetValue("statusCode", out var status) &&
+            status is int statusCode && statusCode is >= 400 and < 500);
 
     private async Task<Result<VaultSecretVersion>> GetVersionAsync(
         SecretVaultConnection connection, string secretId, long revision, CancellationToken cancellationToken)
