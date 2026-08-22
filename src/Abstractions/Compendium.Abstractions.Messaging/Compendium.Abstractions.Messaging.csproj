@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Messaging</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Messaging</RootNamespace>
     <PackageId>Compendium.Abstractions.Messaging</PackageId>
+    <MinVerTagPrefix>messaging-v</MinVerTagPrefix>
     <Description>Conversational messaging abstractions for Compendium Framework: the IMessagingConnector port for two-way chat-platform integrations (Telegram, Slack, Discord, Teams, WhatsApp, generic webhook). Parses + verifies inbound platform webhooks into normalized messages and sends normalized replies; credentials are supplied per call for multi-tenant hosting.</Description>
   </PropertyGroup>
 

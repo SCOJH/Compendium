@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Jobs</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Jobs</RootNamespace>
     <PackageId>Compendium.Abstractions.Jobs</PackageId>
+    <MinVerTagPrefix>jobs-v</MinVerTagPrefix>
     <Description>Background job abstractions for Compendium Framework: IBackgroundJobScheduler. Provider-agnostic interface for enqueueing, scheduling, recurring, and cancelling background jobs across Hangfire, Temporal, and similar engines.</Description>
   </PropertyGroup>
 

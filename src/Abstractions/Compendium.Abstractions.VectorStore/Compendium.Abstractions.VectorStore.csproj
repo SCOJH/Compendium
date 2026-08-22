@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.VectorStore</AssemblyName>
     <RootNamespace>Compendium.Abstractions.VectorStore</RootNamespace>
     <PackageId>Compendium.Abstractions.VectorStore</PackageId>
+    <MinVerTagPrefix>vectorstore-v</MinVerTagPrefix>
     <Description>Vector store abstractions for Compendium Framework: IVectorStore port for embedding storage, similarity search and tenant-aware filtering. Provider-agnostic interfaces for pgvector, Qdrant, Weaviate, Pinecone and other vector databases.</Description>
   </PropertyGroup>
 

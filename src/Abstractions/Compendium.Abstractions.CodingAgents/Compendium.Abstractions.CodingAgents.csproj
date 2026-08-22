@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.CodingAgents</AssemblyName>
     <RootNamespace>Compendium.Abstractions.CodingAgents</RootNamespace>
     <PackageId>Compendium.Abstractions.CodingAgents</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Coding-agent runtime abstractions for Compendium Framework: ICodingAgentRuntime, IAgentSandbox, neutral stream events, and the CliCodingAgentRuntime template-method base. Provider-agnostic ports for CLI-driven coding agents (Claude Code, Codex, Cursor, etc.).</Description>
   </PropertyGroup>
 

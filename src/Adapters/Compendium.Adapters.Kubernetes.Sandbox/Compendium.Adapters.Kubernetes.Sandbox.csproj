@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Adapters.Kubernetes.Sandbox</AssemblyName>
     <RootNamespace>Compendium.Adapters.Kubernetes.Sandbox</RootNamespace>
     <PackageId>Compendium.Adapters.Kubernetes.Sandbox</PackageId>
+    <MinVerTagPrefix>adapter-kubernetes-sandbox-v</MinVerTagPrefix>
     <Description>Kubernetes adapter for Compendium IAgentSandbox: provisions ephemeral pods for coding-agent runs (Claude Code, Codex, Gemini, OpenCode), drives exec/read/write/edit through the Kubernetes API, and tears the pod down on dispose. Multi-tenant ready; runs as non-root with allowlisted egress.</Description>
   </PropertyGroup>
 

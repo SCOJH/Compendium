@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Adapters.AspNetCore</AssemblyName>
     <RootNamespace>Compendium.Adapters.AspNetCore</RootNamespace>
     <PackageId>Compendium.Adapters.AspNetCore</PackageId>
+    <MinVerTagPrefix>adapter-aspnetcore-v</MinVerTagPrefix>
     <Description>ASP.NET Core integration for Compendium Framework: Health checks (PostgreSQL/Redis), middleware, web API utilities, security headers, CORS, multi-tenancy HTTP resolution.</Description>
   </PropertyGroup>
 

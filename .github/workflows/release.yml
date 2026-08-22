@@ -1,8 +1,19 @@
 name: Release
 
+# Un tag = un train = les paquets de ce train, et eux seuls.
+#
+# NEX-REF-06. Avant : `tags: ["v*"]` déclenchait un job qui packait les 35
+# projets `Compendium.*` de `src/` et les poussait tous sous le même numéro,
+# avec `--skip-duplicate`. Trois conséquences, toutes documentées dans
+# docs/operations/release-trains.md : un correctif d'un paquet sortait comme
+# une release des 34 autres ; le numéro ne désignait plus un arbre ; et une
+# republication silencieuse restait verte.
+#
+# Le déclencheur `*-v*` ne matche PAS les anciens tags `v1.0.4` : les
+# rejouer ne publie donc plus rien, ce qui est l'effet recherché.
 on:
   push:
-    tags: ["v*"]
+    tags: ["*-v*"]
 
 permissions:
   contents: write
@@ -15,7 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # MinVer needs full history
+          # MinVer a besoin de tout l'historique ; la garde de provenance a
+          # besoin des tags.
+          fetch-depth: 0
 
       - uses: actions/setup-dotnet@v5
         with:
@@ -32,33 +45,44 @@ jobs:
           dotnet test Compendium.sln -c Release --no-build \
             --filter "FullyQualifiedName!~IntegrationTests&FullyQualifiedName!~LoadTests"
 
-      - name: Pack Compendium.* packages (excluding tests)
+      # Un projet packable sans <MinVerTagPrefix> ne casse pas le build : MinVer
+      # lui donne discrètement 0.0.0-alpha.0.N et le job le publierait.
+      - name: Every packable project declares a train
+        run: bash scripts/verify-package-trains.sh
+
+      - name: Pack the train this tag releases
         run: |
           mkdir -p artifacts
-          while IFS= read -r csproj; do
-            name=$(basename "$csproj" .csproj)
-            if [[ "$name" == Compendium.* && "$name" != *.Tests ]]; then
-              echo "Packing $name"
-              dotnet pack "$csproj" -c Release --no-build -o artifacts/
-            fi
-          done < <(find src -name '*.csproj')
-          ls -la artifacts/
-          echo "Packed $(ls artifacts/*.nupkg 2>/dev/null | wc -l) packages"
+          projects=$(bash scripts/select-train-projects.sh "$GITHUB_REF_NAME")
+          mapfile -t project_list <<< "$projects"
+          for csproj in "${project_list[@]}"; do
+            echo "Packing $(basename "$csproj" .csproj)"
+            dotnet pack "$csproj" -c Release --no-build -o artifacts/
+          done
+          echo "Packed $(ls artifacts/*.nupkg 2>/dev/null | wc -l) package(s) for $GITHUB_REF_NAME"
+
+      - name: Verify every package comes from a tagged commit
+        run: bash scripts/verify-package-provenance.sh artifacts/
+
+      # Remplace `--skip-duplicate`, qui transformait une republication en
+      # non-événement vert. Une collision de version veut dire qu'un tag a été
+      # déplacé : la release doit s'arrêter, bruyamment.
+      - name: Verify no version is being republished
+        run: bash scripts/verify-package-not-published.sh artifacts/
 
       - name: Push to nuget.org
         run: |
           dotnet nuget push "artifacts/*.nupkg" \
             --api-key ${{ secrets.NUGET_API_KEY }} \
-            --source https://api.nuget.org/v3/index.json \
-            --skip-duplicate
+            --source https://api.nuget.org/v3/index.json
 
-      - name: Push to GitHub Packages (backup feed)
-        continue-on-error: true
-        run: |
-          dotnet nuget push "artifacts/*.nupkg" \
-            --api-key ${{ secrets.GITHUB_TOKEN }} \
-            --source https://nuget.pkg.github.com/sassy-solutions/index.json \
-            --skip-duplicate
+      # Il n'y a volontairement PAS de second push vers
+      # nuget.pkg.github.com/sassy-solutions. Ce dépôt appartient à SCOJH depuis
+      # le transfert : pousser sur le flux d'une organisation qui ne possède plus
+      # le code créait une TROISIÈME provenance pour les mêmes PackageId — le
+      # défaut n°1 que ce ticket ferme — et son `continue-on-error: true` en
+      # faisait un échec silencieux à chaque release. nuget.org est la source
+      # canonique ; un second flux ne fait que rouvrir le problème.
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda  # v3.0.0

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Multitenancy</AssemblyName>
     <RootNamespace>Compendium.Multitenancy</RootNamespace>
     <PackageId>Compendium.Multitenancy</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Multi-tenancy for Compendium Framework: Tenant resolution (header/subdomain/path), isolation strategies (database/schema/row-level), tenant context management for SaaS applications.</Description>
   </PropertyGroup>
 

@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Translation</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Translation</RootNamespace>
     <PackageId>Compendium.Abstractions.Translation</PackageId>
+    <MinVerTagPrefix>translation-v</MinVerTagPrefix>
     <Description>Translation abstractions for Compendium Framework: ITranslator. Provider-agnostic interface for text translation, batch translation, and language detection.</Description>
   </PropertyGroup>
 

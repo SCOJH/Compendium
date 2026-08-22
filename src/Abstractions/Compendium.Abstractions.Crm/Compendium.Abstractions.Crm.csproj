@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Crm</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Crm</RootNamespace>
     <PackageId>Compendium.Abstractions.Crm</PackageId>
+    <MinVerTagPrefix>crm-v</MinVerTagPrefix>
     <Description>CRM abstractions for Compendium Framework: ICrmSync port and contact/company/event/association models. Provider-agnostic interface for CRM synchronization across HubSpot, Attio, Salesforce, and similar platforms.</Description>
   </PropertyGroup>
 

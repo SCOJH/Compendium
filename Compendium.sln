@@ -175,10 +175,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Adapters.Kubernetes.Sandbox.IntegrationTests", "tests\Integration\Compendium.Adapters.Kubernetes.Sandbox.IntegrationTests\Compendium.Adapters.Kubernetes.Sandbox.IntegrationTests.csproj", "{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Storage", "src\Abstractions\Compendium.Abstractions.Storage\Compendium.Abstractions.Storage.csproj", "{B4108100-52A7-4680-A0C4-7EB6955DB5F6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Storage.Tests", "tests\Unit\Compendium.Abstractions.Storage.Tests\Compendium.Abstractions.Storage.Tests.csproj", "{585E082A-E775-426B-BEA5-D41D3AF53DE7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Caching", "src\Abstractions\Compendium.Abstractions.Caching\Compendium.Abstractions.Caching.csproj", "{4A6496B8-5833-428F-92D7-3EB331F5CA32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compendium.Abstractions.Caching.Tests", "tests\Unit\Compendium.Abstractions.Caching.Tests\Compendium.Abstractions.Caching.Tests.csproj", "{262B8E91-B53C-49BC-833D-739DD4CFC2E1}"
@@ -475,14 +471,6 @@ Global
 		{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4108100-52A7-4680-A0C4-7EB6955DB5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4108100-52A7-4680-A0C4-7EB6955DB5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4108100-52A7-4680-A0C4-7EB6955DB5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4108100-52A7-4680-A0C4-7EB6955DB5F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{585E082A-E775-426B-BEA5-D41D3AF53DE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A6496B8-5833-428F-92D7-3EB331F5CA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -612,8 +600,6 @@ Global
 		{D098747F-BBF1-488B-9CC6-0E89D693440D} = {0CB45A8C-EFA9-418F-A1DE-1C5B082B238A}
 		{BFC22E6F-1619-4CC2-9773-0B57DA972B64} = {17245130-8317-4D67-B86D-BFA713DE2C1C}
 		{D8DAEEF0-931B-4CE8-BEC4-767162B4CE7B} = {A2517BFF-352C-4123-81B2-2D848F3FB497}
-		{B4108100-52A7-4680-A0C4-7EB6955DB5F6} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
-		{585E082A-E775-426B-BEA5-D41D3AF53DE7} = {6E0B453A-55CF-4567-ADBD-50CFB84CE629}
 		{4A6496B8-5833-428F-92D7-3EB331F5CA32} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}
 		{262B8E91-B53C-49BC-833D-739DD4CFC2E1} = {6E0B453A-55CF-4567-ADBD-50CFB84CE629}
 		{0C879585-0B57-4701-B270-17C3BDE6F043} = {DE85A2F8-C0BA-47FD-8E9A-7D782FD6D3E2}

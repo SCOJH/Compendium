@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Application</AssemblyName>
     <RootNamespace>Compendium.Application</RootNamespace>
     <PackageId>Compendium.Application</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Application layer for Compendium Framework: CQRS dispatchers, Idempotency service, Saga orchestration, Pipeline behaviors. Build event-driven applications with clean architecture.</Description>
   </PropertyGroup>
 

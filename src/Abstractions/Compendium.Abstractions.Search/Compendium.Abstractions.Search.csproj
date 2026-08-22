@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Search</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Search</RootNamespace>
     <PackageId>Compendium.Abstractions.Search</PackageId>
+    <MinVerTagPrefix>search-v</MinVerTagPrefix>
     <Description>Search abstractions for Compendium Framework: ISearchIndex port and supporting models. Provider-agnostic interface for search engines (Meilisearch, Typesense, Elasticsearch, OpenSearch).</Description>
   </PropertyGroup>
 

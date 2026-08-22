@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Git</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Git</RootNamespace>
     <PackageId>Compendium.Abstractions.Git</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Git-server abstractions for Compendium Framework: the IGitServer facade with concern-scoped ports (credentials, repositories, pipelines, CI configuration, deployment environments, branch policies, access control, webhooks, namespace provisioning), a provider-neutral connection/credential model, and declarative per-adapter capabilities. Provider-agnostic ports for GitHub, GitLab, Gitea/Forgejo, Azure DevOps, and other git servers.</Description>
   </PropertyGroup>
 

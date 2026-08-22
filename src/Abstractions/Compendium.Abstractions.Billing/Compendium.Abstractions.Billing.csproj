@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Billing</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Billing</RootNamespace>
     <PackageId>Compendium.Abstractions.Billing</PackageId>
+    <MinVerTagPrefix>billing-v</MinVerTagPrefix>
     <Description>Billing abstractions for Compendium Framework: IBillingService, ISubscriptionService, ILicenseService, IPaymentWebhookHandler. Provider-agnostic interfaces for checkout, subscriptions, licensing, and webhook processing.</Description>
   </PropertyGroup>
 

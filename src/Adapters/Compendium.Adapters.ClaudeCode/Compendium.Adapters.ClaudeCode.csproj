@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Adapters.ClaudeCode</AssemblyName>
     <RootNamespace>Compendium.Adapters.ClaudeCode</RootNamespace>
     <PackageId>Compendium.Adapters.ClaudeCode</PackageId>
+    <MinVerTagPrefix>adapter-claudecode-v</MinVerTagPrefix>
     <Description>Claude Code CLI adapter for Compendium Framework: concrete ICodingAgentRuntime implementation that spawns the `claude` CLI as a subprocess and streams its stream-json output as neutral CodingAgentStreamEvents.</Description>
   </PropertyGroup>
 

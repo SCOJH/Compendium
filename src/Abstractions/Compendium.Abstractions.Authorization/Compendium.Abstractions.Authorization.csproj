@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Abstractions.Authorization</AssemblyName>
     <RootNamespace>Compendium.Abstractions.Authorization</RootNamespace>
     <PackageId>Compendium.Abstractions.Authorization</PackageId>
+    <MinVerTagPrefix>authorization-v</MinVerTagPrefix>
     <Description>Authorization abstractions for Compendium Framework: IAuthorizationCheck (relationship-based access control / ReBAC). Provider-agnostic interface for relationship-based authorization across OpenFGA, SpiceDB, and similar Zanzibar-style stores.</Description>
   </PropertyGroup>
 

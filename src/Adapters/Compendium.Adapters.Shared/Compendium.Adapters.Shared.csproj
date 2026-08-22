@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Adapters.Shared</AssemblyName>
     <RootNamespace>Compendium.Adapters.Shared</RootNamespace>
     <PackageId>Compendium.Adapters.Shared</PackageId>
+    <MinVerTagPrefix>adapter-shared-v</MinVerTagPrefix>
     <Description>Shared utilities for Compendium adapters: PII masking helpers, logging conventions.</Description>
   </PropertyGroup>
 

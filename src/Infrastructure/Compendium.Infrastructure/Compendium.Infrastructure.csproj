@@ -4,6 +4,7 @@
     <AssemblyName>Compendium.Infrastructure</AssemblyName>
     <RootNamespace>Compendium.Infrastructure</RootNamespace>
     <PackageId>Compendium.Infrastructure</PackageId>
+    <MinVerTagPrefix>core-v</MinVerTagPrefix>
     <Description>Infrastructure layer for Compendium Framework: Event Store abstraction, Projections, Sagas, Resilience (retry/circuit breaker), Observability (Serilog/OpenTelemetry), Security, Encryption.</Description>
   </PropertyGroup>
 
