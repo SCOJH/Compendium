@@ -23,7 +23,7 @@ internal sealed class ScalewayTestHarness : IDisposable
 {
     public const string ProjectId = "11111111-2222-3333-4444-555555555555";
 
-    public ScalewayTestHarness(string? defaultProjectId = ProjectId)
+    public ScalewayTestHarness(string? defaultProjectId = ProjectId, HttpMessageHandler? handler = null)
     {
         Server = WireMockServer.Start();
         var options = new ScalewaySecretManagerOptions
@@ -32,7 +32,7 @@ internal sealed class ScalewayTestHarness : IDisposable
             DefaultRegion = "fr-par",
             DefaultProjectId = defaultProjectId,
         };
-        Client = new ScalewayApiClient(new TestHttpClientFactory(), Options.Create(options));
+        Client = new ScalewayApiClient(new TestHttpClientFactory(handler), Options.Create(options));
         Containers = new ScalewaySecretContainerService(Client);
         Versions = new ScalewaySecretVersionService(Client);
         Vault = new ScalewaySecretVault(Containers, Versions);
@@ -60,9 +60,18 @@ internal sealed class ScalewayTestHarness : IDisposable
 
     public void Dispose() => Server.Stop();
 
+    /// <summary>
+    /// Hands out clients over the mock server, or over an injected handler when
+    /// the test needs a transport fault it can produce deterministically.
+    /// </summary>
     private sealed class TestHttpClientFactory : IHttpClientFactory
     {
-        public HttpClient CreateClient(string name) => new();
+        private readonly HttpMessageHandler? _handler;
+
+        public TestHttpClientFactory(HttpMessageHandler? handler) => _handler = handler;
+
+        public HttpClient CreateClient(string name) =>
+            _handler is null ? new HttpClient() : new HttpClient(_handler, disposeHandler: false);
     }
 }
 
