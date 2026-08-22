@@ -5543,146 +5543,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.IObjectStore.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.IObjectStore.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.IObjectStore",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.IObjectStore.yml\" sourcestartlinenumber=\"1\">Provides provider-agnostic object/blob storage operations.\nImplementations target backends such as AWS S3, Azure Blob Storage, Google Cloud Storage,\nMinIO, or local filesystems.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ListOptions.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.ListOptions.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.ListOptions",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ListOptions.yml\" sourcestartlinenumber=\"1\">Specifies options for listing objects in an object store.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ListPage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.ListPage.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.ListPage",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ListPage.yml\" sourcestartlinenumber=\"1\">Represents a single page of results returned by <xref href=\"Compendium.Abstractions.Storage.IObjectStore.ListAsync(Compendium.Abstractions.Storage.Models.ListOptions%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectInfo.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectInfo.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.ObjectInfo",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectInfo.yml\" sourcestartlinenumber=\"1\">Describes an object stored in an object store.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectMetadata.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectMetadata.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.ObjectMetadata",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectMetadata.yml\" sourcestartlinenumber=\"1\">Describes metadata applied to an object on upload.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectStream.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.ObjectStream.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.ObjectStream",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.ObjectStream.yml\" sourcestartlinenumber=\"1\">Represents the content of an object together with its metadata, returned by\n<xref href=\"Compendium.Abstractions.Storage.IObjectStore.GetAsync(System.String%2cSystem.Threading.CancellationToken)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.PresignedAction.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.PresignedAction.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models.PresignedAction",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.Models.PresignedAction.yml\" sourcestartlinenumber=\"1\">Specifies the action allowed by a presigned URL.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.Models.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.Models.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.Models",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.StorageErrors.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.StorageErrors.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage.StorageErrors",
-      "Summary": "<p sourcefile=\"api/Compendium.Abstractions.Storage.StorageErrors.yml\" sourcestartlinenumber=\"1\">Provides standardized error definitions for object-storage operations.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Compendium.Abstractions.Storage.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Compendium.Abstractions.Storage.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "Compendium.Abstractions.Storage",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Abstractions.Translation.ITranslator.yml",
       "output": {
         ".html": {
@@ -10911,6 +10771,16 @@
       "output": {
         ".html": {
           "relative_path": "operations/coding-agent-sandbox.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "operations/release-trains.md",
+      "output": {
+        ".html": {
+          "relative_path": "operations/release-trains.html"
         }
       },
       "version": ""
