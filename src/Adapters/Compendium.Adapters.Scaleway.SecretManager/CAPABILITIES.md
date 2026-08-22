@@ -29,7 +29,12 @@ API: Secret Manager regional `v1beta1` (`fr-par`, `nl-ams`, `pl-waw`)
   `retryAfterSeconds` when the provider supplies `Retry-After`.
 - **Disabled-version access**: the provider's 4xx on access is disambiguated
   by reading the version metadata, so consumers always receive the precise
-  `VersionDisabled` vs `VersionNotFound` vs `SecretNotFound` code.
+  `VersionDisabled` vs `VersionNotFound` vs `SecretNotFound` code. The
+  disambiguation arms on a 4xx only — a server status (5xx) or a transport
+  fault always yields `SecretVault.ProviderRejected` carrying the real status
+  in `statusCode` metadata, and costs no extra request. The same rule guards
+  the enable/disable idempotency probe: a 5xx stays a failure, never a
+  no-op success.
 - **Billing**: Scaleway bills stored versions (enabled or disabled) and API
   requests. Cost levers for callers: deduplicate identical payloads before
   `AddAsync`, cache `AccessAsync` results per revision (immutable → cacheable
