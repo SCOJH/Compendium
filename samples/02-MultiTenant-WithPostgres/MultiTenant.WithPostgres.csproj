@@ -20,7 +20,6 @@
   <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Npgsql" />
-    <PackageReference Include="Serilog" VersionOverride="4.4.0" />
   </ItemGroup>
 
 </Project>
