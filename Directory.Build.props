@@ -29,8 +29,8 @@
     <Company>Sassy Solutions</Company>
     <Copyright>Copyright © 2026 Sassy Solutions</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/sassy-solutions/compendium</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/sassy-solutions/compendium</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SCOJH/Compendium</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SCOJH/Compendium</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ddd;cqrs;event-sourcing;multi-tenancy;dotnet</PackageTags>
     <Description>Modular framework for DDD + CQRS + Event Sourcing + Multi-tenancy in .NET.</Description>

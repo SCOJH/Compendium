@@ -2,7 +2,7 @@
 
 > A pragmatic .NET framework for building event-sourced, multi-tenant SaaS applications.
 
-[![CI](https://github.com/sassy-solutions/compendium/actions/workflows/ci.yml/badge.svg)](https://github.com/sassy-solutions/compendium/actions/workflows/ci.yml)
+[![CI](https://github.com/SCOJH/Compendium/actions/workflows/ci.yml/badge.svg)](https://github.com/SCOJH/Compendium/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Compendium.Core.svg)](https://www.nuget.org/packages/Compendium.Core/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
@@ -157,7 +157,7 @@ These are the framework packages that ship from this repository. Adapter package
 
 ## Documentation
 
-The full documentation site is being built at [sassy-solutions.github.io/compendium](https://sassy-solutions.github.io/compendium/) (DocFX-powered). In the meantime:
+The full documentation site is being built at [scojh.github.io/Compendium](https://scojh.github.io/Compendium/) (DocFX-powered). In the meantime:
 
 - [ROADMAP.md](ROADMAP.md) — themes, what's next, and what's out of scope
 - [CONTRIBUTING.md](CONTRIBUTING.md) — build, test, conventions

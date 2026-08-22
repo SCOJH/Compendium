@@ -156,8 +156,10 @@ internal sealed class ScalewayApiClient
                 .ConfigureAwait(false);
             return body?.Message;
         }
-        catch (JsonException)
+        catch (Exception ex) when (ex is JsonException or NotSupportedException)
         {
+            // A non-JSON body (an HTML gateway page, say) costs the detail
+            // message, never the status code the caller needs.
             return null;
         }
     }

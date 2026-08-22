@@ -16,7 +16,7 @@ In a real SaaS, the tenant identifier can arrive via several paths in the same r
 
 When more than one source is present, Compendium **requires them to agree**. A request with `X-Tenant-ID: acme` and a JWT for tenant `globex` is rejected outright — that combination usually means a misconfigured proxy or a confused-deputy attack.
 
-The middleware that enforces this lives in `Compendium.Adapters.AspNetCore`. From [`TenantValidationMiddleware.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs):
+The middleware that enforces this lives in `Compendium.Adapters.AspNetCore`. From [`TenantValidationMiddleware.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs):
 
 ```csharp
 // Extract tenant identifiers from all sources
@@ -37,7 +37,7 @@ if (validationResult.IsFailure)
 }
 ```
 
-The configurable bits (which header, which JWT claims, which paths to skip) live on [`TenantValidationMiddlewareOptions`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs#L226).
+The configurable bits (which header, which JWT claims, which paths to skip) live on [`TenantValidationMiddlewareOptions`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Adapters/Compendium.Adapters.AspNetCore/Security/TenantValidationMiddleware.cs#L226).
 
 ## TenantContext is per-request, scoped DI
 
@@ -102,4 +102,4 @@ Anything else without a resolvable tenant is rejected.
 - [Hexagonal Architecture](hexagonal-architecture.md) — `TenantContext` is itself a port, with concrete implementations in adapters
 - [Event Sourcing](event-sourcing.md) — events carry `AggregateId`; tenancy is enforced by the store, not by the event
 - [ADR 0004](../adr/0004-multi-tenancy-strategy.md) — the decision and trade-offs
-- [`samples/02-MultiTenant-WithPostgres`](https://github.com/sassy-solutions/compendium/tree/main/samples/02-MultiTenant-WithPostgres) — runnable two-tenant example
+- [`samples/02-MultiTenant-WithPostgres`](https://github.com/SCOJH/Compendium/tree/main/samples/02-MultiTenant-WithPostgres) — runnable two-tenant example
