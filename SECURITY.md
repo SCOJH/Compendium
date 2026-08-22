@@ -13,7 +13,7 @@ Compendium is pre-1.0. Only the latest released preview / stable line receives s
 
 **Please do not open public issues for security vulnerabilities.**
 
-Report privately via [GitHub Security Advisories](https://github.com/sassy-solutions/compendium/security/advisories/new). GitHub will notify the maintainers, and the advisory gives us a private channel to coordinate a fix before public disclosure.
+Report privately via [GitHub Security Advisories](https://github.com/SCOJH/Compendium/security/advisories/new). GitHub will notify the maintainers, and the advisory gives us a private channel to coordinate a fix before public disclosure.
 
 When reporting, please include:
 

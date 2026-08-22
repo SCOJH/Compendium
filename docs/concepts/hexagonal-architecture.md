@@ -53,10 +53,10 @@ Zero NuGet dependencies. Only the .NET BCL.
 
 Examples:
 
-- [`AggregateRoot<TId>`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs) — write-side base class
-- [`ValueObject`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/ValueObject.cs) — equality by component
-- [`Result<T>`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs) — typed success/failure
-- [`IDomainEvent`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs) — event contract
+- [`AggregateRoot<TId>`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs) — write-side base class
+- [`ValueObject`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Primitives/ValueObject.cs) — equality by component
+- [`Result<T>`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs) — typed success/failure
+- [`IDomainEvent`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Domain/Events/IDomainEvent.cs) — event contract
 
 ### `Compendium.Abstractions.*` — Ports
 

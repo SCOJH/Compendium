@@ -28,8 +28,8 @@ Compendium distills years of building event-sourced SaaS into a small set of foc
 
 ## Status
 
-Compendium is at **`v1.0.0-preview.1`**. APIs in `Compendium.Core` and `Compendium.Abstractions.*` are intended to be stable; adapter APIs may evolve based on production feedback. See [CHANGELOG](https://github.com/sassy-solutions/compendium/blob/main/CHANGELOG.md) for what has shipped.
+Compendium is at **`v1.0.0-preview.1`**. APIs in `Compendium.Core` and `Compendium.Abstractions.*` are intended to be stable; adapter APIs may evolve based on production feedback. See [CHANGELOG](https://github.com/SCOJH/Compendium/blob/main/CHANGELOG.md) for what has shipped.
 
 ## License
 
-MIT © 2026 Sassy Solutions. See [LICENSE](https://github.com/sassy-solutions/compendium/blob/main/LICENSE).
+MIT © 2026 Sassy Solutions. See [LICENSE](https://github.com/SCOJH/Compendium/blob/main/LICENSE).

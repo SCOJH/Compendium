@@ -16,7 +16,7 @@ The trade-off is verbosity: every fallible call now has an explicit branch. We a
 
 ## The shape
 
-From [`src/Core/Compendium.Core/Results/Result.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs):
+From [`src/Core/Compendium.Core/Results/Result.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/Result.cs):
 
 ```csharp
 public class Result
@@ -36,7 +36,7 @@ public class Result
 
 ## Errors are values
 
-From [`src/Core/Compendium.Core/Results/Error.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/Error.cs):
+From [`src/Core/Compendium.Core/Results/Error.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/Error.cs):
 
 ```csharp
 public sealed class Error : ValueObject
@@ -77,7 +77,7 @@ if (orderResult.IsFailure) return orderResult.Error;
 return Result.Success();
 ```
 
-For richer composition (`Map`, `Bind`, `Tap`, etc.) see [`Result.Extensions.cs`](https://github.com/sassy-solutions/compendium/blob/ca25347/src/Core/Compendium.Core/Results/) — but use them sparingly. Loud explicit branching is usually clearer than a chain of monadic operators.
+For richer composition (`Map`, `Bind`, `Tap`, etc.) see [`Result.Extensions.cs`](https://github.com/SCOJH/Compendium/blob/ca25347/src/Core/Compendium.Core/Results/) — but use them sparingly. Loud explicit branching is usually clearer than a chain of monadic operators.
 
 ## Anti-patterns
 

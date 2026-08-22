@@ -7,14 +7,18 @@
 
 using Compendium.Abstractions.Secrets.Model;
 using Compendium.Adapters.Scaleway.SecretManager.Http;
+using Compendium.Adapters.Scaleway.SecretManager.Tests.Infrastructure;
+using Compendium.Core.Results;
 using FluentAssertions;
+using WireMock.RequestBuilders;
 using Xunit;
 
 namespace Compendium.Adapters.Scaleway.SecretManager.Tests;
 
 /// <summary>
-/// Pure-mapping guarantees: tag encoding round-trips, defensive path/status
-/// parsing, descriptor/version projection.
+/// Mapping guarantees: tag encoding round-trips, defensive path/status
+/// parsing, descriptor/version projection, and the HTTP status to
+/// <c>SecretVault.*</c> code table every operation shares.
 /// </summary>
 public sealed class ScalewayMappingTests
 {
@@ -108,5 +112,46 @@ public sealed class ScalewayMappingTests
         version.Revision.Should().Be(7);
         version.Description.Should().BeNull();
         version.Status.Should().Be(VaultSecretVersionStatus.Enabled);
+    }
+
+    /// <summary>
+    /// A server fault never turns into a more specific code, whichever
+    /// operation runs into it. The version service is allowed to refine an
+    /// ambiguous client refusal; it is never allowed to refine an outage.
+    /// </summary>
+    [Theory]
+    [InlineData(500)]
+    [InlineData(502)]
+    [InlineData(503)]
+    public async Task ServerStatus_AlwaysMapsToProviderRejected(int status)
+    {
+        using var harness = new ScalewayTestHarness();
+        string[] paths =
+        [
+            "secrets",
+            "secrets/sec-1",
+            "secrets/sec-1/versions",
+            "secrets/sec-1/versions/1/access",
+        ];
+        foreach (var path in paths)
+        {
+            harness.Server
+                .Given(Request.Create().WithPath(ScalewayTestHarness.Api(path)).UsingGet())
+                .RespondWith(Json.Status(status, new { message = "boom" }));
+        }
+
+        var connection = harness.Connection();
+
+        ShouldBeProviderRejected(await harness.Containers.ListAsync(connection, SecretScopePath.Root), status);
+        ShouldBeProviderRejected(await harness.Containers.GetAsync(connection, "sec-1"), status);
+        ShouldBeProviderRejected(await harness.Versions.ListAsync(connection, "sec-1"), status);
+        ShouldBeProviderRejected(await harness.Versions.AccessAsync(connection, "sec-1", 1), status);
+    }
+
+    private static void ShouldBeProviderRejected<T>(Result<T> result, int status)
+    {
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("SecretVault.ProviderRejected");
+        result.Error.Metadata["statusCode"].Should().Be(status);
     }
 }

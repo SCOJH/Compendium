@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: dotnet
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     outputs:
       version_path: ${{ steps.version.outputs.path }}
@@ -99,7 +99,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: dotnet
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Download site artifact
