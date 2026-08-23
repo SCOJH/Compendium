@@ -27,6 +27,15 @@ public interface IEventTypeRegistry
     Type? GetWhitelistedType(string typeName);
 
     /// <summary>
+    /// Gets the logical name of an event type: the name under which it is indexed and written.
+    /// Returns the value of the <c>EventTypeName</c> attribute when the type carries one,
+    /// and the <see cref="Type.AssemblyQualifiedName"/> otherwise.
+    /// </summary>
+    /// <param name="eventType">The event type to name.</param>
+    /// <returns>The logical name of the event type.</returns>
+    string GetLogicalName(Type eventType);
+
+    /// <summary>
     /// Registers an event type in the whitelist.
     /// </summary>
     /// <param name="eventType">The event type to register.</param>
