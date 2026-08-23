@@ -106,6 +106,15 @@ This attribute is used by source generators to create compile-time safe event re
 This attribute is used by source generators to identify assemblies containing domain events.</p>
 </dd>
     </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html">EventTypeNameAttribute</a></dt>
+      <dd><p>Declares the logical name under which an event type is indexed and stored.
+Without this attribute an event is identified by its <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type.assemblyqualifiedname">AssemblyQualifiedName</a>,
+which ties an already written event log to the binary identity of the assembly that
+defined the event (namespace, assembly, version, culture, public key token).
+The attribute is not inherited, so a derived event never claims the name of its parent.</p>
+</dd>
+    </dl>
 
 
 </article>

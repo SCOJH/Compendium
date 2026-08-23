@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_EventSourcing_EventTypeRegistry" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry" class="text-break">
-Class EventTypeRegistry  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L19"><i class="bi bi-code-slash"></i></a>
+Class EventTypeRegistry  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -152,6 +152,13 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
 
 
+  <h2 id="Compendium_Core_EventSourcing_EventTypeRegistry_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A registered type is indexed under two keys: its logical name — the value of its
+<a class="xref" href="Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html">EventTypeNameAttribute</a> — and its <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type.assemblyqualifiedname">AssemblyQualifiedName</a>.
+An event log holding both forms is therefore readable by a single binary, without ever
+rewriting a line already written. <a class="xref" href="Compendium.Core.EventSourcing.EventTypeRegistry.html#Compendium_Core_EventSourcing_EventTypeRegistry_Count">Count</a> and <a class="xref" href="Compendium.Core.EventSourcing.EventTypeRegistry.html#Compendium_Core_EventSourcing_EventTypeRegistry_GetRegisteredTypes">GetRegisteredTypes()</a>
+keep counting types, not keys.</p>
+</div>
 
 
   <h2 class="section" id="constructors">Constructors
@@ -162,7 +169,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry__ctor_Compendium_Core_Domain_Primitives_ILockingStrategy_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.#ctor(Compendium.Core.Domain.Primitives.ILockingStrategy)">
   EventTypeRegistry(ILockingStrategy?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Core.EventSourcing.EventTypeRegistry.html">EventTypeRegistry</a> class.</p>
@@ -199,7 +206,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_Count" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.Count">
   Count
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L209"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the number of registered event types.</p>
@@ -235,7 +242,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_AutoRegisterFromAssemblies_System_Reflection_Assembly___" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.AutoRegisterFromAssemblies(System.Reflection.Assembly[])">
   AutoRegisterFromAssemblies(params Assembly[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L176"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Automatically discovers and registers all domain event types from the specified assemblies.</p>
@@ -268,7 +275,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_Clear" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L194"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears all registered event types. Use with caution.</p>
@@ -295,7 +302,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_Dispose" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.Dispose">
   Dispose()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
@@ -318,11 +325,52 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
 
 
+  <a id="Compendium_Core_EventSourcing_EventTypeRegistry_GetLogicalName_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName*"></a>
+
+  <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_GetLogicalName_System_Type_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName(System.Type)">
+  GetLogicalName(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the logical name of an event type: the name under which it is indexed and written.
+Returns the value of the <code>EventTypeName</code> attribute when the type carries one,
+and the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type.assemblyqualifiedname">AssemblyQualifiedName</a> otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GetLogicalName(Type eventType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>eventType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd><p>The event type to name.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The logical name of the event type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Compendium_Core_EventSourcing_EventTypeRegistry_GetRegisteredTypes_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.GetRegisteredTypes*"></a>
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_GetRegisteredTypes" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.GetRegisteredTypes">
   GetRegisteredTypes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L108"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets all registered event types.</p>
@@ -355,7 +403,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_GetWhitelistedType_System_String_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.GetWhitelistedType(System.String)">
   GetWhitelistedType(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the Type object for a whitelisted event type.</p>
@@ -394,7 +442,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_IsWhitelisted_System_String_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.IsWhitelisted(System.String)">
   IsWhitelisted(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Checks if an event type is whitelisted for safe deserialization.</p>
@@ -433,7 +481,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_RegisterEventType_System_Type_" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.RegisterEventType(System.Type)">
   RegisterEventType(Type)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L81"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers an event type in the whitelist.</p>
@@ -466,7 +514,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
   <h3 id="Compendium_Core_EventSourcing_EventTypeRegistry_RegisterEventTypes_System_Collections_Generic_IEnumerable_System_Type__" data-uid="Compendium.Core.EventSourcing.EventTypeRegistry.RegisterEventTypes(System.Collections.Generic.IEnumerable{System.Type})">
   RegisterEventTypes(IEnumerable&lt;Type&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers multiple event types at once for efficient batch registration.</p>
@@ -492,6 +540,12 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></dt>
+    <dd><p>Thrown when two distinct types claim the same logical name. Nothing is registered in that case.</p>
+</dd>
+  </dl>
 
 
 
@@ -499,7 +553,7 @@ Prevents deserialization attacks by maintaining a strict whitelist of allowed do
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L19" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/EventTypeRegistry.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
 

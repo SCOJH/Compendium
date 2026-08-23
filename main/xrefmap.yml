@@ -36931,6 +36931,44 @@ references:
   isSpec: "True"
   fullName: Compendium.Core.EventSourcing.Attributes.EventRegistryAssemblyAttribute.NamespacePrefix
   nameWithType: EventRegistryAssemblyAttribute.NamespacePrefix
+- uid: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute
+  name: EventTypeNameAttribute
+  href: api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html
+  commentId: T:Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute
+  fullName: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute
+  nameWithType: EventTypeNameAttribute
+- uid: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.#ctor(System.String)
+  name: EventTypeNameAttribute(string)
+  href: api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html#Compendium_Core_EventSourcing_Attributes_EventTypeNameAttribute__ctor_System_String_
+  commentId: M:Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.EventTypeNameAttribute(string)
+  fullName.vb: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.New(String)
+  nameWithType: EventTypeNameAttribute.EventTypeNameAttribute(string)
+  nameWithType.vb: EventTypeNameAttribute.New(String)
+- uid: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.#ctor*
+  name: EventTypeNameAttribute
+  href: api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html#Compendium_Core_EventSourcing_Attributes_EventTypeNameAttribute__ctor_
+  commentId: Overload:Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.EventTypeNameAttribute
+  fullName.vb: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.New
+  nameWithType: EventTypeNameAttribute.EventTypeNameAttribute
+  nameWithType.vb: EventTypeNameAttribute.New
+- uid: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name
+  name: Name
+  href: api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html#Compendium_Core_EventSourcing_Attributes_EventTypeNameAttribute_Name
+  commentId: P:Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name
+  fullName: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name
+  nameWithType: EventTypeNameAttribute.Name
+- uid: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name*
+  name: Name
+  href: api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html#Compendium_Core_EventSourcing_Attributes_EventTypeNameAttribute_Name_
+  commentId: Overload:Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name
+  isSpec: "True"
+  fullName: Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.Name
+  nameWithType: EventTypeNameAttribute.Name
 - uid: Compendium.Core.EventSourcing.EventTypeMetadata
   name: EventTypeMetadata
   href: api/Compendium.Core.EventSourcing.EventTypeMetadata.html
@@ -37088,6 +37126,19 @@ references:
   isSpec: "True"
   fullName: Compendium.Core.EventSourcing.EventTypeRegistry.Dispose
   nameWithType: EventTypeRegistry.Dispose
+- uid: Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName(System.Type)
+  name: GetLogicalName(Type)
+  href: api/Compendium.Core.EventSourcing.EventTypeRegistry.html#Compendium_Core_EventSourcing_EventTypeRegistry_GetLogicalName_System_Type_
+  commentId: M:Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName(System.Type)
+  fullName: Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName(System.Type)
+  nameWithType: EventTypeRegistry.GetLogicalName(Type)
+- uid: Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName*
+  name: GetLogicalName
+  href: api/Compendium.Core.EventSourcing.EventTypeRegistry.html#Compendium_Core_EventSourcing_EventTypeRegistry_GetLogicalName_
+  commentId: Overload:Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName
+  isSpec: "True"
+  fullName: Compendium.Core.EventSourcing.EventTypeRegistry.GetLogicalName
+  nameWithType: EventTypeRegistry.GetLogicalName
 - uid: Compendium.Core.EventSourcing.EventTypeRegistry.GetRegisteredTypes
   name: GetRegisteredTypes()
   href: api/Compendium.Core.EventSourcing.EventTypeRegistry.html#Compendium_Core_EventSourcing_EventTypeRegistry_GetRegisteredTypes
@@ -37428,6 +37479,19 @@ references:
   commentId: T:Compendium.Core.EventSourcing.IEventTypeRegistry
   fullName: Compendium.Core.EventSourcing.IEventTypeRegistry
   nameWithType: IEventTypeRegistry
+- uid: Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName(System.Type)
+  name: GetLogicalName(Type)
+  href: api/Compendium.Core.EventSourcing.IEventTypeRegistry.html#Compendium_Core_EventSourcing_IEventTypeRegistry_GetLogicalName_System_Type_
+  commentId: M:Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName(System.Type)
+  fullName: Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName(System.Type)
+  nameWithType: IEventTypeRegistry.GetLogicalName(Type)
+- uid: Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName*
+  name: GetLogicalName
+  href: api/Compendium.Core.EventSourcing.IEventTypeRegistry.html#Compendium_Core_EventSourcing_IEventTypeRegistry_GetLogicalName_
+  commentId: Overload:Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName
+  isSpec: "True"
+  fullName: Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName
+  nameWithType: IEventTypeRegistry.GetLogicalName
 - uid: Compendium.Core.EventSourcing.IEventTypeRegistry.GetRegisteredTypes
   name: GetRegisteredTypes()
   href: api/Compendium.Core.EventSourcing.IEventTypeRegistry.html#Compendium_Core_EventSourcing_IEventTypeRegistry_GetRegisteredTypes
@@ -39325,15 +39389,15 @@ references:
   commentId: T:Compendium.Infrastructure.EventSourcing.InMemoryEventStore
   fullName: Compendium.Infrastructure.EventSourcing.InMemoryEventStore
   nameWithType: InMemoryEventStore
-- uid: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.#ctor(Compendium.Core.EventSourcing.IEventDeserializer,Microsoft.Extensions.Logging.ILogger{Compendium.Infrastructure.EventSourcing.InMemoryEventStore},Compendium.Multitenancy.ITenantContext)
-  name: InMemoryEventStore(IEventDeserializer, ILogger<InMemoryEventStore>?, ITenantContext?)
-  href: api/Compendium.Infrastructure.EventSourcing.InMemoryEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryEventStore__ctor_Compendium_Core_EventSourcing_IEventDeserializer_Microsoft_Extensions_Logging_ILogger_Compendium_Infrastructure_EventSourcing_InMemoryEventStore__Compendium_Multitenancy_ITenantContext_
-  commentId: M:Compendium.Infrastructure.EventSourcing.InMemoryEventStore.#ctor(Compendium.Core.EventSourcing.IEventDeserializer,Microsoft.Extensions.Logging.ILogger{Compendium.Infrastructure.EventSourcing.InMemoryEventStore},Compendium.Multitenancy.ITenantContext)
-  name.vb: New(IEventDeserializer, ILogger(Of InMemoryEventStore), ITenantContext)
-  fullName: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.InMemoryEventStore(Compendium.Core.EventSourcing.IEventDeserializer, Microsoft.Extensions.Logging.ILogger<Compendium.Infrastructure.EventSourcing.InMemoryEventStore>?, Compendium.Multitenancy.ITenantContext?)
-  fullName.vb: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.New(Compendium.Core.EventSourcing.IEventDeserializer, Microsoft.Extensions.Logging.ILogger(Of Compendium.Infrastructure.EventSourcing.InMemoryEventStore), Compendium.Multitenancy.ITenantContext)
-  nameWithType: InMemoryEventStore.InMemoryEventStore(IEventDeserializer, ILogger<InMemoryEventStore>?, ITenantContext?)
-  nameWithType.vb: InMemoryEventStore.New(IEventDeserializer, ILogger(Of InMemoryEventStore), ITenantContext)
+- uid: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.#ctor(Compendium.Core.EventSourcing.IEventDeserializer,Microsoft.Extensions.Logging.ILogger{Compendium.Infrastructure.EventSourcing.InMemoryEventStore},Compendium.Multitenancy.ITenantContext,Compendium.Core.EventSourcing.IEventTypeRegistry)
+  name: InMemoryEventStore(IEventDeserializer, ILogger<InMemoryEventStore>?, ITenantContext?, IEventTypeRegistry?)
+  href: api/Compendium.Infrastructure.EventSourcing.InMemoryEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryEventStore__ctor_Compendium_Core_EventSourcing_IEventDeserializer_Microsoft_Extensions_Logging_ILogger_Compendium_Infrastructure_EventSourcing_InMemoryEventStore__Compendium_Multitenancy_ITenantContext_Compendium_Core_EventSourcing_IEventTypeRegistry_
+  commentId: M:Compendium.Infrastructure.EventSourcing.InMemoryEventStore.#ctor(Compendium.Core.EventSourcing.IEventDeserializer,Microsoft.Extensions.Logging.ILogger{Compendium.Infrastructure.EventSourcing.InMemoryEventStore},Compendium.Multitenancy.ITenantContext,Compendium.Core.EventSourcing.IEventTypeRegistry)
+  name.vb: New(IEventDeserializer, ILogger(Of InMemoryEventStore), ITenantContext, IEventTypeRegistry)
+  fullName: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.InMemoryEventStore(Compendium.Core.EventSourcing.IEventDeserializer, Microsoft.Extensions.Logging.ILogger<Compendium.Infrastructure.EventSourcing.InMemoryEventStore>?, Compendium.Multitenancy.ITenantContext?, Compendium.Core.EventSourcing.IEventTypeRegistry?)
+  fullName.vb: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.New(Compendium.Core.EventSourcing.IEventDeserializer, Microsoft.Extensions.Logging.ILogger(Of Compendium.Infrastructure.EventSourcing.InMemoryEventStore), Compendium.Multitenancy.ITenantContext, Compendium.Core.EventSourcing.IEventTypeRegistry)
+  nameWithType: InMemoryEventStore.InMemoryEventStore(IEventDeserializer, ILogger<InMemoryEventStore>?, ITenantContext?, IEventTypeRegistry?)
+  nameWithType.vb: InMemoryEventStore.New(IEventDeserializer, ILogger(Of InMemoryEventStore), ITenantContext, IEventTypeRegistry)
 - uid: Compendium.Infrastructure.EventSourcing.InMemoryEventStore.#ctor*
   name: InMemoryEventStore
   href: api/Compendium.Infrastructure.EventSourcing.InMemoryEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryEventStore__ctor_
@@ -39564,15 +39628,15 @@ references:
   commentId: T:Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore
   fullName: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore
   nameWithType: InMemoryStreamingEventStore
-- uid: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext)
-  name: InMemoryStreamingEventStore(ITenantContext?)
-  href: api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_Compendium_Multitenancy_ITenantContext_
-  commentId: M:Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext)
-  name.vb: New(ITenantContext)
-  fullName: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.InMemoryStreamingEventStore(Compendium.Multitenancy.ITenantContext?)
-  fullName.vb: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.New(Compendium.Multitenancy.ITenantContext)
-  nameWithType: InMemoryStreamingEventStore.InMemoryStreamingEventStore(ITenantContext?)
-  nameWithType.vb: InMemoryStreamingEventStore.New(ITenantContext)
+- uid: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext,Compendium.Core.EventSourcing.IEventTypeRegistry)
+  name: InMemoryStreamingEventStore(ITenantContext?, IEventTypeRegistry?)
+  href: api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_Compendium_Multitenancy_ITenantContext_Compendium_Core_EventSourcing_IEventTypeRegistry_
+  commentId: M:Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext,Compendium.Core.EventSourcing.IEventTypeRegistry)
+  name.vb: New(ITenantContext, IEventTypeRegistry)
+  fullName: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.InMemoryStreamingEventStore(Compendium.Multitenancy.ITenantContext?, Compendium.Core.EventSourcing.IEventTypeRegistry?)
+  fullName.vb: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.New(Compendium.Multitenancy.ITenantContext, Compendium.Core.EventSourcing.IEventTypeRegistry)
+  nameWithType: InMemoryStreamingEventStore.InMemoryStreamingEventStore(ITenantContext?, IEventTypeRegistry?)
+  nameWithType.vb: InMemoryStreamingEventStore.New(ITenantContext, IEventTypeRegistry)
 - uid: Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor*
   name: InMemoryStreamingEventStore
   href: api/Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.html#Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_

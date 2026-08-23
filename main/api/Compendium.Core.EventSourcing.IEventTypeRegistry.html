@@ -121,11 +121,52 @@ Interface IEventTypeRegistry  <a class="header-action link-secondary" title="Vie
 </h2>
 
 
+  <a id="Compendium_Core_EventSourcing_IEventTypeRegistry_GetLogicalName_" data-uid="Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName*"></a>
+
+  <h3 id="Compendium_Core_EventSourcing_IEventTypeRegistry_GetLogicalName_System_Type_" data-uid="Compendium.Core.EventSourcing.IEventTypeRegistry.GetLogicalName(System.Type)">
+  GetLogicalName(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/IEventTypeRegistry.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the logical name of an event type: the name under which it is indexed and written.
+Returns the value of the <code>EventTypeName</code> attribute when the type carries one,
+and the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type.assemblyqualifiedname">AssemblyQualifiedName</a> otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetLogicalName(Type eventType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>eventType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd><p>The event type to name.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The logical name of the event type.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Compendium_Core_EventSourcing_IEventTypeRegistry_GetRegisteredTypes_" data-uid="Compendium.Core.EventSourcing.IEventTypeRegistry.GetRegisteredTypes*"></a>
 
   <h3 id="Compendium_Core_EventSourcing_IEventTypeRegistry_GetRegisteredTypes" data-uid="Compendium.Core.EventSourcing.IEventTypeRegistry.GetRegisteredTypes">
   GetRegisteredTypes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/IEventTypeRegistry.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/IEventTypeRegistry.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets all registered event types.</p>
@@ -236,7 +277,7 @@ Interface IEventTypeRegistry  <a class="header-action link-secondary" title="Vie
 
   <h3 id="Compendium_Core_EventSourcing_IEventTypeRegistry_RegisterEventType_System_Type_" data-uid="Compendium.Core.EventSourcing.IEventTypeRegistry.RegisterEventType(System.Type)">
   RegisterEventType(Type)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/IEventTypeRegistry.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/EventSourcing/IEventTypeRegistry.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers an event type in the whitelist.</p>

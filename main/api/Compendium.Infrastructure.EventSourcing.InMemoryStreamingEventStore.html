@@ -167,9 +167,9 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <a id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor*"></a>
 
-  <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_Compendium_Multitenancy_ITenantContext_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext)">
-  InMemoryStreamingEventStore(ITenantContext?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore__ctor_Compendium_Multitenancy_ITenantContext_Compendium_Core_EventSourcing_IEventTypeRegistry_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.#ctor(Compendium.Multitenancy.ITenantContext,Compendium.Core.EventSourcing.IEventTypeRegistry)">
+  InMemoryStreamingEventStore(ITenantContext?, IEventTypeRegistry?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.html">InMemoryStreamingEventStore</a> class.</p>
@@ -177,13 +177,17 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public InMemoryStreamingEventStore(ITenantContext? tenantContext = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public InMemoryStreamingEventStore(ITenantContext? tenantContext = null, IEventTypeRegistry? eventTypeRegistry = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>tenantContext</code> <a class="xref" href="Compendium.Multitenancy.ITenantContext.html">ITenantContext</a></dt>
     <dd><p>The tenant context for multi-tenancy support (optional).</p>
+</dd>
+    <dt><code>eventTypeRegistry</code> <a class="xref" href="Compendium.Core.EventSourcing.IEventTypeRegistry.html">IEventTypeRegistry</a></dt>
+    <dd><p>The event type registry used to name written events. When it is not supplied, events are
+stamped with their assembly qualified name — the behaviour that predates logical names.</p>
 </dd>
   </dl>
 
@@ -206,7 +210,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_AppendEventsAsync_System_String_System_Collections_Generic_IEnumerable_Compendium_Core_Domain_Events_IDomainEvent__System_Int64_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.AppendEventsAsync(System.String,System.Collections.Generic.IEnumerable{Compendium.Core.Domain.Events.IDomainEvent},System.Int64,System.Threading.CancellationToken)">
   AppendEventsAsync(string, IEnumerable&lt;IDomainEvent&gt;, long, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Appends events to the event store for a specific aggregate.</p>
@@ -254,7 +258,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_Dispose" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.Dispose">
   Dispose()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L356"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L364"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
@@ -281,7 +285,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_ExistsAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.ExistsAsync(System.String,System.Threading.CancellationToken)">
   ExistsAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L234"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L242"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Checks if an aggregate exists in the event store.</p>
@@ -323,7 +327,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetEventCountAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetEventCountAsync(System.String,System.Threading.CancellationToken)">
   GetEventCountAsync(string?, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L318"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L326"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the total count of events for estimating rebuild progress.</p>
@@ -365,7 +369,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetEventsAsync_System_String_System_Int64_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetEventsAsync(System.String,System.Int64,System.Threading.CancellationToken)">
   GetEventsAsync(string, long, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets events for a specific aggregate starting from a specific version.</p>
@@ -410,7 +414,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetEventsAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetEventsAsync(System.String,System.Threading.CancellationToken)">
   GetEventsAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L128"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets all events for a specific aggregate.</p>
@@ -452,7 +456,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetEventsInRangeAsync_System_String_System_Int64_System_Int64_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetEventsInRangeAsync(System.String,System.Int64,System.Int64,System.Threading.CancellationToken)">
   GetEventsInRangeAsync(string, long, long, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets events for a specific aggregate within a version range.</p>
@@ -500,7 +504,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetLastEventAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetLastEventAsync(System.String,System.Threading.CancellationToken)">
   GetLastEventAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the last event for a specific aggregate.</p>
@@ -542,7 +546,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetMaxGlobalPositionAsync_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetMaxGlobalPositionAsync(System.Threading.CancellationToken)">
   GetMaxGlobalPositionAsync(CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L348"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the highest global position in the event store.</p>
@@ -581,7 +585,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetStatisticsAsync_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetStatisticsAsync(System.Threading.CancellationToken)">
   GetStatisticsAsync(CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L253"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets statistics about the event store.</p>
@@ -620,7 +624,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_GetVersionAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.GetVersionAsync(System.String,System.Threading.CancellationToken)">
   GetVersionAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the current version of an aggregate.</p>
@@ -662,7 +666,7 @@ and read methods match the contract of <a class="xref" href="Compendium.Infrastr
 
   <h3 id="Compendium_Infrastructure_EventSourcing_InMemoryStreamingEventStore_StreamEventsAsync_System_String_System_Int64_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.EventSourcing.InMemoryStreamingEventStore.StreamEventsAsync(System.String,System.Int64,System.Threading.CancellationToken)">
   StreamEventsAsync(string?, long, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L272"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/EventSourcing/InMemoryStreamingEventStore.cs/#L280"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Streams events from all streams starting from a global position.

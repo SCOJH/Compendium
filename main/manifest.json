@@ -8217,6 +8217,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute",
+      "Summary": "<p sourcefile=\"api/Compendium.Core.EventSourcing.Attributes.EventTypeNameAttribute.yml\" sourcestartlinenumber=\"1\">Declares the logical name under which an event type is indexed and stored.\nWithout this attribute an event is identified by its <xref href=\"System.Type.AssemblyQualifiedName\" data-throw-if-not-resolved=\"false\"></xref>,\nwhich ties an already written event log to the binary identity of the assembly that\ndefined the event (namespace, assembly, version, culture, public key token).\nThe attribute is not inherited, so a derived event never claims the name of its parent.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Core.EventSourcing.Attributes.yml",
       "output": {
         ".html": {
