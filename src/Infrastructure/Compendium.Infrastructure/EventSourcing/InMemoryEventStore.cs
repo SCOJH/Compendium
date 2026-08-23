@@ -23,6 +23,7 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
     private readonly ILogger<InMemoryEventStore>? _logger;
     private readonly ITenantContext? _tenantContext;
     private readonly IEventDeserializer _eventDeserializer;
+    private readonly IEventTypeRegistry? _eventTypeRegistry;
     private readonly JsonSerializerOptions _jsonOptions;
     private bool _disposed;
 
@@ -32,14 +33,20 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
     /// <param name="eventDeserializer">The secure event deserializer.</param>
     /// <param name="logger">The logger instance (optional for testing).</param>
     /// <param name="tenantContext">The tenant context for multi-tenancy support (optional for testing).</param>
+    /// <param name="eventTypeRegistry">
+    /// The event type registry used to name written events. When it is not supplied, events are
+    /// stamped with their assembly qualified name — the behaviour that predates logical names.
+    /// </param>
     public InMemoryEventStore(
         IEventDeserializer eventDeserializer,
         ILogger<InMemoryEventStore>? logger = null,
-        ITenantContext? tenantContext = null)
+        ITenantContext? tenantContext = null,
+        IEventTypeRegistry? eventTypeRegistry = null)
     {
         _eventDeserializer = eventDeserializer ?? throw new ArgumentNullException(nameof(eventDeserializer));
         _logger = logger;
         _tenantContext = tenantContext;
+        _eventTypeRegistry = eventTypeRegistry;
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -102,7 +109,7 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
                     EventId = domainEvent.EventId,
                     AggregateId = aggregateId,
                     AggregateType = domainEvent.AggregateType,
-                    EventType = domainEvent.GetType().AssemblyQualifiedName!,
+                    EventType = ResolveEventTypeName(domainEvent),
                     EventData = JsonSerializer.Serialize(domainEvent, domainEvent.GetType(), _jsonOptions),
                     Version = version,
                     AggregateVersion = domainEvent.AggregateVersion,
@@ -162,18 +169,17 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
                     Array.Empty<IDomainEvent>()));
             }
 
-            var domainEvents = events
-                .OrderBy(e => e.Version)
-                .Select(DeserializeEvent)
-                .Where(e => e != null)
-                .Cast<IDomainEvent>()
-                .ToList();
+            var materialization = MaterializeEvents(aggregateId, events.OrderBy(e => e.Version));
+            if (materialization.IsFailure)
+            {
+                return Task.FromResult(materialization);
+            }
 
             _logger?.LogDebug(
                 "Retrieved {EventCount} events for aggregate {AggregateId}",
-                domainEvents.Count, aggregateId);
+                materialization.Value.Count, aggregateId);
 
-            return Task.FromResult(Result.Success<IReadOnlyList<IDomainEvent>>(domainEvents));
+            return Task.FromResult(materialization);
         }
         catch (Exception ex)
         {
@@ -218,15 +224,11 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
                     Array.Empty<IDomainEvent>()));
             }
 
-            var domainEvents = events
-                .Where(e => e.Version > fromVersion)
-                .OrderBy(e => e.Version)
-                .Select(DeserializeEvent)
-                .Where(e => e != null)
-                .Cast<IDomainEvent>()
-                .ToList();
+            var materialization = MaterializeEvents(
+                aggregateId,
+                events.Where(e => e.Version > fromVersion).OrderBy(e => e.Version));
 
-            return Task.FromResult(Result.Success<IReadOnlyList<IDomainEvent>>(domainEvents));
+            return Task.FromResult(materialization);
         }
         catch (Exception ex)
         {
@@ -278,15 +280,11 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
                     Array.Empty<IDomainEvent>()));
             }
 
-            var domainEvents = events
-                .Where(e => e.Version >= fromVersion && e.Version <= toVersion)
-                .OrderBy(e => e.Version)
-                .Select(DeserializeEvent)
-                .Where(e => e != null)
-                .Cast<IDomainEvent>()
-                .ToList();
+            var materialization = MaterializeEvents(
+                aggregateId,
+                events.Where(e => e.Version >= fromVersion && e.Version <= toVersion).OrderBy(e => e.Version));
 
-            return Task.FromResult(Result.Success<IReadOnlyList<IDomainEvent>>(domainEvents));
+            return Task.FromResult(materialization);
         }
         catch (Exception ex)
         {
@@ -466,11 +464,56 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
     }
 
     /// <summary>
+    /// Gets the name an event is written under: its logical name when a registry is available,
+    /// its assembly qualified name otherwise.
+    /// </summary>
+    /// <param name="domainEvent">The event being stored.</param>
+    /// <returns>The name to stamp on the stored event.</returns>
+    private string ResolveEventTypeName(IDomainEvent domainEvent)
+    {
+        var eventType = domainEvent.GetType();
+
+        return _eventTypeRegistry?.GetLogicalName(eventType) ?? eventType.AssemblyQualifiedName!;
+    }
+
+    /// <summary>
+    /// Deserializes a whole stream, refusing to return it at all when one of its events
+    /// cannot be read. A stream returned short of an event the caller cannot see is worse
+    /// than a failure: it rebuilds an aggregate from an incomplete history, silently.
+    /// </summary>
+    /// <param name="aggregateId">The aggregate the events belong to.</param>
+    /// <param name="storedEvents">The stored events, already filtered and ordered.</param>
+    /// <returns>The deserialized events, or a failure naming the aggregate and the unresolved name.</returns>
+    private Result<IReadOnlyList<IDomainEvent>> MaterializeEvents(string aggregateId, IEnumerable<StoredEvent> storedEvents)
+    {
+        var domainEvents = new List<IDomainEvent>();
+
+        foreach (var storedEvent in storedEvents)
+        {
+            var result = TryDeserializeStoredEvent(storedEvent);
+
+            if (result.IsFailure)
+            {
+                return Result.Failure<IReadOnlyList<IDomainEvent>>(
+                    Error.Failure(
+                        "EventStore.EventTypeUnresolved",
+                        $"Event {storedEvent.EventId} (version {storedEvent.Version}) of aggregate {aggregateId} " +
+                        $"could not be read: event type name '{storedEvent.EventType}' did not resolve. " +
+                        $"Underlying error: {result.Error.Message}"));
+            }
+
+            domainEvents.Add(result.Value);
+        }
+
+        return Result.Success<IReadOnlyList<IDomainEvent>>(domainEvents);
+    }
+
+    /// <summary>
     /// Securely deserializes a stored event back to a domain event using the whitelisted type registry.
     /// </summary>
     /// <param name="storedEvent">The stored event.</param>
-    /// <returns>The deserialized domain event, or null if deserialization fails or type is not whitelisted.</returns>
-    private IDomainEvent? DeserializeEvent(StoredEvent storedEvent)
+    /// <returns>The deserialized domain event, or the error that prevented it.</returns>
+    private Result<IDomainEvent> TryDeserializeStoredEvent(StoredEvent storedEvent)
     {
         try
         {
@@ -481,17 +524,30 @@ public sealed class InMemoryEventStore : IEventStore, IDisposable
             {
                 _logger?.LogWarning("Failed to securely deserialize event {EventId} of type {EventType}: {Error}",
                     storedEvent.EventId, storedEvent.EventType, result.Error.Message);
-                return null;
             }
 
-            return result.Value;
+            return result;
         }
         catch (Exception ex)
         {
             _logger?.LogError(ex, "Unexpected error deserializing event {EventId} of type {EventType}",
                 storedEvent.EventId, storedEvent.EventType);
-            return null;
+
+            return Result.Failure<IDomainEvent>(
+                Error.Failure("EventStore.DeserializationFailed", ex.Message));
         }
+    }
+
+    /// <summary>
+    /// Securely deserializes a stored event back to a domain event using the whitelisted type registry.
+    /// </summary>
+    /// <param name="storedEvent">The stored event.</param>
+    /// <returns>The deserialized domain event, or null if deserialization fails or type is not whitelisted.</returns>
+    private IDomainEvent? DeserializeEvent(StoredEvent storedEvent)
+    {
+        var result = TryDeserializeStoredEvent(storedEvent);
+
+        return result.IsFailure ? null : result.Value;
     }
 
     /// <summary>
