@@ -31,15 +31,23 @@ public sealed class InMemoryStreamingEventStore : IStreamingEventStore, IDisposa
     private readonly List<StoredEvent> _globalLog = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.NoRecursion);
     private readonly ITenantContext? _tenantContext;
+    private readonly IEventTypeRegistry? _eventTypeRegistry;
     private readonly JsonSerializerOptions _jsonOptions;
     private long _globalSequence;
     private bool _disposed;
 
     /// <summary>Initializes a new instance of the <see cref="InMemoryStreamingEventStore"/> class.</summary>
     /// <param name="tenantContext">The tenant context for multi-tenancy support (optional).</param>
-    public InMemoryStreamingEventStore(ITenantContext? tenantContext = null)
+    /// <param name="eventTypeRegistry">
+    /// The event type registry used to name written events. When it is not supplied, events are
+    /// stamped with their assembly qualified name — the behaviour that predates logical names.
+    /// </param>
+    public InMemoryStreamingEventStore(
+        ITenantContext? tenantContext = null,
+        IEventTypeRegistry? eventTypeRegistry = null)
     {
         _tenantContext = tenantContext;
+        _eventTypeRegistry = eventTypeRegistry;
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -100,7 +108,7 @@ public sealed class InMemoryStreamingEventStore : IStreamingEventStore, IDisposa
                     StoredAt = now,
                     TenantId = tenantId,
                     Event = domainEvent,
-                    EventTypeName = domainEvent.GetType().AssemblyQualifiedName!,
+                    EventTypeName = ResolveEventTypeName(domainEvent),
                     EventDataJson = JsonSerializer.Serialize(domainEvent, domainEvent.GetType(), _jsonOptions),
                 };
 
@@ -368,6 +376,19 @@ public sealed class InMemoryStreamingEventStore : IStreamingEventStore, IDisposa
     {
         var tenantId = _tenantContext?.TenantId;
         return string.IsNullOrEmpty(tenantId) ? aggregateId : $"{tenantId}:{aggregateId}";
+    }
+
+    /// <summary>
+    /// Gets the name an event is written under: its logical name when a registry is available,
+    /// its assembly qualified name otherwise.
+    /// </summary>
+    /// <param name="domainEvent">The event being stored.</param>
+    /// <returns>The name to stamp on the stored event.</returns>
+    private string ResolveEventTypeName(IDomainEvent domainEvent)
+    {
+        var eventType = domainEvent.GetType();
+
+        return _eventTypeRegistry?.GetLogicalName(eventType) ?? eventType.AssemblyQualifiedName!;
     }
 
     private void ThrowIfDisposed()

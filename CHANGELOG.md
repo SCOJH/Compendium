@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING — `IEventTypeRegistry` gains `string GetLogicalName(Type eventType)`.**
+  Any implementation of this interface outside this repository stops compiling
+  until it supplies the member. A default interface member returning the assembly
+  qualified name was considered and rejected: a silent fallback would leave an
+  implementer writing binary identities while the rest of the system assumed
+  otherwise — the very failure this change exists to remove. `EventTypeRegistry`
+  is the only implementation in this repository.
+- **BREAKING — `InMemoryEventStore` no longer hands back a truncated stream as a
+  success.** `GetEventsAsync` (both overloads) and `GetEventsInRangeAsync` used to
+  drop every event whose type could not be resolved, log a warning, and return
+  `Result.Success` over what was left — an aggregate rebuilt from an incomplete
+  history, with no way for the caller to know. They now return `Result.Failure`
+  with code `EventStore.EventTypeUnresolved`, naming the aggregate, the event
+  version and the unresolved type name. `GetLastEventAsync` already behaved this
+  way; the two halves of the class now agree.
+- **`InMemoryEventStore` and `InMemoryStreamingEventStore` accept an optional
+  `IEventTypeRegistry`.** When one is supplied, written events are stamped with
+  their logical name; without it, with their assembly qualified name, as before.
+  The parameter comes last and is optional, so existing constructor calls are
+  unaffected.
+
 - **All seven heavy adapters extracted to their own repositories** per
   [ADR-0006](docs/adr/0006-multi-repo-adapter-split.md). `Compendium.Adapters.Stripe`,
   `Compendium.Adapters.LemonSqueezy`, `Compendium.Adapters.Zitadel`,
@@ -82,6 +103,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Logical event names — `[EventTypeName]`.** A domain event can now declare the
+  name it is indexed and stored under (`[EventTypeName("ConfigurationCreated")]`)
+  instead of depending on its `AssemblyQualifiedName`, which ties an already
+  written log to the binary identity of the assembly defining the event —
+  namespace, assembly, version, culture, public key token. `EventTypeRegistry`
+  indexes a registered type under both its logical name and its assembly qualified
+  name, so a log holding either form stays readable by a single binary and no line
+  already written is ever rewritten. Two distinct types claiming the same logical
+  name are refused at registration, with an `InvalidOperationException` naming
+  both: a "last one wins" would deserialize a payload into the wrong type. `Count`
+  and `GetRegisteredTypes()` keep counting types, not keys. An event type without
+  the attribute behaves exactly as it did before.
 - **`Compendium.Adapters.Kubernetes.Sandbox`** (POM-431). Kubernetes adapter
   for `IAgentSandbox`: provisions an ephemeral non-root pod per agent run,
   drives it through `pods/exec` (bash exec, base64 file read/write/edit),

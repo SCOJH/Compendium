@@ -7,6 +7,7 @@
 
 using System.Reflection;
 using Compendium.Core.EventSourcing;
+using Compendium.Core.EventSourcing.Attributes;
 using Compendium.Core.Tests.TestHelpers;
 
 namespace Compendium.Core.Tests.EventSourcing;
@@ -246,8 +247,184 @@ public class EventTypeRegistryTests : IDisposable
         action4.Should().Throw<ObjectDisposedException>();
     }
 
+    [Fact]
+    public void GetLogicalName_WithDecoratedType_ReturnsAttributeName()
+    {
+        // Act & Assert
+        _registry.GetLogicalName(typeof(NamedTestDomainEvent))
+            .Should().Be("EventTypeRegistryTests.Named");
+    }
+
+    [Fact]
+    public void GetLogicalName_WithUndecoratedType_ReturnsAssemblyQualifiedName()
+    {
+        // Act & Assert - the value from before logical names existed, to the character
+        _registry.GetLogicalName(typeof(TestDomainEvent))
+            .Should().Be(typeof(TestDomainEvent).AssemblyQualifiedName);
+    }
+
+    [Fact]
+    public void GetLogicalName_WithNullType_ThrowsArgumentNullException()
+    {
+        // Act & Assert
+        var action = () => _registry.GetLogicalName(null!);
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void GetLogicalName_AfterDispose_ThrowsObjectDisposedException()
+    {
+        // Arrange
+        _registry.Dispose();
+
+        // Act & Assert
+        var action = () => _registry.GetLogicalName(typeof(NamedTestDomainEvent));
+        action.Should().Throw<ObjectDisposedException>();
+    }
+
+    [Fact]
+    public void RegisterEventType_WithDecoratedType_ResolvesUnderBothNames()
+    {
+        // Arrange
+        var eventType = typeof(NamedTestDomainEvent);
+        var assemblyQualifiedName = eventType.AssemblyQualifiedName!;
+
+        // Act
+        _registry.RegisterEventType(eventType);
+
+        // Assert - a log holding either form is readable by this single binary
+        _registry.GetWhitelistedType("EventTypeRegistryTests.Named").Should().Be(eventType);
+        _registry.GetWhitelistedType(assemblyQualifiedName).Should().Be(eventType);
+        _registry.IsWhitelisted("EventTypeRegistryTests.Named").Should().BeTrue();
+        _registry.IsWhitelisted(assemblyQualifiedName).Should().BeTrue();
+    }
+
+    [Fact]
+    public void RegisterEventType_WithDecoratedType_CountsOneTypeNotTwoKeys()
+    {
+        // Act
+        _registry.RegisterEventType(typeof(NamedTestDomainEvent));
+
+        // Assert
+        _registry.Count.Should().Be(1);
+        _registry.GetRegisteredTypes().Should().HaveCount(1);
+        _registry.GetRegisteredTypes().Should().Contain(typeof(NamedTestDomainEvent));
+    }
+
+    [Fact]
+    public void RegisterEventTypes_WithDecoratedType_ResolvesUnderBothNames()
+    {
+        // Act
+        _registry.RegisterEventTypes(new[] { typeof(NamedTestDomainEvent) });
+
+        // Assert
+        _registry.Count.Should().Be(1);
+        _registry.GetWhitelistedType("EventTypeRegistryTests.Named").Should().Be(typeof(NamedTestDomainEvent));
+        _registry.GetWhitelistedType(typeof(NamedTestDomainEvent).AssemblyQualifiedName!)
+            .Should().Be(typeof(NamedTestDomainEvent));
+    }
+
+    [Fact]
+    public void Clear_AfterDecoratedRegistration_RemovesBothNames()
+    {
+        // Arrange
+        _registry.RegisterEventType(typeof(NamedTestDomainEvent));
+
+        // Act
+        _registry.Clear();
+
+        // Assert
+        _registry.Count.Should().Be(0);
+        _registry.IsWhitelisted("EventTypeRegistryTests.Named").Should().BeFalse();
+        _registry.IsWhitelisted(typeof(NamedTestDomainEvent).AssemblyQualifiedName!).Should().BeFalse();
+    }
+
+    [Fact]
+    public void RegisterEventType_TwoTypesClaimingTheSameLogicalName_Throws()
+    {
+        // Arrange
+        _registry.RegisterEventType(typeof(FirstDuplicatedNameEvent));
+
+        // Act & Assert - a "last one wins" would deserialize a payload into the wrong type
+        var action = () => _registry.RegisterEventType(typeof(SecondDuplicatedNameEvent));
+        action.Should().Throw<InvalidOperationException>()
+            .WithMessage($"*{typeof(FirstDuplicatedNameEvent).FullName}*")
+            .WithMessage($"*{typeof(SecondDuplicatedNameEvent).FullName}*");
+
+        _registry.Count.Should().Be(1);
+        _registry.GetWhitelistedType("EventTypeRegistryTests.Duplicated")
+            .Should().Be(typeof(FirstDuplicatedNameEvent));
+    }
+
+    [Fact]
+    public void RegisterEventTypes_WithCollidingBatch_RegistersNothing()
+    {
+        // Arrange
+        var colliding = new[] { typeof(FirstDuplicatedNameEvent), typeof(SecondDuplicatedNameEvent) };
+
+        // Act & Assert - the whole batch is validated before a single write
+        var action = () => _registry.RegisterEventTypes(colliding);
+        action.Should().Throw<InvalidOperationException>();
+
+        _registry.Count.Should().Be(0);
+        _registry.IsWhitelisted("EventTypeRegistryTests.Duplicated").Should().BeFalse();
+    }
+
+    [Fact]
+    public void RegisterEventType_SameDecoratedTypeTwice_DoesNotThrow()
+    {
+        // Act
+        _registry.RegisterEventType(typeof(NamedTestDomainEvent));
+        var action = () => _registry.RegisterEventType(typeof(NamedTestDomainEvent));
+
+        // Assert
+        action.Should().NotThrow();
+        _registry.Count.Should().Be(1);
+    }
+
     public void Dispose()
     {
         _registry?.Dispose();
+    }
+}
+
+/// <summary>
+/// A decorated domain event. Its logical name is unique in this assembly, so that
+/// AutoRegisterFromAssemblies, which scans every concrete IDomainEvent of the test
+/// assembly, keeps registering it without colliding.
+/// </summary>
+[EventTypeName("EventTypeRegistryTests.Named")]
+public sealed class NamedTestDomainEvent : DomainEventBase
+{
+    public NamedTestDomainEvent()
+        : base("aggregate", "Aggregate", 1)
+    {
+    }
+}
+
+/// <summary>
+/// First half of the collision pair. Abstract on purpose: AutoRegisterFromAssemblies skips
+/// abstract types, so the two types below can share a logical name — which is the point of
+/// the collision tests — without making the assembly-wide scan of
+/// AutoRegisterFromAssemblies_WithValidAssembly_RegistersDomainEvents throw.
+/// </summary>
+[EventTypeName("EventTypeRegistryTests.Duplicated")]
+public abstract class FirstDuplicatedNameEvent : DomainEventBase
+{
+    protected FirstDuplicatedNameEvent()
+        : base("aggregate", "Aggregate", 1)
+    {
+    }
+}
+
+/// <summary>
+/// Second half of the collision pair. See <see cref="FirstDuplicatedNameEvent"/>.
+/// </summary>
+[EventTypeName("EventTypeRegistryTests.Duplicated")]
+public abstract class SecondDuplicatedNameEvent : DomainEventBase
+{
+    protected SecondDuplicatedNameEvent()
+        : base("aggregate", "Aggregate", 1)
+    {
     }
 }
