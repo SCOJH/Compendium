@@ -64,6 +64,9 @@ flowchart TB
     class rehydrate warn
 ```
 
+The dispatchers and the behavior pipeline are the framework's own — no mediator
+dependency; the reasoning is in [ADR-0012](../adr/0012-hand-rolled-cqrs-dispatch.md).
+
 **The rupture to know about:** after `AppendEventsAsync` succeeds, **nothing is
 dispatched automatically**. There is no in-process domain-event dispatcher
 (`IDomainEventHandler<T>` exists but no component invokes it), and projections only
@@ -101,7 +104,9 @@ Reading notes:
   (assembly-qualified-name) rows and new (logical-name) rows is readable by a single
   binary, without rewriting anything. Name collisions are refused at registration —
   *"a payload deserialized into the wrong type is worse than one not deserialized at
-  all"* (`EventTypeRegistry.cs`).
+  all"* (`EventTypeRegistry.cs`). Rationale and trade-offs:
+  [ADR-0010](../adr/0010-logical-event-identity.md) and
+  [ADR-0011](../adr/0011-whitelist-deserialization-upcasting.md).
 - A stream containing one unresolvable event type fails **as a whole**
   (`EventStore.EventTypeUnresolved`) rather than returning a truncated history as a
   success.

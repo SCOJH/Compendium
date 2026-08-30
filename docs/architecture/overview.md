@@ -31,7 +31,8 @@ Everything else is arranged around that core in strict hexagonal rings
 inward only:
 
 - **Abstractions** — ports as interfaces, one NuGet package per concern
-  (event store, AI, billing, geo, …), so a consumer references only the ports it uses.
+  (event store, AI, billing, geo, …), so a consumer references only the ports it
+  uses ([ADR-0013](../adr/0013-abstraction-package-per-concern.md)).
 - **Application** — CQRS dispatchers, pipeline behaviors, saga orchestration.
 - **Infrastructure** — generic building blocks plus complete in-memory
   implementations of every port, which double as the framework's semantic reference
@@ -68,9 +69,10 @@ partitioned mechanically by the `ProjectReference` graph — see
 
 - **36 architecture tests** (NetArchTest) pin the dependency direction, event
   immutability, and CQRS/naming conventions.
-- **Release trains + publication gates**: a tag releases exactly one train; every
-  published package must come from a tagged, test-gated commit, and republishing an
-  existing version is a hard failure.
+- **Release trains + publication gates**: a tag releases exactly one train
+  ([ADR-0008](../adr/0008-release-train-per-package.md)); every published package
+  must come from a tagged, test-gated commit, and republishing an existing version
+  is a hard failure ([ADR-0009](../adr/0009-publication-gates.md)).
 - **In-memory implementations as contract**: any semantic gap between an in-memory
   implementation and a persistent adapter is treated as a framework bug, which keeps
   the whole framework-behaviour test suite Docker-free.
