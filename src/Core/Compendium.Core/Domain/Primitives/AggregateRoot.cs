@@ -5,7 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Frozen;
 using Compendium.Core.Domain.Events;
 
 namespace Compendium.Core.Domain.Primitives;
@@ -46,9 +45,11 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
     public IReadOnlyCollection<IDomainEvent> DomainEvents =>
         _lockingStrategy.ExecuteRead(() =>
         {
-            // Always create fresh frozen set to ensure consistency
-            // (Cache was causing issues with cleared collections)
-            return _domainEvents.ToFrozenSet();
+            // Return a fresh snapshot that PRESERVES insertion order. Deduplication is
+            // already handled by _eventHashes on add, so a frozen set is unnecessary and
+            // its unordered enumeration could reorder a multi-event batch on persist/publish
+            // (corrupting the stream / rehydrated state). Order matters for event sourcing.
+            return (IReadOnlyCollection<IDomainEvent>)_domainEvents.ToArray();
         });
 
     /// <summary>
@@ -117,11 +118,12 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
             throw new ObjectDisposedException(nameof(AggregateRoot<TId>));
         }
 
-        // Execute atomically to avoid race conditions
-        FrozenSet<IDomainEvent> events = null!;
+        // Execute atomically to avoid race conditions. Preserve insertion order
+        // (see DomainEvents): events must come out in the order they were raised.
+        IReadOnlyCollection<IDomainEvent> events = null!;
         _lockingStrategy.ExecuteWrite(() =>
         {
-            events = _domainEvents.ToFrozenSet();
+            events = _domainEvents.ToArray();
             ClearDomainEventsInternal();
         });
         return events;
