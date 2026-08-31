@@ -7,6 +7,7 @@
 
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -47,6 +48,33 @@ public interface ILiveProjectionProcessor
     void UnregisterProjection(string projectionName);
 
     /// <summary>
+    /// Suspends a single projection: it stops receiving events and its checkpoint
+    /// stops being written, while every other projection keeps advancing.
+    /// </summary>
+    /// <remarks>
+    /// This is what makes an administrative pause real rather than a state row, and
+    /// what lets a rebuild own a projection's checkpoint without the live loop
+    /// writing its in-memory position back over it.
+    /// </remarks>
+    /// <param name="projectionName">The name of the projection to suspend.</param>
+    void SuspendProjection(string projectionName);
+
+    /// <summary>
+    /// Resumes a suspended projection. Its position is re-read from the projection
+    /// store before it receives anything, so it restarts exactly where its persisted
+    /// checkpoint stands — no jump forward, no replay of what it already applied.
+    /// </summary>
+    /// <param name="projectionName">The name of the projection to resume.</param>
+    void ResumeProjection(string projectionName);
+
+    /// <summary>
+    /// Gets a value indicating whether a projection is currently suspended.
+    /// </summary>
+    /// <param name="projectionName">The name of the projection.</param>
+    /// <returns><see langword="true"/> when the projection is suspended.</returns>
+    bool IsProjectionSuspended(string projectionName);
+
+    /// <summary>
     /// Gets the status of live projection processing.
     /// </summary>
     /// <returns>Processing status information.</returns>
@@ -84,6 +112,19 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     // past a poison event; a restart clears this and re-attempts from the checkpoint.
     private readonly ConcurrentDictionary<string, string> _haltedProjections;
 
+    // Suspended projections: excluded from the fan-out AND from checkpoint writes,
+    // so their cursor is frozen at its persisted value. Populated by an
+    // administrative pause and by a rebuild taking ownership of a projection.
+    private readonly ConcurrentDictionary<string, byte> _suspendedProjections;
+
+    // Projections whose in-memory position is stale and must be re-read from the
+    // store before they receive anything again (resume, end of rebuild).
+    private readonly ConcurrentDictionary<string, byte> _positionRefreshRequests;
+
+    // Last (status, error) pair written to the projection store per projection, so
+    // health transitions are persisted once instead of on every batch.
+    private readonly ConcurrentDictionary<string, string> _publishedStates;
+
     private readonly SemaphoreSlim _processingLock;
 
     // The stream read cursor: the MIN over all live (non-halted) projection
@@ -120,6 +161,9 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         _projectionPositions = new ConcurrentDictionary<string, long>();
         _projectionFailureCounts = new ConcurrentDictionary<string, int>();
         _haltedProjections = new ConcurrentDictionary<string, string>();
+        _suspendedProjections = new ConcurrentDictionary<string, byte>();
+        _positionRefreshRequests = new ConcurrentDictionary<string, byte>();
+        _publishedStates = new ConcurrentDictionary<string, string>();
         _processingLock = new SemaphoreSlim(1, 1);
         _processingStopwatch = new Stopwatch();
         _lastStatsUpdate = DateTime.UtcNow;
@@ -142,8 +186,39 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         _projectionPositions.TryRemove(projectionName, out _);
         _projectionFailureCounts.TryRemove(projectionName, out _);
         _haltedProjections.TryRemove(projectionName, out _);
+        _suspendedProjections.TryRemove(projectionName, out _);
+        _positionRefreshRequests.TryRemove(projectionName, out _);
+        _publishedStates.TryRemove(projectionName, out _);
         _logger.LogInformation("Unregistered projection {ProjectionName} from live processing", projectionName);
     }
+
+    /// <inheritdoc />
+    public void SuspendProjection(string projectionName)
+    {
+        _suspendedProjections[projectionName] = 0;
+        _positionRefreshRequests.TryRemove(projectionName, out _);
+        _logger.LogInformation(
+            "Suspended projection {ProjectionName}: it no longer receives events and its checkpoint is frozen",
+            projectionName);
+    }
+
+    /// <inheritdoc />
+    public void ResumeProjection(string projectionName)
+    {
+        if (_suspendedProjections.TryRemove(projectionName, out _))
+        {
+            // Its in-memory position is stale (the checkpoint may have been rewound by
+            // a rebuild while it was suspended). Re-read it before the next pass.
+            _positionRefreshRequests[projectionName] = 0;
+            _logger.LogInformation(
+                "Resumed projection {ProjectionName}: position will be re-read from its persisted checkpoint",
+                projectionName);
+        }
+    }
+
+    /// <inheritdoc />
+    public bool IsProjectionSuspended(string projectionName) =>
+        _suspendedProjections.ContainsKey(projectionName);
 
     /// <inheritdoc />
     Task ILiveProjectionProcessor.StartAsync(CancellationToken cancellationToken)
@@ -169,6 +244,7 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             RegisteredProjections = _registeredProjections.Count,
             ActiveProjections = _liveProjections.Count,
             HaltedProjections = _haltedProjections.Count,
+            SuspendedProjections = _suspendedProjections.Count,
             LastProcessedPosition = _lastProcessedPosition,
             TotalEventsProcessed = _totalEventsProcessed,
             EventsPerSecond = eventsPerSecond,
@@ -279,6 +355,17 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                     anyCheckpointFound = true;
                 }
 
+                // A pause must survive the pod that served the pause request: the
+                // engine consults the persisted state rather than assuming every
+                // projection is running because the process just started.
+                var persistedState = await _projectionStore.GetProjectionStateAsync(projectionName, cancellationToken);
+                if (persistedState?.Status == ProjectionStatus.Paused)
+                {
+                    _suspendedProjections[projectionName] = 0;
+                    _logger.LogInformation(
+                        "Projection {ProjectionName} starts suspended: its persisted state is Paused", projectionName);
+                }
+
                 _logger.LogDebug("Initialized projection {ProjectionName} with checkpoint at position {Position}",
                     projectionName, checkpoint);
             }
@@ -324,10 +411,79 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             // siblings advanced, then the process restarted) must re-receive the
             // events it missed. Siblings already past that position skip them by the
             // per-projection position guard, so re-delivery is a no-op for them.
-            _lastProcessedPosition = _projectionPositions.Values.Min();
+            RecomputeReadCursor(_projectionPositions.Values.DefaultIfEmpty(0L).Min());
             _logger.LogInformation(
                 "Resuming live processing from min projection checkpoint: {Position}", _lastProcessedPosition);
         }
+    }
+
+    /// <summary>
+    /// The projections that currently take events: registered, not dead-lettered and
+    /// not suspended. Everything that decides "where do we read from" and "whose
+    /// checkpoint do we write" goes through this set.
+    /// </summary>
+    private IReadOnlyList<string> ActiveProjectionNames() =>
+        _liveProjections.Keys
+            .Where(name => !_haltedProjections.ContainsKey(name) && !_suspendedProjections.ContainsKey(name))
+            .ToList();
+
+    /// <summary>
+    /// Sets the shared read cursor to the MIN over active projection positions, so an
+    /// event held back by one projection keeps being re-streamed until it catches up.
+    /// Falls back to <paramref name="fallback"/> when no projection is active — with
+    /// nobody to consume it, re-reading the same tail forever buys nothing.
+    /// </summary>
+    private void RecomputeReadCursor(long fallback)
+    {
+        var active = ActiveProjectionNames();
+        _lastProcessedPosition = active.Count > 0
+            ? active.Select(name => _projectionPositions.GetValueOrDefault(name, 0L)).Min()
+            : fallback;
+    }
+
+    /// <summary>
+    /// Re-reads the persisted checkpoint of every projection that asked for it (a
+    /// resume, or the end of a rebuild that rewound the cursor under our feet), then
+    /// re-derives the read cursor so the refreshed projection is streamed the events
+    /// it is missing instead of being stranded ahead of them.
+    /// </summary>
+    private async Task RefreshRequestedPositionsAsync(CancellationToken cancellationToken)
+    {
+        if (_positionRefreshRequests.IsEmpty)
+        {
+            return;
+        }
+
+        foreach (var projectionName in _positionRefreshRequests.Keys)
+        {
+            if (!_positionRefreshRequests.TryRemove(projectionName, out _))
+            {
+                continue;
+            }
+
+            try
+            {
+                var checkpoint = await _projectionStore.GetCheckpointAsync(projectionName, cancellationToken);
+                _projectionPositions[projectionName] = checkpoint ?? 0L;
+                _projectionFailureCounts.TryRemove(projectionName, out _);
+                _haltedProjections.TryRemove(projectionName, out _);
+                _logger.LogInformation(
+                    "Projection {ProjectionName} resumes at its persisted checkpoint {Position}",
+                    projectionName, checkpoint ?? 0L);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                // Put the request back rather than letting the projection run from a
+                // stale in-memory position, which would skip events silently.
+                _positionRefreshRequests[projectionName] = 0;
+                _logger.LogError(ex,
+                    "Failed to re-read the checkpoint of projection {ProjectionName}; it stays out of the fan-out",
+                    projectionName);
+                _suspendedProjections[projectionName] = 0;
+            }
+        }
+
+        RecomputeReadCursor(_lastProcessedPosition);
     }
 
     /// <summary>
@@ -343,6 +499,8 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         await _processingLock.WaitAsync(cancellationToken);
         try
         {
+            await RefreshRequestedPositionsAsync(cancellationToken);
+
             var newEvents = new List<EventData>();
             var batchCount = 0;
             const int maxBatchSize = 100; // Smaller batches for live processing
@@ -413,6 +571,12 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                 continue;
             }
 
+            if (_suspendedProjections.ContainsKey(projectionName))
+            {
+                // Paused, or owned by a rebuild: no events, no checkpoint write.
+                continue;
+            }
+
             foreach (var (data, metadata) in prepared)
             {
                 var current = _projectionPositions.GetValueOrDefault(projectionName, 0L);
@@ -424,34 +588,53 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                     continue;
                 }
 
-                try
+                var failure = await ApplyWithRetriesAsync(
+                    projectionName, projection, data, metadata, cancellationToken);
+
+                if (failure is null)
                 {
-                    await ApplyEventToProjectionAsync(projection, data.Event, metadata, cancellationToken);
                     _projectionPositions[projectionName] = data.GlobalPosition;
-                    _projectionFailureCounts.TryRemove(projectionName, out _);
+                    if (_projectionFailureCounts.TryRemove(projectionName, out _))
+                    {
+                        // It was failing and now applies again: say so, otherwise the
+                        // state row stays Failed and the operator chases a ghost.
+                        await PublishProjectionStateAsync(
+                            projectionName, projection, ProjectionStatus.Building, null, cancellationToken);
+                    }
+
                     appliedCount++;
                 }
-                catch (Exception ex) when (ex is not OperationCanceledException)
+                else
                 {
                     // CRITICAL: do NOT advance this projection's checkpoint past the
                     // failed event. Hold at `current` and retry on the next pass.
                     var failures = _projectionFailureCounts.AddOrUpdate(projectionName, 1, (_, c) => c + 1);
-                    _logger.LogError(ex,
+                    _logger.LogError(failure,
                         "Projection {ProjectionName} failed to apply event {EventId} at position {Position} " +
-                        "(attempt {Attempt}/{Max}); checkpoint held at {Held}",
+                        "(pass {Attempt}/{Max}); checkpoint held at {Held}",
                         projectionName, data.EventId, data.GlobalPosition,
                         failures, _options.MaxProjectionApplyFailures, current);
+
+                    var status =
+                        $"failed to apply event {data.EventId} at position {data.GlobalPosition}: {failure.Message}";
 
                     if (failures >= _options.MaxProjectionApplyFailures)
                     {
                         var reason =
-                            $"halted at position {data.GlobalPosition} after {failures} consecutive failed attempts: {ex.Message}";
+                            $"halted at position {data.GlobalPosition} after {failures} consecutive failed attempts: {failure.Message}";
                         _haltedProjections[projectionName] = reason;
-                        _logger.LogCritical(ex,
+                        _logger.LogCritical(failure,
                             "Projection {ProjectionName} DEAD-LETTERED: {Reason}. Its read model is now STALE " +
                             "until the process is restarted/redeployed; other projections continue past this event.",
                             projectionName, reason);
+                        status = reason;
                     }
+
+                    // Make the failure legible outside the logs: `projection_states`
+                    // carries the status and the message, so the admin surface and the
+                    // lag metrics stop reporting a healthy projection.
+                    await PublishProjectionStateAsync(
+                        projectionName, projection, ProjectionStatus.Failed, status, cancellationToken);
 
                     // Stop applying further (later) events to THIS projection this pass.
                     break;
@@ -465,11 +648,7 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         // so an event held back by one projection is re-streamed until it catches up.
         // If every projection is halted, jump to the batch head to avoid re-reading a
         // tail nobody will consume.
-        var livePositions = _liveProjections.Keys
-            .Where(name => !_haltedProjections.ContainsKey(name))
-            .Select(name => _projectionPositions.GetValueOrDefault(name, 0L))
-            .ToList();
-        _lastProcessedPosition = livePositions.Count > 0 ? livePositions.Min() : maxPosition;
+        RecomputeReadCursor(maxPosition);
 
         // Persist each projection's OWN position (held-back projections included, so a
         // restart resumes from where each actually is — never past a failed event).
@@ -480,6 +659,93 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
 
         _logger.LogDebug("Processed batch of {EventCount} events ({Applied} applies), cursor: {Position}",
             events.Count, appliedCount, _lastProcessedPosition);
+    }
+
+    /// <summary>
+    /// Applies one event to one projection, re-attempting it up to
+    /// <see cref="ProjectionOptions.RetryCount"/> times with
+    /// <see cref="ProjectionOptions.RetryDelay"/> in between.
+    /// </summary>
+    /// <returns>
+    /// <see langword="null"/> when the event was applied, otherwise the exception of
+    /// the last attempt — the caller holds the cursor and records the failure.
+    /// </returns>
+    private async Task<Exception?> ApplyWithRetriesAsync(
+        string projectionName,
+        IProjection projection,
+        EventData data,
+        EventMetadata metadata,
+        CancellationToken cancellationToken)
+    {
+        var attempts = Math.Max(0, _options.RetryCount) + 1;
+
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                await ApplyEventToProjectionAsync(projection, data.Event, metadata, cancellationToken);
+                return null;
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                if (attempt >= attempts)
+                {
+                    return ex;
+                }
+
+                _logger.LogWarning(ex,
+                    "Projection {ProjectionName} failed to apply event {EventId} at position {Position} " +
+                    "(attempt {Attempt}/{Attempts}); retrying in {Delay}",
+                    projectionName, data.EventId, data.GlobalPosition, attempt, attempts, _options.RetryDelay);
+
+                if (_options.RetryDelay > TimeSpan.Zero)
+                {
+                    await Task.Delay(_options.RetryDelay, cancellationToken);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Persists a projection's health to <see cref="IProjectionStore"/>, once per
+    /// transition. A store that refuses the write must not take the batch down with
+    /// it: the checkpoint semantics are the load-bearing part, the state row is the
+    /// report on them.
+    /// </summary>
+    private async Task PublishProjectionStateAsync(
+        string projectionName,
+        IProjection projection,
+        ProjectionStatus status,
+        string? errorMessage,
+        CancellationToken cancellationToken)
+    {
+        var signature = $"{status}|{errorMessage}";
+        if (_publishedStates.TryGetValue(projectionName, out var published) && published == signature)
+        {
+            return;
+        }
+
+        try
+        {
+            await _projectionStore.SaveProjectionStateAsync(
+                new ProjectionState
+                {
+                    ProjectionName = projectionName,
+                    Version = projection.Version,
+                    LastProcessedPosition = _projectionPositions.GetValueOrDefault(projectionName, 0L),
+                    LastProcessedAt = DateTime.UtcNow,
+                    Status = status,
+                    ErrorMessage = errorMessage,
+                },
+                cancellationToken);
+
+            _publishedStates[projectionName] = signature;
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogError(ex,
+                "Failed to persist state {Status} for projection {ProjectionName}", status, projectionName);
+        }
     }
 
     /// <summary>
@@ -505,8 +771,17 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             var applyMethod = genericInterface.GetMethod(nameof(IProjection<IDomainEvent>.ApplyAsync));
             if (applyMethod != null)
             {
-                var task = (Task)applyMethod.Invoke(projection, new object[] { domainEvent, metadata, cancellationToken })!;
-                await task;
+                try
+                {
+                    var task = (Task)applyMethod.Invoke(projection, new object[] { domainEvent, metadata, cancellationToken })!;
+                    await task;
+                }
+                catch (TargetInvocationException ex) when (ex.InnerException != null)
+                {
+                    // A projection that throws synchronously arrives wrapped; the
+                    // wrapper's message is what would land in error_message.
+                    throw ex.InnerException;
+                }
             }
         }
     }
@@ -519,11 +794,16 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     /// </summary>
     private async Task SaveCheckpointsAsync(CancellationToken cancellationToken)
     {
-        var tasks = _liveProjections.Keys.Select(projectionName =>
-            _projectionStore.SaveCheckpointAsync(
-                projectionName,
-                _projectionPositions.GetValueOrDefault(projectionName, 0L),
-                cancellationToken));
+        // Suspended projections are excluded on purpose: their cursor belongs to
+        // whoever suspended them (an operator pause, a rebuild replaying from 0), and
+        // writing our stale in-memory position here would undo it.
+        var tasks = _liveProjections.Keys
+            .Where(projectionName => !_suspendedProjections.ContainsKey(projectionName))
+            .Select(projectionName =>
+                _projectionStore.SaveCheckpointAsync(
+                    projectionName,
+                    _projectionPositions.GetValueOrDefault(projectionName, 0L),
+                    cancellationToken));
 
         await Task.WhenAll(tasks);
     }
@@ -647,6 +927,13 @@ public class LiveProcessingStatus
     /// models are knowingly stale and the process needs attention/redeploy.
     /// </summary>
     public int HaltedProjections { get; init; }
+
+    /// <summary>
+    /// Gets the number of projections that are currently suspended — paused from the
+    /// administrative surface, or temporarily owned by a rebuild. A suspended
+    /// projection receives no events and its checkpoint does not move.
+    /// </summary>
+    public int SuspendedProjections { get; init; }
 
     /// <summary>
     /// Gets or sets the last processed global position.
