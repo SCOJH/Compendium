@@ -289,8 +289,23 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
 
                 await using (handle)
                 {
-                    await RunConsumerTermAsync(handle, stoppingToken);
+                    try
+                    {
+                        await RunConsumerTermAsync(handle, stoppingToken);
+                    }
+                    catch (Exception ex) when (ex is not OperationCanceledException)
+                    {
+                        // A term that cannot even start — the store refusing to yield
+                        // checkpoints, say — must release the lease and let someone try
+                        // again, rather than leave this replica silently disabled while
+                        // holding the right to be the one that consumes.
+                        _logger.LogError(ex,
+                            "Projection consumer term ended on an error; releasing the lease and retrying in {Delay}",
+                            _options.ConsumerLeaseRetryInterval);
+                    }
                 }
+
+                await Task.Delay(_options.ConsumerLeaseRetryInterval, stoppingToken);
             }
         }
         catch (OperationCanceledException)
