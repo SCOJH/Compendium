@@ -246,6 +246,63 @@ public class ProjectionLifecycleService
 }
 ```
 
+## Guarantees, and what a multi-replica host must supply
+
+These are the properties the engine holds itself to. They matter because each one
+was, at some point, quietly untrue.
+
+**One cursor per projection.** Every projection carries its own position, persisted
+under its own name in `projection_checkpoints`. The stream is read from the MIN over
+active projections, and each projection skips what it has already applied. A
+projection registered today has no checkpoint, therefore starts at 0 and replays the
+whole history — whatever position its siblings have reached.
+
+**A failure stops one projection, not the batch and not the others.** The cursor of a
+projection that throws is held at the position *before* the event it failed on, so a
+restart re-attempts it instead of skipping it forever. `RetryCount` / `RetryDelay`
+govern immediate re-attempts; after `MaxProjectionApplyFailures` consecutive failed
+passes the projection is dead-lettered so its siblings can advance past a poison
+event. Either way the projection's row in `projection_states` carries `Failed` and
+the exception message, and goes back to `Building` when it recovers.
+
+**A pause stops the cursor.** `PauseProjectionAsync` suspends the projection in the
+processor: no events, no checkpoint writes. The state is persisted, so the pause
+survives the pod that received the request. `ResumeProjectionAsync` re-reads the
+persisted checkpoint before the projection takes events again, so it restarts exactly
+where it stopped.
+
+**A rebuild rebuilds.** `RebuildProjectionAsync` rewinds the cursor to 0, calls
+`ResetAsync()`, replays from 0 and writes the cursor batch by batch — in that order.
+Reading the checkpoint and replaying from it *after* clearing the read model made
+rebuild a delete, because a healthy checkpoint sits at the head of the stream and
+`global_position > checkpoint` then selects nothing. The projection is suspended for
+the duration and handed back only if the rebuild completes; an interrupted or failed
+rebuild leaves it suspended, with its state saying so.
+
+**One process applies.** `LiveProjectionProcessor` is a `BackgroundService`: every
+replica of a host that registers it runs one. It enters its loop only while it holds
+`IProjectionConsumerLease`, and re-reads every position at the start of each term, so
+no replica can apply an event twice or write back a position it remembers from an
+earlier term.
+
+The default implementation always grants the lease. That is correct for a
+single-process host and for tests, and it is the behaviour every existing caller
+already had — but in a multi-replica deployment it grants the lease to everyone at
+once, which is the situation the port exists to end. **Register your own before
+calling `AddProjections`:**
+
+```csharp
+// TryAdd inside AddProjections leaves your registration in place.
+services.AddSingleton<IProjectionConsumerLease, PostgresProjectionConsumerLease>();
+services.AddProjections(options => { ... });
+```
+
+Make release a property of the mechanism rather than of your error handling: a lock
+bound to a database connection is released by the server when the pod dies, a row
+holding a "leader" flag is not unless it also carries an expiry. It is a port and not
+a lock in this assembly on purpose — `Compendium.Infrastructure` has no database
+dependency and must not acquire one.
+
 ## Database Schema
 
 The PostgreSQL projection store creates the following tables:

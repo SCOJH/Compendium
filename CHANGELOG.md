@@ -7,8 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`EnhancedProjectionManager.RebuildProjectionAsync` reconstructs instead of
+  deleting.** It read the projection's checkpoint, called `ResetAsync()`, then
+  replayed events *strictly after* that checkpoint. In steady state the checkpoint
+  sits at the head of the stream, so the replay selected nothing: the operation
+  cleared the read model and left it empty — and answered `202 Accepted` while
+  doing it. The order is now: rewind the cursor to 0, clear, replay from 0, write
+  the cursor batch by batch. The rewind comes first so that a process death
+  mid-rebuild leaves a cursor that replays too much rather than one claiming
+  events applied to a table that has just been cleared. The rebuild is confined to
+  the named projection: it is taken out of the live fan-out for the duration and
+  handed back only if it completes, so a half-rebuilt read model does not quietly
+  return to service.
+- **A pause now stops the engine, not just the state row.**
+  `PauseProjectionAsync` consulted `_projectionCancellations`, a dictionary
+  nothing ever wrote to, so the projection kept applying events while the
+  administrative surface reported it paused. Pause and resume now reach the
+  processor; a resume re-reads the persisted checkpoint, so the projection
+  restarts exactly where it stopped, with no jump and no replay. A pause survives
+  a restart: `LiveProjectionProcessor` reads the persisted state on start.
+- **An apply failure is persisted, not only logged.** The live processor writes
+  `ProjectionStatus.Failed` and the exception message to `projection_states`, and
+  `Building` again once the projection recovers. `ProjectionState` writes carry
+  the real position instead of the 0 every update used to put in
+  `last_processed_position`.
+- **`RetryCount` and `RetryDelay` are read.** Both were declared in
+  `ProjectionOptions` and used nowhere. They now govern the immediate re-attempts
+  of one event on one projection; `MaxProjectionApplyFailures` counts consecutive
+  failed passes, each pass being one round of those re-attempts.
+- **A projection that throws synchronously reports its own message.** The
+  reflection wrapper's exception is unwrapped before it reaches the logs and
+  `error_message`.
+
+### Added
+
+- **`IProjectionConsumerLease` — the right to be the single process applying
+  events to projections.** `LiveProjectionProcessor` is a `BackgroundService`:
+  every replica of a host that registers it runs one, and its only protection
+  against concurrency was an in-process semaphore, which cannot see the other
+  pods. The processor now enters its loop only while it holds the lease, one term
+  per acquisition, re-reading every position from the store at the start of a term
+  so a replica taking over never resumes from what it remembers. The lease is
+  confirmed periodically and the term ends as soon as it is lost.
+  `SingleProcessProjectionConsumerLease` — registered by default via `TryAdd` —
+  always grants it, which is the behaviour every single-process host already had;
+  a multi-replica deployment registers a database-backed implementation before
+  calling `AddProjections`. This is a port rather than a lock because
+  `Compendium.Infrastructure` has no database dependency and must not acquire
+  one. New options: `ConsumerName`, `ConsumerLeaseRetryInterval`,
+  `ConsumerLeaseRenewInterval`.
+
 ### Changed
 
+- **BREAKING — `ILiveProjectionProcessor` gains `SuspendProjection`,
+  `ResumeProjection` and `IsProjectionSuspended`.** Any implementation outside
+  this repository stops compiling until it supplies them. They are what makes an
+  administrative pause real and what lets a rebuild own a projection's checkpoint
+  without the live loop writing its in-memory position back over it — the two
+  reasons the interface existed without being able to keep its promises.
+  `LiveProcessingStatus` also gains `SuspendedProjections` and
+  `IsConsumerLeaseHolder`.
 - **BREAKING — `IEventTypeRegistry` gains `string GetLogicalName(Type eventType)`.**
   Any implementation of this interface outside this repository stops compiling
   until it supplies the member. A default interface member returning the assembly
