@@ -66,17 +66,32 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
         var projection = _serviceProvider.GetRequiredService<TProjection>();
         var projectionName = projection.ProjectionName;
 
+        // Take this projection — and only this one — out of the live fan-out for the
+        // duration. Otherwise the live loop keeps applying new events to a projection
+        // whose read model is being cleared underneath it, and writes its in-memory
+        // position back over the rewound checkpoint.
+        var liveProcessor = _serviceProvider.GetService<ILiveProjectionProcessor>();
+        liveProcessor?.SuspendProjection(projectionName);
+        var rebuilt = false;
+
         await _rebuildSemaphore.WaitAsync(cancellationToken);
         try
         {
             _logger.LogInformation("Starting rebuild of projection {ProjectionName}", projectionName);
 
             // Update state to rebuilding
-            await UpdateProjectionStateAsync(projectionName, ProjectionStatus.Rebuilding);
+            await UpdateProjectionStateAsync(projectionName, ProjectionStatus.Rebuilding, position: 0);
 
-            // Get checkpoint if resuming
-            var checkpoint = await _projectionStore.GetCheckpointAsync(projectionName, cancellationToken);
-            var fromPosition = checkpoint ?? 0;
+            // Rewind the cursor BEFORE clearing the read model, and replay from the
+            // beginning of the stream. Reading the checkpoint and replaying from it
+            // after ResetAsync made rebuild a delete: in steady state the checkpoint
+            // sits at the head, `global_position > checkpoint` selects nothing, and
+            // the projection was left with an emptied table. The rewind comes first so
+            // a process death mid-rebuild leaves a cursor that replays too much rather
+            // than one that claims events already applied to a table that was cleared.
+            await _projectionStore.SaveCheckpointAsync(projectionName, 0, cancellationToken);
+
+            const long fromPosition = 0;
 
             // Reset projection state
             await projection.ResetAsync(cancellationToken);
@@ -184,6 +199,7 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
 
             // Update state to completed
             await UpdateProjectionStateAsync(projectionName, ProjectionStatus.Completed);
+            rebuilt = true;
 
             _logger.LogInformation("Completed rebuild of projection {ProjectionName}. Processed {EventCount} events in {ElapsedSeconds}s",
                 projectionName, processedCount, stopwatch.Elapsed.TotalSeconds);
@@ -203,6 +219,23 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
         finally
         {
             _rebuildSemaphore.Release();
+
+            if (rebuilt)
+            {
+                // Hand the projection back to the live loop, which re-reads the
+                // checkpoint the rebuild just wrote and carries on from there.
+                liveProcessor?.ResumeProjection(projectionName);
+            }
+            else
+            {
+                // Interrupted or failed: the read model is half-rebuilt and the state
+                // row says so. Resuming here would quietly serve a partial read model
+                // as if it were whole — that call belongs to whoever reads the state.
+                _logger.LogWarning(
+                    "Projection {ProjectionName} stays suspended after an unfinished rebuild; " +
+                    "resume it explicitly once its state has been examined",
+                    projectionName);
+            }
         }
     }
 
@@ -239,6 +272,11 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
             cts.Cancel();
         }
 
+        // Writing a Paused row is the report, not the act: the live processor is what
+        // holds the cursor still. Without this call the projection kept applying and
+        // "paused" was a lie told by the admin surface.
+        _serviceProvider.GetService<ILiveProjectionProcessor>()?.SuspendProjection(projectionName);
+
         await UpdateProjectionStateAsync(projectionName, ProjectionStatus.Paused);
         _logger.LogInformation("Paused projection {ProjectionName}", projectionName);
     }
@@ -246,6 +284,10 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
     /// <inheritdoc />
     public async Task ResumeProjectionAsync(string projectionName, CancellationToken cancellationToken = default)
     {
+        // The processor re-reads the persisted checkpoint before taking events again,
+        // so the projection restarts exactly where the pause stopped it.
+        _serviceProvider.GetService<ILiveProjectionProcessor>()?.ResumeProjection(projectionName);
+
         await UpdateProjectionStateAsync(projectionName, ProjectionStatus.Building);
         _logger.LogInformation("Resumed projection {ProjectionName}", projectionName);
     }
@@ -371,13 +413,35 @@ public class EnhancedProjectionManager : IProjectionManager, IDisposable
     private async Task UpdateProjectionStateAsync(
         string projectionName,
         ProjectionStatus status,
-        string? errorMessage = null)
+        string? errorMessage = null,
+        long? position = null)
     {
+        // The state row used to be written without a position, so every write put 0 in
+        // last_processed_position — a column that reads as "this projection has applied
+        // nothing". Carry the checkpoint unless the caller knows better (a rebuild
+        // announcing that it has just rewound to 0).
+        var lastProcessedPosition = position;
+        if (lastProcessedPosition is null)
+        {
+            try
+            {
+                lastProcessedPosition = await _projectionStore.GetCheckpointAsync(projectionName) ?? 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex,
+                    "Could not read the checkpoint of projection {ProjectionName} while writing its state",
+                    projectionName);
+                lastProcessedPosition = 0;
+            }
+        }
+
         var state = new ProjectionState
         {
             ProjectionName = projectionName,
             Status = status,
             ErrorMessage = errorMessage,
+            LastProcessedPosition = lastProcessedPosition.Value,
             LastProcessedAt = DateTime.UtcNow
         };
 
