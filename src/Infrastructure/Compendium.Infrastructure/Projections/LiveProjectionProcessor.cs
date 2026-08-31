@@ -594,9 +594,11 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     }
 
     /// <summary>
-    /// Processes new events that have arrived since the last check.
+    /// Processes new events that have arrived since the last check. Exposed as
+    /// <see langword="internal"/> so tests can drive a single polling pass — including
+    /// the position refresh a resume asks for — without racing the loop.
     /// </summary>
-    private async Task ProcessNewEventsAsync(CancellationToken cancellationToken)
+    internal async Task ProcessNewEventsAsync(CancellationToken cancellationToken)
     {
         if (!_liveProjections.Any())
         {
