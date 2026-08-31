@@ -60,21 +60,44 @@ public class ProjectionOptions
     public TimeSpan OperationTimeout { get; set; } = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Gets or sets the retry count for failed operations.
-    /// Default is 3 retries.
+    /// Gets or sets how many times the live processor immediately re-attempts the same
+    /// event on the same projection before it gives up for this pass, holds that
+    /// projection's checkpoint and counts one failure. Default is 3 retries.
     /// </summary>
     public int RetryCount { get; set; } = 3;
 
     /// <summary>
-    /// Gets or sets the delay between retries.
-    /// Default is 1 second.
+    /// Gets or sets the delay between the immediate re-attempts governed by
+    /// <see cref="RetryCount"/>. Default is 1 second.
     /// </summary>
     public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// Gets or sets the name of the consumer lease that elects the single process
+    /// applying events to projections. Every replica that must exclude the others uses
+    /// the same name.
+    /// </summary>
+    public string ConsumerName { get; set; } = "compendium-live-projections";
+
+    /// <summary>
+    /// Gets or sets how long a replica that failed to take the consumer lease waits
+    /// before trying again. Also the upper bound on how long the stream stays
+    /// unconsumed after the holder disappears. Default is 5 seconds.
+    /// </summary>
+    public TimeSpan ConsumerLeaseRetryInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Gets or sets how often the lease holder confirms it still holds the lease. A
+    /// holder that has lost it stops applying events at the next confirmation, so this
+    /// bounds how long two processes could overlap. Default is 10 seconds.
+    /// </summary>
+    public TimeSpan ConsumerLeaseRenewInterval { get; set; } = TimeSpan.FromSeconds(10);
+
+    /// <summary>
     /// Gets or sets how many consecutive times the live processor re-attempts
     /// applying the <i>same</i> event to a projection that keeps throwing before
-    /// it <b>dead-letters</b> (halts) that projection. Default is 5.
+    /// it <b>dead-letters</b> (halts) that projection. One pass is one round of
+    /// <see cref="RetryCount"/> immediate re-attempts, not one attempt. Default is 5.
     /// </summary>
     /// <remarks>
     /// <para>

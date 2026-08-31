@@ -131,6 +131,11 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
     // positions, so an event held back by one projection is re-delivered until it
     // catches up (already-applied events are skipped per-projection by position).
     private long _lastProcessedPosition;
+
+    // True while this process holds the consumer lease and is therefore the one
+    // applying events. Read by GetStatus so a replica can say which it is.
+    private volatile bool _isConsumerLeaseHolder;
+
     private readonly Stopwatch _processingStopwatch;
     private long _totalEventsProcessed;
     private DateTime _lastStatsUpdate;
@@ -245,6 +250,7 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
             ActiveProjections = _liveProjections.Count,
             HaltedProjections = _haltedProjections.Count,
             SuspendedProjections = _suspendedProjections.Count,
+            IsConsumerLeaseHolder = _isConsumerLeaseHolder,
             LastProcessedPosition = _lastProcessedPosition,
             TotalEventsProcessed = _totalEventsProcessed,
             EventsPerSecond = eventsPerSecond,
@@ -261,17 +267,110 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
 
         _processingStopwatch.Start();
 
+        // Resolved rather than injected so the constructor stays a five-argument one
+        // for existing hosts and tests. Absent registration means single-process.
+        var lease = _serviceProvider.GetService<IProjectionConsumerLease>()
+                    ?? new SingleProcessProjectionConsumerLease();
+
         try
         {
-            // Initialize projections
+            // One term per acquisition of the lease. Between terms this replica idles:
+            // it holds no cursor and applies nothing, so the same event is never
+            // applied twice by two pods, and no replica can write back a checkpoint it
+            // remembers from an earlier term.
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                var handle = await TryAcquireConsumerLeaseAsync(lease, stoppingToken);
+                if (handle is null)
+                {
+                    await Task.Delay(_options.ConsumerLeaseRetryInterval, stoppingToken);
+                    continue;
+                }
+
+                await using (handle)
+                {
+                    await RunConsumerTermAsync(handle, stoppingToken);
+                }
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("Live projection processor was cancelled");
+        }
+        finally
+        {
+            _isConsumerLeaseHolder = false;
+            _processingStopwatch.Stop();
+            await SaveFinalSnapshotsAsync();
+            _logger.LogInformation("Live projection processor stopped");
+        }
+    }
+
+    /// <summary>
+    /// Attempts to take the consumer lease, turning a lease-store fault into "not the
+    /// holder" rather than into a crashed background service.
+    /// </summary>
+    private async Task<IProjectionConsumerLeaseHandle?> TryAcquireConsumerLeaseAsync(
+        IProjectionConsumerLease lease,
+        CancellationToken stoppingToken)
+    {
+        try
+        {
+            var handle = await lease.TryAcquireAsync(_options.ConsumerName, stoppingToken);
+            if (handle is not null)
+            {
+                _logger.LogInformation(
+                    "Acquired the projection consumer lease {ConsumerName}; this process now applies events",
+                    _options.ConsumerName);
+            }
+
+            return handle;
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogError(ex,
+                "Failed to acquire the projection consumer lease {ConsumerName}; retrying in {Delay}",
+                _options.ConsumerName, _options.ConsumerLeaseRetryInterval);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Runs the polling loop for as long as this process holds the lease. Returns when
+    /// the lease is lost, so the caller can try to take it again.
+    /// </summary>
+    private async Task RunConsumerTermAsync(
+        IProjectionConsumerLeaseHandle handle,
+        CancellationToken stoppingToken)
+    {
+        _isConsumerLeaseHolder = true;
+
+        try
+        {
+            // Positions are re-read from the store at the start of every term: a
+            // replica taking over must never resume from what it remembers.
             await InitializeProjectionsAsync(stoppingToken);
 
-            // Start processing loop
+            var lastRenewal = DateTime.UtcNow;
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
                     await ProcessNewEventsAsync(stoppingToken);
+
+                    if (DateTime.UtcNow - lastRenewal >= _options.ConsumerLeaseRenewInterval)
+                    {
+                        if (!await handle.RenewAsync(stoppingToken))
+                        {
+                            _logger.LogWarning(
+                                "Lost the projection consumer lease {ConsumerName}; stopping this term",
+                                _options.ConsumerName);
+                            return;
+                        }
+
+                        lastRenewal = DateTime.UtcNow;
+                    }
 
                     // Update statistics periodically
                     if (DateTime.UtcNow - _lastStatsUpdate > TimeSpan.FromMinutes(1))
@@ -290,15 +389,9 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                 }
             }
         }
-        catch (OperationCanceledException)
-        {
-            _logger.LogInformation("Live projection processor was cancelled");
-        }
         finally
         {
-            _processingStopwatch.Stop();
-            await SaveFinalSnapshotsAsync();
-            _logger.LogInformation("Live projection processor stopped");
+            _isConsumerLeaseHolder = false;
         }
     }
 
@@ -313,6 +406,14 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
         // Conflating "no checkpoint" with "checkpoint at 0" would cause the cold-start
         // policy to fire every time a projection sits at 0, which is not what we want.
         var anyCheckpointFound = false;
+
+        // A term starts from persisted truth. Dead-letters and failure counts belong to
+        // the previous term — a restart is exactly the point at which a halted
+        // projection is re-attempted from its held checkpoint.
+        _haltedProjections.Clear();
+        _projectionFailureCounts.Clear();
+        _positionRefreshRequests.Clear();
+        _publishedStates.Clear();
 
         foreach (var (projectionName, projectionType) in _registeredProjections)
         {
@@ -359,11 +460,17 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                 // engine consults the persisted state rather than assuming every
                 // projection is running because the process just started.
                 var persistedState = await _projectionStore.GetProjectionStateAsync(projectionName, cancellationToken);
-                if (persistedState?.Status == ProjectionStatus.Paused)
+                var suspendedByState = persistedState?.Status is ProjectionStatus.Paused or ProjectionStatus.Rebuilding;
+                if (suspendedByState)
                 {
                     _suspendedProjections[projectionName] = 0;
                     _logger.LogInformation(
-                        "Projection {ProjectionName} starts suspended: its persisted state is Paused", projectionName);
+                        "Projection {ProjectionName} starts suspended: its persisted state is {Status}",
+                        projectionName, persistedState!.Status);
+                }
+                else
+                {
+                    _suspendedProjections.TryRemove(projectionName, out _);
                 }
 
                 _logger.LogDebug("Initialized projection {ProjectionName} with checkpoint at position {Position}",
@@ -934,6 +1041,13 @@ public class LiveProcessingStatus
     /// projection receives no events and its checkpoint does not move.
     /// </summary>
     public int SuspendedProjections { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether this process currently holds the projection
+    /// consumer lease. Only the holder applies events; the other replicas idle and
+    /// wait to take over.
+    /// </summary>
+    public bool IsConsumerLeaseHolder { get; init; }
 
     /// <summary>
     /// Gets or sets the last processed global position.
