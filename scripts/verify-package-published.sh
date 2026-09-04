@@ -173,13 +173,13 @@ while true; do
   [[ ${#pending[@]} -eq 0 ]] && break
 
   elapsed=$((SECONDS - started))
-  # Stop before sleeping past the budget: one more round could only report the
-  # same thing later.
-  if [[ $((elapsed + POLL_SECONDS)) -gt $TIMEOUT_SECONDS ]]; then
-    break
-  fi
-  echo "…    ${#pending[@]} package(s) not visible yet at ${elapsed}s, retrying in ${POLL_SECONDS}s"
-  sleep "$POLL_SECONDS"
+  [[ $elapsed -ge $TIMEOUT_SECONDS ]] && break
+  # Never sleep past the budget: the last round lands exactly on it, so a
+  # 30-second budget really gets thirty seconds of feed time.
+  nap=$POLL_SECONDS
+  [[ $((elapsed + nap)) -gt $TIMEOUT_SECONDS ]] && nap=$((TIMEOUT_SECONDS - elapsed))
+  echo "…    ${#pending[@]} package(s) not visible yet at ${elapsed}s, retrying in ${nap}s"
+  sleep "$nap"
 done
 
 elapsed=$((SECONDS - started))
@@ -190,7 +190,7 @@ if [[ ${#pending[@]} -gt 0 ]]; then
     echo "      still not on $FLATCONTAINER_BASE after ${elapsed}s — ${last_detail[index]}" >&2
   done
   echo >&2
-  echo "${#pending[@]} package(s) never appeared within ${TIMEOUT_SECONDS}s. The push reported success" >&2
+  echo "${#pending[@]} package(s) never appeared within the ${TIMEOUT_SECONDS}s budget. The push reported success" >&2
   echo "but the feed has nothing to show for it: this release did not publish." >&2
   echo "If the packages do turn up later, raise NUGET_PUBLISH_TIMEOUT_SECONDS — the" >&2
   echo "first version of a brand new package id waits on feed-side validation." >&2
