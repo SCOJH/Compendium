@@ -16,6 +16,10 @@
 # Presence on the flat container is the first observation that a consumer could
 # also make. Until it holds, the release has not happened.
 #
+# Where it belongs: in release.yml, as the step immediately after
+# "Push to nuget.org", on the same artifacts/ directory the push used. It is the
+# closing half of the pair — verify-package-not-published.sh before, this after.
+#
 # Usage:
 #   scripts/verify-package-published.sh <artifacts-dir|package.nupkg> [...]
 #

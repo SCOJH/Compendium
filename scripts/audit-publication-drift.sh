@@ -12,6 +12,9 @@
 # for each repository, take the version of its latest published release and
 # look for it on the feed. If it is nowhere, that repository has drifted.
 #
+# Where it belongs: in a scheduled workflow of this repository, run daily. It
+# needs no credential beyond a token that can read releases and trees.
+#
 # Usage:
 #   scripts/audit-publication-drift.sh [<owner>/<repo> ...]
 #

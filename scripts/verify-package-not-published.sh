@@ -105,12 +105,17 @@ for nupkg in "${packages[@]}"; do
       pass_count=$((pass_count + 1))
       ;;
     200)
+      # utf-8-sig, not utf-8: the flat container is served from blob storage, and
+      # its bodies can carry a UTF-8 BOM — the 404 body does, measured on
+      # 2026-09-04. That body never reaches here, the 404 branch above takes it,
+      # so this is alignment with verify-package-published.sh rather than a fix:
+      # a BOM must not be able to read as "cannot prove the version is free".
       python3 -c '
 import json, sys
 wanted = sys.argv[1]
 try:
-    versions = json.load(sys.stdin).get("versions", [])
-except json.JSONDecodeError:
+    versions = json.loads(sys.stdin.buffer.read().decode("utf-8-sig")).get("versions", [])
+except (UnicodeDecodeError, json.JSONDecodeError):
     sys.exit(2)
 sys.exit(0 if wanted in {str(v).lower() for v in versions} else 1)
 ' "$version_lower" <<<"$body"
