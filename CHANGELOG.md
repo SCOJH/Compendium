@@ -61,6 +61,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING — `AggregateRoot<TId>.DomainEvents` and `GetUncommittedEvents()`
+  return `IReadOnlyList<IDomainEvent>` instead of
+  `IReadOnlyCollection<IDomainEvent>`.** Both used to hand back
+  `_domainEvents.ToFrozenSet()`. `FrozenSet<T>` is a frozen hash table: it
+  enumerates in bucket order, not in insertion order, and nothing in the type
+  promises otherwise. These are the two paths by which events leave an aggregate
+  to be persisted, and for event sourcing the order is not presentation — it is
+  the data. A stream written out of order rebuilds, on replay, a state other than
+  the one the aggregate held in memory, and nothing reports it: the write
+  succeeds, the read succeeds, the two states differ. The set also carried a
+  count risk, since `ToFrozenSet()` deduplicates with
+  `EqualityComparer<T>.Default`: two distinct events that happened to compare
+  equal would have folded into one, and `EventSourcedRepository.SaveAsync`
+  computes `expectedVersion` from that count. Uniqueness has always been carried
+  by `_eventHashes`, keyed on `EventId` at insertion time; the frozen set added
+  nothing to it. The wider return type is what keeps the guarantee: a future
+  `ToFrozenSet()` on this path no longer compiles, `FrozenSet<T>` not
+  implementing `IReadOnlyList<T>`. A consumer compiled against a published
+  version must recompile; no source change is needed for callers that enumerate
+  the result or assign it to `IReadOnlyCollection<IDomainEvent>`.
 - **BREAKING — `ILiveProjectionProcessor` gains `SuspendProjection`,
   `ResumeProjection` and `IsProjectionSuspended`.** Any implementation outside
   this repository stops compiling until it supplies them. They are what makes an
