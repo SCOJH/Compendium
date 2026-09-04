@@ -63,12 +63,14 @@ version_of_tag() {
   printf '%s' "${BASH_REMATCH[2]}"
 }
 
-# The package ids a repository is expected to publish, read from its own source
-# tree rather than from a table kept here: a table would be one more thing to
-# forget to update, which is the failure mode this whole ticket is about.
-package_ids_of() {
-  local repo=$1
-  gh api "repos/$repo/git/trees/HEAD?recursive=1" \
+# The package ids a release was expected to publish, read from the source tree
+# *at its tag* rather than from a table kept here. A table would be one more
+# thing to forget to update, which is the failure mode this whole ticket is
+# about; and reading the tag rather than HEAD keeps the question honest — what
+# this release promised, not what the default branch would promise today.
+package_ids_at() {
+  local repo=$1 ref=$2
+  gh api "repos/$repo/git/trees/$ref?recursive=1" \
     --jq '.tree[] | select(.path | test("^src/.*\\.csproj$")) | .path | split("/") | last | sub("\\.csproj$"; "")' \
     2>/dev/null | grep -v '\.Tests$' | sort -u
 }
@@ -130,11 +132,11 @@ for repo in "${repositories[@]}"; do
   fi
   echo "  latest release: $tag  →  version $version"
 
-  mapfile -t ids < <(package_ids_of "$repo")
+  mapfile -t ids < <(package_ids_at "$repo" "$tag")
   if [[ ${#ids[@]} -eq 0 ]]; then
     # An empty perimeter would make every repository look healthy. Not knowing
     # what a repository ships is exactly the state this audit exists to catch.
-    echo "  DRIFT  no packable project found under src/ — cannot tell what this release should have shipped"
+    echo "  DRIFT  no packable project under src/ at $tag — cannot tell what this release should have shipped"
     drifted+=("$repo")
     echo
     continue
