@@ -160,6 +160,11 @@ Provides real-time feedback on the rebuild process including performance metrics
       <dd><p>Extension methods for configuring projection services in DI container.</p>
 </dd>
     </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.html">SingleProcessProjectionConsumerLease</a></dt>
+      <dd><p>Default lease: this process is always the leader.</p>
+</dd>
+    </dl>
     <h3 id="interfaces">
 Interfaces
 </h3>
@@ -171,6 +176,16 @@ Interfaces
     <dl class="jumplist">
       <dt><a class="xref" href="Compendium.Infrastructure.Projections.IProjection.html">IProjection</a></dt>
       <dd><p>Base interface for all projections that handle domain events.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Infrastructure.Projections.IProjectionConsumerLease.html">IProjectionConsumerLease</a></dt>
+      <dd><p>Port for the right to be the <b>single</b> process applying events to projections.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html">IProjectionConsumerLeaseHandle</a></dt>
+      <dd><p>A held projection-consumer lease. Disposing releases it.</p>
 </dd>
     </dl>
     <dl class="jumplist">

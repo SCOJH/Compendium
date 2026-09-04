@@ -43742,6 +43742,22 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.GetStatus
   nameWithType: ILiveProjectionProcessor.GetStatus
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended(System.String)
+  name: IsProjectionSuspended(string)
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_IsProjectionSuspended_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended(System.String)
+  name.vb: IsProjectionSuspended(String)
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended(string)
+  fullName.vb: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended(String)
+  nameWithType: ILiveProjectionProcessor.IsProjectionSuspended(string)
+  nameWithType.vb: ILiveProjectionProcessor.IsProjectionSuspended(String)
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended*
+  name: IsProjectionSuspended
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_IsProjectionSuspended_
+  commentId: Overload:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.IsProjectionSuspended
+  nameWithType: ILiveProjectionProcessor.IsProjectionSuspended
 - uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.RegisterProjection*
   name: RegisterProjection
   href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_RegisterProjection_
@@ -43758,6 +43774,22 @@ references:
   fullName.vb: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.RegisterProjection(Of TProjection)()
   nameWithType: ILiveProjectionProcessor.RegisterProjection<TProjection>()
   nameWithType.vb: ILiveProjectionProcessor.RegisterProjection(Of TProjection)()
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection(System.String)
+  name: ResumeProjection(string)
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_ResumeProjection_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection(System.String)
+  name.vb: ResumeProjection(String)
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection(string)
+  fullName.vb: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection(String)
+  nameWithType: ILiveProjectionProcessor.ResumeProjection(string)
+  nameWithType.vb: ILiveProjectionProcessor.ResumeProjection(String)
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection*
+  name: ResumeProjection
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_ResumeProjection_
+  commentId: Overload:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.ResumeProjection
+  nameWithType: ILiveProjectionProcessor.ResumeProjection
 - uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.StartAsync(System.Threading.CancellationToken)
   name: StartAsync(CancellationToken)
   href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_StartAsync_System_Threading_CancellationToken_
@@ -43784,6 +43816,22 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.StopAsync
   nameWithType: ILiveProjectionProcessor.StopAsync
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection(System.String)
+  name: SuspendProjection(string)
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_SuspendProjection_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection(System.String)
+  name.vb: SuspendProjection(String)
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection(string)
+  fullName.vb: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection(String)
+  nameWithType: ILiveProjectionProcessor.SuspendProjection(string)
+  nameWithType.vb: ILiveProjectionProcessor.SuspendProjection(String)
+- uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection*
+  name: SuspendProjection
+  href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_SuspendProjection_
+  commentId: Overload:Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.SuspendProjection
+  nameWithType: ILiveProjectionProcessor.SuspendProjection
 - uid: Compendium.Infrastructure.Projections.ILiveProjectionProcessor.UnregisterProjection(System.String)
   name: UnregisterProjection(string)
   href: api/Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html#Compendium_Infrastructure_Projections_ILiveProjectionProcessor_UnregisterProjection_System_String_
@@ -43845,6 +43893,60 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.IProjection.Version
   nameWithType: IProjection.Version
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLease
+  name: IProjectionConsumerLease
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.html
+  commentId: T:Compendium.Infrastructure.Projections.IProjectionConsumerLease
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLease
+  nameWithType: IProjectionConsumerLease
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync(System.String,System.Threading.CancellationToken)
+  name: TryAcquireAsync(string, CancellationToken)
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.html#Compendium_Infrastructure_Projections_IProjectionConsumerLease_TryAcquireAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync(System.String,System.Threading.CancellationToken)
+  name.vb: TryAcquireAsync(String, CancellationToken)
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync(string, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync(String, System.Threading.CancellationToken)
+  nameWithType: IProjectionConsumerLease.TryAcquireAsync(string, CancellationToken)
+  nameWithType.vb: IProjectionConsumerLease.TryAcquireAsync(String, CancellationToken)
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync*
+  name: TryAcquireAsync
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.html#Compendium_Infrastructure_Projections_IProjectionConsumerLease_TryAcquireAsync_
+  commentId: Overload:Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLease.TryAcquireAsync
+  nameWithType: IProjectionConsumerLease.TryAcquireAsync
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle
+  name: IProjectionConsumerLeaseHandle
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html
+  commentId: T:Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle
+  nameWithType: IProjectionConsumerLeaseHandle
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld
+  name: IsHeld
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html#Compendium_Infrastructure_Projections_IProjectionConsumerLeaseHandle_IsHeld
+  commentId: P:Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld
+  nameWithType: IProjectionConsumerLeaseHandle.IsHeld
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld*
+  name: IsHeld
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html#Compendium_Infrastructure_Projections_IProjectionConsumerLeaseHandle_IsHeld_
+  commentId: Overload:Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.IsHeld
+  nameWithType: IProjectionConsumerLeaseHandle.IsHeld
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync(System.Threading.CancellationToken)
+  name: RenewAsync(CancellationToken)
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html#Compendium_Infrastructure_Projections_IProjectionConsumerLeaseHandle_RenewAsync_System_Threading_CancellationToken_
+  commentId: M:Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync(System.Threading.CancellationToken)
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync(System.Threading.CancellationToken)
+  nameWithType: IProjectionConsumerLeaseHandle.RenewAsync(CancellationToken)
+- uid: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync*
+  name: RenewAsync
+  href: api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html#Compendium_Infrastructure_Projections_IProjectionConsumerLeaseHandle_RenewAsync_
+  commentId: Overload:Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.RenewAsync
+  nameWithType: IProjectionConsumerLeaseHandle.RenewAsync
 - uid: Compendium.Infrastructure.Projections.IProjectionManager
   name: IProjectionManager
   href: api/Compendium.Infrastructure.Projections.IProjectionManager.html
@@ -44392,6 +44494,19 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.HaltedProjections
   nameWithType: LiveProcessingStatus.HaltedProjections
+- uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder
+  name: IsConsumerLeaseHolder
+  href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_IsConsumerLeaseHolder
+  commentId: P:Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder
+  fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder
+  nameWithType: LiveProcessingStatus.IsConsumerLeaseHolder
+- uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder*
+  name: IsConsumerLeaseHolder
+  href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_IsConsumerLeaseHolder_
+  commentId: Overload:Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder
+  nameWithType: LiveProcessingStatus.IsConsumerLeaseHolder
 - uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.IsRunning
   name: IsRunning
   href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_IsRunning
@@ -44444,6 +44559,19 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.RegisteredProjections
   nameWithType: LiveProcessingStatus.RegisteredProjections
+- uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections
+  name: SuspendedProjections
+  href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_SuspendedProjections
+  commentId: P:Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections
+  fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections
+  nameWithType: LiveProcessingStatus.SuspendedProjections
+- uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections*
+  name: SuspendedProjections
+  href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_SuspendedProjections_
+  commentId: Overload:Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections
+  nameWithType: LiveProcessingStatus.SuspendedProjections
 - uid: Compendium.Infrastructure.Projections.LiveProcessingStatus.TotalEventsProcessed
   name: TotalEventsProcessed
   href: api/Compendium.Infrastructure.Projections.LiveProcessingStatus.html#Compendium_Infrastructure_Projections_LiveProcessingStatus_TotalEventsProcessed
@@ -44521,6 +44649,22 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.GetStatus
   nameWithType: LiveProjectionProcessor.GetStatus
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended(System.String)
+  name: IsProjectionSuspended(string)
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_IsProjectionSuspended_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended(System.String)
+  name.vb: IsProjectionSuspended(String)
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended(string)
+  fullName.vb: Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended(String)
+  nameWithType: LiveProjectionProcessor.IsProjectionSuspended(string)
+  nameWithType.vb: LiveProjectionProcessor.IsProjectionSuspended(String)
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended*
+  name: IsProjectionSuspended
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_IsProjectionSuspended_
+  commentId: Overload:Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.IsProjectionSuspended
+  nameWithType: LiveProjectionProcessor.IsProjectionSuspended
 - uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.RegisterProjection*
   name: RegisterProjection
   href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_RegisterProjection_
@@ -44537,6 +44681,38 @@ references:
   fullName.vb: Compendium.Infrastructure.Projections.LiveProjectionProcessor.RegisterProjection(Of TProjection)()
   nameWithType: LiveProjectionProcessor.RegisterProjection<TProjection>()
   nameWithType.vb: LiveProjectionProcessor.RegisterProjection(Of TProjection)()
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection(System.String)
+  name: ResumeProjection(string)
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_ResumeProjection_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection(System.String)
+  name.vb: ResumeProjection(String)
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection(string)
+  fullName.vb: Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection(String)
+  nameWithType: LiveProjectionProcessor.ResumeProjection(string)
+  nameWithType.vb: LiveProjectionProcessor.ResumeProjection(String)
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection*
+  name: ResumeProjection
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_ResumeProjection_
+  commentId: Overload:Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.ResumeProjection
+  nameWithType: LiveProjectionProcessor.ResumeProjection
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection(System.String)
+  name: SuspendProjection(string)
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_SuspendProjection_System_String_
+  commentId: M:Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection(System.String)
+  name.vb: SuspendProjection(String)
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection(string)
+  fullName.vb: Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection(String)
+  nameWithType: LiveProjectionProcessor.SuspendProjection(string)
+  nameWithType.vb: LiveProjectionProcessor.SuspendProjection(String)
+- uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection*
+  name: SuspendProjection
+  href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_SuspendProjection_
+  commentId: Overload:Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.LiveProjectionProcessor.SuspendProjection
+  nameWithType: LiveProjectionProcessor.SuspendProjection
 - uid: Compendium.Infrastructure.Projections.LiveProjectionProcessor.UnregisterProjection(System.String)
   name: UnregisterProjection(string)
   href: api/Compendium.Infrastructure.Projections.LiveProjectionProcessor.html#Compendium_Infrastructure_Projections_LiveProjectionProcessor_UnregisterProjection_System_String_
@@ -44669,6 +44845,45 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.ProjectionOptions.CheckpointInterval
   nameWithType: ProjectionOptions.CheckpointInterval
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval
+  name: ConsumerLeaseRenewInterval
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRenewInterval
+  commentId: P:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval
+  nameWithType: ProjectionOptions.ConsumerLeaseRenewInterval
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval*
+  name: ConsumerLeaseRenewInterval
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRenewInterval_
+  commentId: Overload:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval
+  nameWithType: ProjectionOptions.ConsumerLeaseRenewInterval
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval
+  name: ConsumerLeaseRetryInterval
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRetryInterval
+  commentId: P:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval
+  nameWithType: ProjectionOptions.ConsumerLeaseRetryInterval
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval*
+  name: ConsumerLeaseRetryInterval
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRetryInterval_
+  commentId: Overload:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval
+  nameWithType: ProjectionOptions.ConsumerLeaseRetryInterval
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName
+  name: ConsumerName
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerName
+  commentId: P:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName
+  nameWithType: ProjectionOptions.ConsumerName
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName*
+  name: ConsumerName
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerName_
+  commentId: Overload:Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName
+  nameWithType: ProjectionOptions.ConsumerName
 - uid: Compendium.Infrastructure.Projections.ProjectionOptions.EnableSnapshots
   name: EnableSnapshots
   href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_EnableSnapshots
@@ -45092,6 +45307,28 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.ServiceCollectionExtensions.AddProjections
   nameWithType: ServiceCollectionExtensions.AddProjections
+- uid: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease
+  name: SingleProcessProjectionConsumerLease
+  href: api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.html
+  commentId: T:Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease
+  fullName: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease
+  nameWithType: SingleProcessProjectionConsumerLease
+- uid: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync(System.String,System.Threading.CancellationToken)
+  name: TryAcquireAsync(string, CancellationToken)
+  href: api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.html#Compendium_Infrastructure_Projections_SingleProcessProjectionConsumerLease_TryAcquireAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync(System.String,System.Threading.CancellationToken)
+  name.vb: TryAcquireAsync(String, CancellationToken)
+  fullName: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync(string, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync(String, System.Threading.CancellationToken)
+  nameWithType: SingleProcessProjectionConsumerLease.TryAcquireAsync(string, CancellationToken)
+  nameWithType.vb: SingleProcessProjectionConsumerLease.TryAcquireAsync(String, CancellationToken)
+- uid: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync*
+  name: TryAcquireAsync
+  href: api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.html#Compendium_Infrastructure_Projections_SingleProcessProjectionConsumerLease_TryAcquireAsync_
+  commentId: Overload:Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.TryAcquireAsync
+  nameWithType: SingleProcessProjectionConsumerLease.TryAcquireAsync
 - uid: Compendium.Infrastructure.Repositories
   name: Compendium.Infrastructure.Repositories
   href: api/Compendium.Infrastructure.Repositories.html

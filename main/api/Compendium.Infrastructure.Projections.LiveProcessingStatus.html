@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Infrastructure_Projections_LiveProcessingStatus" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus" class="text-break">
-Class LiveProcessingStatus  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L627"><i class="bi bi-code-slash"></i></a>
+Class LiveProcessingStatus  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1031"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -157,7 +157,7 @@ Class LiveProcessingStatus  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_ActiveProjections" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.ActiveProjections">
   ActiveProjections
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L642"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1046"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the number of active projections.</p>
@@ -189,7 +189,7 @@ Class LiveProcessingStatus  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_EventsPerSecond" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.EventsPerSecond">
   EventsPerSecond
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L664"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1082"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the current processing rate in events per second.</p>
@@ -221,7 +221,7 @@ Class LiveProcessingStatus  <a class="header-action link-secondary" title="View 
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_HaltedProjections" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.HaltedProjections">
   HaltedProjections
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L649"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1053"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the number of projections that have been dead-lettered (halted) after
@@ -251,11 +251,45 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
 
 
+  <a id="Compendium_Infrastructure_Projections_LiveProcessingStatus_IsConsumerLeaseHolder_" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_IsConsumerLeaseHolder" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.IsConsumerLeaseHolder">
+  IsConsumerLeaseHolder
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1067"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this process currently holds the projection
+consumer lease. Only the holder applies events; the other replicas idle and
+wait to take over.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsConsumerLeaseHolder { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Compendium_Infrastructure_Projections_LiveProcessingStatus_IsRunning_" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.IsRunning*"></a>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_IsRunning" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.IsRunning">
   IsRunning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L632"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1036"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets whether the processor is currently running.</p>
@@ -287,7 +321,7 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_LastProcessedPosition" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.LastProcessedPosition">
   LastProcessedPosition
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L654"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1072"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the last processed global position.</p>
@@ -319,7 +353,7 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_LastUpdateTime" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.LastUpdateTime">
   LastUpdateTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L674"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1092"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the last time statistics were updated.</p>
@@ -351,7 +385,7 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_RegisteredProjections" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.RegisteredProjections">
   RegisteredProjections
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L637"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1041"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the number of registered projections.</p>
@@ -379,11 +413,45 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
 
 
+  <a id="Compendium_Infrastructure_Projections_LiveProcessingStatus_SuspendedProjections_" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_SuspendedProjections" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.SuspendedProjections">
+  SuspendedProjections
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1060"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the number of projections that are currently suspended — paused from the
+administrative surface, or temporarily owned by a rebuild. A suspended
+projection receives no events and its checkpoint does not move.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int SuspendedProjections { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Compendium_Infrastructure_Projections_LiveProcessingStatus_TotalEventsProcessed_" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.TotalEventsProcessed*"></a>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_TotalEventsProcessed" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.TotalEventsProcessed">
   TotalEventsProcessed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L659"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1077"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the total number of events processed.</p>
@@ -415,7 +483,7 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_LiveProcessingStatus_UpTime" data-uid="Compendium.Infrastructure.Projections.LiveProcessingStatus.UpTime">
   UpTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L669"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1087"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the total uptime of the processor.</p>
@@ -447,7 +515,7 @@ models are knowingly stale and the process needs attention/redeploy.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L627" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/LiveProjectionProcessor.cs/#L1031" class="edit-link">Edit this page</a>
         </div>
 
 

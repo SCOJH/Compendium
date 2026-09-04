@@ -39,11 +39,11 @@
       "type": "Toc",
       "source_relative_path": "adapters/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "adapters/toc.json"
-        },
         ".html": {
           "relative_path": "adapters/toc.html"
+        },
+        ".json": {
+          "relative_path": "adapters/toc.json"
         }
       },
       "version": ""
@@ -142,11 +142,11 @@
       "type": "Toc",
       "source_relative_path": "adr/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "adr/toc.json"
-        },
         ".html": {
           "relative_path": "adr/toc.html"
+        },
+        ".json": {
+          "relative_path": "adr/toc.json"
         }
       },
       "version": ""
@@ -9421,6 +9421,34 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Projections.IProjectionConsumerLease",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.IProjectionConsumerLease.yml\" sourcestartlinenumber=\"1\">Port for the right to be the <b>single</b> process applying events to projections.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.IProjectionConsumerLeaseHandle.yml\" sourcestartlinenumber=\"1\">A held projection-consumer lease. Disposing releases it.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Compendium.Infrastructure.Projections.IProjectionManager.yml",
       "output": {
         ".html": {
@@ -9600,6 +9628,20 @@
       "IsMRef": true,
       "Title": "Compendium.Infrastructure.Projections.ServiceCollectionExtensions",
       "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.ServiceCollectionExtensions.yml\" sourcestartlinenumber=\"1\">Extension methods for configuring projection services in DI container.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease",
+      "Summary": "<p sourcefile=\"api/Compendium.Infrastructure.Projections.SingleProcessProjectionConsumerLease.yml\" sourcestartlinenumber=\"1\">Default lease: this process is always the leader.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -10697,11 +10739,11 @@
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "api/toc.json"
-        },
         ".html": {
           "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
         }
       },
       "version": ""
@@ -10750,11 +10792,11 @@
       "type": "Toc",
       "source_relative_path": "concepts/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "concepts/toc.json"
-        },
         ".html": {
           "relative_path": "concepts/toc.html"
+        },
+        ".json": {
+          "relative_path": "concepts/toc.json"
         }
       },
       "version": ""
@@ -10853,11 +10895,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "toc.json"
-        },
         ".html": {
           "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

@@ -192,7 +192,7 @@ Class ProjectionOptions  <a class="header-action link-secondary" title="View sou
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_BackfillFromBeginningOnEmptyCheckpoint" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.BackfillFromBeginningOnEmptyCheckpoint">
   BackfillFromBeginningOnEmptyCheckpoint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L141"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets whether <a class="xref" href="Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html">ILiveProjectionProcessor</a> should backfill from
@@ -258,6 +258,108 @@ Default is 10 seconds.</p>
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRenewInterval_" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRenewInterval" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval">
+  ConsumerLeaseRenewInterval
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets how often the lease holder confirms it still holds the lease. A
+holder that has lost it stops applying events at the next confirmation, so this
+bounds how long two processes could overlap. Default is 10 seconds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan ConsumerLeaseRenewInterval { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRetryInterval_" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRetryInterval" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval">
+  ConsumerLeaseRetryInterval
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets how long a replica that failed to take the consumer lease waits
+before trying again. Also the upper bound on how long the stream stays
+unconsumed after the holder disappears. Default is 5 seconds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan ConsumerLeaseRetryInterval { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerName_" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerName" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName">
+  ConsumerName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets the name of the consumer lease that elects the single process
+applying events to projections. Every replica that must exclude the others uses
+the same name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ConsumerName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
@@ -338,12 +440,13 @@ Default is 3 to prevent resource exhaustion.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_MaxProjectionApplyFailures" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.MaxProjectionApplyFailures">
   MaxProjectionApplyFailures
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L121"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how many consecutive times the live processor re-attempts
 applying the <i>same</i> event to a projection that keeps throwing before
-it <b>dead-letters</b> (halts) that projection. Default is 5.</p>
+it <b>dead-letters</b> (halts) that projection. One pass is one round of
+<a class="xref" href="Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_RetryCount">RetryCount</a> immediate re-attempts, not one attempt. Default is 5.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -490,11 +593,12 @@ Default is 1000 events per batch.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_RetryCount" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.RetryCount">
   RetryCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets or sets the retry count for failed operations.
-Default is 3 retries.</p>
+  <div class="markdown level1 summary"><p>Gets or sets how many times the live processor immediately re-attempts the same
+event on the same projection before it gives up for this pass, holds that
+projection's checkpoint and counts one failure. Default is 3 retries.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -523,11 +627,11 @@ Default is 3 retries.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_RetryDelay" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.RetryDelay">
   RetryDelay
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets or sets the delay between retries.
-Default is 1 second.</p>
+  <div class="markdown level1 summary"><p>Gets or sets the delay between the immediate re-attempts governed by
+<a class="xref" href="Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_RetryCount">RetryCount</a>. Default is 1 second.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
