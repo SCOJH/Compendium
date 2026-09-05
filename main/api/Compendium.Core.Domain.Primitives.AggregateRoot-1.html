@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Core_Domain_Primitives_AggregateRoot_1" data-uid="Compendium.Core.Domain.Primitives.AggregateRoot`1" class="text-break">
-Class AggregateRoot&lt;TId&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L18"><i class="bi bi-code-slash"></i></a>
+Class AggregateRoot&lt;TId&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -202,7 +202,7 @@ Provides domain event management and optimistic concurrency control.</p>
 
   <h3 id="Compendium_Core_Domain_Primitives_AggregateRoot_1__ctor__0_Compendium_Core_Domain_Primitives_ILockingStrategy_" data-uid="Compendium.Core.Domain.Primitives.AggregateRoot`1.#ctor(`0,Compendium.Core.Domain.Primitives.ILockingStrategy)">
   AggregateRoot(TId, ILockingStrategy?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Core.Domain.Primitives.AggregateRoot-1.html">AggregateRoot&lt;TId&gt;</a> class.</p>
@@ -242,16 +242,15 @@ Provides domain event management and optimistic concurrency control.</p>
 
   <h3 id="Compendium_Core_Domain_Primitives_AggregateRoot_1_DomainEvents" data-uid="Compendium.Core.Domain.Primitives.AggregateRoot`1.DomainEvents">
   DomainEvents
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L51"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Gets the collection of uncommitted domain events.
-Uses frozen collections for efficient reads and caching.</p>
+  <div class="markdown level1 summary"><p>Gets the uncommitted domain events, in the order they were raised.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyCollection&lt;IDomainEvent&gt; DomainEvents { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IDomainEvent&gt; DomainEvents { get; }</code></pre>
   </div>
 
 
@@ -260,13 +259,20 @@ Uses frozen collections for efficient reads and caching.</p>
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="Compendium.Core.Domain.Events.IDomainEvent.html">IDomainEvent</a>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Core.Domain.Events.IDomainEvent.html">IDomainEvent</a>&gt;</dt>
     <dd></dd>
   </dl>
 
 
 
 
+  <h4 class="section" id="Compendium_Core_Domain_Primitives_AggregateRoot_1_DomainEvents_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The order is the data: replaying a stream written out of order rebuilds a
+different state. The return type is therefore an ordered sequence, and the
+snapshot is a fresh copy so that clearing or appending afterwards cannot
+mutate a snapshot already handed out. Uniqueness is carried by
+<code>_eventHashes</code> at insertion time, not by the returned collection.</p>
+</div>
 
 
 
@@ -307,7 +313,7 @@ Uses frozen collections for efficient reads and caching.</p>
 
   <h3 id="Compendium_Core_Domain_Primitives_AggregateRoot_1_Version" data-uid="Compendium.Core.Domain.Primitives.AggregateRoot`1.Version">
   Version
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets the version for optimistic concurrency control.</p>
@@ -472,14 +478,14 @@ Prevents duplicate events using content-based deduplication.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyCollection&lt;IDomainEvent&gt; GetUncommittedEvents()</code></pre>
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;IDomainEvent&gt; GetUncommittedEvents()</code></pre>
   </div>
 
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="Compendium.Core.Domain.Events.IDomainEvent.html">IDomainEvent</a>&gt;</dt>
-    <dd><p>The collection of uncommitted domain events.</p>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Compendium.Core.Domain.Events.IDomainEvent.html">IDomainEvent</a>&gt;</dt>
+    <dd><p>The uncommitted domain events, in the order they were raised.</p>
 </dd>
   </dl>
 
@@ -618,7 +624,7 @@ This method should be called after successfully persisting events.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L18" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Core/Compendium.Core/Domain/Primitives/AggregateRoot.cs/#L17" class="edit-link">Edit this page</a>
         </div>
 
 
