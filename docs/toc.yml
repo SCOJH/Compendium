@@ -4,6 +4,8 @@
   href: getting-started.md
 - name: Concepts
   href: concepts/
+- name: Architecture
+  href: architecture/
 - name: Adapters
   href: adapters/
 - name: Architecture Decisions

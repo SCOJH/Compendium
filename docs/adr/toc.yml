@@ -14,5 +14,17 @@
   href: 0006-multi-repo-adapter-split.md
 - name: 0007 — Integration test split
   href: 0007-integration-test-split.md
+- name: 0008 — Release train per package
+  href: 0008-release-train-per-package.md
+- name: 0009 — Publication gates
+  href: 0009-publication-gates.md
+- name: 0010 — Logical event identity
+  href: 0010-logical-event-identity.md
+- name: 0011 — Whitelist deserialization & upcasting
+  href: 0011-whitelist-deserialization-upcasting.md
+- name: 0012 — Hand-rolled CQRS dispatch
+  href: 0012-hand-rolled-cqrs-dispatch.md
+- name: 0013 — Abstraction package per concern
+  href: 0013-abstraction-package-per-concern.md
 - name: Template
   href: 0000-template.md
