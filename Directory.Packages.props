@@ -5,7 +5,7 @@
   <ItemGroup>
     <!-- Standalone adapter packages — consumed by samples per ADR-0006. -->
     <PackageVersion Include="Compendium.Adapters.OpenRouter" Version="1.0.0" />
-    <PackageVersion Include="Compendium.Adapters.PostgreSQL" Version="1.0.0" />
+    <PackageVersion Include="Compendium.Adapters.PostgreSQL" Version="1.0.2" />
     <PackageVersion Include="Compendium.Adapters.Redis" Version="1.0.0-preview.9" />
 
     <PackageVersion Include="AutoFixture" Version="4.18.1" />
