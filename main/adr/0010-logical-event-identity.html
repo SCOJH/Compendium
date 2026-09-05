@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0010. Logical event identity, decoupled from binary identity | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0010. Logical event identity, decoupled from binary identity | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0010-logical-event-identity.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="0010-logical-event-identity-decoupled-from-binary-identity">0010. Logical event identity, decoupled from binary identity</h1>
+
+<ul>
+<li>Status: Accepted</li>
+<li>Date: 2026-08-30 (recorded retroactively — the decision shipped as commits <code>69d3071</code> → <code>18263bc</code> and is documented in the <a href="../../CHANGELOG.md">CHANGELOG</a> Unreleased section)</li>
+<li>Deciders: @sassy-solutions/maintainers</li>
+</ul>
+<h2 id="context">Context</h2>
+<p>An event log is forever (<a href="0005-event-sourcing-vs-state.html">ADR-0005</a>): rows written
+today must be readable by binaries compiled years from now. Until this decision, an
+event was identified in the store by its <code>Type.AssemblyQualifiedName</code> — which ties
+an already-written log to the <strong>binary identity</strong> of the assembly that defined the
+event: namespace, assembly name, version, culture, public key token.</p>
+<p>Under that scheme, perfectly routine refactorings become data-loss events:
+renaming an event class, moving it to another namespace, or splitting an assembly
+makes every previously written row of that type unresolvable. The failure is also
+maximally unfair — it punishes the codebase hygiene the rest of the framework
+encourages.</p>
+<p>A secondary problem: the in-memory stores at the time silently <em>dropped</em> events
+whose type no longer resolved and returned the remaining stream as a success — an
+aggregate rebuilt from an incomplete history, with no way for the caller to know.</p>
+<h2 id="decision">Decision</h2>
+<p><strong>An event's storage identity is a logical name, declared explicitly and stable by
+contract:</strong></p>
+<ul>
+<li><code>[EventTypeName(&quot;orders.order-placed&quot;)]</code> on the event type declares the name
+under which it is indexed and stored. The attribute is <em>not inherited</em>, so a
+derived event never claims the name of its parent.</li>
+<li><code>EventTypeRegistry</code> indexes every registered type under <strong>two keys</strong>: its logical
+name <em>and</em> its <code>AssemblyQualifiedName</code>. A log holding both old (AQN) and new
+(logical) rows is therefore readable by a single binary, without rewriting a line
+already written. <code>Count</code> and <code>GetRegisteredTypes</code> keep counting types, not keys.</li>
+<li><strong>Name collisions are refused at registration</strong>, atomically for a whole batch —
+<em>&quot;a payload deserialized into the wrong type is worse than one not deserialized
+at all&quot;</em> (<code>EventTypeRegistry.cs</code>). No last-writer-wins.</li>
+<li>Stores stamp written events via <code>IEventTypeRegistry.GetLogicalName(type)</code>; the
+registry is an optional, last-position constructor parameter, so existing
+callers keep the pre-logical-names behaviour untouched.</li>
+<li><code>IEventTypeRegistry</code> gained <code>GetLogicalName</code> as a <strong>breaking interface change,
+deliberately without a default interface member</strong>. A default returning the AQN
+was considered and rejected: a silent fallback would leave an implementer writing
+binary identities while the rest of the system assumed otherwise — the very
+failure this change exists to remove.</li>
+<li>Reads fail loudly: a stream containing one unresolvable event type returns
+<code>Result.Failure</code> (<code>EventStore.EventTypeUnresolved</code>, naming the aggregate, the
+event version, and the unresolved name) instead of a truncated history as a
+success.</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li>Renaming, moving, or re-versioning an event class no longer corrupts the
+readability of the log — for every event that carries the attribute.</li>
+<li>Migration requires no data rewrite and no flag day: old rows resolve through the
+AQN index, new rows are written under the logical name, one binary reads both.</li>
+<li>Failure modes are now visible: an unregistered or renamed-without-attribute type
+is a red <code>Result</code> naming the exact row, not a silently shorter history.</li>
+<li>The breaking interface change surfaces at <em>compile time</em> for external
+<code>IEventTypeRegistry</code> implementations — the cheapest possible place to discover it.</li>
+</ul>
+<h3 id="negative--trade-offs">Negative / Trade-offs</h3>
+<ul>
+<li><strong>Protection is prospective only.</strong> A row written under an AQN <em>before</em> a rename
+is not recoverable by this mechanism — the AQN index holds the <em>current</em> type's
+name. The attribute protects what is written from the moment it exists.</li>
+<li><strong>No aliases.</strong> <code>AllowMultiple = false</code> and no old-name → new-name mapping means
+a logical name, once written to a log, is as permanent as the log itself.
+Renaming a <em>logical</em> name is not supported without an upcaster to a new type.</li>
+<li><strong>Opt-in, with a fragile default.</strong> An event without the attribute still gets the
+AQN behaviour — teams must adopt the attribute deliberately; nothing warns them.</li>
+<li>One breaking change on <code>IEventTypeRegistry</code> for external implementers — accepted
+and documented with its rationale in the CHANGELOG; <code>EventTypeRegistry</code> is the
+only implementation in this repository.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><strong>Keep <code>AssemblyQualifiedName</code> as the identity.</strong> Rejected — it makes refactoring
+the enemy of the event log.</li>
+<li><strong>Full type name (namespace + class, no assembly).</strong> Rejected — softer, but still
+binary-derived: a namespace move still breaks resolution, and the ambiguity
+across assemblies has to be resolved somewhere anyway.</li>
+<li><strong>A default interface member on <code>GetLogicalName</code> returning the AQN.</strong> Considered
+and rejected explicitly (see Decision) — compile-time breakage was chosen over a
+silent wrong default.</li>
+<li><strong>Mapping table in configuration</strong> (name → type in appsettings). Rejected —
+moves a compile-time-checkable fact into runtime configuration, the least
+reviewable place for something this permanent.</li>
+<li><strong>Convention-based naming</strong> (e.g. kebab-case of the class name). Rejected — a
+convention derived from the class name re-couples the stored name to the thing
+that renames; the attribute makes the coupling explicit and severable.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0010-logical-event-identity.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

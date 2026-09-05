@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Architecture Decision Records | Compendium — .NET event-sourcing framework </title>
+      <title>C4 — Level 1: System context | Compendium — .NET event-sourcing framework </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Architecture Decision Records | Compendium — .NET event-sourcing framework ">
+      <meta name="title" content="C4 — Level 1: System context | Compendium — .NET event-sourcing framework ">
       
       
       <link rel="icon" href="../images/favicon.ico">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/adr/README.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/c4-level1-context.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,117 +85,69 @@
         </div>
 
         <article data-uid="">
-<h1 id="architecture-decision-records">Architecture Decision Records</h1>
+<h1 id="c4--level-1-system-context">C4 — Level 1: System context</h1>
 
-<p>ADRs document the structural choices of Compendium. Format: <a href="https://adr.github.io/madr/">MADR</a>.</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Title</th>
-<th>Status</th>
-<th>Date</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0001</td>
-<td><a href="0001-result-pattern.html">Result pattern over exceptions</a></td>
-<td>Accepted</td>
-<td>2026-Q2</td>
-</tr>
-<tr>
-<td>0002</td>
-<td><a href="0002-hexagonal-architecture.html">Hexagonal architecture (strict)</a></td>
-<td>Accepted</td>
-<td>2026-Q2</td>
-</tr>
-<tr>
-<td>0003</td>
-<td><a href="0003-zero-dep-core.html">Zero-dependency Core</a></td>
-<td>Accepted</td>
-<td>2026-Q2</td>
-</tr>
-<tr>
-<td>0004</td>
-<td><a href="0004-multi-tenancy-strategy.html">Multi-tenancy strategy</a></td>
-<td>Accepted</td>
-<td>2026-Q2</td>
-</tr>
-<tr>
-<td>0005</td>
-<td><a href="0005-event-sourcing-vs-state.html">Event sourcing over state-stored</a></td>
-<td>Accepted</td>
-<td>2026-Q2</td>
-</tr>
-<tr>
-<td>0006</td>
-<td><a href="0006-multi-repo-adapter-split.html">Multi-repo adapter split</a></td>
-<td>Accepted</td>
-<td>2026-05-14</td>
-</tr>
-<tr>
-<td>0007</td>
-<td><a href="0007-integration-test-split.html">Integration test split (InMemory default)</a></td>
-<td>Accepted</td>
-<td>2026-05-14</td>
-</tr>
-<tr>
-<td>0008</td>
-<td><a href="0008-release-train-per-package.html">One release train per package</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-<tr>
-<td>0009</td>
-<td><a href="0009-publication-gates.html">Publication gates: provenance, no republication, one feed</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-<tr>
-<td>0010</td>
-<td><a href="0010-logical-event-identity.html">Logical event identity</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-<tr>
-<td>0011</td>
-<td><a href="0011-whitelist-deserialization-upcasting.html">Whitelist deserialization &amp; read-time upcasting</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-<tr>
-<td>0012</td>
-<td><a href="0012-hand-rolled-cqrs-dispatch.html">Hand-rolled CQRS dispatch, no external mediator</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-<tr>
-<td>0013</td>
-<td><a href="0013-abstraction-package-per-concern.html">One abstraction package per concern</a></td>
-<td>Accepted</td>
-<td>2026-08-30</td>
-</tr>
-</tbody>
-</table>
-<p>ADRs 0008–0013 were recorded retroactively on 2026-08-30: the decisions are read
-from the code, the git history, and the CHANGELOG — each record says so and cites
-its evidence. See the <a href="../architecture/overview.html">architecture overview</a> for how
-they fit together.</p>
-<h2 id="process">Process</h2>
+<p>Compendium is a set of NuGet packages, not a running system. The context view
+therefore shows the framework <strong>as seen from a consuming application</strong>: who builds
+with it, what it links into the application, and which external systems stay on the
+other side of an adapter.</p>
+<pre><code class="lang-mermaid">flowchart TB
+    dev[&quot;Developer&lt;br/&gt;&lt;i&gt;builds an event-sourced,&lt;br/&gt;multi-tenant SaaS on .NET&lt;/i&gt;&quot;]
+
+    subgraph host[&quot;Host application (e.g. Nexus)&quot;]
+        app[&quot;Application code&lt;br/&gt;&lt;i&gt;aggregates, handlers,&lt;br/&gt;projections, wiring&lt;/i&gt;&quot;]
+        fw[&quot;Compendium framework packages&lt;br/&gt;&lt;i&gt;Core · Abstractions · Application ·&lt;br/&gt;Infrastructure · Multitenancy · Testing&lt;/i&gt;&quot;]
+        adp[&quot;Adapter packages&lt;br/&gt;&lt;i&gt;from separate repositories,&lt;br/&gt;chosen at composition time&lt;/i&gt;&quot;]
+        app --&gt;|&quot;compiles against&quot;| fw
+        app --&gt;|&quot;registers in DI&quot;| adp
+        adp --&gt;|&quot;implements ports of&quot;| fw
+    end
+
+    dev --&gt;|&quot;writes&quot;| app
+
+    pg[(&quot;PostgreSQL&lt;br/&gt;&lt;i&gt;event store, projections&lt;/i&gt;&quot;)]
+    idp[&quot;Identity provider&lt;br/&gt;&lt;i&gt;OIDC / Zitadel&lt;/i&gt;&quot;]
+    billing[&quot;Billing provider&lt;br/&gt;&lt;i&gt;Stripe, LemonSqueezy, …&lt;/i&gt;&quot;]
+    ai[&quot;AI providers&lt;br/&gt;&lt;i&gt;OpenRouter, Anthropic, …&lt;/i&gt;&quot;]
+    other[&quot;Other SaaS concerns&lt;br/&gt;&lt;i&gt;email, storage, secrets, …&lt;/i&gt;&quot;]
+
+    adp --&gt; pg
+    adp --&gt; idp
+    adp --&gt; billing
+    adp --&gt; ai
+    adp --&gt; other
+
+    classDef person fill:#08427b,stroke:#052e56,color:#fff
+    classDef system fill:#1168bd,stroke:#0b4884,color:#fff
+    classDef external fill:#999999,stroke:#6b6b6b,color:#fff
+    class dev person
+    class app,fw,adp system
+    class pg,idp,billing,ai,other external
+</code></pre>
+<h2 id="reading-notes-faithful-to-the-code">Reading notes (faithful to the code)</h2>
 <ul>
-<li>Propose new ADR via PR with status <code>Proposed</code></li>
-<li>Discuss in PR review</li>
-<li>On merge → status <code>Accepted</code> (or <code>Rejected</code>)</li>
-<li>Superseding an ADR = new ADR + update old's status to <code>Superseded by ####</code></li>
+<li><strong>The framework never talks to an external system itself.</strong> Every arrow to the
+bottom row goes through an adapter package implementing a port from
+<code>Compendium.Abstractions.*</code>. The framework repo contains no vendor SDK on the
+hot path — the heavy adapters were extracted to their own repositories
+(<a href="../adr/0006-multi-repo-adapter-split.html">ADR-0006</a>).</li>
+<li><strong>The host application is a real participant, not a passive consumer.</strong> It owns
+the aggregates and handlers, but also the aggregate rehydration logic
+(<code>EventSourcedRepository</code> leaves it abstract) and most of the DI wiring — there is
+no umbrella <code>AddCompendium()</code> extension.</li>
+<li><strong>Nexus</strong> (<a href="https://sassy.solutions">sassy.solutions</a>) is the reference consumer;
+the framework was extracted from it and is exercised by it in production.</li>
+<li>Without any adapter package, the framework still runs end-to-end on its own
+in-memory implementations — that is how the framework's integration test suite
+works (<a href="../adr/0007-integration-test-split.html">ADR-0007</a>), and a legitimate way to
+start a project before choosing infrastructure.</li>
 </ul>
-<h2 id="template">Template</h2>
-<p>See <a href="0000-template.html">0000-template.md</a>.</p>
+<p>Next: <a href="c4-level2-containers.html">Level 2 — containers (packages)</a></p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/adr/README.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/c4-level1-context.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

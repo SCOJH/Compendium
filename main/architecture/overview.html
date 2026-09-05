@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Architecture overview | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Architecture overview | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/overview.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="architecture-overview">Architecture overview</h1>
+
+<blockquote>
+<p>One page: the problem Compendium solves, the principle that shapes it, and where its
+boundaries run. The diagrams live in the <a href="c4-level1-context.html">C4 views</a>; the
+reasoning behind each structural choice lives in the <a href="../adr/README.html">ADR index</a>.</p>
+</blockquote>
+<h2 id="the-problem">The problem</h2>
+<p>Adopting CQRS and event sourcing on .NET usually means marrying an infrastructure.
+The mainstream paths couple your domain model to an event store product, a message
+bus SDK, or a mediator library before you have written a single business rule — and
+every one of those dependencies propagates to every consumer of your domain
+assemblies. Un-marrying later is a rewrite. Multi-tenancy, the other constant of
+SaaS, is usually bolted on afterwards, one query filter at a time.</p>
+<p>Compendium exists so that a team can build an event-sourced, multi-tenant SaaS
+product <strong>without that marriage</strong>: aggregates, events, command handling, projections
+and tenant scoping are expressed against BCL-only primitives and narrow ports.
+Everything vendor-specific is an adapter package that the application chooses — and
+can replace — at composition time.</p>
+<h2 id="the-central-principle">The central principle</h2>
+<p><strong><code>Compendium.Core</code> has zero NuGet dependencies</strong> (<a href="../adr/0003-zero-dep-core.html">ADR-0003</a>):
+domain primitives (<code>AggregateRoot&lt;TId&gt;</code>, <code>ValueObject</code>, <code>Entity</code>), the
+<code>Result&lt;T&gt;</code>/<code>Error</code> types (<a href="../adr/0001-result-pattern.html">ADR-0001</a>), domain events,
+and the event-serialization contracts compile against the .NET BCL and nothing else.</p>
+<p>Everything else is arranged around that core in strict hexagonal rings
+(<a href="../adr/0002-hexagonal-architecture.html">ADR-0002</a>), with dependencies pointing
+inward only:</p>
+<ul>
+<li><strong>Abstractions</strong> — ports as interfaces, one NuGet package per concern
+(event store, AI, billing, geo, …), so a consumer references only the ports it
+uses (<a href="../adr/0013-abstraction-package-per-concern.html">ADR-0013</a>).</li>
+<li><strong>Application</strong> — CQRS dispatchers, pipeline behaviors, saga orchestration.</li>
+<li><strong>Infrastructure</strong> — generic building blocks plus complete in-memory
+implementations of every port, which double as the framework's semantic reference
+(<a href="../adr/0007-integration-test-split.html">ADR-0007</a>).</li>
+<li><strong>Multitenancy</strong> — ambient, request-scoped tenant context with multi-source
+resolution that fails closed on disagreement (<a href="../adr/0004-multi-tenancy-strategy.html">ADR-0004</a>).</li>
+<li><strong>Adapters</strong> — vendor integrations. The heavy ones live in their own repositories
+with their own release cadence (<a href="../adr/0006-multi-repo-adapter-split.html">ADR-0006</a>);
+this repo keeps only thin glue (ASP.NET Core) and incubating adapters.</li>
+</ul>
+<p>The write side is append-only event sourcing (<a href="../adr/0005-event-sourcing-vs-state.html">ADR-0005</a>);
+read models are replayable projections; every fallible operation returns <code>Result&lt;T&gt;</code>.</p>
+<h2 id="system-boundaries">System boundaries</h2>
+<p><strong>Inside this repository</strong>: the 35 framework packages — Core, the base plus
+satellite abstraction packages, Application, Infrastructure, Multitenancy, Testing,
+and six thin or incubating adapters. Each ships on its own release train (26 trains,
+partitioned mechanically by the <code>ProjectReference</code> graph — see
+<a href="../operations/release-trains.html">release trains</a>).</p>
+<p><strong>Outside, by design</strong>:</p>
+<ul>
+<li><em>Vendor adapters</em> (PostgreSQL event store, Redis, Zitadel, Stripe, the AI
+providers, …) live in separate repositories and only depend on the published
+abstraction packages.</li>
+<li><em>The host application</em> owns its aggregates, command/query handlers, projection
+handlers — and, today, its aggregate rehydration logic and most of the DI wiring:
+there is no umbrella <code>AddCompendium()</code>.</li>
+<li><em>Deliberate refusals</em> (<a href="../../ROADMAP.md">ROADMAP</a>): no message-broker
+abstraction, no built-in UI, no ORM ambitions, no legacy .NET targets.</li>
+</ul>
+<h2 id="what-holds-the-shape">What holds the shape</h2>
+<ul>
+<li><strong>36 architecture tests</strong> (NetArchTest) pin the dependency direction, event
+immutability, and CQRS/naming conventions.</li>
+<li><strong>Release trains + publication gates</strong>: a tag releases exactly one train
+(<a href="../adr/0008-release-train-per-package.html">ADR-0008</a>); every published package
+must come from a tagged, test-gated commit, and republishing an existing version
+is a hard failure (<a href="../adr/0009-publication-gates.html">ADR-0009</a>).</li>
+<li><strong>In-memory implementations as contract</strong>: any semantic gap between an in-memory
+implementation and a persistent adapter is treated as a framework bug, which keeps
+the whole framework-behaviour test suite Docker-free.</li>
+<li><strong>A 90 % line-coverage gate</strong> on the unit-testable surface.</li>
+</ul>
+<h2 id="known-limits--stated-not-hidden">Known limits — stated, not hidden</h2>
+<p>These are real gaps in the code as it stands; the C4 component view marks where each
+one sits.</p>
+<ul>
+<li><strong>Aggregate rehydration is consumer-supplied.</strong> <code>EventSourcedRepository</code> leaves
+<code>BuildAggregateFromEvents</code>/<code>ApplyEventsToAggregate</code> abstract; no convention-based
+<code>Apply</code> dispatch exists, although the README's quick-start implies one.</li>
+<li><strong>No outbox in this repository.</strong> ADR-0005 names the outbox pattern, but the
+implementation belongs to persistent adapters that live elsewhere; the in-repo
+chain stops at the <code>IIntegrationEventPublisher</code> port, and nothing bridges domain
+events to integration events automatically.</li>
+<li><strong>Two projection subsystems coexist</strong> in <code>Compendium.Infrastructure</code> (the legacy
+<code>ProjectionManager</code> and the streaming <code>EnhancedProjectionManager</code>/
+<code>LiveProjectionProcessor</code>), with different checkpoint models and no deprecation
+marking on the older one.</li>
+<li><strong>The query pipeline runs no behaviors</strong> — validation, logging and idempotency
+behaviors apply to commands only.</li>
+<li><strong>Architecture tests cover 4 of 35 assemblies</strong>, and the Core zero-dependency rule
+is guaranteed by the <code>.csproj</code> itself, not by a test.</li>
+<li><strong>Tenant scoping in infrastructure is opt-in</strong>: stores take an optional
+<code>ITenantContext</code> — a container wired without it gets an event store with no tenant
+isolation, silently.</li>
+<li><strong>Compile-time event registration is an aspiration</strong>: the
+<code>IGeneratedEventRegistry</code>/<code>[AutoRegisterEvent]</code> API shipped, but no source
+generator consumes it; event-type registration is manual and a missed type fails
+at read time (loudly, by design).</li>
+</ul>
+<h2 id="going-deeper">Going deeper</h2>
+<ul>
+<li><a href="c4-level1-context.html">C4 level 1 — system context</a></li>
+<li><a href="c4-level2-containers.html">C4 level 2 — containers (packages)</a></li>
+<li><a href="c4-level3-components.html">C4 level 3 — components of the core flow</a></li>
+<li><a href="../adr/README.html">Architecture decision records</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/overview.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

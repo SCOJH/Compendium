@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>C4 — Level 3: Components of the core flow | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="C4 — Level 3: Components of the core flow | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/c4-level3-components.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="c4--level-3-components-of-the-core-flow">C4 — Level 3: Components of the core flow</h1>
+
+<p>This view maps the components that a command actually traverses in the code — from
+dispatch to event append to projection — plus the event-serialization machinery and
+the saga components. Types are named exactly as they appear in the source; the two
+deliberate ruptures in the flow (places where the framework hands responsibility to
+the host application) are marked.</p>
+<h2 id="write-side-and-read-side">Write side and read side</h2>
+<pre><code class="lang-mermaid">flowchart TB
+    caller[&quot;Caller&lt;br/&gt;&lt;i&gt;controller, endpoint, job&lt;/i&gt;&quot;]
+
+    subgraph application[&quot;Compendium.Application&quot;]
+        cd[&quot;CommandDispatcher&lt;br/&gt;&lt;i&gt;sealed, resolves handler via&lt;br/&gt;IServiceProvider&lt;/i&gt;&quot;]
+        behaviors[&quot;IPipelineBehavior chain&lt;br/&gt;&lt;i&gt;Validation · Logging ·&lt;br/&gt;Transaction · Idempotency&lt;br/&gt;(opt-in, commands only)&lt;/i&gt;&quot;]
+        qd[&quot;QueryDispatcher&lt;br/&gt;&lt;i&gt;sealed — runs NO behaviors&lt;/i&gt;&quot;]
+    end
+
+    subgraph consumer[&quot;Host application code&quot;]
+        ch[&quot;ICommandHandler&amp;lt;TCommand&amp;gt;&quot;]
+        qh[&quot;IQueryHandler&amp;lt;TQuery, TResponse&amp;gt;&quot;]
+        agg[&quot;Aggregate : AggregateRoot&amp;lt;TId&amp;gt;&lt;br/&gt;&lt;i&gt;raises events via AddDomainEvent,&lt;br/&gt;versions via IncrementVersion&lt;/i&gt;&quot;]
+        rehydrate[&quot;BuildAggregateFromEvents /&lt;br/&gt;ApplyEventsToAggregate&lt;br/&gt;&lt;i&gt;⚠ abstract — written by the host app&lt;/i&gt;&quot;]
+        proj[&quot;IProjection&amp;lt;TEvent&amp;gt;&lt;br/&gt;&lt;i&gt;one class, N event interfaces&lt;/i&gt;&quot;]
+    end
+
+    subgraph infrastructure[&quot;Compendium.Infrastructure&quot;]
+        repo[&quot;EventSourcedRepository&amp;lt;TAggregate, TId&amp;gt;&lt;br/&gt;&lt;i&gt;load: snapshot + events;&lt;br/&gt;save: append with expectedVersion&lt;/i&gt;&quot;]
+        es[&quot;IEventStore (port in Abstractions)&lt;br/&gt;&lt;i&gt;AppendEventsAsync(id, events, expectedVersion)&lt;br/&gt;→ Error.Conflict on optimistic-concurrency clash&lt;/i&gt;&quot;]
+        snap[&quot;ISnapshotStore + ISnapshotStrategy&lt;br/&gt;&lt;i&gt;optional; NoSnapshotStrategy default&lt;/i&gt;&quot;]
+        stream[&quot;IStreamingEventStore : IEventStore&lt;br/&gt;&lt;i&gt;global position, IAsyncEnumerable&lt;/i&gt;&quot;]
+        lpp[&quot;LiveProjectionProcessor&lt;br/&gt;&lt;i&gt;BackgroundService, 100 ms polling,&lt;br/&gt;per-projection checkpoint + dead-letter&lt;br/&gt;after N consecutive failures&lt;/i&gt;&quot;]
+        epm[&quot;EnhancedProjectionManager&lt;br/&gt;&lt;i&gt;rebuild in batches, reflection dispatch&lt;br/&gt;to IProjection&amp;lt;TEvent&amp;gt;&lt;/i&gt;&quot;]
+        pstore[&quot;IProjectionStore&lt;br/&gt;&lt;i&gt;checkpoints by projection name,&lt;br/&gt;snapshots, state&lt;/i&gt;&quot;]
+    end
+
+    caller --&gt;|&quot;DispatchAsync&quot;| cd
+    caller --&gt;|&quot;DispatchAsync&quot;| qd
+    cd --&gt; behaviors --&gt; ch
+    qd --&gt; qh
+    ch --&gt; agg
+    ch --&gt;|&quot;GetByIdAsync / SaveAsync&quot;| repo
+    repo --&gt; rehydrate
+    repo --&gt; es
+    repo --&gt; snap
+    stream --&gt;|&quot;StreamEventsAsync(fromPosition)&quot;| lpp
+    stream --&gt; epm
+    lpp --&gt;|&quot;ApplyAsync(event, EventMetadata)&quot;| proj
+    epm --&gt;|&quot;rebuild&quot;| proj
+    lpp --&gt; pstore
+    epm --&gt; pstore
+
+    es ~~~ stream
+
+    classDef appl fill:#1168bd,stroke:#0b4884,color:#fff
+    classDef infra fill:#438dd5,stroke:#2e6295,color:#fff
+    classDef host fill:#7f5ba6,stroke:#5d4279,color:#fff
+    classDef warn fill:#8a5a00,stroke:#5e3d00,color:#fff
+    class cd,behaviors,qd appl
+    class repo,es,snap,stream,lpp,epm,pstore infra
+    class ch,qh,agg,proj host
+    class rehydrate warn
+</code></pre>
+<p>The dispatchers and the behavior pipeline are the framework's own — no mediator
+dependency; the reasoning is in <a href="../adr/0012-hand-rolled-cqrs-dispatch.html">ADR-0012</a>.</p>
+<p><strong>The rupture to know about:</strong> after <code>AppendEventsAsync</code> succeeds, <strong>nothing is
+dispatched automatically</strong>. There is no in-process domain-event dispatcher
+(<code>IDomainEventHandler&lt;T&gt;</code> exists but no component invokes it), and projections only
+see events because <code>LiveProjectionProcessor</code> independently polls the streaming
+store. The write path and the read path meet in the store, not in a bus.</p>
+<h2 id="event-serialization-and-schema-evolution-compendiumcoreeventsourcing">Event serialization and schema evolution (<code>Compendium.Core.EventSourcing</code>)</h2>
+<pre><code class="lang-mermaid">flowchart LR
+    subgraph write[&quot;On append (persistent adapters)&quot;]
+        evt[&quot;IDomainEvent&lt;br/&gt;&lt;i&gt;immutable, DomainEventBase&lt;/i&gt;&quot;]
+        reg[&quot;EventTypeRegistry&lt;br/&gt;&lt;i&gt;whitelist, indexed by logical name&lt;br/&gt;([EventTypeName]) AND by&lt;br/&gt;AssemblyQualifiedName&lt;/i&gt;&quot;]
+        json[&quot;System.Text.Json&lt;br/&gt;&lt;i&gt;runtime type passed explicitly;&lt;br/&gt;no Newtonsoft, no $type&lt;/i&gt;&quot;]
+        evt --&gt; json
+        reg --&gt;|&quot;GetLogicalName(type)&lt;br/&gt;stamps the stored name&quot;| json
+    end
+
+    subgraph read[&quot;On read&quot;]
+        sed[&quot;SecureEventDeserializer&lt;br/&gt;&lt;i&gt;type comes from the registry,&lt;br/&gt;never from the payload;&lt;br/&gt;unknown name → Result.Failure&lt;/i&gt;&quot;]
+        mig[&quot;EventVersionMigrator&lt;br/&gt;&lt;i&gt;chains IEventUpcaster V1→V2→V3&lt;br/&gt;at read time; the log is&lt;br/&gt;never rewritten&lt;/i&gt;&quot;]
+        sed --&gt; mig
+    end
+
+    json -.-&gt;|&quot;stored event row&lt;br/&gt;(name + JSON payload)&quot;| sed
+    reg --&gt;|&quot;GetWhitelistedType(name)&quot;| sed
+
+    classDef core fill:#0b6e4f,stroke:#08523b,color:#fff
+    class evt,reg,json,sed,mig core
+</code></pre>
+<p>Reading notes:</p>
+<ul>
+<li>The registry's double indexing means a log holding both old
+(assembly-qualified-name) rows and new (logical-name) rows is readable by a single
+binary, without rewriting anything. Name collisions are refused at registration —
+<em>&quot;a payload deserialized into the wrong type is worse than one not deserialized at
+all&quot;</em> (<code>EventTypeRegistry.cs</code>). Rationale and trade-offs:
+<a href="../adr/0010-logical-event-identity.html">ADR-0010</a> and
+<a href="../adr/0011-whitelist-deserialization-upcasting.html">ADR-0011</a>.</li>
+<li>A stream containing one unresolvable event type fails <strong>as a whole</strong>
+(<code>EventStore.EventTypeUnresolved</code>) rather than returning a truncated history as a
+success.</li>
+<li>Honest caveats: the in-memory stores keep live <code>IDomainEvent</code> instances and never
+exercise the deserialization path — only persistent adapters (separate repos) do;
+event registration is manual (<code>RegisterEventType</code>), and the
+<code>IGeneratedEventRegistry</code>/<code>[AutoRegisterEvent]</code> compile-time story has no source
+generator behind it yet; a missing upcaster is not detected — the event passes
+through unchanged.</li>
+</ul>
+<h2 id="sagas-and-integration-events">Sagas and integration events</h2>
+<p>Two explicit flavors, named so you know which pattern you are using
+(see <a href="../sagas.html">docs/sagas.md</a>):</p>
+<ul>
+<li><strong>Orchestration</strong> — <code>ProcessManager&lt;TState&gt;</code> (step state machine) driven by
+<code>ProcessManagerOrchestrator</code>, persisting through <code>IProcessManagerRepository</code>
+(in-memory implementation provided) and executing business steps through
+<code>IProcessManagerStepExecutor</code> — which has <strong>no implementation in this repo</strong>: it
+is the mandatory extension point of the host application. Compensation is
+explicit, never automatic.</li>
+<li><strong>Choreography</strong> — <code>IHandle&lt;TEvent&gt;</code> handlers fanned out by <code>ChoreographyRouter</code>
+over <code>IIntegrationEvent</code>s published through <code>IIntegrationEventPublisher</code>. The
+in-memory publisher is provided; a durable one (outbox) is an adapter concern and
+<strong>does not live in this repository</strong>.</li>
+</ul>
+<p><strong>The second rupture:</strong> nothing bridges the <code>IDomainEvent</code> world (event store,
+projections) to the <code>IIntegrationEvent</code> world (choreography). Publishing an
+integration event after a domain event is a decision — and code — that belongs to
+the host application today.</p>
+<p>Back to: <a href="overview.html">overview</a> · <a href="c4-level1-context.html">Level 1</a> · <a href="c4-level2-containers.html">Level 2</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/architecture/c4-level3-components.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0013. One abstraction package per concern | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0013. One abstraction package per concern | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0013-abstraction-package-per-concern.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="0013-one-abstraction-package-per-concern">0013. One abstraction package per concern</h1>
+
+<ul>
+<li>Status: Accepted</li>
+<li>Date: 2026-08-30 (recorded retroactively — the shape is visible in <code>src/Abstractions/</code> and in the per-package release trains of <a href="0008-release-train-per-package.html">ADR-0008</a>)</li>
+<li>Deciders: @sassy-solutions/maintainers</li>
+</ul>
+<h2 id="context">Context</h2>
+<p><a href="0002-hexagonal-architecture.html">ADR-0002</a> put the ports in <code>Compendium.Abstractions.*</code>
+assemblies; <a href="0006-multi-repo-adapter-split.html">ADR-0006</a> moved the heavy adapters to
+their own repositories, consuming those ports as published NuGet packages. That
+left open a granularity question with real consequences: <strong>how many packages should
+the ports be?</strong></p>
+<p>A single fat <code>Compendium.Abstractions</code> would mean:</p>
+<ul>
+<li>An external adapter (say, a Geo provider) must reference — and re-release
+against — a package that also carries billing, AI, email, and search contracts it
+never touches. Every port change anywhere bumps everyone.</li>
+<li>A consumer's dependency graph declares intent poorly: &quot;references Abstractions&quot;
+says nothing; &quot;references <code>Abstractions.Billing</code>&quot; is documentation.</li>
+<li>The blast radius of a breaking change in one port is the entire port surface.</li>
+</ul>
+<p>Against that, many small packages cost real overhead: more <code>.csproj</code> files, more
+NuGet metadata, more release trains, slower cold builds.</p>
+<h2 id="decision">Decision</h2>
+<p><strong>One NuGet package per port concern.</strong> The shape in <code>src/Abstractions/</code> is:</p>
+<ul>
+<li>A base <strong><code>Compendium.Abstractions</code></strong> carrying the contracts that are inseparable
+from the framework's execution model: CQRS markers and handler interfaces, the
+event store and snapshot ports, <code>IRepository</code>, and the saga contracts.</li>
+<li><strong>Satellite packages, one concern each</strong> — <code>Compendium.Abstractions.AI</code>,
+<code>.Analytics</code>, <code>.Authorization</code>, <code>.Billing</code>, <code>.Caching</code>, <code>.CodingAgents</code>, <code>.Crm</code>,
+<code>.Documents</code>, <code>.Email</code>, <code>.FeatureFlags</code>, <code>.Geo</code>, <code>.Git</code>, <code>.Identity</code>, <code>.Jobs</code>,
+<code>.Messaging</code>, <code>.Notifications</code>, <code>.Realtime</code>, <code>.Search</code>, <code>.Secrets</code>, <code>.Speech</code>,
+<code>.Translation</code>, <code>.VectorStore</code>, <code>.Webhooks</code> — interfaces and DTOs only, no
+implementations, no vendor SDKs.</li>
+<li>An adapter references <strong>exactly the port it implements</strong> (verified in the
+in-tree adapters: <code>Adapters.GitHub</code> → <code>Abstractions.Git</code>, <code>Adapters.ClaudeCode</code>
+→ <code>Abstractions.CodingAgents</code>, <code>Adapters.Scaleway.SecretManager</code> →
+<code>Abstractions.Secrets</code>).</li>
+<li>Combined with <a href="0008-release-train-per-package.html">ADR-0008</a>, each satellite that
+nothing in-repo depends on ships on its <strong>own release train</strong>: <code>geo-v1.0.6</code>
+releases the Geo contracts and nothing else.</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li>An adapter's dependency surface is its port, full stop — a Geo adapter is never
+forced to re-release because the billing contracts changed.</li>
+<li>Breaking-change blast radius shrinks to one concern; strict semver applies per
+port instead of per &quot;everything&quot;.</li>
+<li>The dependency graph becomes self-documenting: what a service references <em>is</em>
+the list of capabilities it uses.</li>
+<li>New concerns incubate cheaply: a new port is one small project with its own
+train, promotable to a domain repository later without touching the others.</li>
+</ul>
+<h3 id="negative--trade-offs">Negative / Trade-offs</h3>
+<ul>
+<li><strong>Project proliferation is real</strong>: 23 abstraction projects among 35 total, each
+with csproj, tests, packaging metadata, and a train. Accepted as the cost of the
+granularity; the template and MSBuild conventions absorb most of it.</li>
+<li><strong>The granularity is not uniform in practice.</strong> Five satellites (<code>AI</code>, <code>Caching</code>,
+<code>CodingAgents</code>, <code>Git</code>, <code>Secrets</code>) are welded to the <code>core-v</code> train because an
+in-repo project references them — notably <code>Compendium.Application</code> →
+<code>Abstractions.AI</code> (the agent-loop contracts). Their <em>packaging</em> is independent
+but their <em>release cadence</em> is not. Anyone presenting this design should know
+that nuance.</li>
+<li><strong>Dependency shape is inconsistent between satellites</strong>: some reference the base
+<code>Compendium.Abstractions</code>, others reference <code>Compendium.Core</code> directly. Harmless
+today, but it means &quot;satellite&quot; is not a single, uniform layer.</li>
+<li><strong>The architecture tests do not cover the satellites</strong> — the layering rules are
+verified for the four main assemblies only. The satellites' discipline
+(interfaces-only, no vendor SDKs) currently holds by convention and review, not
+by a test.</li>
+<li>Discoverability: a newcomer faces 23 packages where one &quot;Abstractions&quot; would be
+simpler to find. Mitigated by the README package table and by naming.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul>
+<li><strong>One fat <code>Compendium.Abstractions</code>.</strong> Rejected — couples every adapter and
+consumer to every port's release cadence and blast radius; see Context.</li>
+<li><strong>Ports inside each adapter package.</strong> Rejected — an application swapping vendors
+would swap contract assemblies too, defeating the point of ports; two adapters
+for the same concern could not share a contract.</li>
+<li><strong>Ports in <code>Compendium.Core</code>.</strong> Rejected — Core is domain primitives with zero
+dependencies and zero opinions about infrastructure concerns
+(<a href="0003-zero-dep-core.html">ADR-0003</a>); 23 concerns' worth of DTOs does not belong
+in the most-referenced assembly.</li>
+<li><strong>Grouping by broad family</strong> (e.g. one <code>Abstractions.Persistence</code>, one
+<code>Abstractions.Communication</code>). Rejected — the groups would be arbitrary where
+per-concern is mechanical, and the domain-repo topology
+(<a href="0006-multi-repo-adapter-split.html">ADR-0006</a>'s successor work) already groups at
+the level that matters: one <em>repository</em> per domain, each consuming its own
+abstraction package.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0013-abstraction-package-per-concern.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

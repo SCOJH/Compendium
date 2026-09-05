@@ -130,6 +130,66 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "adr/0008-release-train-per-package.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0008-release-train-per-package.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0009-publication-gates.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0009-publication-gates.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0010-logical-event-identity.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0010-logical-event-identity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0011-whitelist-deserialization-upcasting.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0011-whitelist-deserialization-upcasting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0012-hand-rolled-cqrs-dispatch.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0012-hand-rolled-cqrs-dispatch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "adr/0013-abstraction-package-per-concern.md",
+      "output": {
+        ".html": {
+          "relative_path": "adr/0013-abstraction-package-per-concern.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "adr/README.md",
       "output": {
         ".html": {
@@ -10744,6 +10804,59 @@
         },
         ".json": {
           "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "architecture/c4-level1-context.md",
+      "output": {
+        ".html": {
+          "relative_path": "architecture/c4-level1-context.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "architecture/c4-level2-containers.md",
+      "output": {
+        ".html": {
+          "relative_path": "architecture/c4-level2-containers.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "architecture/c4-level3-components.md",
+      "output": {
+        ".html": {
+          "relative_path": "architecture/c4-level3-components.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "architecture/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "architecture/overview.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "architecture/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "architecture/toc.html"
+        },
+        ".json": {
+          "relative_path": "architecture/toc.json"
         }
       },
       "version": ""

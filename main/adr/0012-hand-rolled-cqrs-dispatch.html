@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0012. Hand-rolled CQRS dispatch instead of an external mediator | Compendium — .NET event-sourcing framework </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0012. Hand-rolled CQRS dispatch instead of an external mediator | Compendium — .NET event-sourcing framework ">
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0012-hand-rolled-cqrs-dispatch.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="Compendium">
+            Compendium
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="0012-hand-rolled-cqrs-dispatch-instead-of-an-external-mediator">0012. Hand-rolled CQRS dispatch instead of an external mediator</h1>
+
+<ul>
+<li>Status: Accepted</li>
+<li>Date: 2026-08-30 (recorded retroactively)</li>
+<li>Deciders: @sassy-solutions/maintainers</li>
+</ul>
+<blockquote>
+<p><strong>Honesty note.</strong> Unlike the other ADRs, no artifact in this repository records
+an explicit evaluation of mediator libraries — the word &quot;MediatR&quot; appears nowhere
+in the history. What <em>is</em> in the code is unambiguous: a complete, deliberate
+re-implementation of the mediator pipeline shape (<code>IPipelineBehavior&lt;TRequest, TResponse&gt;</code>, <code>RequestHandlerDelegate&lt;TResponse&gt;</code> — MediatR's exact vocabulary)
+with zero mediator dependency. This record reconstructs the rationale from that
+evidence; the &quot;alternatives&quot; section is reasoning read out of the code, not
+minutes of a meeting.</p>
+</blockquote>
+<h2 id="context">Context</h2>
+<p>Every feature in a Compendium application flows through command and query dispatch,
+so whatever implements that dispatch is referenced by <code>Compendium.Application</code> —
+and therefore by <strong>every handler in every consumer</strong>. The obvious off-the-shelf
+answer is MediatR, whose <code>IPipelineBehavior</code> model is the de-facto standard shape
+for cross-cutting concerns in .NET CQRS codebases.</p>
+<p>Three forces pushed against taking the dependency:</p>
+<ol>
+<li><strong>Fan-out.</strong> The framework's whole dependency philosophy
+(<a href="0003-zero-dep-core.html">ADR-0003</a>) is that anything in the core packages'
+graph propagates to everyone. A mediator in <code>Compendium.Application</code> is a
+version-pinning decision imposed on every consumer forever.</li>
+<li><strong>Surface mismatch.</strong> The framework needs a <em>thin</em> dispatch: resolve one
+handler, run an ordered behavior chain, return <code>Result&lt;T&gt;</code>
+(<a href="0001-result-pattern.html">ADR-0001</a>). It does not need notifications, streaming
+requests, or exception-based flow — and a mediator's exception-first error model
+works against the Result contract at every call site.</li>
+<li><strong>Ecosystem risk.</strong> MediatR's move to a commercial license (2025) made the cost
+of the dependency explicit for a framework that redistributes it transitively.
+(Reconstructed motive — plausible given the timeline, not written down anywhere.)</li>
+</ol>
+<h2 id="decision">Decision</h2>
+<p><code>Compendium.Application</code> ships its own dispatch, ~200 lines total:</p>
+<ul>
+<li><code>ICommandDispatcher</code> / <code>IQueryDispatcher</code> interfaces with <strong>sealed</strong>
+implementations (<code>CommandDispatcher</code>, <code>QueryDispatcher</code>) — sealed-with-interface
+is enforced by the architecture tests, so consumers substitute via DI, never via
+inheritance.</li>
+<li>Handlers are resolved from <code>IServiceProvider</code> (<code>ICommandHandler&lt;TCommand&gt;</code>,
+<code>IQueryHandler&lt;TQuery, TResponse&gt;</code> from <code>Compendium.Abstractions</code>). A missing
+handler is <code>Result.Failure(Error.NotFound(&quot;Handler.NotFound&quot;, …))</code> — never an
+exception.</li>
+<li>The pipeline keeps the community's proven shape on purpose:
+<code>IPipelineBehavior&lt;TRequest, TResponse&gt;</code> + <code>RequestHandlerDelegate&lt;TResponse&gt;</code>,
+chained in registration order. Anyone who has written a MediatR behavior can
+write a Compendium behavior.</li>
+<li>Four behaviors ship (<code>Validation</code> — DataAnnotations, <code>Logging</code>, <code>Transaction</code>,
+<code>Idempotency</code>), all <strong>opt-in</strong>: nothing registers them by default, and no
+umbrella <code>AddCompendiumApplication()</code> exists. The consumer's composition root
+states exactly what runs.</li>
+<li>Dispatch is instrumented natively (<code>CompendiumTelemetry</code> activity source and
+counters) instead of through a behavior, so tracing exists even with an empty
+pipeline.</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
+<ul>
+<li>Zero third-party packages between a consumer's handler and the framework — no
+license exposure, no version conflicts, no transitive surprises.</li>
+<li>The error model is uniform: dispatch failures, validation failures, and business
+failures are all <code>Result</code>, mappable at one place at the HTTP edge.</li>
+<li>The pipeline shape is community-standard, so onboarding cost is near zero and
+migration <em>to or from</em> a mediator library stays mechanical.</li>
+<li>The dispatch surface is small enough to read in one sitting — a property worth
+actual money when it sits under every request.</li>
+</ul>
+<h3 id="negative--trade-offs">Negative / Trade-offs</h3>
+<ul>
+<li><strong>We own the maintenance</strong> of code the ecosystem would otherwise maintain —
+accepted because the surface is deliberately tiny and stable.</li>
+<li><strong>The pipeline covers commands only.</strong> <code>QueryDispatcher</code> invokes the handler
+directly and runs <strong>no behaviors</strong> — queries get no validation, logging, or
+idempotency from the pipeline. The asymmetry is real, currently undocumented at
+the API level, and a consumer can be surprised by it.</li>
+<li>No notification/publish mechanism and no streaming requests — by scope, not
+omission; event fan-out belongs to projections and choreography, not the
+dispatcher.</li>
+<li>All wiring is manual (<code>AddScoped&lt;ICommandDispatcher, CommandDispatcher&gt;()</code>, one
+registration per behavior). Explicitness was chosen over convenience; the cost is
+a longer composition root and a real &quot;forgot to register X&quot; class of mistakes.</li>
+<li>Behavior interface detection in <code>Transaction</code>/<code>Idempotency</code> behaviors matches
+<code>ICommand</code> <strong>by interface name via reflection</strong> rather than by type identity — a
+shortcut that works but is weaker than the rest of the design.</li>
+</ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<p><em>(Reconstructed — see honesty note above.)</em></p>
+<ul>
+<li><strong>MediatR.</strong> The default choice; rejected on fan-out (a redistributed framework
+imposing the dependency on all consumers), error model (exceptions vs
+<a href="0001-result-pattern.html">ADR-0001</a>), surface (notifications and streams unused),
+and, from 2025, commercial licensing of a transitively-shipped component.</li>
+<li><strong>Wolverine / Brighter.</strong> Heavier still: runtime code generation, messaging
+ambitions, their own persistence opinions — each individually against the grain
+of a framework whose adapters are supposed to be the only opinionated parts.</li>
+<li><strong>No dispatcher at all</strong> (inject <code>ICommandHandler&lt;T&gt;</code> directly). Genuinely
+simpler, and Result-compatible — but it dissolves the seam where cross-cutting
+behaviors and telemetry attach, pushing validation/logging/idempotency back into
+every handler or into decorators the consumer must compose by hand.</li>
+<li><strong>Source-generated dispatch</strong> (compile-time handler registry). Attractive — no
+reflection, no service-locator lookup — but the framework has no source-generator
+infrastructure today (see the unshipped <code>IGeneratedEventRegistry</code> story), and
+runtime resolution via DI is the semantics consumers already understand.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/SCOJH/Compendium/blob/main/docs/adr/0012-hand-rolled-cqrs-dispatch.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright © 2026 Sassy Solutions. Released under the MIT License. <a href="https://github.com/SCOJH/Compendium">View on GitHub</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
