@@ -19,6 +19,18 @@ Compendium is the framework that powers [Nexus](https://sassy.solutions), Sassy 
 - **Modular adapters** — Pick only what you need: twenty-two production adapters across persistence (Postgres, Redis, pgvector, Qdrant, Pinecone, S3-compatible), identity (Zitadel), billing (Stripe, LemonSqueezy), email (Listmonk), and AI (OpenRouter, OpenAI, Anthropic, Gemini, Mistral, DeepSeek, Mercury, Hugging Face, Azure OpenAI, AWS Bedrock, LiteLLM, Ollama). See [Adapters](#adapters). Each ships its own repo, NuGet package, and release cadence per [ADR-0006](docs/adr/0006-multi-repo-adapter-split.md).
 - **Battle-tested in production** — Powers Nexus, a multi-tenant platform engineering product.
 
+## Architecture
+
+Compendium lets you adopt CQRS and event sourcing without marrying an infrastructure:
+a zero-dependency core holds the domain primitives, narrow port packages define every
+integration surface, and vendor adapters live outside the framework — chosen, and
+replaceable, at composition time. Dependency direction is enforced by architecture
+tests, and every package ships on its own release train through provenance-gated CI.
+
+- **[Architecture overview](docs/architecture/overview.md)** — the problem, the central principle, the boundaries, and the known limits (stated, not hidden).
+- **[C4 diagrams](docs/architecture/c4-level1-context.md)** — [context](docs/architecture/c4-level1-context.md), [containers](docs/architecture/c4-level2-containers.md), and [components](docs/architecture/c4-level3-components.md), faithful to the code as it is.
+- **[Architecture Decision Records](docs/adr/README.md)** — 13 MADR records, from the Result pattern and the zero-dependency core to release trains and event serialization.
+
 ## Adapters
 
 Each public adapter lives in its own repository under `sassy-solutions/compendium-adapter-*` and is released independently per [ADR-0006](docs/adr/0006-multi-repo-adapter-split.md). The framework defines the ports (`IEventStore`, `IAIProvider`, `IVectorStore`, `IBillingProvider`, …); adapters provide concrete implementations.
@@ -119,21 +131,6 @@ builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
 
 var app = builder.Build();
 ```
-
-## Architecture
-
-```
-Core (zero deps) → Abstractions → Application → Infrastructure → Adapters
-                                       ↓
-                              Multitenancy (cross-cutting)
-```
-
-- **Core** — Domain primitives with no external dependencies.
-- **Abstractions** — Ports (interfaces) for infrastructure concerns: identity, billing, email, AI.
-- **Application** — CQRS orchestration: command/query handlers, dispatchers.
-- **Infrastructure** — Generic infrastructure concerns: projections, outbox, caching.
-- **Adapters** — Concrete integrations with external systems.
-- **Multitenancy** — Tenant resolution and scoping, usable across all layers.
 
 ## Packages
 

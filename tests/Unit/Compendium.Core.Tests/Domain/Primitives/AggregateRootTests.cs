@@ -11,6 +11,13 @@ namespace Compendium.Core.Tests.Domain.Primitives;
 
 public class AggregateRootTests
 {
+    /// <summary>
+    /// Number of events raised by the order tests. Taken well above the point where a
+    /// hash-ordered collection stops preserving insertion order — the size at which
+    /// the assertion stops being satisfiable by accident.
+    /// </summary>
+    private const int OrderProbeBatchSize = 128;
+
     [Fact]
     public void Constructor_WithValidId_InitializesCorrectly()
     {
@@ -61,19 +68,26 @@ public class AggregateRootTests
     public void AddDomainEvent_MultipleEvents_MaintainsOrder()
     {
         // Arrange
+        // The batch is large on purpose. Order is the data for an event-sourced
+        // aggregate, and a handful of events does not tell a guarantee apart from a
+        // coincidence: a hash-ordered collection happens to preserve insertion order
+        // on a small batch. OrderProbeBatchSize is the size at which that luck runs
+        // out. Equal() compares the whole sequence position by position, where
+        // ContainInOrder() only checks the relative order of the elements it is given.
         var aggregate = new TestAggregate(Guid.NewGuid());
-        var event1 = new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 1, "Event 1");
-        var event2 = new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 2, "Event 2");
-        var event3 = new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 3, "Event 3");
+        var expected = Enumerable.Range(0, OrderProbeBatchSize)
+            .Select(i => new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), i, $"Event {i}"))
+            .ToList();
 
         // Act
-        aggregate.TestAddDomainEvent(event1);
-        aggregate.TestAddDomainEvent(event2);
-        aggregate.TestAddDomainEvent(event3);
+        foreach (var domainEvent in expected)
+        {
+            aggregate.TestAddDomainEvent(domainEvent);
+        }
 
         // Assert
-        aggregate.DomainEvents.Should().HaveCount(3);
-        aggregate.DomainEvents.Should().ContainInOrder(event1, event2, event3);
+        aggregate.DomainEvents.Should().HaveCount(OrderProbeBatchSize);
+        aggregate.DomainEvents.Should().Equal(expected);
     }
 
     [Fact]
@@ -176,19 +190,25 @@ public class AggregateRootTests
     public void GetUncommittedEvents_WithEvents_ReturnsEventsAndClears()
     {
         // Arrange
+        // Same large batch as AddDomainEvent_MultipleEvents_MaintainsOrder, and for
+        // the same reason: this is the second path out of the aggregate, the one the
+        // event store is fed from.
         var aggregate = new TestAggregate(Guid.NewGuid());
-        var event1 = new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 1);
-        var event2 = new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 2);
+        var expected = Enumerable.Range(0, OrderProbeBatchSize)
+            .Select(i => new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), i, $"Event {i}"))
+            .ToList();
 
-        aggregate.TestAddDomainEvent(event1);
-        aggregate.TestAddDomainEvent(event2);
+        foreach (var domainEvent in expected)
+        {
+            aggregate.TestAddDomainEvent(domainEvent);
+        }
 
         // Act
         var uncommittedEvents = aggregate.GetUncommittedEvents();
 
         // Assert
-        uncommittedEvents.Should().HaveCount(2);
-        uncommittedEvents.Should().ContainInOrder(event1, event2);
+        uncommittedEvents.Should().HaveCount(OrderProbeBatchSize);
+        uncommittedEvents.Should().Equal(expected);
         aggregate.DomainEvents.Should().BeEmpty();
         aggregate.HasDomainEvents.Should().BeFalse();
     }
@@ -352,5 +372,94 @@ public class AggregateRootTests
         // Note: The current implementation uses a simple hash that might allow duplicates
         // This test documents the current behavior and can be updated when deduplication is improved
         aggregate.DomainEvents.Count.Should().BeGreaterOrEqualTo(1);
+    }
+
+    [Fact]
+    public void DomainEvents_EventsEqualByValue_ReturnsThemAll()
+    {
+        // Arrange
+        // Two events that are distinct instances with distinct EventIds — so
+        // _eventHashes, which deduplicates on EventId, accepts both — but that are
+        // equal to one another for EqualityComparer<T>.Default. A set-based snapshot
+        // would silently fold them into one, and the caller would persist one event
+        // fewer than the aggregate raised. Uniqueness belongs to _eventHashes; the
+        // snapshot must not add a second, coarser rule of its own.
+        var aggregate = new TestAggregate(Guid.NewGuid());
+        var first = new AlwaysEqualDomainEvent(aggregate.Id.ToString());
+        var second = new AlwaysEqualDomainEvent(aggregate.Id.ToString());
+
+        first.EventId.Should().NotBe(second.EventId);
+        first.Equals(second).Should().BeTrue();
+
+        // Act
+        aggregate.TestAddDomainEvent(first);
+        aggregate.TestAddDomainEvent(second);
+
+        // Assert
+        aggregate.DomainEvents.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void DomainEvents_And_GetUncommittedEvents_ExposeAnOrderedSequenceType()
+    {
+        // Arrange
+        // The order tests above would very probably fail on an unordered return type;
+        // this one fails for certain if the contract is widened back to a type that
+        // promises no order. It is the assertion that makes the guarantee a property
+        // of the signature rather than of the method body.
+        var expected = typeof(IReadOnlyList<IDomainEvent>);
+
+        // Act
+        var propertyType = typeof(AggregateRoot<>).GetProperty(nameof(TestAggregate.DomainEvents))!.PropertyType;
+        var returnType = typeof(AggregateRoot<>).GetMethod(nameof(TestAggregate.GetUncommittedEvents))!.ReturnType;
+
+        // Assert
+        propertyType.Should().Be(expected);
+        returnType.Should().Be(expected);
+    }
+
+    [Fact]
+    public void DomainEvents_SnapshotTaken_IsNotAffectedByLaterChanges()
+    {
+        // Arrange
+        var aggregate = new TestAggregate(Guid.NewGuid());
+        aggregate.TestAddDomainEvent(new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 1));
+        var snapshot = aggregate.DomainEvents;
+
+        // Act
+        aggregate.TestAddDomainEvent(new TestDomainEvent(aggregate.Id.ToString(), nameof(TestAggregate), 2));
+        aggregate.ClearDomainEvents();
+
+        // Assert
+        snapshot.Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// A domain event whose EventId is unique per instance but which compares equal to
+    /// every other instance of its type. It exists to tell the two notions of identity
+    /// apart: the one the aggregate deduplicates on, and the one a set would use.
+    /// </summary>
+    private sealed class AlwaysEqualDomainEvent : IDomainEvent
+    {
+        public AlwaysEqualDomainEvent(string aggregateId)
+        {
+            AggregateId = aggregateId;
+        }
+
+        public Guid EventId { get; } = Guid.NewGuid();
+
+        public string AggregateId { get; }
+
+        public string AggregateType => nameof(TestAggregate);
+
+        public DateTimeOffset OccurredOn { get; } = DateTimeOffset.UtcNow;
+
+        public long AggregateVersion => 1;
+
+        public int EventVersion => 1;
+
+        public override bool Equals(object? obj) => obj is AlwaysEqualDomainEvent;
+
+        public override int GetHashCode() => 0;
     }
 }

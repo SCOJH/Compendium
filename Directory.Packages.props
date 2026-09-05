@@ -5,7 +5,7 @@
   <ItemGroup>
     <!-- Standalone adapter packages — consumed by samples per ADR-0006. -->
     <PackageVersion Include="Compendium.Adapters.OpenRouter" Version="1.0.0" />
-    <PackageVersion Include="Compendium.Adapters.PostgreSQL" Version="1.0.0" />
+    <PackageVersion Include="Compendium.Adapters.PostgreSQL" Version="1.0.2" />
     <PackageVersion Include="Compendium.Adapters.Redis" Version="1.0.0-preview.9" />
 
     <PackageVersion Include="AutoFixture" Version="4.18.1" />
@@ -19,7 +19,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.19" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.16" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.19" />
@@ -31,7 +31,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.19" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageVersion Include="MinVer" Version="7.0.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="NBomber" Version="6.0.0" />
@@ -47,14 +47,14 @@
          (AspNetCore health checks, sample 02). Direct PG/Redis adapter code lives in the
          per-adapter repos (compendium-adapter-postgresql, compendium-adapter-redis). -->
     <PackageVersion Include="Npgsql" Version="9.0.4" />
-    <PackageVersion Include="OpenTelemetry" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.18.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.12.0-beta.1" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.15.1" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.18.0" />
     <PackageVersion Include="Polly" Version="8.6.4" />
     <PackageVersion Include="Polly.Extensions" Version="8.6.4" />
     <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
@@ -74,12 +74,12 @@
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
     <!-- Base Testcontainers package used by Compendium.Testing fixtures. The
          provider-specific Testcontainers.PostgreSql/Redis pins moved to the per-adapter repos. -->
-    <PackageVersion Include="Testcontainers" Version="4.11.0" />
-    <PackageVersion Include="Testcontainers.K3s" Version="4.11.0" />
+    <PackageVersion Include="Testcontainers" Version="4.14.0" />
+    <PackageVersion Include="Testcontainers.K3s" Version="4.14.0" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
     <PackageVersion Include="Xunit.SkippableFact" Version="1.5.61" />
   </ItemGroup>
 </Project>

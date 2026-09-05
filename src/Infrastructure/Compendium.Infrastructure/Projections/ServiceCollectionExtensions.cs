@@ -40,6 +40,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IProjectionManager, EnhancedProjectionManager>();
         services.AddSingleton<ILiveProjectionProcessor, LiveProjectionProcessor>();
 
+        // Single-process lease by default: correct for one host, and the behaviour every
+        // existing caller already had. A multi-replica deployment registers its own
+        // implementation (a database-backed lock) BEFORE calling this method — TryAdd
+        // leaves it in place.
+        services.TryAddSingleton<IProjectionConsumerLease, SingleProcessProjectionConsumerLease>();
+
         // Register as hosted service for automatic startup
         services.AddSingleton<IHostedService>(provider =>
             (IHostedService)provider.GetRequiredService<ILiveProjectionProcessor>());

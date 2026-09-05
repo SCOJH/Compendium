@@ -5,7 +5,6 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using System.Collections.Frozen;
 using Compendium.Core.Domain.Events;
 
 namespace Compendium.Core.Domain.Primitives;
@@ -40,16 +39,17 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
     public long Version { get; private set; }
 
     /// <summary>
-    /// Gets the collection of uncommitted domain events.
-    /// Uses frozen collections for efficient reads and caching.
+    /// Gets the uncommitted domain events, in the order they were raised.
     /// </summary>
-    public IReadOnlyCollection<IDomainEvent> DomainEvents =>
-        _lockingStrategy.ExecuteRead(() =>
-        {
-            // Always create fresh frozen set to ensure consistency
-            // (Cache was causing issues with cleared collections)
-            return _domainEvents.ToFrozenSet();
-        });
+    /// <remarks>
+    /// The order is the data: replaying a stream written out of order rebuilds a
+    /// different state. The return type is therefore an ordered sequence, and the
+    /// snapshot is a fresh copy so that clearing or appending afterwards cannot
+    /// mutate a snapshot already handed out. Uniqueness is carried by
+    /// <c>_eventHashes</c> at insertion time, not by the returned collection.
+    /// </remarks>
+    public IReadOnlyList<IDomainEvent> DomainEvents =>
+        _lockingStrategy.ExecuteRead(() => (IReadOnlyList<IDomainEvent>)_domainEvents.ToList().AsReadOnly());
 
     /// <summary>
     /// Gets a value indicating whether there are uncommitted domain events.
@@ -109,8 +109,8 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
     /// <summary>
     /// Gets all uncommitted domain events and clears the collection.
     /// </summary>
-    /// <returns>The collection of uncommitted domain events.</returns>
-    public IReadOnlyCollection<IDomainEvent> GetUncommittedEvents()
+    /// <returns>The uncommitted domain events, in the order they were raised.</returns>
+    public IReadOnlyList<IDomainEvent> GetUncommittedEvents()
     {
         if (_disposed)
         {
@@ -118,10 +118,10 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IDisposable
         }
 
         // Execute atomically to avoid race conditions
-        FrozenSet<IDomainEvent> events = null!;
+        IReadOnlyList<IDomainEvent> events = null!;
         _lockingStrategy.ExecuteWrite(() =>
         {
-            events = _domainEvents.ToFrozenSet();
+            events = _domainEvents.ToList().AsReadOnly();
             ClearDomainEventsInternal();
         });
         return events;

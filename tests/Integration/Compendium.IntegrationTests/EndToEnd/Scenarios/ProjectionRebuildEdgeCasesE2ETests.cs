@@ -159,11 +159,19 @@ public sealed class ProjectionRebuildEdgeCasesE2ETests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task RebuildProjection_WithCheckpointAlreadyAtMaxPosition_CompletesWithoutReprocessing()
+    public async Task RebuildProjection_WithCheckpointAlreadyAtMaxPosition_RestoresTheReadModel()
     {
-        // Arrange — append events, rebuild, capture max checkpoint. Then call rebuild again
-        // and assert no events are re-applied below the existing checkpoint. We measure
-        // re-application via a counting projection wrapper that tracks ApplyAsync calls.
+        // Replaces RebuildProjection_WithCheckpointAlreadyAtMaxPosition_CompletesWithoutReprocessing,
+        // which announced in a comment that it measured re-application "via a counting
+        // projection wrapper" — a wrapper that did not exist in the file. It asserted
+        // only that the checkpoint was unchanged, which stayed true while the rebuild
+        // was in fact clearing the read model and replaying nothing: it read the
+        // checkpoint, called ResetAsync, then replayed events strictly after that
+        // checkpoint, and in steady state the checkpoint sits at the head.
+        //
+        // What matters is the state of the table, so that is what is asserted here:
+        // rebuilding a projection whose checkpoint is already at the head leaves the
+        // same rows behind, and the events really are applied again.
 
         var orderId = OrderId.New();
         var order = OrderAggregate.PlaceOrder(orderId, "customer-max-checkpoint", DateTimeOffset.UtcNow);
@@ -174,24 +182,40 @@ public sealed class ProjectionRebuildEdgeCasesE2ETests : IAsyncLifetime
         await _eventStore.AppendEventsAsync(orderId.ToString(), events, expectedVersion: 0);
 
         _projectionManager.RegisterProjection<OrderSummaryProjection>();
+        var projection = _provider.GetRequiredService<OrderSummaryProjection>();
 
-        // First rebuild establishes the high-water-mark checkpoint.
+        // First rebuild establishes the read model and a checkpoint at the head.
         await _projectionManager.RebuildProjectionAsync<OrderSummaryProjection>(streamId: orderId.ToString());
         var initialCheckpoint = await _projectionStore.GetCheckpointAsync("E2E_OrderSummary");
         initialCheckpoint.Should().NotBeNull();
         var maxPosition = await _eventStore.GetMaxGlobalPositionAsync();
-        initialCheckpoint!.Value.Should().BeGreaterOrEqualTo(events.Count - 1,
-            "the checkpoint must reach at least the count of applied events");
 
-        // Act — rebuild again. The store already holds a checkpoint at the end of the stream.
+        var rowsBefore = projection.GetAllSummaries().Count();
+        rowsBefore.Should().BeGreaterThan(0, "the first rebuild must have populated the read model");
+        var summaryBefore = projection.GetOrderSummary(orderId.ToString());
+        summaryBefore.Should().NotBeNull();
+
+        // Act — rebuild again, with the checkpoint already at the end of the stream.
         await _projectionManager.RebuildProjectionAsync<OrderSummaryProjection>(streamId: orderId.ToString());
-        var afterCheckpoint = await _projectionStore.GetCheckpointAsync("E2E_OrderSummary");
 
-        // Assert
+        // Assert — the read model is whole. This is the assertion the old test lacked,
+        // and the one that fails against the pre-fix ordering: the table was emptied and
+        // never refilled.
+        projection.GetAllSummaries().Should().HaveCount(rowsBefore,
+            "a rebuild must leave the read model in the state applying the stream produces");
+        var summaryAfter = projection.GetOrderSummary(orderId.ToString());
+        summaryAfter.Should().NotBeNull();
+        summaryAfter!.LineCount.Should().Be(summaryBefore!.LineCount);
+        summaryAfter.TotalAmount.Should().Be(summaryBefore.TotalAmount);
+
+        var afterCheckpoint = await _projectionStore.GetCheckpointAsync("E2E_OrderSummary");
         afterCheckpoint.Should().NotBeNull();
         afterCheckpoint!.Value.Should().BeLessOrEqualTo(maxPosition,
             "the checkpoint must never exceed the highest global position observed in the event store");
-        afterCheckpoint.Value.Should().Be(initialCheckpoint.Value,
-            "a rebuild starting from the existing checkpoint with no new events must leave the checkpoint untouched");
+        afterCheckpoint.Value.Should().Be(initialCheckpoint!.Value,
+            "replaying the same stream must land the cursor on the same position");
+
+        var state = await _projectionManager.GetProjectionStateAsync("E2E_OrderSummary");
+        state.Status.Should().Be(ProjectionStatus.Completed);
     }
 }
