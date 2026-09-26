@@ -16,7 +16,7 @@ Heavy adapters that ship from their own repositories per [ADR-0006](../adr/0006-
 
 Generate a new repository from the [`template-compendium-adapter-dotnet`](https://github.com/sassy-solutions/template-compendium-adapter-dotnet) GitHub template. The template ships:
 
-- xUnit + FluentAssertions + NSubstitute + AutoFixture + Bogus test stack
+- xUnit + AwesomeAssertions + NSubstitute + AutoFixture + Bogus test stack
 - 90 % line-coverage CI gate
 - MinVer-driven versioning from git tags
 - Tag-triggered NuGet publishing (nuget.org + GitHub Packages)

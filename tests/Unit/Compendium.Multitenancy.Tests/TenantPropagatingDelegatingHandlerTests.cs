@@ -8,7 +8,7 @@
 using System.Net;
 using System.Net.Http;
 using Compendium.Multitenancy.Http;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 

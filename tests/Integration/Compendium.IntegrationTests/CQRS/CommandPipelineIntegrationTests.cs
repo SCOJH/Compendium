@@ -12,7 +12,7 @@ using Compendium.Application.CQRS;
 using Compendium.Application.CQRS.Behaviors;
 using Compendium.Application.Idempotency;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

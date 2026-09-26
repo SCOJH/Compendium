@@ -6,7 +6,7 @@
 
 using Compendium.Infrastructure.EventSourcing;
 using Compendium.Infrastructure.Projections;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Infrastructure.Tests.EventSourcing;
 

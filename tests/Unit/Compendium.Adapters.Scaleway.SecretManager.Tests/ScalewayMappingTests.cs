@@ -9,7 +9,7 @@ using Compendium.Abstractions.Secrets.Model;
 using Compendium.Adapters.Scaleway.SecretManager.Http;
 using Compendium.Adapters.Scaleway.SecretManager.Tests.Infrastructure;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using WireMock.RequestBuilders;
 using Xunit;
 

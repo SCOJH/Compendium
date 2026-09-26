@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using Compendium.Adapters.AspNetCore.Health;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;

@@ -222,7 +222,7 @@ public sealed class LiveProjectionProcessorLifecycleTests
         var highWater = new Dictionary<string, long> { ["Ahead"] = 3, ["Laggard"] = 1 };
         foreach (var (name, position) in saved.OrderBy(_ => 0))
         {
-            position.Should().BeGreaterOrEqualTo(highWater[name],
+            position.Should().BeGreaterThanOrEqualTo(highWater[name],
                 $"the engine must never move the cursor of {name} backwards");
             highWater[name] = position;
         }

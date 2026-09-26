@@ -9,7 +9,7 @@ using Compendium.Abstractions.Sagas.Common;
 using Compendium.Abstractions.Sagas.ProcessManagers;
 using Compendium.Application.Sagas.ProcessManagers;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.IntegrationTests.EndToEnd.Scenarios;

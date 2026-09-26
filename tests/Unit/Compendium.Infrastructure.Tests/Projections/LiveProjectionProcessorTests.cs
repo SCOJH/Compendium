@@ -267,7 +267,7 @@ public sealed class LiveProjectionProcessorTests
         }
 
         // Assert — the streaming throw was caught and the loop kept running for at least one attempt
-        attempt.Should().BeGreaterOrEqualTo(1);
+        attempt.Should().BeGreaterThanOrEqualTo(1);
     }
 
     private static async IAsyncEnumerable<EventData> OneEventStreamThenEmpty(long fromPosition)

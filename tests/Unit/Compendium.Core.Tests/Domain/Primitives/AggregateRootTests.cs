@@ -371,7 +371,7 @@ public class AggregateRootTests
         // Assert
         // Note: The current implementation uses a simple hash that might allow duplicates
         // This test documents the current behavior and can be updated when deduplication is improved
-        aggregate.DomainEvents.Count.Should().BeGreaterOrEqualTo(1);
+        aggregate.DomainEvents.Count.Should().BeGreaterThanOrEqualTo(1);
     }
 
     [Fact]

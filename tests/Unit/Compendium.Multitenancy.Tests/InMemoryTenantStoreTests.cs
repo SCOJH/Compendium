@@ -7,7 +7,7 @@
 
 using Compendium.Multitenancy.Extensions;
 using Compendium.Multitenancy.Stores;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Multitenancy.Tests;
 

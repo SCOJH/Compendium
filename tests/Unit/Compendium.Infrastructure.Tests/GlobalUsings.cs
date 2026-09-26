@@ -18,7 +18,7 @@ global using Compendium.Core.Results;
 global using Compendium.Infrastructure.EventSourcing;
 global using Compendium.Infrastructure.Observability;
 global using Compendium.Multitenancy;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Microsoft.Extensions.Logging;
 global using NSubstitute;
 global using Xunit;

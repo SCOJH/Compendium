@@ -46,7 +46,7 @@
 ### ❌ Scenario 2: Idempotency (0/6 tests passing)
 
 **Status**: **FAIL**
-**Root Cause**: JsonElement dynamic type incompatibility with FluentAssertions
+**Root Cause**: JsonElement dynamic type incompatibility with AwesomeAssertions
 
 **Failing Tests**:
 1. `FirstExecution_WithIdempotencyKey_OperationExecutesAndResultStored` - ❌
@@ -67,7 +67,7 @@ Microsoft.CSharp.RuntimeBinder.RuntimeBinderException:
 **Analysis**:
 - IdempotencyService stores cached results as dynamic objects
 - Deserialization returns `JsonElement` which doesn't support `dynamic` extension methods
-- FluentAssertions `.Should()` fails on `JsonElement` wrapped in `dynamic`
+- AwesomeAssertions `.Should()` fails on `JsonElement` wrapped in `dynamic`
 
 **Impact**: **CRITICAL** - Cannot verify idempotency enforcement (core framework requirement)
 

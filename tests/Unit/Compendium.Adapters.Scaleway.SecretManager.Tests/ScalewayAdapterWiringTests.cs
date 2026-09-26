@@ -8,7 +8,7 @@
 using Compendium.Abstractions.Secrets;
 using Compendium.Abstractions.Secrets.Capabilities;
 using Compendium.Adapters.Scaleway.SecretManager.DependencyInjection;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 

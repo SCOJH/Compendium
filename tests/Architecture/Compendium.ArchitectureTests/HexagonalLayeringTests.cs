@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using FluentAssertions;
+using AwesomeAssertions;
 using NetArchTest.Rules;
 using Xunit;
 

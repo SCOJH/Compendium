@@ -14,7 +14,7 @@ using Compendium.Abstractions.Git.Pipelines;
 using Compendium.Abstractions.Git.Protection;
 using Compendium.Abstractions.Git.Repositories;
 using Compendium.Abstractions.Git.Webhooks;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.Testing.Git;

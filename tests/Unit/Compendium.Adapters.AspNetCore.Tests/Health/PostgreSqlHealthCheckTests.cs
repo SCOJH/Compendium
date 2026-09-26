@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Adapters.AspNetCore.Health;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging.Abstractions;
 

@@ -8,7 +8,7 @@
 using Compendium.Abstractions.CodingAgents.Sandbox;
 using Compendium.Adapters.Kubernetes.Sandbox;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using k8s;
 using k8s.Models;
 using Microsoft.Extensions.Logging.Abstractions;

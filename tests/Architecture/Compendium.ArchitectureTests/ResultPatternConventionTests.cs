@@ -7,7 +7,7 @@
 
 using System.Reflection;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.ArchitectureTests;

@@ -10,7 +10,7 @@ using Compendium.Application.Sagas.Choreography;
 using Compendium.Application.Sagas.DependencyInjection;
 using Compendium.Core.Domain.Events;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 

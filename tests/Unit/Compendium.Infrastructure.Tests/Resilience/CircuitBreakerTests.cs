@@ -366,7 +366,7 @@ public sealed class CircuitBreakerTests
         var executedFailures = results.Count(r => r.Error.Code != "CircuitBreaker.Open");
         var rejectedCalls = results.Count(r => r.Error.Code == "CircuitBreaker.Open");
 
-        executedFailures.Should().BeGreaterOrEqualTo(_defaultOptions.FailureThreshold);
+        executedFailures.Should().BeGreaterThanOrEqualTo(_defaultOptions.FailureThreshold);
         rejectedCalls.Should().BeGreaterThan(0);
 
         _output.WriteLine($"Executed failures: {executedFailures}, Rejected calls: {rejectedCalls}");

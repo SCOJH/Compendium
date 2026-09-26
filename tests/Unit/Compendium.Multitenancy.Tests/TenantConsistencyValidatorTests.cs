@@ -1,5 +1,5 @@
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 

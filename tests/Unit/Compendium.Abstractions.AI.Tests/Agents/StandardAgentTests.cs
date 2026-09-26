@@ -11,7 +11,7 @@ using Compendium.Abstractions.AI.Agents.Models;
 using Compendium.Abstractions.AI.Models;
 using Compendium.Application.AI.Agents;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using NSubstitute;
 
 namespace Compendium.Abstractions.AI.Tests.Agents;

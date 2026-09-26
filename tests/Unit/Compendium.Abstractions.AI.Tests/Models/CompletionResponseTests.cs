@@ -1,5 +1,5 @@
 using Compendium.Abstractions.AI.Models;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Abstractions.AI.Tests.Models;
 

@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 global using Xunit;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Compendium.Abstractions.Billing;
 global using Compendium.Abstractions.Billing.Models;
 global using Compendium.Core.Results;

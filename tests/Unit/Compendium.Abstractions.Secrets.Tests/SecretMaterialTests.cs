@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Abstractions.Secrets.Model;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.Abstractions.Secrets.Tests;

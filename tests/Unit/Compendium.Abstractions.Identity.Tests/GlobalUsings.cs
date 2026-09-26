@@ -9,5 +9,5 @@ global using Compendium.Abstractions.Identity;
 global using Compendium.Abstractions.Identity.Models;
 global using Compendium.Abstractions.Identity.Models.Requests;
 global using Compendium.Core.Results;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Xunit;

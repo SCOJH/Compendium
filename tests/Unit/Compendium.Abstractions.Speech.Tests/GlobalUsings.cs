@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 global using Xunit;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Compendium.Abstractions.Speech;
 global using Compendium.Abstractions.Speech.Models;
 global using Compendium.Core.Results;

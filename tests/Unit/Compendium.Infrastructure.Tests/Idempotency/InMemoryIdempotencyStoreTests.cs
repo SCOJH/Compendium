@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Infrastructure.Idempotency;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Infrastructure.Tests.Idempotency;
 

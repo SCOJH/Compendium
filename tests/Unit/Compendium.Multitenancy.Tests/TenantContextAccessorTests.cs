@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Multitenancy.Tests;
 
