@@ -8,7 +8,7 @@
 using System.Text;
 using Compendium.Abstractions.Secrets.Model;
 using Compendium.Adapters.Scaleway.SecretManager.Tests.Infrastructure;
-using FluentAssertions;
+using AwesomeAssertions;
 using WireMock.RequestBuilders;
 using Xunit;
 

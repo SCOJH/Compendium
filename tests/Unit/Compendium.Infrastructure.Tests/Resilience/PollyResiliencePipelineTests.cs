@@ -86,12 +86,12 @@ public sealed class PollyResiliencePipelineTests
 
         // Just verify delays are non-zero (retries waited before retry)
         // Using very lenient bounds to avoid CI flakiness due to timer resolution and jitter
-        firstRetryDelay.Should().BeGreaterOrEqualTo(0, "first retry should have some delay");
-        secondRetryDelay.Should().BeGreaterOrEqualTo(0, "second retry should have some delay");
+        firstRetryDelay.Should().BeGreaterThanOrEqualTo(0, "first retry should have some delay");
+        secondRetryDelay.Should().BeGreaterThanOrEqualTo(0, "second retry should have some delay");
 
         // Verify second delay is at least as long as first (exponential backoff property)
         // Allow small tolerance for jitter
-        secondRetryDelay.Should().BeGreaterOrEqualTo(firstRetryDelay * 0.5,
+        secondRetryDelay.Should().BeGreaterThanOrEqualTo(firstRetryDelay * 0.5,
             "exponential backoff should generally increase delays between retries");
     }
 

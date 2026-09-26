@@ -64,7 +64,7 @@ Each extracted adapter repo :
 2. Ships its own NuGet : `Compendium.Adapters.<Vendor>` and `Compendium.Adapters.<Vendor>.Tests` is internal.
 3. Owns its **own integration tests** (Testcontainers, vendor sandboxes) so the framework CI no longer carries Docker images for `pg` / `redis`.
 4. Sets a **CI line-coverage gate of 90 %** on the unit-testable surface ; types that genuinely require a live external system are covered by integration tests in the same repo.
-5. Follows the **same testing conventions** as the framework (xUnit 2.9, FluentAssertions 6.12, NSubstitute 5.1, AAA explicit comments, Result-pattern assertions, `IAsyncLifetime` fixtures, no Moq / no `Assert.*` / no `Thread.Sleep`). Codified in the `compendium-test-author` skill, which the template ships with.
+5. Follows the **same testing conventions** as the framework (xUnit 2.9, AwesomeAssertions 6.12, NSubstitute 5.1, AAA explicit comments, Result-pattern assertions, `IAsyncLifetime` fixtures, no Moq / no `Assert.*` / no `Thread.Sleep`). Codified in the `compendium-test-author` skill, which the template ships with.
 6. Tracks the framework via [Renovate](https://docs.renovatebot.com/) ; a Compendium release auto-opens a PR in every adapter repo within 24 h ; the adapter repo's CI must stay green or the PR blocks.
 
 A starter template lives at `templates/adapter-dotnet/` in this repository (see PR opening this ADR). It is the canonical seed for a new adapter repo : copy, rename `<Vendor>`, push to a fresh GitHub repo, set up NuGet publishing.

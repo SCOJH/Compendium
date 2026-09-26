@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 global using Xunit;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Compendium.Abstractions.Email;
 global using Compendium.Abstractions.Email.Models;
 global using Compendium.Core.Results;

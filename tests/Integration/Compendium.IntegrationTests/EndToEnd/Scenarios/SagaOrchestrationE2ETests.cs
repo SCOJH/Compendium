@@ -8,7 +8,7 @@
 using Compendium.Application.Saga;
 using Compendium.Core.Results;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.IntegrationTests.EndToEnd.Scenarios;

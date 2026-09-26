@@ -15,5 +15,5 @@ global using Compendium.Core.Domain.Primitives;
 global using Compendium.Core.Domain.Rules;
 global using Compendium.Core.Domain.Specifications;
 global using Compendium.Core.Results;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using Xunit;

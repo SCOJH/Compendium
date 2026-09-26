@@ -10,7 +10,7 @@ using Compendium.Infrastructure.Projections;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
 using Compendium.IntegrationTests.EndToEnd.TestProjections;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -149,7 +149,7 @@ public sealed class LiveProjectionE2ETests : IAsyncLifetime
         status.IsRunning.Should().BeTrue();
         status.RegisteredProjections.Should().Be(1);
         status.ActiveProjections.Should().Be(1);
-        status.TotalEventsProcessed.Should().BeGreaterOrEqualTo(5);
+        status.TotalEventsProcessed.Should().BeGreaterThanOrEqualTo(5);
 
         // **Expected Results:**
         // ✅ Projection updates within 500ms of event append
@@ -198,7 +198,7 @@ public sealed class LiveProjectionE2ETests : IAsyncLifetime
         }
         // **Step 3: Verify processor statistics**
         var status = _liveProcessor.GetStatus();
-        status.TotalEventsProcessed.Should().BeGreaterOrEqualTo(10, "At least 10 events (5 orders x 2 events each)");
+        status.TotalEventsProcessed.Should().BeGreaterThanOrEqualTo(10, "At least 10 events (5 orders x 2 events each)");
 
         // **Expected Results:**
         // ✅ All 5 orders processed
@@ -240,7 +240,7 @@ public sealed class LiveProjectionE2ETests : IAsyncLifetime
         // **Step 4: Verify final checkpoint saved**
         var checkpointAfter = await _projectionStore.GetCheckpointAsync("E2E_OrderSummary");
         checkpointAfter.Should().NotBeNull();
-        checkpointAfter!.Value.Should().BeGreaterOrEqualTo(checkpointBefore!.Value, "Final checkpoint should be saved on shutdown");
+        checkpointAfter!.Value.Should().BeGreaterThanOrEqualTo(checkpointBefore!.Value, "Final checkpoint should be saved on shutdown");
 
         // **Step 5: Verify processor stopped**
         var status = _liveProcessor.GetStatus();

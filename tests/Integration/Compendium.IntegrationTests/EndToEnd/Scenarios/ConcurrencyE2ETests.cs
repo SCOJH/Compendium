@@ -9,7 +9,7 @@ using Compendium.Core.Results;
 using Compendium.Infrastructure.EventSourcing;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.IntegrationTests.EndToEnd.Scenarios;
@@ -362,7 +362,7 @@ public sealed class ConcurrencyE2ETests : IAsyncLifetime
             // Event counts should be monotonically increasing (reads are consistent)
             for (int i = 1; i < eventCounts.Count; i++)
             {
-                eventCounts[i].Should().BeGreaterOrEqualTo(eventCounts[i - 1],
+                eventCounts[i].Should().BeGreaterThanOrEqualTo(eventCounts[i - 1],
                     "Event count should never decrease during concurrent reads");
             }
         }

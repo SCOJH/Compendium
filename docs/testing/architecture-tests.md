@@ -3,7 +3,7 @@
 Compendium ships a small but strict set of architecture tests under
 `tests/Architecture/Compendium.ArchitectureTests/`. They are powered by
 [NetArchTest.Rules](https://github.com/BenMorris/NetArchTest) + xUnit +
-FluentAssertions and run on every CI build.
+AwesomeAssertions and run on every CI build.
 
 The goal is not coverage of behaviour — that is the job of the unit and
 integration test projects. The goal is to **fail fast when someone introduces

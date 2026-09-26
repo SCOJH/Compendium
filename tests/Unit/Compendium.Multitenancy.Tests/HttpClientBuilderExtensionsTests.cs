@@ -7,7 +7,7 @@
 
 using Compendium.Multitenancy.Extensions;
 using Compendium.Multitenancy.Http;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

@@ -10,7 +10,7 @@ using Compendium.Infrastructure.Projections;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
 using Compendium.IntegrationTests.EndToEnd.TestProjections;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -210,7 +210,7 @@ public sealed class ProjectionRebuildEdgeCasesE2ETests : IAsyncLifetime
 
         var afterCheckpoint = await _projectionStore.GetCheckpointAsync("E2E_OrderSummary");
         afterCheckpoint.Should().NotBeNull();
-        afterCheckpoint!.Value.Should().BeLessOrEqualTo(maxPosition,
+        afterCheckpoint!.Value.Should().BeLessThanOrEqualTo(maxPosition,
             "the checkpoint must never exceed the highest global position observed in the event store");
         afterCheckpoint.Value.Should().Be(initialCheckpoint!.Value,
             "replaying the same stream must land the cursor on the same position");

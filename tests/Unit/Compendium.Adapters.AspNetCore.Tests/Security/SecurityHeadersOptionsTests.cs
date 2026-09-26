@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Adapters.AspNetCore.Security;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Adapters.AspNetCore.Tests.Security;
 

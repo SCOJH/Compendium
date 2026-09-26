@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Adapters.Shared.Logging;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Adapters.Shared.Tests.Logging;
 

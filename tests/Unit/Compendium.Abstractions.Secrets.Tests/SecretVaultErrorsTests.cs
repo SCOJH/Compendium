@@ -7,7 +7,7 @@
 
 using Compendium.Abstractions.Secrets.Capabilities;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.Abstractions.Secrets.Tests;

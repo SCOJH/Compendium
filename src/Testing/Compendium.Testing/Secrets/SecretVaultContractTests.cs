@@ -10,7 +10,7 @@ using Compendium.Abstractions.Secrets.Capabilities;
 using Compendium.Abstractions.Secrets.Connections;
 using Compendium.Abstractions.Secrets.Model;
 using Compendium.Core.Results;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.Testing.Secrets;

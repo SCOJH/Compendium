@@ -7,7 +7,7 @@
 
 using System.Reflection;
 using Compendium.Core.Domain.Events;
-using FluentAssertions;
+using AwesomeAssertions;
 using NetArchTest.Rules;
 using Xunit;
 

@@ -14,6 +14,6 @@ global using Compendium.Abstractions.CQRS.Commands;
 global using Compendium.Abstractions.CQRS.Handlers;
 global using Compendium.Abstractions.CQRS.Queries;
 global using Compendium.Core.Results;
-global using FluentAssertions;
+global using AwesomeAssertions;
 global using NSubstitute;
 global using Xunit;

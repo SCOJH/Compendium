@@ -8,7 +8,7 @@
 using Compendium.Multitenancy.Extensions;
 using Compendium.Multitenancy.Http;
 using Compendium.Multitenancy.Stores;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Compendium.Multitenancy.Tests;

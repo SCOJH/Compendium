@@ -9,7 +9,7 @@ using Compendium.Core.Results;
 using Compendium.Infrastructure.EventSourcing;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace Compendium.IntegrationTests.EndToEnd.Scenarios;

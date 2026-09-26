@@ -25,7 +25,7 @@
     </PackageReference>
     <PackageReference Include="Xunit.SkippableFact" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="KubernetesClient" />
     <PackageReference Include="Testcontainers" />
     <PackageReference Include="Testcontainers.K3s" />

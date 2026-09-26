@@ -12,7 +12,7 @@ using System.Text.Json;
 using Compendium.Adapters.AspNetCore.Security;
 using Compendium.Core.Results;
 using Compendium.Multitenancy;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;

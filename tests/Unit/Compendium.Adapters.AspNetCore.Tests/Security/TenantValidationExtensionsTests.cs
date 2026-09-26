@@ -8,7 +8,7 @@
 using System.Diagnostics;
 using Compendium.Adapters.AspNetCore.Security;
 using Compendium.Multitenancy;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Infrastructure.Projections;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Infrastructure.Tests.Projections;
 

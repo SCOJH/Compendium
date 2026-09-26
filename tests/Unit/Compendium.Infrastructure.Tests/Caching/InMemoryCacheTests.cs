@@ -7,7 +7,7 @@
 using Compendium.Abstractions.Caching;
 using Compendium.Infrastructure.Caching;
 using Compendium.Multitenancy;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;

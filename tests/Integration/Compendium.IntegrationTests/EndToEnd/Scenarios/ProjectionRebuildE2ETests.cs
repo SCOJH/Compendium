@@ -11,7 +11,7 @@ using Compendium.Infrastructure.Projections;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates;
 using Compendium.IntegrationTests.EndToEnd.TestAggregates.ValueObjects;
 using Compendium.IntegrationTests.EndToEnd.TestProjections;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -286,7 +286,7 @@ public sealed class ProjectionRebuildE2ETests : IAsyncLifetime
 
         // Verify checkpoint advanced through all events
         var checkpoint = await _projectionStore!.GetCheckpointAsync("E2E_OrderSummary");
-        checkpoint.Should().BeGreaterOrEqualTo(5, "Should process all 5 events");
+        checkpoint.Should().BeGreaterThanOrEqualTo(5, "Should process all 5 events");
 
         // **Expected Results:**
         // ✅ Projection rebuilt from 5 events (1 place + 3 lines + 1 complete)

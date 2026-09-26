@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Testing.TestHelpers;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Testing.Tests.TestHelpers;
 

@@ -1,6 +1,6 @@
 ---
 name: compendium-test-author
-description: Use when adding or repairing tests inside the Compendium event-sourcing framework — anywhere under tests/Unit, tests/Integration, or tests/Architecture. Triggers on "/tests", "écris les tests pour ...", "add unit tests", "test the changes", "amène <project> à 90%". Encodes xUnit 2.9.3 + FluentAssertions 6.12 + NSubstitute 5.1 + AutoFixture + Bogus, IAsyncLifetime fixtures, Result-pattern assertions, and Compendium-specific patterns (CQRS, ES, hexagonal, multi-tenant, idempotency).
+description: Use when adding or repairing tests inside the Compendium event-sourcing framework — anywhere under tests/Unit, tests/Integration, or tests/Architecture. Triggers on "/tests", "écris les tests pour ...", "add unit tests", "test the changes", "amène <project> à 90%". Encodes xUnit 2.9.3 + AwesomeAssertions 6.12 + NSubstitute 5.1 + AutoFixture + Bogus, IAsyncLifetime fixtures, Result-pattern assertions, and Compendium-specific patterns (CQRS, ES, hexagonal, multi-tenant, idempotency).
 type: skill
 ---
 
@@ -24,7 +24,7 @@ Read from `Directory.Packages.props`:
 | `xunit` | 2.9.3 | Test runner |
 | `xunit.runner.visualstudio` | 3.1.5 | VS adapter |
 | `Microsoft.NET.Test.Sdk` | 18.4.0 | Test SDK |
-| `FluentAssertions` | 6.12.1 | **Assertions — always** |
+| `AwesomeAssertions` | 6.12.1 | **Assertions — always** |
 | `NSubstitute` | 5.1.0 | **Mocks — preferred** |
 | `Moq` | 4.20.72 | Available but **don't use it** in new tests |
 | `AutoFixture` | 4.18.1 | Auto-generated fixtures |
@@ -241,7 +241,7 @@ Reuse existing fixtures — **don't reinvent**.
 ## Hard constraints (interdictions)
 
 - ❌ **No Moq** — NSubstitute only, even though Moq is referenced.
-- ❌ **No `Assert.*` xUnit calls** — FluentAssertions exclusively.
+- ❌ **No `Assert.*` xUnit calls** — AwesomeAssertions exclusively.
 - ❌ **No real DB / Redis / network** in `tests/Unit/` — those belong in `tests/Integration/`.
 - ❌ **No `Thread.Sleep`** — use `await Task.Delay(...)` or inject an `ITimeProvider` mock.
 - ❌ **No order-dependent tests** — every test must pass in isolation and in any order.
@@ -249,7 +249,7 @@ Reuse existing fixtures — **don't reinvent**.
 - ❌ **No production-code change** in a test PR (sole exception : a typo in a string literal asserted by the new test).
 - ❌ **No `--no-verify`, no `--force-push`, no commit-amending** of pushed history.
 - ❌ **No version bumps** in `Directory.Packages.props` from a test PR.
-- ❌ **No new top-level dependency** unless approved by the orchestrator (NSubstitute / FluentAssertions / xUnit are already centrally managed).
+- ❌ **No new top-level dependency** unless approved by the orchestrator (NSubstitute / AwesomeAssertions / xUnit are already centrally managed).
 
 ## Output format when done
 

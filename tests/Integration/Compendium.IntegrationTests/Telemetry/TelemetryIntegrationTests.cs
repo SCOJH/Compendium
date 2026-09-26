@@ -12,7 +12,7 @@ using Compendium.Abstractions.CQRS.Queries;
 using Compendium.Application.CQRS;
 using Compendium.Core.Results;
 using Compendium.Core.Telemetry;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

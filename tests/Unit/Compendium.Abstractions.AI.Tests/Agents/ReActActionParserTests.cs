@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Compendium.Application.AI.Agents;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace Compendium.Abstractions.AI.Tests.Agents;
 
