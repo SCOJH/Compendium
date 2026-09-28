@@ -46,7 +46,7 @@
     <!-- Npgsql + StackExchange.Redis remain as transitive pins for in-tree consumers
          (AspNetCore health checks, sample 02). Direct PG/Redis adapter code lives in the
          per-adapter repos (compendium-adapter-postgresql, compendium-adapter-redis). -->
-    <PackageVersion Include="Npgsql" Version="9.0.4" />
+    <PackageVersion Include="Npgsql" Version="10.0.3" />
     <PackageVersion Include="OpenTelemetry" Version="1.19.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.19.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.19.0" />
