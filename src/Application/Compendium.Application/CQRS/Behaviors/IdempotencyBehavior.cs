@@ -161,7 +161,7 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
 
         var key = CallerKeyFor(keyed.IdempotencyScope, keyed.IdempotencyKey);
         var fingerprintKey = key + ":fingerprint";
-        var fingerprint = GenerateIdempotencyKey(request);
+        var fingerprint = FingerprintOf(request);
 
         if (_idempotencyService is IIdempotencyReservationService reservations)
         {
@@ -194,6 +194,10 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
                 var earlier = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
                 if (earlier != null)
                 {
+                    // We now hold a fresh reservation for a full lifetime. Re-record the result
+                    // so it lives as long: a reservation outliving its result would answer
+                    // "in progress" for a key whose operation finished long ago.
+                    await TryRecordAsync(key, earlier, requestName).ConfigureAwait(false);
                     return await ReturnRecordedAsync(earlier, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
                 }
 
@@ -220,19 +224,25 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
     private async Task<TResponse> RunAndRecordAsync(
         string key,
         string fingerprintKey,
-        string fingerprint,
+        string? fingerprint,
         string requestName,
         RequestHandlerDelegate<TResponse> next)
     {
         // Recording is not cancelled with the request: a response computed but not recorded
         // would leave its key answering "in progress" until the reservation expires, even
         // though the operation succeeded.
-        await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
+        if (fingerprint != null)
+        {
+            await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
+        }
 
         var response = await next().ConfigureAwait(false);
 
         await TryRecordAsync(key, response, requestName).ConfigureAwait(false);
-        await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
+        if (fingerprint != null)
+        {
+            await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
+        }
 
         return response;
     }
@@ -252,7 +262,7 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
     private async Task<TResponse> ReplayAsync(
         string key,
         string fingerprintKey,
-        string fingerprint,
+        string? fingerprint,
         string requestName,
         CancellationToken cancellationToken)
     {
@@ -294,7 +304,7 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
     private async Task<TResponse> ReturnRecordedAsync(
         TResponse recorded,
         string fingerprintKey,
-        string fingerprint,
+        string? fingerprint,
         string requestName,
         CancellationToken cancellationToken)
     {
@@ -307,8 +317,13 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
         return recorded;
     }
 
-    private async Task<bool> KeyReusedAsync(string fingerprintKey, string fingerprint, CancellationToken cancellationToken)
+    private async Task<bool> KeyReusedAsync(string fingerprintKey, string? fingerprint, CancellationToken cancellationToken)
     {
+        if (fingerprint == null)
+        {
+            return false;
+        }
+
         var recorded = await _idempotencyService.GetResultAsync<string>(fingerprintKey, cancellationToken).ConfigureAwait(false);
         return recorded != null && !string.Equals(recorded, fingerprint, StringComparison.Ordinal);
     }
@@ -333,6 +348,29 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
         var material = $"{scope?.Length ?? -1}:{scope}|{callerKey.Length}:{callerKey}";
         var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(material))).ToLowerInvariant();
         return $"idempotency:request:{typeof(TRequest).FullName}:{hash}";
+    }
+
+    /// <summary>
+    /// A stable digest of the request's content, or <c>null</c> when it cannot be serialised.
+    /// Not <see cref="GenerateIdempotencyKey"/>: its fallback hashes <c>GetHashCode()</c>,
+    /// which differs per instance for a class and per process for a string-bearing record —
+    /// a fingerprint built on it would refuse every replay as a reused key. Without a stable
+    /// digest the reuse check is skipped; the key itself still deduplicates.
+    /// </summary>
+    private string? FingerprintOf(TRequest request)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(request, _jsonOptions);
+            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(json))).ToLowerInvariant();
+        }
+        catch (Exception ex) when (ex is NotSupportedException or JsonException or InvalidOperationException)
+        {
+            _logger.LogWarning(
+                "{RequestType} cannot be serialised ({Reason}); reusing its idempotency key with different parameters will not be detected",
+                typeof(TRequest).Name, ex.GetType().Name);
+            return null;
+        }
     }
 
     private static TResponse Fail(Error error)

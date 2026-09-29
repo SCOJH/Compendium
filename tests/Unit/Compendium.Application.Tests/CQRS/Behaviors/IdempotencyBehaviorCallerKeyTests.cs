@@ -26,6 +26,16 @@ public sealed class IdempotencyBehaviorCallerKeyTests
 
     public sealed record PlainCommand(string Tag) : ICommand<Result<string>>;
 
+    /// <summary>System.Text.Json refuses to serialise <see cref="System.Type"/>.</summary>
+    public sealed class UnserialisableCommand(string key) : ICommand<Result<string>>, IIdempotentRequest
+    {
+        public Type Payload { get; } = typeof(string);
+
+        public string? IdempotencyKey { get; } = key;
+
+        public string? IdempotencyScope => null;
+    }
+
     private readonly AtomicStore _store = new();
 
     private IdempotencyBehavior<TCommand, Result<string>> Behavior<TCommand>(IIdempotencyService? service = null, int replayWaitMs = 200)
@@ -265,6 +275,21 @@ public sealed class IdempotencyBehaviorCallerKeyTests
 
         runs.Should().Be(1);
         replay.Value.Should().Be("done");
+    }
+
+    [Fact]
+    public async Task ACommandThatCannotBeSerialised_IsStillReplayed_NotRefusedAsAReusedKey()
+    {
+        var behavior = Behavior<UnserialisableCommand>();
+        var runs = 0;
+        Task<Result<string>> Handler() => Task.FromResult(Result.Success($"deployment-{Interlocked.Increment(ref runs)}"));
+
+        var first = await behavior.HandleAsync(new UnserialisableCommand("key-9"), Handler, CancellationToken.None);
+        var replay = await behavior.HandleAsync(new UnserialisableCommand("key-9"), Handler, CancellationToken.None);
+
+        runs.Should().Be(1);
+        replay.IsSuccess.Should().BeTrue();
+        replay.Value.Should().Be(first.Value);
     }
 
     /// <summary>A reservation store with real atomicity, standing in for the infrastructure one.</summary>

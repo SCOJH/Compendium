@@ -21,18 +21,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `IdempotencyBehavior.ReplayWait`, then receives an `Idempotency.InProgress`
   conflict instead of a second execution. A replay that wins a reservation after the
   previous one expired still returns the recorded response if it lives.
-  Keys are partitioned by `IIdempotentRequest.IdempotencyScope` — a multi-tenant
-  application must return the tenant there — and hashed with it into a fixed-shape
+  Keys are partitioned by `IIdempotentRequest.IdempotencyScope` — mandatory, so a
+  multi-tenant application cannot forget to return the tenant there — and hashed with it into a fixed-shape
   key, so a caller cannot reach another key's internal slots. The request is
   fingerprinted: the same key with different parameters gets
-  `Idempotency.KeyReused` rather than someone else's response. A store failure
+  `Idempotency.KeyReused` rather than someone else's response (a request that
+  cannot be serialised skips that check rather than refusing its own replays). A store failure
   while reserving refuses the request (`Idempotency.Unavailable`) rather than run it
   beside a possible winner; recording is not cancelled with the request.
   `IdempotencyService` implements the new `IIdempotencyReservationService` and
   reserves for the same lifetime as its results. `InMemoryIdempotencyStore`
   implements the reservation. Purely additive: commands that do not implement
   `IIdempotentRequest` keep the content-hash key, and no existing interface gains a
-  member (`IdempotencyScope` has a default implementation).
+  member.
 
 ### Fixed
 

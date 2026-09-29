@@ -28,8 +28,9 @@ public interface IIdempotentRequest
     /// Keys are chosen by callers, so two tenants will eventually send the same one. Without
     /// a scope they would share one slot: the second would receive the first one's recorded
     /// response, data included, and its own command would never run. A multi-tenant
-    /// application <b>must</b> return the tenant identifier here. The default, <c>null</c>,
-    /// is only correct when every caller of the command belongs to one trust domain.
+    /// application <b>must</b> return the tenant identifier here. Returning <c>null</c> is a
+    /// deliberate statement that every caller of the command belongs to one trust domain —
+    /// which is why the member has no default: forgetting it must not compile.
     /// </remarks>
-    string? IdempotencyScope => null;
+    string? IdempotencyScope { get; }
 }

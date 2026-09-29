@@ -156,7 +156,7 @@ public sealed class InMemoryIdempotencyStoreTests
         result.IsFailure.Should().BeTrue();
         result.Error.Code.Should().Be("Idempotency.InvalidExpiration");
     }
-    public sealed record ReplayableCommand(string? IdempotencyKey) : Compendium.Abstractions.CQRS.Commands.ICommand<Result<string>>, Compendium.Application.Idempotency.IIdempotentRequest;
+    public sealed record ReplayableCommand(string? IdempotencyKey, string? IdempotencyScope = null) : Compendium.Abstractions.CQRS.Commands.ICommand<Result<string>>, Compendium.Application.Idempotency.IIdempotentRequest;
 
     [Fact]
     public async Task AReplayAfterTheReservationExpired_ButWhileTheResultLives_DoesNotRunAgain()
@@ -182,5 +182,35 @@ public sealed class InMemoryIdempotencyStoreTests
 
         runs.Should().Be(1);
         replay.Value.Should().Be(first.Value);
+    }
+    [Fact]
+    public async Task AKeyWhoseReservationWasRewon_DoesNotAnswerInProgress_OnceTheOriginalResultExpired()
+    {
+        var service = new Compendium.Application.Idempotency.IdempotencyService(_sut, TimeSpan.FromMilliseconds(600));
+        var behavior = new Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>(
+            service,
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>>.Instance)
+        {
+            ReplayWait = TimeSpan.FromMilliseconds(100),
+        };
+        var runs = 0;
+        async Task<Result<string>> Handler()
+        {
+            var n = Interlocked.Increment(ref runs);
+            await Task.Delay(400);
+            return Result.Success($"run-{n}");
+        }
+
+        // t≈0 reserve (→600), t≈400 result (→1000).
+        await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
+        await Task.Delay(300);
+        // t≈700: reservation expired, result alive — the replay re-wins the reservation (→1300).
+        await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
+        await Task.Delay(400);
+        // t≈1100: the ORIGINAL result has expired, the re-won reservation has not.
+        var late = await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
+
+        runs.Should().Be(1);
+        late.IsSuccess.Should().BeTrue("the re-won reservation must come with its result, not answer in progress");
     }
 }
