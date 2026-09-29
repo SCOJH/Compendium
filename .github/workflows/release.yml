@@ -70,6 +70,27 @@ jobs:
       - name: Verify no version is being republished
         run: bash scripts/verify-package-not-published.sh artifacts/
 
+      # La quatrième garde, et la seule qui regarde ce dont le paquet DÉPEND.
+      #
+      # Le 2026-09-29, `testing-v1.0.5-preview.6` a été tagué SEUL, sur un commit
+      # onze commits après `core-v1.0.5-preview.5`. MinVer a donc tamponné les
+      # dépendances du paquet en `1.0.5-preview.5.11` — jamais publiée, et qui
+      # sort AU-DESSUS de `preview.5` (une suite plus longue d'identifiants de
+      # préversion avec le même préfixe gagne), donc le `>=` qu'elle exprime
+      # n'était satisfait par rien. La release est passée VERTE et a produit un
+      # paquet que personne ne pouvait installer (`NU1102`), sur un registre qui
+      # n'autorise pas la suppression.
+      #
+      # Les trois gardes ci-dessus regardent toutes LE paquet : son train, sa
+      # provenance, sa version. Aucune ne regarde ce dont il dépend.
+      #
+      # La règle que ça grave : un train aval se tague AVEC son train amont, sur
+      # le même commit. Elle était déjà écrite — en prose, dans le `$comment` de
+      # `compendium-floor-gaps.json` côté Nexus — là où elle pouvait être, et a
+      # été, manquée.
+      - name: Verify every Compendium dependency can be resolved
+        run: bash scripts/verify-package-dependencies-exist.sh artifacts/
+
       - name: Push to nuget.org
         run: |
           dotnet nuget push "artifacts/*.nupkg" \
