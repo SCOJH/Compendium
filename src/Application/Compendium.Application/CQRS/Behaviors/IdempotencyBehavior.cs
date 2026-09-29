@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Compendium.Application.Idempotency;
+using Compendium.Core.Results;
 using Microsoft.Extensions.Logging;
 
 namespace Compendium.Application.CQRS.Behaviors;
@@ -17,6 +18,23 @@ namespace Compendium.Application.CQRS.Behaviors;
 /// Pipeline behavior that provides idempotency for command processing.
 /// Prevents duplicate command execution by caching results and checking for previously processed commands.
 /// </summary>
+/// <remarks>
+/// <para>
+/// Two keying modes. A command implementing <see cref="IIdempotentRequest"/> is keyed by the
+/// caller's <see cref="IIdempotentRequest.IdempotencyKey"/>; a blank key disables
+/// deduplication for that call. Any other command keeps the historical content-hash key.
+/// </para>
+/// <para>
+/// For caller-keyed commands, when the service implements
+/// <see cref="IIdempotencyReservationService"/> the key is reserved atomically before the
+/// handler runs, and the reservation is never released: the winner records its response,
+/// failure included, and every replay returns that response. A replay arriving while the
+/// winner still runs waits up to <see cref="ReplayWait"/>, then gets an
+/// <c>Idempotency.InProgress</c> conflict — never a second execution. A handler that throws
+/// records nothing, so its key answers "in progress" until the reservation expires: the
+/// side effects it may have produced are exactly why the operation is not re-run.
+/// </para>
+/// </remarks>
 /// <typeparam name="TRequest">The type of the request being processed.</typeparam>
 /// <typeparam name="TResponse">The type of the response being returned.</typeparam>
 public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
@@ -47,6 +65,12 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
     }
 
     /// <summary>
+    /// Gets how long a replay waits for a concurrent winner to record its response before
+    /// answering <c>Idempotency.InProgress</c>. Defaults to five seconds.
+    /// </summary>
+    public TimeSpan ReplayWait { get; init; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Handles the request with idempotency checking and result caching.
     /// </summary>
     /// <param name="request">The request to handle.</param>
@@ -62,6 +86,11 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
         if (!IsCommand(request))
         {
             return await next().ConfigureAwait(false);
+        }
+
+        if (request is IIdempotentRequest keyed)
+        {
+            return await HandleCallerKeyedAsync(keyed.IdempotencyKey, next, cancellationToken).ConfigureAwait(false);
         }
 
         var idempotencyKey = GenerateIdempotencyKey(request);
@@ -106,6 +135,133 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
         }
 
         return response;
+    }
+
+    private async Task<TResponse> HandleCallerKeyedAsync(
+        string? callerKey,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        var requestName = typeof(TRequest).Name;
+
+        if (string.IsNullOrWhiteSpace(callerKey))
+        {
+            _logger.LogDebug("{RequestName} carries no idempotency key; running without deduplication", requestName);
+            return await next().ConfigureAwait(false);
+        }
+
+        // Namespaced by request type: the same caller key on two different commands names
+        // two different operations.
+        var key = $"idempotency:request:{typeof(TRequest).FullName}:{callerKey}";
+
+        if (_idempotencyService is IIdempotencyReservationService reservations)
+        {
+            var reserved = await reservations.TryReserveAsync(key, cancellationToken).ConfigureAwait(false);
+
+            if (reserved.IsSuccess)
+            {
+                return reserved.Value
+                    ? await RunAndRecordAsync(key, requestName, next, cancellationToken).ConfigureAwait(false)
+                    : await ReplayAsync(key, requestName, cancellationToken).ConfigureAwait(false);
+            }
+
+            _logger.LogWarning(
+                "Could not reserve idempotency key for {RequestName} ({ErrorCode}: {ErrorMessage}); "
+                + "falling back to check-then-act, concurrent duplicates are possible",
+                requestName, reserved.Error.Code, reserved.Error.Message);
+        }
+
+        if (await _idempotencyService.IsProcessedAsync(key, cancellationToken).ConfigureAwait(false))
+        {
+            var cached = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
+            if (cached != null)
+            {
+                return cached;
+            }
+        }
+
+        return await RunAndRecordAsync(key, requestName, next, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<TResponse> RunAndRecordAsync(
+        string key,
+        string requestName,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        var response = await next().ConfigureAwait(false);
+
+        try
+        {
+            await _idempotencyService.SetResultAsync(key, response, null, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to record the response of {RequestName}; its replays will answer in progress", requestName);
+        }
+
+        return response;
+    }
+
+    private async Task<TResponse> ReplayAsync(string key, string requestName, CancellationToken cancellationToken)
+    {
+        var deadline = DateTimeOffset.UtcNow + ReplayWait;
+        var delay = TimeSpan.FromMilliseconds(25);
+
+        while (true)
+        {
+            var recorded = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
+            if (recorded != null)
+            {
+                _logger.LogInformation("{RequestName} replayed: returning the recorded response", requestName);
+                return recorded;
+            }
+
+            var remaining = deadline - DateTimeOffset.UtcNow;
+            if (remaining <= TimeSpan.Zero)
+            {
+                break;
+            }
+
+            await Task.Delay(delay < remaining ? delay : remaining, cancellationToken).ConfigureAwait(false);
+            delay = TimeSpan.FromMilliseconds(Math.Min(delay.TotalMilliseconds * 2, 500));
+        }
+
+        var error = Error.Conflict(
+            "Idempotency.InProgress",
+            $"A request with the same idempotency key is still being processed ({requestName}). Retry later with the same key.");
+
+        return FailureAs(error)
+            ?? throw new InvalidOperationException(
+                $"{error.Message} {typeof(TResponse).Name} is not a Result type, so the conflict cannot be returned as a value.");
+    }
+
+    /// <summary>
+    /// Builds <typeparamref name="TResponse"/> as a failure when it is <see cref="Result"/> or
+    /// <see cref="Result{TValue}"/>; <c>null</c> otherwise. Same construction as
+    /// <see cref="ValidationBehavior{TRequest, TResponse}"/>.
+    /// </summary>
+    private static TResponse? FailureAs(Error error)
+    {
+        if (typeof(TResponse) == typeof(Result))
+        {
+            return (TResponse)(object)Result.Failure(error);
+        }
+
+        if (typeof(TResponse).IsGenericType && typeof(TResponse).GetGenericTypeDefinition() == typeof(Result<>))
+        {
+            var failure = typeof(Result)
+                .GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
+                .Single(m => m.Name == nameof(Result.Failure)
+                          && m.IsGenericMethodDefinition
+                          && m.GetParameters().Length == 1
+                          && m.GetParameters()[0].ParameterType == typeof(Error))
+                .MakeGenericMethod(typeof(TResponse).GetGenericArguments()[0]);
+
+            return (TResponse)failure.Invoke(null, [error])!;
+        }
+
+        return null;
     }
 
     /// <summary>

@@ -21,7 +21,7 @@ namespace Compendium.Infrastructure.Idempotency;
 /// TTL set via <see cref="SetAsync{TValue}"/>; entries that have outlived
 /// their TTL are removed on the next access (lazy eviction).
 /// </remarks>
-public sealed class InMemoryIdempotencyStore : IIdempotencyStore
+public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
 {
     private readonly ConcurrentDictionary<string, Entry> _store = new();
 
@@ -68,6 +68,50 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyStore
     }
 
     /// <summary>Clears all entries. Test-only helper.</summary>
+    /// <inheritdoc />
+    public Task<Result<bool>> TryReserveAsync(
+        string key,
+        TimeSpan expiration,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
+
+        if (expiration <= TimeSpan.Zero)
+        {
+            return Task.FromResult(Result.Failure<bool>(
+                Error.Validation("Idempotency.InvalidExpiration", "Expiration must be positive.")));
+        }
+
+        var candidate = new Entry(ReservationMarker, DateTimeOffset.UtcNow.Add(expiration));
+
+        // TryAdd / TryUpdate only: a read followed by a write would let two callers both
+        // see the key free and both "win". An expired holder is replaced with a
+        // compare-and-swap against the exact entry we read, so a concurrent winner that
+        // replaced it first makes our swap fail and we loop to read it.
+        while (true)
+        {
+            if (_store.TryAdd(key, candidate))
+            {
+                return Task.FromResult(Result.Success(true));
+            }
+
+            if (!_store.TryGetValue(key, out var holder))
+            {
+                continue;
+            }
+
+            if (holder.ExpiresAt > DateTimeOffset.UtcNow)
+            {
+                return Task.FromResult(Result.Success(false));
+            }
+
+            if (_store.TryUpdate(key, candidate, holder))
+            {
+                return Task.FromResult(Result.Success(true));
+            }
+        }
+    }
+
     public void Clear() => _store.Clear();
 
     private bool TryGetLive(string key, out Entry entry)
@@ -80,12 +124,16 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyStore
                 return true;
             }
 
-            _store.TryRemove(key, out _);
+            // Remove THIS expired entry only: a plain TryRemove(key) could delete an entry a
+            // concurrent caller wrote between our read and this line — a live reservation.
+            _store.TryRemove(KeyValuePair.Create(key, found));
         }
 
         entry = default!;
         return false;
     }
+
+    private static readonly object ReservationMarker = new();
 
     private sealed record Entry(object? Value, DateTimeOffset ExpiresAt);
 }

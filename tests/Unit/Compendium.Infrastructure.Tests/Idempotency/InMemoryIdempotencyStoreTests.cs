@@ -114,4 +114,46 @@ public sealed class InMemoryIdempotencyStoreTests
         await getAct.Should().ThrowAsync<ArgumentException>();
         await existsAct.Should().ThrowAsync<ArgumentException>();
     }
+    [Fact]
+    public async Task TryReserve_FirstCallerWins_SecondLoses()
+    {
+        (await _sut.TryReserveAsync("r1", TimeSpan.FromMinutes(5))).Value.Should().BeTrue();
+        (await _sut.TryReserveAsync("r1", TimeSpan.FromMinutes(5))).Value.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task TryReserve_UnderContention_ExactlyOneCallerWins()
+    {
+        var gate = new TaskCompletionSource();
+        var contenders = Enumerable.Range(0, 64)
+            .Select(_ => Task.Run(async () =>
+            {
+                await gate.Task;
+                return (await _sut.TryReserveAsync("contended", TimeSpan.FromMinutes(5))).Value;
+            }))
+            .ToArray();
+
+        gate.SetResult();
+        var outcomes = await Task.WhenAll(contenders);
+
+        outcomes.Count(won => won).Should().Be(1);
+    }
+
+    [Fact]
+    public async Task TryReserve_AfterTheReservationExpired_CanBeWonAgain()
+    {
+        (await _sut.TryReserveAsync("r2", TimeSpan.FromMilliseconds(20))).Value.Should().BeTrue();
+        await Task.Delay(60);
+
+        (await _sut.TryReserveAsync("r2", TimeSpan.FromMinutes(5))).Value.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task TryReserve_WithANonPositiveExpiration_Fails()
+    {
+        var result = await _sut.TryReserveAsync("r3", TimeSpan.Zero);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Idempotency.InvalidExpiration");
+    }
 }

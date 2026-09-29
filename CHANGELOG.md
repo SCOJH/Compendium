@@ -7,8 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Caller-keyed idempotency with an atomic reservation.** A command implementing
+  the new `IIdempotentRequest` is deduplicated on the key its caller supplies (for
+  instance an HTTP `Idempotency-Key`), not on a hash of its content — two identical
+  deployments of the same tag are both legitimate, and only the caller knows a
+  retry from a second request. A blank key disables deduplication for that call.
+  When the store implements the new `IIdempotencyReservationStore`, the key is
+  reserved atomically before the handler runs and never released: the winner
+  records its response, failure included, and every replay gets that response; a
+  replay arriving while the winner still runs waits up to
+  `IdempotencyBehavior.ReplayWait`, then receives an `Idempotency.InProgress`
+  conflict instead of a second execution. `IdempotencyService` implements the new
+  `IIdempotencyReservationService` and reserves for the same lifetime as its
+  results. `InMemoryIdempotencyStore` implements the reservation. Purely additive:
+  commands that do not implement `IIdempotentRequest` keep the content-hash key,
+  and no existing interface gains a member.
+
 ### Fixed
 
+- **`InMemoryIdempotencyStore` no longer deletes a live entry while evicting an
+  expired one.** The eviction removed by key, so an entry written by a concurrent
+  caller between the read and the removal could be dropped; it now removes only
+  the exact expired entry it read.
 - **`EnhancedProjectionManager.RebuildProjectionAsync` reconstructs instead of
   deleting.** It read the projection's checkpoint, called `ResetAsync()`, then
   replayed events *strictly after* that checkpoint. In steady state the checkpoint

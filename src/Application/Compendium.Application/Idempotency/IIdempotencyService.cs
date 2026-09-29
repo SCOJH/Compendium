@@ -50,7 +50,7 @@ public interface IIdempotencyService
 /// Default implementation of the idempotency service that uses an underlying store
 /// to track processed operations and their results.
 /// </summary>
-public sealed class IdempotencyService : IIdempotencyService
+public sealed class IdempotencyService : IIdempotencyService, IIdempotencyReservationService
 {
     private readonly IIdempotencyStore _store;
     private readonly TimeSpan _defaultExpiration;
@@ -133,6 +133,32 @@ public sealed class IdempotencyService : IIdempotencyService
             throw new InvalidOperationException($"Failed to persist idempotency record: {storeResult.Error.Message}");
         }
     }
+
+    /// <inheritdoc />
+    public async Task<Result<bool>> TryReserveAsync(string idempotencyKey, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            throw new ArgumentException("Idempotency key cannot be null or empty", nameof(idempotencyKey));
+        }
+
+        if (_store is not IIdempotencyReservationStore reservations)
+        {
+            return Result.Failure<bool>(Error.Failure(
+                "Idempotency.ReservationUnsupported",
+                $"{_store.GetType().Name} does not implement {nameof(IIdempotencyReservationStore)}; "
+                + "concurrent requests sharing a key cannot be serialised."));
+        }
+
+        // Same lifetime as the results: see IIdempotencyReservationService.
+        return await reservations.TryReserveAsync(ReservationKeyFor(idempotencyKey), _defaultExpiration, cancellationToken);
+    }
+
+    /// <summary>
+    /// The reservation lives beside the result, never on the same key: the result slot is
+    /// how a replay tells "finished" from "still running".
+    /// </summary>
+    internal static string ReservationKeyFor(string idempotencyKey) => idempotencyKey + ":reservation";
 
     /// <summary>
     /// Marks an operation as processed without storing a specific result.
