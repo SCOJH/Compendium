@@ -34,6 +34,14 @@ namespace Compendium.Application.CQRS.Behaviors;
 /// records nothing, so its key answers "in progress" until the reservation expires: the
 /// side effects it may have produced are exactly why the operation is not re-run.
 /// </para>
+/// <para>
+/// Keys are partitioned by <see cref="IIdempotentRequest.IdempotencyScope"/>. The request's
+/// content is fingerprinted: the same key sent with different parameters is refused with
+/// <c>Idempotency.KeyReused</c> instead of silently receiving another request's response.
+/// If the store fails while reserving, the request is refused with
+/// <c>Idempotency.Unavailable</c> rather than run beside a possible winner; only a service or
+/// store that cannot reserve at all falls back to check-then-act.
+/// </para>
 /// </remarks>
 /// <typeparam name="TRequest">The type of the request being processed.</typeparam>
 /// <typeparam name="TResponse">The type of the response being returned.</typeparam>
@@ -90,7 +98,7 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
 
         if (request is IIdempotentRequest keyed)
         {
-            return await HandleCallerKeyedAsync(keyed.IdempotencyKey, next, cancellationToken).ConfigureAwait(false);
+            return await HandleCallerKeyedAsync(request, keyed, next, cancellationToken).ConfigureAwait(false);
         }
 
         var idempotencyKey = GenerateIdempotencyKey(request);
@@ -138,37 +146,63 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
     }
 
     private async Task<TResponse> HandleCallerKeyedAsync(
-        string? callerKey,
+        TRequest request,
+        IIdempotentRequest keyed,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         var requestName = typeof(TRequest).Name;
 
-        if (string.IsNullOrWhiteSpace(callerKey))
+        if (string.IsNullOrWhiteSpace(keyed.IdempotencyKey))
         {
             _logger.LogDebug("{RequestName} carries no idempotency key; running without deduplication", requestName);
             return await next().ConfigureAwait(false);
         }
 
-        // Namespaced by request type: the same caller key on two different commands names
-        // two different operations.
-        var key = $"idempotency:request:{typeof(TRequest).FullName}:{callerKey}";
+        var key = CallerKeyFor(keyed.IdempotencyScope, keyed.IdempotencyKey);
+        var fingerprintKey = key + ":fingerprint";
+        var fingerprint = GenerateIdempotencyKey(request);
 
         if (_idempotencyService is IIdempotencyReservationService reservations)
         {
             var reserved = await reservations.TryReserveAsync(key, cancellationToken).ConfigureAwait(false);
 
+            if (reserved.IsFailure && reserved.Error.Code != "Idempotency.ReservationUnsupported")
+            {
+                // The store could not answer. Falling back to check-then-act here would let
+                // this call run beside a winner that holds the reservation — the one thing a
+                // keyed request asked us never to do. Fail closed: the caller retries with the
+                // same key and loses nothing.
+                _logger.LogWarning(
+                    "Could not reserve the idempotency key of {RequestName} ({ErrorCode}: {ErrorMessage}); refusing to run",
+                    requestName, reserved.Error.Code, reserved.Error.Message);
+                return Fail(Error.Unavailable(
+                    "Idempotency.Unavailable",
+                    $"The idempotency store could not reserve this key ({requestName}). Retry with the same key."));
+            }
+
             if (reserved.IsSuccess)
             {
-                return reserved.Value
-                    ? await RunAndRecordAsync(key, requestName, next, cancellationToken).ConfigureAwait(false)
-                    : await ReplayAsync(key, requestName, cancellationToken).ConfigureAwait(false);
+                if (!reserved.Value)
+                {
+                    return await ReplayAsync(key, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
+                }
+
+                // Winning only proves no live reservation exists. The result of an earlier
+                // winner can outlive its reservation (it was recorded after the handler ran),
+                // and running again under the same key would be a second execution.
+                var earlier = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
+                if (earlier != null)
+                {
+                    return await ReturnRecordedAsync(earlier, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
+                }
+
+                return await RunAndRecordAsync(key, fingerprintKey, fingerprint, requestName, next).ConfigureAwait(false);
             }
 
             _logger.LogWarning(
-                "Could not reserve idempotency key for {RequestName} ({ErrorCode}: {ErrorMessage}); "
-                + "falling back to check-then-act, concurrent duplicates are possible",
-                requestName, reserved.Error.Code, reserved.Error.Message);
+                "{ServiceType} cannot reserve keys; {RequestName} falls back to check-then-act, concurrent duplicates are possible",
+                _idempotencyService.GetType().Name, requestName);
         }
 
         if (await _idempotencyService.IsProcessedAsync(key, cancellationToken).ConfigureAwait(false))
@@ -176,40 +210,65 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
             var cached = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
             if (cached != null)
             {
-                return cached;
+                return await ReturnRecordedAsync(cached, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        return await RunAndRecordAsync(key, requestName, next, cancellationToken).ConfigureAwait(false);
+        return await RunAndRecordAsync(key, fingerprintKey, fingerprint, requestName, next).ConfigureAwait(false);
     }
 
     private async Task<TResponse> RunAndRecordAsync(
         string key,
+        string fingerprintKey,
+        string fingerprint,
         string requestName,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+        RequestHandlerDelegate<TResponse> next)
     {
+        // Recording is not cancelled with the request: a response computed but not recorded
+        // would leave its key answering "in progress" until the reservation expires, even
+        // though the operation succeeded.
+        await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
+
         var response = await next().ConfigureAwait(false);
 
-        try
-        {
-            await _idempotencyService.SetResultAsync(key, response, null, cancellationToken).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to record the response of {RequestName}; its replays will answer in progress", requestName);
-        }
+        await TryRecordAsync(key, response, requestName).ConfigureAwait(false);
+        await TryRecordAsync(fingerprintKey, fingerprint, requestName).ConfigureAwait(false);
 
         return response;
     }
 
-    private async Task<TResponse> ReplayAsync(string key, string requestName, CancellationToken cancellationToken)
+    private async Task TryRecordAsync<TValue>(string key, TValue value, string requestName)
+    {
+        try
+        {
+            await _idempotencyService.SetResultAsync(key, value, null, CancellationToken.None).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to record idempotency data for {RequestName}; its replays may answer in progress", requestName);
+        }
+    }
+
+    private async Task<TResponse> ReplayAsync(
+        string key,
+        string fingerprintKey,
+        string fingerprint,
+        string requestName,
+        CancellationToken cancellationToken)
     {
         var deadline = DateTimeOffset.UtcNow + ReplayWait;
         var delay = TimeSpan.FromMilliseconds(25);
 
         while (true)
         {
+            // The fingerprint is written before the winner runs, so a reused key is refused
+            // at once instead of after waiting for a response that is not this caller's.
+            var reused = await KeyReusedAsync(fingerprintKey, fingerprint, cancellationToken).ConfigureAwait(false);
+            if (reused)
+            {
+                return KeyReusedFailure(requestName);
+            }
+
             var recorded = await _idempotencyService.GetResultAsync<TResponse>(key, cancellationToken).ConfigureAwait(false);
             if (recorded != null)
             {
@@ -227,14 +286,59 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
             delay = TimeSpan.FromMilliseconds(Math.Min(delay.TotalMilliseconds * 2, 500));
         }
 
-        var error = Error.Conflict(
+        return Fail(Error.Conflict(
             "Idempotency.InProgress",
-            $"A request with the same idempotency key is still being processed ({requestName}). Retry later with the same key.");
-
-        return FailureAs(error)
-            ?? throw new InvalidOperationException(
-                $"{error.Message} {typeof(TResponse).Name} is not a Result type, so the conflict cannot be returned as a value.");
+            $"A request with the same idempotency key is still being processed ({requestName}). Retry later with the same key."));
     }
+
+    private async Task<TResponse> ReturnRecordedAsync(
+        TResponse recorded,
+        string fingerprintKey,
+        string fingerprint,
+        string requestName,
+        CancellationToken cancellationToken)
+    {
+        if (await KeyReusedAsync(fingerprintKey, fingerprint, cancellationToken).ConfigureAwait(false))
+        {
+            return KeyReusedFailure(requestName);
+        }
+
+        _logger.LogInformation("{RequestName} replayed: returning the recorded response", requestName);
+        return recorded;
+    }
+
+    private async Task<bool> KeyReusedAsync(string fingerprintKey, string fingerprint, CancellationToken cancellationToken)
+    {
+        var recorded = await _idempotencyService.GetResultAsync<string>(fingerprintKey, cancellationToken).ConfigureAwait(false);
+        return recorded != null && !string.Equals(recorded, fingerprint, StringComparison.Ordinal);
+    }
+
+    private TResponse KeyReusedFailure(string requestName)
+    {
+        _logger.LogWarning("{RequestName}: idempotency key reused with different parameters; refused", requestName);
+        return Fail(Error.Conflict(
+            "Idempotency.KeyReused",
+            $"This idempotency key was already used for a {requestName} with different parameters. Use a new key."));
+    }
+
+    /// <summary>
+    /// A fixed-shape key: the request type, then a SHA-256 of the scope and the caller key.
+    /// Hashing bounds the length and the alphabet of whatever the caller sent, and — because
+    /// the result key always ends in hex — no caller key can land on the <c>:reservation</c>
+    /// or <c>:fingerprint</c> slot of another. Scope and key are length-prefixed so that
+    /// ("ab", "c") and ("a", "bc") cannot hash alike.
+    /// </summary>
+    private static string CallerKeyFor(string? scope, string callerKey)
+    {
+        var material = $"{scope?.Length ?? -1}:{scope}|{callerKey.Length}:{callerKey}";
+        var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(material))).ToLowerInvariant();
+        return $"idempotency:request:{typeof(TRequest).FullName}:{hash}";
+    }
+
+    private static TResponse Fail(Error error)
+        => FailureAs(error)
+           ?? throw new InvalidOperationException(
+               $"{error.Message} {typeof(TResponse).Name} is not a Result type, so the refusal cannot be returned as a value.");
 
     /// <summary>
     /// Builds <typeparamref name="TResponse"/> as a failure when it is <see cref="Result"/> or

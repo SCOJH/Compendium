@@ -19,17 +19,20 @@ namespace Compendium.Application.Tests.CQRS.Behaviors;
 /// </summary>
 public sealed class IdempotencyBehaviorCallerKeyTests
 {
-    public sealed record DeployCommand(string Tag, string? IdempotencyKey) : ICommand<Result<string>>, IIdempotentRequest;
+    public sealed record DeployCommand(string Tag, string? IdempotencyKey, string? Tenant = null) : ICommand<Result<string>>, IIdempotentRequest
+    {
+        public string? IdempotencyScope => Tenant;
+    }
 
     public sealed record PlainCommand(string Tag) : ICommand<Result<string>>;
 
     private readonly AtomicStore _store = new();
 
-    private IdempotencyBehavior<TCommand, Result<string>> Behavior<TCommand>(IIdempotencyService? service = null)
+    private IdempotencyBehavior<TCommand, Result<string>> Behavior<TCommand>(IIdempotencyService? service = null, int replayWaitMs = 200)
         where TCommand : class
         => new(service ?? new IdempotencyService(_store), NullLogger<IdempotencyBehavior<TCommand, Result<string>>>.Instance)
         {
-            ReplayWait = TimeSpan.FromMilliseconds(200),
+            ReplayWait = TimeSpan.FromMilliseconds(replayWaitMs),
         };
 
     [Fact]
@@ -98,7 +101,9 @@ public sealed class IdempotencyBehaviorCallerKeyTests
     [Fact]
     public async Task ConcurrentCallersWithOneKey_RunTheHandlerExactlyOnce_AndAllGetItsResponse()
     {
-        var behavior = Behavior<DeployCommand>();
+        // A generous wait: this test is about exactly-once, not about the timeout, and a
+        // loaded CI must not turn a slow thread pool into a false failure.
+        var behavior = Behavior<DeployCommand>(replayWaitMs: 10_000);
         var runs = 0;
         var release = new TaskCompletionSource();
         async Task<Result<string>> Handler()
@@ -182,6 +187,86 @@ public sealed class IdempotencyBehaviorCallerKeyTests
         _store.Keys.Should().ContainSingle().Which.Should().StartWith("idempotency:").And.NotContain(":request:");
     }
 
+    [Fact]
+    public async Task TheSameKey_FromTwoTenants_RunsForBoth_AndNeitherSeesTheOthersResponse()
+    {
+        var behavior = Behavior<DeployCommand>();
+        var runs = 0;
+        Task<Result<string>> Handler() => Task.FromResult(Result.Success($"deployment-{Interlocked.Increment(ref runs)}"));
+
+        var a = await behavior.HandleAsync(new DeployCommand("v1", "shared", Tenant: "tenant-a"), Handler, CancellationToken.None);
+        var b = await behavior.HandleAsync(new DeployCommand("v1", "shared", Tenant: "tenant-b"), Handler, CancellationToken.None);
+
+        runs.Should().Be(2);
+        b.Value.Should().NotBe(a.Value);
+    }
+
+    [Fact]
+    public async Task TheSameKey_WithDifferentParameters_IsRefused_NotAnsweredWithTheFirstResponse()
+    {
+        var behavior = Behavior<DeployCommand>();
+        var runs = 0;
+        Task<Result<string>> Handler() => Task.FromResult(Result.Success($"deployment-{Interlocked.Increment(ref runs)}"));
+
+        await behavior.HandleAsync(new DeployCommand("v1", "key-6"), Handler, CancellationToken.None);
+        var reused = await behavior.HandleAsync(new DeployCommand("v2", "key-6"), Handler, CancellationToken.None);
+
+        runs.Should().Be(1);
+        reused.IsFailure.Should().BeTrue();
+        reused.Error.Code.Should().Be("Idempotency.KeyReused");
+        reused.Error.Type.Should().Be(ErrorType.Conflict);
+    }
+
+    [Fact]
+    public async Task ACallerKeyShapedLikeAnInternalSlot_DoesNotCollideWithAnotherKey()
+    {
+        var behavior = Behavior<DeployCommand>();
+        var runs = 0;
+        Task<Result<string>> Handler() => Task.FromResult(Result.Success($"deployment-{Interlocked.Increment(ref runs)}"));
+
+        await behavior.HandleAsync(new DeployCommand("v1", "X:reservation"), Handler, CancellationToken.None);
+        await behavior.HandleAsync(new DeployCommand("v1", "X:fingerprint"), Handler, CancellationToken.None);
+        var plain = await behavior.HandleAsync(new DeployCommand("v1", "X"), Handler, CancellationToken.None);
+
+        runs.Should().Be(3);
+        plain.IsSuccess.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task WhenTheStoreFailsToReserve_TheRequestIsRefused_NotRunBesideAPossibleWinner()
+    {
+        _store.FailReservations = true;
+        var behavior = Behavior<DeployCommand>();
+        var runs = 0;
+        Task<Result<string>> Handler() => Task.FromResult(Result.Success($"deployment-{Interlocked.Increment(ref runs)}"));
+
+        var response = await behavior.HandleAsync(new DeployCommand("v1", "key-7"), Handler, CancellationToken.None);
+
+        runs.Should().Be(0);
+        response.IsFailure.Should().BeTrue();
+        response.Error.Code.Should().Be("Idempotency.Unavailable");
+    }
+
+    [Fact]
+    public async Task ACancelledRequest_StillRecordsTheResponseItComputed()
+    {
+        var behavior = Behavior<DeployCommand>();
+        var runs = 0;
+        using var cts = new CancellationTokenSource();
+        Task<Result<string>> Handler()
+        {
+            Interlocked.Increment(ref runs);
+            cts.Cancel();
+            return Task.FromResult(Result.Success("done"));
+        }
+
+        await behavior.HandleAsync(new DeployCommand("v1", "key-8"), Handler, cts.Token);
+        var replay = await behavior.HandleAsync(new DeployCommand("v1", "key-8"), Handler, CancellationToken.None);
+
+        runs.Should().Be(1);
+        replay.Value.Should().Be("done");
+    }
+
     /// <summary>A reservation store with real atomicity, standing in for the infrastructure one.</summary>
     private sealed class AtomicStore : IIdempotencyReservationStore
     {
@@ -199,12 +284,18 @@ public sealed class IdempotencyBehaviorCallerKeyTests
 
         public Task<Result> SetAsync<TValue>(string key, TValue value, TimeSpan expiration, CancellationToken cancellationToken = default)
         {
+            // Like any real store: a cancelled token aborts the write.
+            cancellationToken.ThrowIfCancellationRequested();
             _entries[key] = value;
             return Task.FromResult(Result.Success());
         }
 
+        public bool FailReservations { get; set; }
+
         public Task<Result<bool>> TryReserveAsync(string key, TimeSpan expiration, CancellationToken cancellationToken = default)
-            => Task.FromResult(Result.Success(_entries.TryAdd(key, "reserved")));
+            => Task.FromResult(FailReservations
+                ? Result.Failure<bool>(Error.Unavailable("Store.Down", "connection refused"))
+                : Result.Success(_entries.TryAdd(key, "reserved")));
     }
 
     /// <summary>An <see cref="IIdempotencyService"/> that does not offer reservations.</summary>

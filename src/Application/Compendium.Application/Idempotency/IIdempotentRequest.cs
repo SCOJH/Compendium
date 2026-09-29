@@ -20,4 +20,16 @@ public interface IIdempotentRequest
 {
     /// <summary>Gets the caller-supplied idempotency key, or <c>null</c> for none.</summary>
     string? IdempotencyKey { get; }
+
+    /// <summary>
+    /// Gets the partition the key lives in — in a multi-tenant application, the tenant.
+    /// </summary>
+    /// <remarks>
+    /// Keys are chosen by callers, so two tenants will eventually send the same one. Without
+    /// a scope they would share one slot: the second would receive the first one's recorded
+    /// response, data included, and its own command would never run. A multi-tenant
+    /// application <b>must</b> return the tenant identifier here. The default, <c>null</c>,
+    /// is only correct when every caller of the command belongs to one trust domain.
+    /// </remarks>
+    string? IdempotencyScope => null;
 }

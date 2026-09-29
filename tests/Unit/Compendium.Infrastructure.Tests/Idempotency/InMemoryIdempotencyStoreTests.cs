@@ -156,4 +156,31 @@ public sealed class InMemoryIdempotencyStoreTests
         result.IsFailure.Should().BeTrue();
         result.Error.Code.Should().Be("Idempotency.InvalidExpiration");
     }
+    public sealed record ReplayableCommand(string? IdempotencyKey) : Compendium.Abstractions.CQRS.Commands.ICommand<Result<string>>, Compendium.Application.Idempotency.IIdempotentRequest;
+
+    [Fact]
+    public async Task AReplayAfterTheReservationExpired_ButWhileTheResultLives_DoesNotRunAgain()
+    {
+        // Real store and real service: the reservation is taken before the handler runs and
+        // the result recorded after, so the result outlives the reservation by the handler's
+        // duration. A replay in that window wins the reservation again — it must still not run.
+        var service = new Compendium.Application.Idempotency.IdempotencyService(_sut, TimeSpan.FromMilliseconds(600));
+        var behavior = new Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>(
+            service,
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>>.Instance);
+        var runs = 0;
+        async Task<Result<string>> Handler()
+        {
+            var n = Interlocked.Increment(ref runs);
+            await Task.Delay(400);
+            return Result.Success($"run-{n}");
+        }
+
+        var first = await behavior.HandleAsync(new ReplayableCommand("k"), Handler, CancellationToken.None);
+        await Task.Delay(300); // reservation (t0 + 600 ms) has expired; result (t0 + 400 + 600 ms) has not
+        var replay = await behavior.HandleAsync(new ReplayableCommand("k"), Handler, CancellationToken.None);
+
+        runs.Should().Be(1);
+        replay.Value.Should().Be(first.Value);
+    }
 }

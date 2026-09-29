@@ -67,7 +67,6 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
         return Task.FromResult(Result.Success());
     }
 
-    /// <summary>Clears all entries. Test-only helper.</summary>
     /// <inheritdoc />
     public Task<Result<bool>> TryReserveAsync(
         string key,
@@ -112,6 +111,7 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
         }
     }
 
+    /// <summary>Clears all entries. Test-only helper.</summary>
     public void Clear() => _store.Clear();
 
     private bool TryGetLive(string key, out Entry entry)
