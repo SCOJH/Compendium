@@ -256,4 +256,28 @@ public class IdempotencyServiceTests
         // Assert
         await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*down*");
     }
+    [Fact]
+    public async Task TryReserve_WhenTheStoreCannotReserve_FailsExplicitly_InsteadOfPretending()
+    {
+        var sut = new IdempotencyService(Substitute.For<IIdempotencyStore>());
+
+        var result = await sut.TryReserveAsync("key");
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Code.Should().Be("Idempotency.ReservationUnsupported");
+    }
+
+    [Fact]
+    public async Task TryReserve_UsesTheResultLifetime_OnAKeyDistinctFromTheResult()
+    {
+        var store = Substitute.For<IIdempotencyReservationStore>();
+        store.TryReserveAsync(Arg.Any<string>(), Arg.Any<TimeSpan>(), Arg.Any<CancellationToken>())
+            .Returns(Result.Success(true));
+        var sut = new IdempotencyService(store, TimeSpan.FromMinutes(42));
+
+        var result = await sut.TryReserveAsync("key");
+
+        result.Value.Should().BeTrue();
+        await store.Received(1).TryReserveAsync("key:reservation", TimeSpan.FromMinutes(42), Arg.Any<CancellationToken>());
+    }
 }
