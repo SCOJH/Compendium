@@ -197,8 +197,12 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
                     // We now hold a fresh reservation for a full lifetime. Re-record the result
                     // so it lives as long: a reservation outliving its result would answer
                     // "in progress" for a key whose operation finished long ago.
+                    // Check first: re-recording our own fingerprint before comparing would erase
+                    // the evidence of a reused key.
+                    var recorded = await ReturnRecordedAsync(earlier, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
                     await TryRecordAsync(key, earlier, requestName).ConfigureAwait(false);
-                    return await ReturnRecordedAsync(earlier, fingerprintKey, fingerprint, requestName, cancellationToken).ConfigureAwait(false);
+                    await ExtendFingerprintAsync(fingerprintKey, requestName, cancellationToken).ConfigureAwait(false);
+                    return recorded;
                 }
 
                 return await RunAndRecordAsync(key, fingerprintKey, fingerprint, requestName, next).ConfigureAwait(false);
@@ -317,6 +321,16 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
         return recorded;
     }
 
+    /// <summary>Re-records the fingerprint already stored, so it lives as long as the result.</summary>
+    private async Task ExtendFingerprintAsync(string fingerprintKey, string requestName, CancellationToken cancellationToken)
+    {
+        var stored = await _idempotencyService.GetResultAsync<string>(fingerprintKey, cancellationToken).ConfigureAwait(false);
+        if (stored != null)
+        {
+            await TryRecordAsync(fingerprintKey, stored, requestName).ConfigureAwait(false);
+        }
+    }
+
     private async Task<bool> KeyReusedAsync(string fingerprintKey, string? fingerprint, CancellationToken cancellationToken)
     {
         if (fingerprint == null)
@@ -364,7 +378,7 @@ public sealed class IdempotencyBehavior<TRequest, TResponse> : IPipelineBehavior
             var json = JsonSerializer.Serialize(request, _jsonOptions);
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(json))).ToLowerInvariant();
         }
-        catch (Exception ex) when (ex is NotSupportedException or JsonException or InvalidOperationException)
+        catch (Exception ex) when (ex is not OperationCanceledException)
         {
             _logger.LogWarning(
                 "{RequestType} cannot be serialised ({Reason}); reusing its idempotency key with different parameters will not be detected",
