@@ -104,7 +104,7 @@ are pruned lazily on read.</p>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class InMemoryIdempotencyStore : IIdempotencyStore</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore, IIdempotencyStore</code></pre>
   </div>
 
 
@@ -121,6 +121,7 @@ are pruned lazily on read.</p>
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
+      <div><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyReservationStore.html">IIdempotencyReservationStore</a></div>
       <div><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyStore.html">IIdempotencyStore</a></div>
     </dd>
   </dl>
@@ -167,7 +168,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_Clear" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L115"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears all entries. Test-only helper.</p>
@@ -324,6 +325,52 @@ their TTL are removed on the next access (lazy eviction).</p>
     <dd><p>The type of the value to store.</p>
 </dd>
   </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_TryReserveAsync_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync*"></a>
+
+  <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_TryReserveAsync_System_String_System_TimeSpan_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)">
+  TryReserveAsync(string, TimeSpan, CancellationToken)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reserves <code class="paramref">key</code> if no live reservation holds it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Result&lt;bool&gt;&gt; TryReserveAsync(string key, TimeSpan expiration, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The key to reserve.</p>
+</dd>
+    <dt><code>expiration</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd><p>How long the reservation lives.</p>
+</dd>
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>The cancellation token.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Compendium.Core.Results.Result-1.html">Result</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</dt>
+    <dd><p><code>true</code> when this caller won the reservation, <code>false</code> when a live reservation
+already existed, or a failure on store error.</p>
+</dd>
+  </dl>
+
 
 
 

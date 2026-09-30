@@ -26410,6 +26410,23 @@ references:
   fullName.vb: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior(Of TRequest, TResponse).HandleAsync
   nameWithType: IdempotencyBehavior<TRequest, TResponse>.HandleAsync
   nameWithType.vb: IdempotencyBehavior(Of TRequest, TResponse).HandleAsync
+- uid: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait
+  name: ReplayWait
+  href: api/Compendium.Application.CQRS.Behaviors.IdempotencyBehavior-2.html#Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_ReplayWait
+  commentId: P:Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait
+  fullName: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<TRequest, TResponse>.ReplayWait
+  fullName.vb: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior(Of TRequest, TResponse).ReplayWait
+  nameWithType: IdempotencyBehavior<TRequest, TResponse>.ReplayWait
+  nameWithType.vb: IdempotencyBehavior(Of TRequest, TResponse).ReplayWait
+- uid: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait*
+  name: ReplayWait
+  href: api/Compendium.Application.CQRS.Behaviors.IdempotencyBehavior-2.html#Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_ReplayWait_
+  commentId: Overload:Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait
+  isSpec: "True"
+  fullName: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<TRequest, TResponse>.ReplayWait
+  fullName.vb: Compendium.Application.CQRS.Behaviors.IdempotencyBehavior(Of TRequest, TResponse).ReplayWait
+  nameWithType: IdempotencyBehavior<TRequest, TResponse>.ReplayWait
+  nameWithType.vb: IdempotencyBehavior(Of TRequest, TResponse).ReplayWait
 - uid: Compendium.Application.CQRS.Behaviors.LoggingBehavior`2
   name: LoggingBehavior<TRequest, TResponse>
   href: api/Compendium.Application.CQRS.Behaviors.LoggingBehavior-2.html
@@ -26783,6 +26800,50 @@ references:
   fullName.vb: Compendium.Application.Idempotency.IDeduplicationStrategy.GenerateKey(Of T)(T)
   nameWithType: IDeduplicationStrategy.GenerateKey<T>(T)
   nameWithType.vb: IDeduplicationStrategy.GenerateKey(Of T)(T)
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationService
+  name: IIdempotencyReservationService
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationService.html
+  commentId: T:Compendium.Application.Idempotency.IIdempotencyReservationService
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationService
+  nameWithType: IIdempotencyReservationService
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync(System.String,System.Threading.CancellationToken)
+  name: TryReserveAsync(string, CancellationToken)
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationService.html#Compendium_Application_Idempotency_IIdempotencyReservationService_TryReserveAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync(System.String,System.Threading.CancellationToken)
+  name.vb: TryReserveAsync(String, CancellationToken)
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync(string, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync(String, System.Threading.CancellationToken)
+  nameWithType: IIdempotencyReservationService.TryReserveAsync(string, CancellationToken)
+  nameWithType.vb: IIdempotencyReservationService.TryReserveAsync(String, CancellationToken)
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync*
+  name: TryReserveAsync
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationService.html#Compendium_Application_Idempotency_IIdempotencyReservationService_TryReserveAsync_
+  commentId: Overload:Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync
+  isSpec: "True"
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationService.TryReserveAsync
+  nameWithType: IIdempotencyReservationService.TryReserveAsync
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationStore
+  name: IIdempotencyReservationStore
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationStore.html
+  commentId: T:Compendium.Application.Idempotency.IIdempotencyReservationStore
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationStore
+  nameWithType: IIdempotencyReservationStore
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)
+  name: TryReserveAsync(string, TimeSpan, CancellationToken)
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationStore.html#Compendium_Application_Idempotency_IIdempotencyReservationStore_TryReserveAsync_System_String_System_TimeSpan_System_Threading_CancellationToken_
+  commentId: M:Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)
+  name.vb: TryReserveAsync(String, TimeSpan, CancellationToken)
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync(string, System.TimeSpan, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync(String, System.TimeSpan, System.Threading.CancellationToken)
+  nameWithType: IIdempotencyReservationStore.TryReserveAsync(string, TimeSpan, CancellationToken)
+  nameWithType.vb: IIdempotencyReservationStore.TryReserveAsync(String, TimeSpan, CancellationToken)
+- uid: Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync*
+  name: TryReserveAsync
+  href: api/Compendium.Application.Idempotency.IIdempotencyReservationStore.html#Compendium_Application_Idempotency_IIdempotencyReservationStore_TryReserveAsync_
+  commentId: Overload:Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync
+  isSpec: "True"
+  fullName: Compendium.Application.Idempotency.IIdempotencyReservationStore.TryReserveAsync
+  nameWithType: IIdempotencyReservationStore.TryReserveAsync
 - uid: Compendium.Application.Idempotency.IIdempotencyService
   name: IIdempotencyService
   href: api/Compendium.Application.Idempotency.IIdempotencyService.html
@@ -26907,6 +26968,38 @@ references:
   fullName.vb: Compendium.Application.Idempotency.IIdempotencyStore.SetAsync(Of TValue)(String, TValue, System.TimeSpan, System.Threading.CancellationToken)
   nameWithType: IIdempotencyStore.SetAsync<TValue>(string, TValue, TimeSpan, CancellationToken)
   nameWithType.vb: IIdempotencyStore.SetAsync(Of TValue)(String, TValue, TimeSpan, CancellationToken)
+- uid: Compendium.Application.Idempotency.IIdempotentRequest
+  name: IIdempotentRequest
+  href: api/Compendium.Application.Idempotency.IIdempotentRequest.html
+  commentId: T:Compendium.Application.Idempotency.IIdempotentRequest
+  fullName: Compendium.Application.Idempotency.IIdempotentRequest
+  nameWithType: IIdempotentRequest
+- uid: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey
+  name: IdempotencyKey
+  href: api/Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyKey
+  commentId: P:Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey
+  fullName: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey
+  nameWithType: IIdempotentRequest.IdempotencyKey
+- uid: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey*
+  name: IdempotencyKey
+  href: api/Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyKey_
+  commentId: Overload:Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey
+  isSpec: "True"
+  fullName: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyKey
+  nameWithType: IIdempotentRequest.IdempotencyKey
+- uid: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope
+  name: IdempotencyScope
+  href: api/Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyScope
+  commentId: P:Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope
+  fullName: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope
+  nameWithType: IIdempotentRequest.IdempotencyScope
+- uid: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope*
+  name: IdempotencyScope
+  href: api/Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyScope_
+  commentId: Overload:Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope
+  isSpec: "True"
+  fullName: Compendium.Application.Idempotency.IIdempotentRequest.IdempotencyScope
+  nameWithType: IIdempotentRequest.IdempotencyScope
 - uid: Compendium.Application.Idempotency.IdempotencyService
   name: IdempotencyService
   href: api/Compendium.Application.Idempotency.IdempotencyService.html
@@ -26996,6 +27089,22 @@ references:
   fullName.vb: Compendium.Application.Idempotency.IdempotencyService.SetResultAsync(Of TResult)(String, TResult, System.TimeSpan?, System.Threading.CancellationToken)
   nameWithType: IdempotencyService.SetResultAsync<TResult>(string, TResult, TimeSpan?, CancellationToken)
   nameWithType.vb: IdempotencyService.SetResultAsync(Of TResult)(String, TResult, TimeSpan?, CancellationToken)
+- uid: Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync(System.String,System.Threading.CancellationToken)
+  name: TryReserveAsync(string, CancellationToken)
+  href: api/Compendium.Application.Idempotency.IdempotencyService.html#Compendium_Application_Idempotency_IdempotencyService_TryReserveAsync_System_String_System_Threading_CancellationToken_
+  commentId: M:Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync(System.String,System.Threading.CancellationToken)
+  name.vb: TryReserveAsync(String, CancellationToken)
+  fullName: Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync(string, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync(String, System.Threading.CancellationToken)
+  nameWithType: IdempotencyService.TryReserveAsync(string, CancellationToken)
+  nameWithType.vb: IdempotencyService.TryReserveAsync(String, CancellationToken)
+- uid: Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync*
+  name: TryReserveAsync
+  href: api/Compendium.Application.Idempotency.IdempotencyService.html#Compendium_Application_Idempotency_IdempotencyService_TryReserveAsync_
+  commentId: Overload:Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync
+  isSpec: "True"
+  fullName: Compendium.Application.Idempotency.IdempotencyService.TryReserveAsync
+  nameWithType: IdempotencyService.TryReserveAsync
 - uid: Compendium.Application.Idempotency.PropertyBasedDeduplicationStrategy
   name: PropertyBasedDeduplicationStrategy
   href: api/Compendium.Application.Idempotency.PropertyBasedDeduplicationStrategy.html
@@ -40489,6 +40598,22 @@ references:
   fullName.vb: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.SetAsync(Of TValue)(String, TValue, System.TimeSpan, System.Threading.CancellationToken)
   nameWithType: InMemoryIdempotencyStore.SetAsync<TValue>(string, TValue, TimeSpan, CancellationToken)
   nameWithType.vb: InMemoryIdempotencyStore.SetAsync(Of TValue)(String, TValue, TimeSpan, CancellationToken)
+- uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)
+  name: TryReserveAsync(string, TimeSpan, CancellationToken)
+  href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_TryReserveAsync_System_String_System_TimeSpan_System_Threading_CancellationToken_
+  commentId: M:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)
+  name.vb: TryReserveAsync(String, TimeSpan, CancellationToken)
+  fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(string, System.TimeSpan, System.Threading.CancellationToken)
+  fullName.vb: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(String, System.TimeSpan, System.Threading.CancellationToken)
+  nameWithType: InMemoryIdempotencyStore.TryReserveAsync(string, TimeSpan, CancellationToken)
+  nameWithType.vb: InMemoryIdempotencyStore.TryReserveAsync(String, TimeSpan, CancellationToken)
+- uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync*
+  name: TryReserveAsync
+  href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_TryReserveAsync_
+  commentId: Overload:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync
+  nameWithType: InMemoryIdempotencyStore.TryReserveAsync
 - uid: Compendium.Infrastructure.Observability
   name: Compendium.Infrastructure.Observability
   href: api/Compendium.Infrastructure.Observability.html

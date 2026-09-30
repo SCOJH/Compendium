@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2" data-uid="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2" class="text-break">
-Class IdempotencyBehavior&lt;TRequest, TResponse&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Class IdempotencyBehavior&lt;TRequest, TResponse&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -160,6 +160,31 @@ Prevents duplicate command execution by caching results and checking for previou
 
 
 
+  <h2 id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+Two keying modes. A command implementing <a class="xref" href="Compendium.Application.Idempotency.IIdempotentRequest.html">IIdempotentRequest</a> is keyed by the
+caller's <a class="xref" href="Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyKey">IdempotencyKey</a>; a blank key disables
+deduplication for that call. Any other command keeps the historical content-hash key.
+</p>
+<p>
+For caller-keyed commands, when the service implements
+<a class="xref" href="Compendium.Application.Idempotency.IIdempotencyReservationService.html">IIdempotencyReservationService</a> the key is reserved atomically before the
+handler runs, and the reservation is never released: the winner records its response,
+failure included, and every replay returns that response. A replay arriving while the
+winner still runs waits up to <a class="xref" href="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior-2.html#Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_ReplayWait">ReplayWait</a>, then gets an
+<code>Idempotency.InProgress</code> conflict — never a second execution. A handler that throws
+records nothing, so its key answers "in progress" until the reservation expires: the
+side effects it may have produced are exactly why the operation is not re-run.
+</p>
+<p>
+Keys are partitioned by <a class="xref" href="Compendium.Application.Idempotency.IIdempotentRequest.html#Compendium_Application_Idempotency_IIdempotentRequest_IdempotencyScope">IdempotencyScope</a>. The request's
+content is fingerprinted: the same key sent with different parameters is refused with
+<code>Idempotency.KeyReused</code> instead of silently receiving another request's response.
+If the store fails while reserving, the request is refused with
+<code>Idempotency.Unavailable</code> rather than run beside a possible winner; only a service or
+store that cannot reserve at all falls back to check-then-act.
+</p>
+</div>
 
 
   <h2 class="section" id="constructors">Constructors
@@ -170,7 +195,7 @@ Prevents duplicate command execution by caching results and checking for previou
 
   <h3 id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2__ctor_Compendium_Application_Idempotency_IIdempotencyService_Microsoft_Extensions_Logging_ILogger_Compendium_Application_CQRS_Behaviors_IdempotencyBehavior__0__1___" data-uid="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.#ctor(Compendium.Application.Idempotency.IIdempotencyService,Microsoft.Extensions.Logging.ILogger{Compendium.Application.CQRS.Behaviors.IdempotencyBehavior{`0,`1}})">
   IdempotencyBehavior(IIdempotencyService, ILogger&lt;IdempotencyBehavior&lt;TRequest, TResponse&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L61"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior-2.html">IdempotencyBehavior&lt;TRequest, TResponse&gt;</a> class.</p>
@@ -202,6 +227,43 @@ Prevents duplicate command execution by caching results and checking for previou
 
 
 
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_ReplayWait_" data-uid="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait*"></a>
+
+  <h3 id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_ReplayWait" data-uid="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.ReplayWait">
+  ReplayWait
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets how long a replay waits for a concurrent winner to record its response before
+answering <code>Idempotency.InProgress</code>. Defaults to five seconds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan ReplayWait { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -210,7 +272,7 @@ Prevents duplicate command execution by caching results and checking for previou
 
   <h3 id="Compendium_Application_CQRS_Behaviors_IdempotencyBehavior_2_HandleAsync__0_Compendium_Application_CQRS_Behaviors_RequestHandlerDelegate__1__System_Threading_CancellationToken_" data-uid="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior`2.HandleAsync(`0,Compendium.Application.CQRS.Behaviors.RequestHandlerDelegate{`1},System.Threading.CancellationToken)">
   HandleAsync(TRequest, RequestHandlerDelegate&lt;TResponse&gt;, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L88"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Handles the request with idempotency checking and result caching.</p>
@@ -255,7 +317,7 @@ Prevents duplicate command execution by caching results and checking for previou
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Application/Compendium.Application/CQRS/Behaviors/IdempotencyBehavior.cs/#L48" class="edit-link">Edit this page</a>
         </div>
 
 

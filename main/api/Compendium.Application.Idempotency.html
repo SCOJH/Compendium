@@ -122,6 +122,19 @@ for deduplication and idempotency purposes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyReservationService.html">IIdempotencyReservationService</a></dt>
+      <dd><p>The reservation side of <a class="xref" href="Compendium.Application.Idempotency.IIdempotencyService.html">IIdempotencyService</a>. <a class="xref" href="Compendium.Application.Idempotency.IdempotencyService.html">IdempotencyService</a>
+implements both; <a class="xref" href="Compendium.Application.CQRS.Behaviors.IdempotencyBehavior-2.html">IdempotencyBehavior&lt;TRequest, TResponse&gt;</a>
+uses this one when the service it is given supports it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyReservationStore.html">IIdempotencyReservationStore</a></dt>
+      <dd><p>An <a class="xref" href="Compendium.Application.Idempotency.IIdempotencyStore.html">IIdempotencyStore</a> that can also reserve a key atomically, so that two
+concurrent callers presenting the same key cannot both run the operation.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyService.html">IIdempotencyService</a></dt>
       <dd><p>Provides idempotency capabilities to ensure operations are executed only once.
 Allows storing and retrieving operation results to prevent duplicate processing.</p>
@@ -131,6 +144,12 @@ Allows storing and retrieving operation results to prevent duplicate processing.
       <dt><a class="xref" href="Compendium.Application.Idempotency.IIdempotencyStore.html">IIdempotencyStore</a></dt>
       <dd><p>Defines the storage contract for idempotency data.
 Implementations should provide persistent storage for operation tracking.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Compendium.Application.Idempotency.IIdempotentRequest.html">IIdempotentRequest</a></dt>
+      <dd><p>A request whose idempotency key is chosen by the caller (for instance from an HTTP
+<code>Idempotency-Key</code> header) rather than derived from its content.</p>
 </dd>
     </dl>
 
