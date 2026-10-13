@@ -62,6 +62,14 @@ jobs:
       - name: Every packable project declares a release train
         run: bash scripts/verify-package-trains.sh
 
+      # L'ordre des versions NuGet et l'analyse des plages sont la partie de la
+      # garde de release qui peut être fausse SUBTILEMENT — un `preview.5` jugé
+      # supérieur à `preview.5.11` la rendrait muette pile sur le cas qui l'a
+      # motivée. L'auto-test ne demande ni réseau ni paquet, donc il tourne ici
+      # sur chaque poussée, et pas seulement le jour d'une release.
+      - name: Version-range comparator self-test
+        run: bash scripts/verify-package-dependencies-exist.sh --self-test
+
       - name: Enforce 90% line coverage gate
         # Per ADR-0006: with the heavy integration-bound adapters extracted to their
         # own repos, the framework's aggregate line coverage is well above 90 % and

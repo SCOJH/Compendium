@@ -61,7 +61,44 @@ and nothing else changes version.
 Adding a package means adding a `<MinVerTagPrefix>` and seeding its first tag.
 Nothing else: the release job discovers trains from the `.csproj` files.
 
-## The two gates
+## A downstream train is tagged WITH its upstream train
+
+One train at a time is true of what gets *packed*. It is **not** true of what gets
+*tagged*, and the difference cost a broken public package on 2026-09-29.
+
+`Compendium.Testing` depends on the `core-v` train. MinVer derives each dependency
+version from the depended-on project's own tag **at the commit being tagged**. Tag
+`testing-v` alone, on a commit that has moved past the last `core-v` tag, and
+MinVer stamps the dependency with a height-suffixed version — `1.0.5-preview.5.11`
+for eleven commits past `core-v1.0.5-preview.5`. That version was never published.
+Worse, it sorts **above** `1.0.5-preview.5`: a longer run of prerelease identifiers
+with the same prefix wins, so the `>=` it expresses is satisfied by nothing on the
+feed. The release went green and produced a package that answered `NU1102` to
+every consumer.
+
+So:
+
+```bash
+# Compendium.Testing moves -> the core train moves with it, same commit.
+git tag core-v1.0.5-preview.7
+git tag testing-v1.0.5-preview.7
+git push origin core-v1.0.5-preview.7 testing-v1.0.5-preview.7
+```
+
+Publish the upstream train first and let it land on the feed; the downstream
+package's own gate reads the feed, so the order matters for the gate, not for
+MinVer.
+
+`Compendium.Abstractions.FeatureFlags` belongs to the same release unit in
+practice: Nexus pins it alongside the core train, and a `featureflags-v` left
+behind makes `CompendiumProvenanceRuleTests` fail there. The 2026-09-05 release
+tagged `core-v`, `featureflags-v` and `testing-v` together, and that was not a
+coincidence.
+
+**The third gate below now enforces this mechanically.** Do not rely on
+remembering it.
+
+## The three gates
 
 Two packages are public today whose nuspec records a commit that is on no tag.
 Neither went through the test gate or the coverage gate, and neither can be
@@ -80,7 +117,26 @@ between `Pack` and `Push`, so a failure means nothing is published:
   collision means a tag was moved. An unreachable feed is also a failure — not
   knowing is not permission.
 
-Both take a directory or individual packages, read id, version and commit from
+- **`scripts/verify-package-dependencies-exist.sh artifacts/`** — the only gate
+  that looks at what a package DEPENDS ON rather than at the package. For every
+  `Compendium.*` dependency in the packed nuspec it asks the feed whether any
+  published version satisfies the declared range. A dependency nothing can satisfy
+  means a downstream train was tagged without its upstream train — see the section
+  above. Only `Compendium.*` is judged: third-party dependencies came from versions
+  the build already restored, so the build itself proves they exist. An unreachable
+  feed is a failure here too.
+
+  The range is treated as a **range**, not an equality: `1.0.5-preview.7` means
+  `>= 1.0.5-preview.7`, and a higher published version satisfies it. Checking for
+  the exact string would turn the gate red on legitimate releases, which on the
+  only irreversible step of a release is worse than no gate.
+
+  Version ordering and range parsing live in
+  `scripts/nuget-version-satisfies.py`, which carries a `--self-test` that needs
+  neither network nor package. `ci.yml` runs it on every push, so the comparator
+  cannot rot between releases.
+
+All three take a directory or individual packages, read id, version and commit from
 the embedded nuspec rather than from the file name, and report every offending
 package before exiting.
 
