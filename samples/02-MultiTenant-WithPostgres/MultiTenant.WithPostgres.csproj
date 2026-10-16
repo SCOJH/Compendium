@@ -20,6 +20,10 @@
   <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Npgsql" />
+    <PackageReference Include="OpenTelemetry" VersionOverride="1.19.1" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" VersionOverride="1.19.1" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" VersionOverride="1.19.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" VersionOverride="1.19.1" />
   </ItemGroup>
 
 </Project>
