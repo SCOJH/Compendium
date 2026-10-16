@@ -35,10 +35,10 @@
     <PackageReference Include="Testcontainers" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="AutoFixture" />
-    
-    <!-- Security overrides -->
-    <PackageReference Include="System.Net.Http" />
-    <PackageReference Include="System.Text.RegularExpressions" />
+    <!-- NET10-01: the System.Net.Http / System.Text.RegularExpressions "security
+         overrides" are gone. Both live in the shared framework; the .NET 10 SDK
+         prunes the old transitive copies xunit drags in and flags a direct
+         reference as redundant (NU1510). -->
   </ItemGroup>
 
 </Project>

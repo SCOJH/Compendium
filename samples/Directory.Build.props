@@ -7,6 +7,11 @@
          MinVer from the root props, so they follow the core train rather than
          falling back to 0.0.0-alpha; the version is cosmetic here. -->
     <MinVerTagPrefix>core-v</MinVerTagPrefix>
+    <!-- NET10-01: a sample is something you `dotnet run`, which needs a single
+         target. The root props multi-target net9.0;net10.0 for the libraries;
+         samples run on the runtime the SDK pinned in global.json always ships. -->
+    <TargetFrameworks></TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>

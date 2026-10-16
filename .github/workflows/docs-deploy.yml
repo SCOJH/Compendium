@@ -35,9 +35,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # NET10-01 — global.json pins the .NET 10 SDK (needed to restore the
+      # net9.0;net10.0 solution); the .NET 9 line stays for its runtime.
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
       - name: Cache NuGet packages
         uses: actions/cache@v6

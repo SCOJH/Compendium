@@ -6,11 +6,11 @@ If you'd rather read working code, jump straight to [`samples/01-QuickStart-Orde
 
 ## 1. Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (the .NET 9 SDK also works)
 - (Optional) Docker — only needed for the multi-tenant + PostgreSQL sample
 - A C# project (`dotnet new console -o MyService`)
 
-> **Note.** Compendium targets `net9.0`. Older runtimes are not supported.
+> **Note.** Compendium targets `net9.0` and `net10.0`. Older runtimes are not supported.
 
 ## 2. Install the packages
 

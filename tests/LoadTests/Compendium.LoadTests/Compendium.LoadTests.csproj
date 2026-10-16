@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <!-- An executable: one target, so `dotnet run` needs no -f. The empty
+         TargetFrameworks cancels the net9.0;net10.0 pair inherited from the
+         Directory.Build.props (restore would otherwise still walk both). -->
+    <TargetFrameworks></TargetFrameworks>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

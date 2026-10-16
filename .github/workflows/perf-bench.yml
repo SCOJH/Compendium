@@ -31,9 +31,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # NET10-01 — the .NET 10 SDK (global.json) builds the benchmarks; they still
+      # run on net9.0, so the .NET 9 runtime has to be installed too. A plain
+      # global-json-file install would bring only the SDK 10 and its runtime.
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
       - name: Restore
         run: dotnet restore ${{ matrix.project }}

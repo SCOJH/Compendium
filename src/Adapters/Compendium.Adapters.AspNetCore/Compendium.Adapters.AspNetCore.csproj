@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
+    <!-- Microsoft.Extensions.Diagnostics.HealthChecks ships inside Microsoft.AspNetCore.App,
+         referenced above; a PackageReference to it is redundant (NU1510 on the .NET 10 SDK). -->
     <!-- Npgsql + StackExchange.Redis used directly here for health-check probes. -->
     <PackageReference Include="Npgsql" />
     <PackageReference Include="StackExchange.Redis" />

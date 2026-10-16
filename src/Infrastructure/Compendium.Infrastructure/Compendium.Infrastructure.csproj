@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
-    <PackageReference Include="System.Text.Json" />
+    <!-- System.Text.Json comes from the shared framework on both targets (NU1510). -->
 
     <!-- Resilience -->
     <PackageReference Include="Polly" />
