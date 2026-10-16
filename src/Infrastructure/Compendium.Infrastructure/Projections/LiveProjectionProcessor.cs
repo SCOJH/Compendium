@@ -400,7 +400,7 @@ public class LiveProjectionProcessor : BackgroundService, ILiveProjectionProcess
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {
                     _logger.LogError(ex, "Error in live projection processing loop");
-                    await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                    await Task.Delay(_options.ProcessingErrorRetryDelay, stoppingToken);
                 }
             }
         }

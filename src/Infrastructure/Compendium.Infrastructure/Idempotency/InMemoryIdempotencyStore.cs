@@ -19,11 +19,38 @@ namespace Compendium.Infrastructure.Idempotency;
 /// <remarks>
 /// Semantic contract: matches <c>RedisIdempotencyStore</c>. Each entry has a
 /// TTL set via <see cref="SetAsync{TValue}"/>; entries that have outlived
-/// their TTL are removed on the next access (lazy eviction).
+/// their TTL are removed on the next access (lazy eviction). Whether an entry
+/// has outlived its TTL is decided by the <see cref="TimeProvider"/> the store
+/// was built with — the system clock unless a test hands in a controllable one.
 /// </remarks>
 public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
 {
     private readonly ConcurrentDictionary<string, Entry> _store = new();
+    private readonly TimeProvider _timeProvider;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InMemoryIdempotencyStore"/> class
+    /// that reads the system clock.
+    /// </summary>
+    public InMemoryIdempotencyStore()
+        : this(TimeProvider.System)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InMemoryIdempotencyStore"/> class
+    /// that reads the time from <paramref name="timeProvider"/>.
+    /// </summary>
+    /// <param name="timeProvider">
+    /// The clock that decides when an entry has outlived its TTL. A test passes a
+    /// controllable one so that expirations happen when the test says, not when the
+    /// wall clock does.
+    /// </param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="timeProvider"/> is null.</exception>
+    public InMemoryIdempotencyStore(TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider ?? throw new ArgumentNullException(nameof(timeProvider));
+    }
 
     /// <inheritdoc />
     public Task<Result<bool>> ExistsAsync(string key, CancellationToken cancellationToken = default)
@@ -62,7 +89,7 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
                 Error.Validation("Idempotency.InvalidExpiration", "Expiration must be positive.")));
         }
 
-        var expiresAt = DateTimeOffset.UtcNow.Add(expiration);
+        var expiresAt = _timeProvider.GetUtcNow().Add(expiration);
         _store[key] = new Entry(value, expiresAt);
         return Task.FromResult(Result.Success());
     }
@@ -81,7 +108,7 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
                 Error.Validation("Idempotency.InvalidExpiration", "Expiration must be positive.")));
         }
 
-        var candidate = new Entry(ReservationMarker, DateTimeOffset.UtcNow.Add(expiration));
+        var candidate = new Entry(ReservationMarker, _timeProvider.GetUtcNow().Add(expiration));
 
         // TryAdd / TryUpdate only: a read followed by a write would let two callers both
         // see the key free and both "win". An expired holder is replaced with a
@@ -99,7 +126,7 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
                 continue;
             }
 
-            if (holder.ExpiresAt > DateTimeOffset.UtcNow)
+            if (holder.ExpiresAt > _timeProvider.GetUtcNow())
             {
                 return Task.FromResult(Result.Success(false));
             }
@@ -118,7 +145,7 @@ public sealed class InMemoryIdempotencyStore : IIdempotencyReservationStore
     {
         if (_store.TryGetValue(key, out var found))
         {
-            if (found.ExpiresAt > DateTimeOffset.UtcNow)
+            if (found.ExpiresAt > _timeProvider.GetUtcNow())
             {
                 entry = found;
                 return true;

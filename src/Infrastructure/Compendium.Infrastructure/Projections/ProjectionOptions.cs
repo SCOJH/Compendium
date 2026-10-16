@@ -73,6 +73,15 @@ public class ProjectionOptions
     public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// Gets or sets how long the live processor pauses after an unexpected error in its
+    /// polling loop — the event store refusing to stream, say — before it polls again.
+    /// Not the per-event re-attempts governed by <see cref="RetryDelay"/>: this is the
+    /// back-off of the loop itself, which survives the error and keeps polling.
+    /// Default is 5 seconds.
+    /// </summary>
+    public TimeSpan ProcessingErrorRetryDelay { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Gets or sets the name of the consumer lease that elects the single process
     /// applying events to projections. Every replica that must exclude the others uses
     /// the same name.

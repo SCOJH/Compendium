@@ -4,14 +4,24 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Compendium.Infrastructure.Idempotency;
 using AwesomeAssertions;
+using Compendium.Infrastructure.Idempotency;
+using Microsoft.Extensions.Time.Testing;
 
 namespace Compendium.Infrastructure.Tests.Idempotency;
 
 public sealed class InMemoryIdempotencyStoreTests
 {
-    private readonly InMemoryIdempotencyStore _sut = new();
+    // Every TTL in these tests is measured against this clock, never against the wall clock:
+    // a test that needs time to pass advances it, so a loaded machine cannot stretch or
+    // shrink the windows the scenarios depend on.
+    private readonly FakeTimeProvider _clock = new();
+    private readonly InMemoryIdempotencyStore _sut;
+
+    public InMemoryIdempotencyStoreTests()
+    {
+        _sut = new InMemoryIdempotencyStore(_clock);
+    }
 
     [Fact]
     public async Task Exists_WhenKeyMissing_ReturnsFalse()
@@ -60,7 +70,7 @@ public sealed class InMemoryIdempotencyStoreTests
     public async Task Exists_AfterExpiration_ReturnsFalse()
     {
         await _sut.SetAsync("k1", "value", TimeSpan.FromMilliseconds(50));
-        await Task.Delay(150);
+        _clock.Advance(TimeSpan.FromMilliseconds(150));
 
         var result = await _sut.ExistsAsync("k1");
 
@@ -71,7 +81,7 @@ public sealed class InMemoryIdempotencyStoreTests
     public async Task Get_AfterExpiration_ReturnsDefault()
     {
         await _sut.SetAsync("k1", "value", TimeSpan.FromMilliseconds(50));
-        await Task.Delay(150);
+        _clock.Advance(TimeSpan.FromMilliseconds(150));
 
         var result = await _sut.GetAsync<string>("k1");
 
@@ -143,7 +153,7 @@ public sealed class InMemoryIdempotencyStoreTests
     public async Task TryReserve_AfterTheReservationExpired_CanBeWonAgain()
     {
         (await _sut.TryReserveAsync("r2", TimeSpan.FromMilliseconds(20))).Value.Should().BeTrue();
-        await Task.Delay(60);
+        _clock.Advance(TimeSpan.FromMilliseconds(60));
 
         (await _sut.TryReserveAsync("r2", TimeSpan.FromMinutes(5))).Value.Should().BeTrue();
     }
@@ -169,15 +179,15 @@ public sealed class InMemoryIdempotencyStoreTests
             service,
             Microsoft.Extensions.Logging.Abstractions.NullLogger<Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>>.Instance);
         var runs = 0;
-        async Task<Result<string>> Handler()
+        Task<Result<string>> Handler()
         {
             var n = Interlocked.Increment(ref runs);
-            await Task.Delay(400);
-            return Result.Success($"run-{n}");
+            _clock.Advance(TimeSpan.FromMilliseconds(400)); // the handler takes 400 ms
+            return Task.FromResult(Result.Success($"run-{n}"));
         }
 
         var first = await behavior.HandleAsync(new ReplayableCommand("k"), Handler, CancellationToken.None);
-        await Task.Delay(300); // reservation (t0 + 600 ms) has expired; result (t0 + 400 + 600 ms) has not
+        _clock.Advance(TimeSpan.FromMilliseconds(300)); // reservation (t0 + 600 ms) has expired; result (t0 + 400 + 600 ms) has not
         var replay = await behavior.HandleAsync(new ReplayableCommand("k"), Handler, CancellationToken.None);
 
         runs.Should().Be(1);
@@ -191,23 +201,25 @@ public sealed class InMemoryIdempotencyStoreTests
             service,
             Microsoft.Extensions.Logging.Abstractions.NullLogger<Compendium.Application.CQRS.Behaviors.IdempotencyBehavior<ReplayableCommand, Result<string>>>.Instance)
         {
+            // Only reached if the re-won reservation came without its result: bounds how long
+            // such a regression takes to fail, the passing path never waits.
             ReplayWait = TimeSpan.FromMilliseconds(100),
         };
         var runs = 0;
-        async Task<Result<string>> Handler()
+        Task<Result<string>> Handler()
         {
             var n = Interlocked.Increment(ref runs);
-            await Task.Delay(400);
-            return Result.Success($"run-{n}");
+            _clock.Advance(TimeSpan.FromMilliseconds(400)); // the handler takes 400 ms
+            return Task.FromResult(Result.Success($"run-{n}"));
         }
 
-        // t≈0 reserve (→600), t≈400 result (→1000).
+        // t=0 reserve (→600), t=400 result (→1000).
         await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
-        await Task.Delay(300);
-        // t≈700: reservation expired, result alive — the replay re-wins the reservation (→1300).
+        _clock.Advance(TimeSpan.FromMilliseconds(300));
+        // t=700: reservation expired, result alive — the replay re-wins the reservation (→1300).
         await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
-        await Task.Delay(400);
-        // t≈1100: the ORIGINAL result has expired, the re-won reservation has not.
+        _clock.Advance(TimeSpan.FromMilliseconds(400));
+        // t=1100: the ORIGINAL result has expired, the re-won reservation has not.
         var late = await behavior.HandleAsync(new ReplayableCommand("k2"), Handler, CancellationToken.None);
 
         runs.Should().Be(1);
