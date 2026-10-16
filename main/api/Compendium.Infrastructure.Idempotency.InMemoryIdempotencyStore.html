@@ -89,7 +89,7 @@
 
 
   <h1 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore" class="text-break">
-Class InMemoryIdempotencyStore  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L24"><i class="bi bi-code-slash"></i></a>
+Class InMemoryIdempotencyStore  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -156,8 +156,84 @@ are pruned lazily on read.</p>
   <h2 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>Semantic contract: matches <code>RedisIdempotencyStore</code>. Each entry has a
 TTL set via <a class="xref" href="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_SetAsync__1_System_String___0_System_TimeSpan_System_Threading_CancellationToken_">SetAsync&lt;TValue&gt;(string, TValue, TimeSpan, CancellationToken)</a>; entries that have outlived
-their TTL are removed on the next access (lazy eviction).</p>
+their TTL are removed on the next access (lazy eviction). Whether an entry
+has outlived its TTL is decided by the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timeprovider">TimeProvider</a> the store
+was built with — the system clock unless a test hands in a controllable one.</p>
 </div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor*"></a>
+
+  <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor">
+  InMemoryIdempotencyStore()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html">InMemoryIdempotencyStore</a> class
+that reads the system clock.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InMemoryIdempotencyStore()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor*"></a>
+
+  <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor_System_TimeProvider_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor(System.TimeProvider)">
+  InMemoryIdempotencyStore(TimeProvider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html">InMemoryIdempotencyStore</a> class
+that reads the time from <code class="paramref">timeProvider</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InMemoryIdempotencyStore(TimeProvider timeProvider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>timeProvider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timeprovider">TimeProvider</a></dt>
+    <dd><p>The clock that decides when an entry has outlived its TTL. A test passes a
+controllable one so that expirations happen when the test says, not when the
+wall clock does.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p>Thrown when <code class="paramref">timeProvider</code> is null.</p>
+</dd>
+  </dl>
+
 
 
   <h2 class="section" id="methods">Methods
@@ -168,7 +244,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_Clear" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears all entries. Test-only helper.</p>
@@ -195,7 +271,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_ExistsAsync_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.ExistsAsync(System.String,System.Threading.CancellationToken)">
   ExistsAsync(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Checks if a key exists in the store.</p>
@@ -237,7 +313,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_GetAsync__1_System_String_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.GetAsync``1(System.String,System.Threading.CancellationToken)">
   GetAsync&lt;TResult&gt;(string, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Retrieves a value from the store by key.</p>
@@ -285,7 +361,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_SetAsync__1_System_String___0_System_TimeSpan_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.SetAsync``1(System.String,``0,System.TimeSpan,System.Threading.CancellationToken)">
   SetAsync&lt;TValue&gt;(string, TValue, TimeSpan, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stores a value in the store with the specified expiration.</p>
@@ -339,7 +415,7 @@ their TTL are removed on the next access (lazy eviction).</p>
 
   <h3 id="Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_TryReserveAsync_System_String_System_TimeSpan_System_Threading_CancellationToken_" data-uid="Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.TryReserveAsync(System.String,System.TimeSpan,System.Threading.CancellationToken)">
   TryReserveAsync(string, TimeSpan, CancellationToken)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reserves <code class="paramref">key</code> if no live reservation holds it.</p>
@@ -385,7 +461,7 @@ already existed, or a failure on store error.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L24" class="edit-link">Edit this page</a>
+          <a href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Idempotency/InMemoryIdempotencyStore.cs/#L26" class="edit-link">Edit this page</a>
         </div>
 
 

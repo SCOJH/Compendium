@@ -192,7 +192,7 @@ Class ProjectionOptions  <a class="header-action link-secondary" title="View sou
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_BackfillFromBeginningOnEmptyCheckpoint" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.BackfillFromBeginningOnEmptyCheckpoint">
   BackfillFromBeginningOnEmptyCheckpoint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L150"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets whether <a class="xref" href="Compendium.Infrastructure.Projections.ILiveProjectionProcessor.html">ILiveProjectionProcessor</a> should backfill from
@@ -272,7 +272,7 @@ Default is 10 seconds.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRenewInterval" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRenewInterval">
   ConsumerLeaseRenewInterval
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how often the lease holder confirms it still holds the lease. A
@@ -306,7 +306,7 @@ bounds how long two processes could overlap. Default is 10 seconds.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerLeaseRetryInterval" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerLeaseRetryInterval">
   ConsumerLeaseRetryInterval
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how long a replica that failed to take the consumer lease waits
@@ -340,7 +340,7 @@ unconsumed after the holder disappears. Default is 5 seconds.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ConsumerName" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ConsumerName">
   ConsumerName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L89"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets the name of the consumer lease that elects the single process
@@ -440,7 +440,7 @@ Default is 3 to prevent resource exhaustion.</p>
 
   <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_MaxProjectionApplyFailures" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.MaxProjectionApplyFailures">
   MaxProjectionApplyFailures
-  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets or sets how many consecutive times the live processor re-attempts
@@ -504,6 +504,42 @@ Default is 30 seconds.</p>
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public TimeSpan OperationTimeout { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Compendium_Infrastructure_Projections_ProjectionOptions_ProcessingErrorRetryDelay_" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay*"></a>
+
+  <h3 id="Compendium_Infrastructure_Projections_ProjectionOptions_ProcessingErrorRetryDelay" data-uid="Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay">
+  ProcessingErrorRetryDelay
+  <a class="header-action link-secondary" title="View source" href="https://github.com/SCOJH/Compendium/blob/main/src/Infrastructure/Compendium.Infrastructure/Projections/ProjectionOptions.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets how long the live processor pauses after an unexpected error in its
+polling loop — the event store refusing to stream, say — before it polls again.
+Not the per-event re-attempts governed by <a class="xref" href="Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_RetryDelay">RetryDelay</a>: this is the
+back-off of the loop itself, which survives the error and keeps polling.
+Default is 5 seconds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan ProcessingErrorRetryDelay { get; set; }</code></pre>
   </div>
 
 

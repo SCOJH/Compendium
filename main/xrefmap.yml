@@ -40537,6 +40537,34 @@ references:
   commentId: T:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore
   fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore
   nameWithType: InMemoryIdempotencyStore
+- uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor
+  name: InMemoryIdempotencyStore()
+  href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor
+  commentId: M:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor
+  name.vb: New()
+  fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.InMemoryIdempotencyStore()
+  fullName.vb: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.New()
+  nameWithType: InMemoryIdempotencyStore.InMemoryIdempotencyStore()
+  nameWithType.vb: InMemoryIdempotencyStore.New()
+- uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor(System.TimeProvider)
+  name: InMemoryIdempotencyStore(TimeProvider)
+  href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor_System_TimeProvider_
+  commentId: M:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor(System.TimeProvider)
+  name.vb: New(TimeProvider)
+  fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.InMemoryIdempotencyStore(System.TimeProvider)
+  fullName.vb: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.New(System.TimeProvider)
+  nameWithType: InMemoryIdempotencyStore.InMemoryIdempotencyStore(TimeProvider)
+  nameWithType.vb: InMemoryIdempotencyStore.New(TimeProvider)
+- uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor*
+  name: InMemoryIdempotencyStore
+  href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore__ctor_
+  commentId: Overload:Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.InMemoryIdempotencyStore
+  fullName.vb: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.New
+  nameWithType: InMemoryIdempotencyStore.InMemoryIdempotencyStore
+  nameWithType.vb: InMemoryIdempotencyStore.New
 - uid: Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.Clear
   name: Clear()
   href: api/Compendium.Infrastructure.Idempotency.InMemoryIdempotencyStore.html#Compendium_Infrastructure_Idempotency_InMemoryIdempotencyStore_Clear
@@ -45061,6 +45089,19 @@ references:
   isSpec: "True"
   fullName: Compendium.Infrastructure.Projections.ProjectionOptions.OperationTimeout
   nameWithType: ProjectionOptions.OperationTimeout
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay
+  name: ProcessingErrorRetryDelay
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ProcessingErrorRetryDelay
+  commentId: P:Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay
+  nameWithType: ProjectionOptions.ProcessingErrorRetryDelay
+- uid: Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay*
+  name: ProcessingErrorRetryDelay
+  href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ProcessingErrorRetryDelay_
+  commentId: Overload:Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay
+  isSpec: "True"
+  fullName: Compendium.Infrastructure.Projections.ProjectionOptions.ProcessingErrorRetryDelay
+  nameWithType: ProjectionOptions.ProcessingErrorRetryDelay
 - uid: Compendium.Infrastructure.Projections.ProjectionOptions.ProgressReportInterval
   name: ProgressReportInterval
   href: api/Compendium.Infrastructure.Projections.ProjectionOptions.html#Compendium_Infrastructure_Projections_ProjectionOptions_ProgressReportInterval
