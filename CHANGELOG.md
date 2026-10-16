@@ -106,9 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `Compendium.Application`, `Compendium.Infrastructure` and
   `Compendium.Adapters.ClaudeCode`; `Microsoft.Extensions.Diagnostics.HealthChecks`
   from `Compendium.Adapters.AspNetCore` — so those ids no longer appear as nuspec
-  dependencies; the assemblies were already coming from the framework, so nothing
-  changes at run time, and nothing changes at restore either since no consumer
-  restored them from the package graph. `Compendium.Testing` is the exception:
+  dependencies; the assemblies were already coming from the framework, so a
+  `net9.0` consumer's graph loses those nodes with no effect at compile or run
+  time. `Compendium.Testing` is the exception:
   its `net9.0` nuspec group keeps `System.Net.Http >= 4.3.4` and
   `System.Text.RegularExpressions >= 4.3.1`, with package pruning switched off for
   that target so that `pack` keeps them. A consumer restoring on the .NET 9 SDK

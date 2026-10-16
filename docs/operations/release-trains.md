@@ -106,90 +106,14 @@ triggers the old all-packages job.
 
 ## The release workflow
 
-`.github/workflows/release.yml` has to change with this, and that change is not
-in the same commit as the rest — it is outside the write perimeter of the agent
-that prepared these scripts. Below is the file to apply, in full. The behaviour
-change is in four places: the trigger, the train guard, the pack step, and the
-two gates before two pushes that no longer carry `--skip-duplicate`.
-
-```yaml
-name: Release
-
-on:
-  push:
-    tags: ["*-v*"]
-
-permissions:
-  contents: write
-  packages: write
-
-jobs:
-  pack-publish:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0 # MinVer needs full history; the provenance gate needs the tags
-
-      # Both SDKs, as ci.yml: global.json asks for SDK 10, and the packages target net9.0 and net10.0 (NET10-01).
-      - uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: |
-            9.0.x
-            10.0.x
-
-      - name: Restore
-        run: dotnet restore Compendium.sln
-
-      - name: Build
-        run: dotnet build Compendium.sln -c Release --no-restore
-
-      - name: Test (unit only)
-        run: |
-          dotnet test Compendium.sln -c Release --no-build \
-            --filter "FullyQualifiedName!~IntegrationTests&FullyQualifiedName!~LoadTests"
-
-      - name: Every packable project declares a train
-        run: bash scripts/verify-package-trains.sh
-
-      - name: Pack the train this tag releases
-        run: |
-          mkdir -p artifacts
-          projects=$(bash scripts/select-train-projects.sh "$GITHUB_REF_NAME")
-          mapfile -t project_list <<< "$projects"
-          for csproj in "${project_list[@]}"; do
-            echo "Packing $(basename "$csproj" .csproj)"
-            dotnet pack "$csproj" -c Release --no-build -o artifacts/
-          done
-          echo "Packed $(ls artifacts/*.nupkg 2>/dev/null | wc -l) package(s) for $GITHUB_REF_NAME"
-
-      - name: Verify every package comes from a tagged commit
-        run: bash scripts/verify-package-provenance.sh artifacts/
-
-      - name: Verify no version is being republished
-        run: bash scripts/verify-package-not-published.sh artifacts/
-
-      - name: Push to nuget.org
-        run: |
-          dotnet nuget push "artifacts/*.nupkg" \
-            --api-key ${{ secrets.NUGET_API_KEY }} \
-            --source https://api.nuget.org/v3/index.json
-
-      - name: Push to GitHub Packages (backup feed)
-        continue-on-error: true
-        run: |
-          dotnet nuget push "artifacts/*.nupkg" \
-            --api-key ${{ secrets.GITHUB_TOKEN }} \
-            --source https://nuget.pkg.github.com/sassy-solutions/index.json
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda  # v3.0.0
-        with:
-          files: artifacts/*.nupkg
-          generate_release_notes: true
-          prerelease: ${{ contains(github.ref, '-preview') || contains(github.ref, '-rc') || contains(github.ref, '-alpha') || contains(github.ref, '-beta') }}
-```
+The workflow is `.github/workflows/release.yml`: read the file itself, not a copy here (a copy drifts; an earlier
+version of this page still showed the GitHub Packages backup push that the workflow later dropped on purpose). What it
+does for a train tag (`<train>-v<version>`): it installs the .NET 9 and .NET 10 SDKs (`global.json` asks for SDK 10, the
+packages target `net9.0` and `net10.0`), restores, builds and runs the unit tests, checks that every packable project
+declares a train (`scripts/verify-package-trains.sh`), packs only the projects of the train the tag names
+(`scripts/select-train-projects.sh`), then refuses to publish unless every package comes from a tagged commit
+(`scripts/verify-package-provenance.sh`) and no version is being republished (`scripts/verify-package-not-published.sh`),
+pushes to nuget.org and creates the GitHub release.
 
 The old `tags: ["v*"]` trigger does not match a train tag, and `"*-v*"` does not
 match the old `v1.0.5-preview.4`. Old tags therefore stop triggering anything,
