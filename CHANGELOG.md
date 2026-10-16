@@ -96,21 +96,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Every package now targets `net9.0` and `net10.0`.** .NET 9 (STS) leaves
   support on 2026-11-10; .NET 10 is the LTS consumers are moving to, and `net9.0`
   stays for the transition only. `global.json` moves to the .NET 10 SDK (10.0.100
-  or any later 10.0 feature band), which builds both targets; CI installs the
-  .NET 9 SDK beside it for its runtime, so every test runs once per target. On
-  `net10.0` the `Microsoft.Extensions.*` family and
-  `Microsoft.AspNetCore.Mvc.Testing` resolve to 10.0.x, which packages built for
-  .NET 10 (OpenTelemetry 1.19 among them) require; `net9.0` keeps the 9.0.x
-  versions it already shipped with. References to packages the shared framework
-  provides on both targets are removed — `System.Text.Json` from
+  or any later 10.0 feature band), which builds both targets; the CI, docs, perf
+  and release workflows install the .NET 9 SDK beside it for its runtime, so
+  every test runs once per target. On `net10.0` the `Microsoft.Extensions.*`
+  family and `Microsoft.AspNetCore.Mvc.Testing` resolve to 10.0.x, which packages
+  built for .NET 10 (OpenTelemetry 1.19 among them) require; `net9.0` keeps the
+  9.0.x versions it already shipped with. References to packages the shared
+  framework provides on both targets are removed — `System.Text.Json` from
   `Compendium.Application`, `Compendium.Infrastructure` and
-  `Compendium.Adapters.ClaudeCode`; `System.Net.Http` and
-  `System.Text.RegularExpressions` from `Compendium.Testing`;
-  `Microsoft.Extensions.Diagnostics.HealthChecks` from
-  `Compendium.Adapters.AspNetCore` — so those ids no longer appear as nuspec
-  dependencies; the assemblies were already coming from the framework, nothing
-  changes at run time. Samples run on `net10.0`; the load and perf executables
-  stay on `net9.0` for now. (NET10-01, agent-spot/backlog#363)
+  `Compendium.Adapters.ClaudeCode`; `Microsoft.Extensions.Diagnostics.HealthChecks`
+  from `Compendium.Adapters.AspNetCore` — so those ids no longer appear as nuspec
+  dependencies; the assemblies were already coming from the framework, so nothing
+  changes at run time, and nothing changes at restore either since no consumer
+  restored them from the package graph. `Compendium.Testing` is the exception:
+  its `net9.0` nuspec group keeps `System.Net.Http >= 4.3.4` and
+  `System.Text.RegularExpressions >= 4.3.1`, with package pruning switched off for
+  that target so that `pack` keeps them. A consumer restoring on the .NET 9 SDK
+  prunes nothing and would otherwise get the vulnerable 4.3.0 copies through
+  AutoFixture > Fare > NETStandard.Library 1.6.1 — a restore error for anyone
+  auditing transitive packages with warnings as errors. Samples run on `net10.0`;
+  the load and perf executables stay on `net9.0` for now. (NET10-01,
+  agent-spot/backlog#363)
 - **BREAKING — `AggregateRoot<TId>.DomainEvents` and `GetUncommittedEvents()`
   return `IReadOnlyList<IDomainEvent>` instead of
   `IReadOnlyCollection<IDomainEvent>`.** Both used to hand back

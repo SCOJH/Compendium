@@ -6,7 +6,7 @@ If you'd rather read working code, jump straight to [`samples/01-QuickStart-Orde
 
 ## 1. Prerequisites
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (the .NET 9 SDK also works)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0). To consume the packages from your own `net9.0` project, the .NET 9 SDK is enough; building this repository and running its samples (`net10.0`) needs the .NET 10 SDK.
 - (Optional) Docker — only needed for the multi-tenant + PostgreSQL sample
 - A C# project (`dotnet new console -o MyService`)
 

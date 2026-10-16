@@ -132,9 +132,12 @@ jobs:
         with:
           fetch-depth: 0 # MinVer needs full history; the provenance gate needs the tags
 
-      - uses: actions/setup-dotnet@v5
+      # Both SDKs, as ci.yml: global.json asks for SDK 10, and the packages target net9.0 and net10.0 (NET10-01).
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
       - name: Restore
         run: dotnet restore Compendium.sln

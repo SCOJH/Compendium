@@ -35,10 +35,32 @@
     <PackageReference Include="Testcontainers" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="AutoFixture" />
-    <!-- NET10-01: the System.Net.Http / System.Text.RegularExpressions "security
-         overrides" are gone. Both live in the shared framework; the .NET 10 SDK
-         prunes the old transitive copies xunit drags in and flags a direct
-         reference as redundant (NU1510). -->
+  </ItemGroup>
+
+  <!-- NET10-01: the net9.0 target keeps the two "security overrides", and keeps
+       package pruning off to be allowed to.
+
+       Here, on the .NET 10 SDK, System.Net.Http and System.Text.RegularExpressions
+       are pruned (they live in the shared framework) and a direct reference to them
+       is flagged redundant (NU1510). A consumer restoring this package on the .NET 9
+       SDK prunes nothing: AutoFixture 4.18.1 > Fare 2.1.1 > NETStandard.Library 1.6.1
+       brings System.Net.Http 4.3.0 and System.Text.RegularExpressions 4.3.0, both
+       under high-severity advisories (GHSA-7jgj-8wvc-jh57, GHSA-cmhx-cq75-c4mj), and
+       a strict consumer — NuGetAuditMode=all with TreatWarningsAsErrors, which is
+       agentspot-engine today — fails its restore on NU1903. The two references below
+       lift that chain to the patched versions in the net9.0 nuspec group, exactly as
+       before NET10-01. Pruning has to be off for that target: with it on, pack drops
+       them from the nuspec, and a NoWarn on NU1510 would change nothing. The net10.0
+       target needs none of this; its consumers prune.
+
+       Remove the whole block together with net9.0, or earlier if AutoFixture 5 or
+       Fare >= 2.2 stops dragging NETStandard.Library 1.6.1 in. -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <RestoreEnablePackagePruning>false</RestoreEnablePackagePruning>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Text.RegularExpressions" />
   </ItemGroup>
 
 </Project>
