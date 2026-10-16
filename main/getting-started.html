@@ -77,12 +77,12 @@
 <p>If you'd rather read working code, jump straight to <a href="https://github.com/SCOJH/Compendium/tree/main/samples/01-QuickStart-OrderAggregate"><code>samples/01-QuickStart-OrderAggregate</code></a>. Everything below is taken from that sample.</p>
 <h2 id="1-prerequisites">1. Prerequisites</h2>
 <ul>
-<li><a href="https://dotnet.microsoft.com/download/dotnet/9.0">.NET 9 SDK</a></li>
+<li><a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10 SDK</a>. To consume the packages from your own <code>net9.0</code> project, the .NET 9 SDK is enough; building this repository and running its samples (<code>net10.0</code>) needs the .NET 10 SDK.</li>
 <li>(Optional) Docker — only needed for the multi-tenant + PostgreSQL sample</li>
 <li>A C# project (<code>dotnet new console -o MyService</code>)</li>
 </ul>
 <blockquote>
-<p><strong>Note.</strong> Compendium targets <code>net9.0</code>. Older runtimes are not supported.</p>
+<p><strong>Note.</strong> Compendium targets <code>net9.0</code> and <code>net10.0</code>. Older runtimes are not supported.</p>
 </blockquote>
 <h2 id="2-install-the-packages">2. Install the packages</h2>
 <p>The smallest useful set is <code>Compendium.Core</code> plus <code>Compendium.Application</code>. Add adapters as you need them.</p>

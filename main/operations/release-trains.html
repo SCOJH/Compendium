@@ -174,85 +174,14 @@ train tag triggers its release.</p>
 trigger below. A train tag pushed before that either triggers nothing or
 triggers the old all-packages job.</p>
 <h2 id="the-release-workflow">The release workflow</h2>
-<p><code>.github/workflows/release.yml</code> has to change with this, and that change is not
-in the same commit as the rest — it is outside the write perimeter of the agent
-that prepared these scripts. Below is the file to apply, in full. The behaviour
-change is in four places: the trigger, the train guard, the pack step, and the
-two gates before two pushes that no longer carry <code>--skip-duplicate</code>.</p>
-<pre><code class="lang-yaml">name: Release
-
-on:
-  push:
-    tags: [&quot;*-v*&quot;]
-
-permissions:
-  contents: write
-  packages: write
-
-jobs:
-  pack-publish:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0 # MinVer needs full history; the provenance gate needs the tags
-
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: &quot;9.0.x&quot;
-
-      - name: Restore
-        run: dotnet restore Compendium.sln
-
-      - name: Build
-        run: dotnet build Compendium.sln -c Release --no-restore
-
-      - name: Test (unit only)
-        run: |
-          dotnet test Compendium.sln -c Release --no-build \
-            --filter &quot;FullyQualifiedName!~IntegrationTests&amp;FullyQualifiedName!~LoadTests&quot;
-
-      - name: Every packable project declares a train
-        run: bash scripts/verify-package-trains.sh
-
-      - name: Pack the train this tag releases
-        run: |
-          mkdir -p artifacts
-          projects=$(bash scripts/select-train-projects.sh &quot;$GITHUB_REF_NAME&quot;)
-          mapfile -t project_list &lt;&lt;&lt; &quot;$projects&quot;
-          for csproj in &quot;${project_list[@]}&quot;; do
-            echo &quot;Packing $(basename &quot;$csproj&quot; .csproj)&quot;
-            dotnet pack &quot;$csproj&quot; -c Release --no-build -o artifacts/
-          done
-          echo &quot;Packed $(ls artifacts/*.nupkg 2&gt;/dev/null | wc -l) package(s) for $GITHUB_REF_NAME&quot;
-
-      - name: Verify every package comes from a tagged commit
-        run: bash scripts/verify-package-provenance.sh artifacts/
-
-      - name: Verify no version is being republished
-        run: bash scripts/verify-package-not-published.sh artifacts/
-
-      - name: Push to nuget.org
-        run: |
-          dotnet nuget push &quot;artifacts/*.nupkg&quot; \
-            --api-key ${{ secrets.NUGET_API_KEY }} \
-            --source https://api.nuget.org/v3/index.json
-
-      - name: Push to GitHub Packages (backup feed)
-        continue-on-error: true
-        run: |
-          dotnet nuget push &quot;artifacts/*.nupkg&quot; \
-            --api-key ${{ secrets.GITHUB_TOKEN }} \
-            --source https://nuget.pkg.github.com/sassy-solutions/index.json
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda  # v3.0.0
-        with:
-          files: artifacts/*.nupkg
-          generate_release_notes: true
-          prerelease: ${{ contains(github.ref, '-preview') || contains(github.ref, '-rc') || contains(github.ref, '-alpha') || contains(github.ref, '-beta') }}
-</code></pre>
+<p>The workflow is <code>.github/workflows/release.yml</code>: read the file itself, not a copy here (a copy drifts; an earlier
+version of this page still showed the GitHub Packages backup push that the workflow later dropped on purpose). What it
+does for a train tag (<code>&lt;train&gt;-v&lt;version&gt;</code>): it installs the .NET 9 and .NET 10 SDKs (<code>global.json</code> asks for SDK 10, the
+packages target <code>net9.0</code> and <code>net10.0</code>), restores, builds and runs the unit tests, checks that every packable project
+declares a train (<code>scripts/verify-package-trains.sh</code>), packs only the projects of the train the tag names
+(<code>scripts/select-train-projects.sh</code>), then refuses to publish unless every package comes from a tagged commit
+(<code>scripts/verify-package-provenance.sh</code>) and no version is being republished (<code>scripts/verify-package-not-published.sh</code>),
+pushes to nuget.org and creates the GitHub release.</p>
 <p>The old <code>tags: [&quot;v*&quot;]</code> trigger does not match a train tag, and <code>&quot;*-v*&quot;</code> does not
 match the old <code>v1.0.5-preview.4</code>. Old tags therefore stop triggering anything,
 which is what we want: re-pushing one of them used to republish thirty-five
