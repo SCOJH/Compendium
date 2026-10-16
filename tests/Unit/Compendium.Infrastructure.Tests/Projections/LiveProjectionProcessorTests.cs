@@ -183,7 +183,8 @@ public sealed class LiveProjectionProcessorTests
     [Fact]
     public async Task ExecuteAsync_RunsLoopAndProcessesEvents()
     {
-        // Arrange — wire an in-memory store with a small set of events
+        // Arrange — wire an in-memory store with a small set of events; the first checkpoint
+        // write signals the test, which waits for the loop itself rather than for the clock
         var eventStore = Substitute.For<IStreamingEventStore>();
         eventStore.GetMaxGlobalPositionAsync(Arg.Any<CancellationToken>()).Returns(0L);
         eventStore.StreamEventsAsync(Arg.Any<string?>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
@@ -191,6 +192,9 @@ public sealed class LiveProjectionProcessorTests
 
         var store = Substitute.For<IProjectionStore>();
         store.GetCheckpointAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns((long?)null);
+        var checkpointSaved = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        store.When(s => s.SaveCheckpointAsync(Arg.Any<string>(), Arg.Any<long>(), Arg.Any<CancellationToken>()))
+            .Do(_ => checkpointSaved.TrySetResult());
 
         var services = new ServiceCollection();
         services.AddSingleton<TestProjection>();
@@ -203,20 +207,11 @@ public sealed class LiveProjectionProcessorTests
             Options.Create(new ProjectionOptions { EnableSnapshots = true, SnapshotInterval = TimeSpan.Zero }));
 
         sut.RegisterProjection<TestProjection>();
-        using var cts = new CancellationTokenSource();
 
-        // Act — start the background service, give it a beat, then stop
-        await sut.StartAsync(cts.Token);
-        await Task.Delay(150, cts.Token);
-        cts.Cancel();
-        try
-        {
-            await sut.StopAsync(CancellationToken.None);
-        }
-        catch (OperationCanceledException)
-        {
-            // expected when cancellation propagates from ExecuteAsync
-        }
+        // Act — start the background service, wait until the loop has saved a checkpoint, then stop
+        await sut.StartAsync(CancellationToken.None);
+        await checkpointSaved.Task.WaitAsync(LoopTimeout);
+        await sut.StopAsync(CancellationToken.None);
 
         // Assert — checkpoint(s) were saved as the loop processed at least one event
         await store.Received().SaveCheckpointAsync(
@@ -226,15 +221,22 @@ public sealed class LiveProjectionProcessorTests
     [Fact]
     public async Task ExecuteAsync_StreamingThrows_LoopCatchesAndContinues()
     {
-        // Arrange
+        // Arrange — the first poll throws while streaming, the following ones stream nothing.
+        // The second poll signals the test: reaching it at all is the behaviour under test.
         var eventStore = Substitute.For<IStreamingEventStore>();
         eventStore.GetMaxGlobalPositionAsync(Arg.Any<CancellationToken>()).Returns(0L);
-        var attempt = 0;
+        var attempts = 0;
+        var polledAgain = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         eventStore.StreamEventsAsync(Arg.Any<string?>(), Arg.Any<long>(), Arg.Any<CancellationToken>())
             .Returns(_ =>
             {
-                attempt++;
-                return ThrowingStream();
+                if (Interlocked.Increment(ref attempts) == 1)
+                {
+                    return ThrowingStream();
+                }
+
+                polledAgain.TrySetResult();
+                return EmptyStream();
             });
 
         var store = Substitute.For<IProjectionStore>();
@@ -248,27 +250,32 @@ public sealed class LiveProjectionProcessorTests
             store,
             sp,
             NullLogger<LiveProjectionProcessor>.Instance,
-            Options.Create(new ProjectionOptions { EnableSnapshots = false }));
+            Options.Create(new ProjectionOptions
+            {
+                EnableSnapshots = false,
+                // The loop polls again as soon as it has caught the error: no wall-clock back-off
+                // stands between the throw and the signal the test waits for.
+                ProcessingErrorRetryDelay = TimeSpan.Zero,
+            }));
 
         sut.RegisterProjection<TestProjection>();
-        using var cts = new CancellationTokenSource();
 
-        // Act
-        await sut.StartAsync(cts.Token);
-        await Task.Delay(120, cts.Token);
-        cts.Cancel();
-        try
-        {
-            await sut.StopAsync(CancellationToken.None);
-        }
-        catch (OperationCanceledException)
-        {
-            // expected
-        }
+        // Act — start the background service, wait until the loop has polled past the throw, then stop
+        await sut.StartAsync(CancellationToken.None);
+        await polledAgain.Task.WaitAsync(LoopTimeout);
+        await sut.StopAsync(CancellationToken.None);
 
-        // Assert — the streaming throw was caught and the loop kept running for at least one attempt
-        attempt.Should().BeGreaterThanOrEqualTo(1);
+        // Assert — the throw was caught inside the term: the loop polled again without being
+        // re-initialised (one checkpoint read, not one per term), and the fault never surfaced
+        attempts.Should().BeGreaterThanOrEqualTo(2);
+        await store.Received(1).GetCheckpointAsync("TestProjection", Arg.Any<CancellationToken>());
+        sut.ExecuteTask.Should().NotBeNull();
+        sut.ExecuteTask!.IsCompletedSuccessfully.Should().BeTrue("the fault must not escape the processing loop");
     }
+
+    // The tests above wait for a signal from the loop, never for time to pass; this bound only
+    // turns a loop that never gets there into a failure instead of a hang.
+    private static readonly TimeSpan LoopTimeout = TimeSpan.FromSeconds(30);
 
     private static async IAsyncEnumerable<EventData> OneEventStreamThenEmpty(long fromPosition)
     {
@@ -295,6 +302,12 @@ public sealed class LiveProjectionProcessorTests
 #pragma warning disable CS0162 // Unreachable
         yield break;
 #pragma warning restore CS0162
+    }
+
+    private static async IAsyncEnumerable<EventData> EmptyStream()
+    {
+        await Task.CompletedTask;
+        yield break;
     }
 
     private sealed class TestEvent : IDomainEvent

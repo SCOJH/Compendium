@@ -34,6 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   implements the reservation. Purely additive: commands that do not implement
   `IIdempotentRequest` keep the content-hash key, and no existing interface gains a
   member.
+- **`InMemoryIdempotencyStore` accepts a `TimeProvider`.** A new constructor takes
+  the clock that decides when an entry has outlived its TTL; the parameterless
+  constructor keeps reading the system clock, so existing calls and registrations
+  are unaffected. The store's own tests now drive a `FakeTimeProvider` instead of
+  sleeping through real TTLs, which is what made them fail on a loaded CI runner.
+- **`ProjectionOptions.ProcessingErrorRetryDelay`.** How long the live projection
+  processor pauses after an unexpected error in its polling loop before it polls
+  again — previously a hard-coded five seconds, which stays the default.
 
 ### Fixed
 

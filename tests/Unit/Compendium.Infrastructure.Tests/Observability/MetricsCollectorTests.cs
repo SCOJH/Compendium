@@ -5,6 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Runtime.CompilerServices;
 using Bogus;
 
 namespace Compendium.Infrastructure.Tests.Observability;
@@ -259,34 +260,45 @@ public sealed class MetricsCollectorTests : IDisposable
     [Fact]
     public void MetricsCollector_MemoryUsage_ShouldNotLeak()
     {
-        // Arrange
-        var initialMemory = GC.GetTotalMemory(true);
+        // Arrange / Act — record a thousand distinct metrics whose names, tags and tag values
+        // are fresh objects the test then knows only through weak references. A leak is
+        // measured on those objects, not on the heap of the test process, which every other
+        // test running in parallel also allocates on.
         const int iterations = 1000;
+        var recorded = RecordMetricsKeepingWeakReferences(_sut, iterations);
 
-        // Act
-        for (int i = 0; i < iterations; i++)
-        {
-            _sut.IncrementCounter($"memory.test.{i}", 1);
-            _sut.RecordValue($"memory.gauge.{i}", i);
-            _sut.RecordDuration($"memory.duration.{i}", TimeSpan.FromMilliseconds(i));
-
-            using var timer = _sut.StartTimer($"memory.timer.{i}");
-            // Timer automatically disposed
-        }
-
-        // Force garbage collection
         GC.Collect();
         GC.WaitForPendingFinalizers();
         GC.Collect();
 
-        var finalMemory = GC.GetTotalMemory(true);
+        // Assert — a collector that held on to what it records would keep them alive
+        recorded.Should().HaveCount(iterations * 3);
+        recorded.Where(reference => reference.IsAlive).Should().BeEmpty(
+            "the collector must not retain the names, tags or timers it records");
+    }
 
-        // Assert
-        var memoryGrowth = finalMemory - initialMemory;
-        _output.WriteLine($"Memory growth: {memoryGrowth / 1024.0:F2} KB for {iterations} operations");
+    // Not inlined: once this method has returned, no stack slot of the test can still reference
+    // the objects it created, so only the collector could keep them alive.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static List<WeakReference> RecordMetricsKeepingWeakReferences(MetricsCollector sut, int iterations)
+    {
+        var references = new List<WeakReference>(iterations * 3);
+        for (var i = 0; i < iterations; i++)
+        {
+            var name = $"memory.test.{i}";
+            var tagValue = new object();
+            var tags = new[] { new KeyValuePair<string, object?>("iteration", tagValue) };
+            references.Add(new WeakReference(name));
+            references.Add(new WeakReference(tagValue));
+            references.Add(new WeakReference(tags));
 
-        // Memory growth should be reasonable (metrics are lightweight)
-        memoryGrowth.Should().BeLessThan(10_000_000, "Memory usage should not indicate significant leaks");
+            sut.IncrementCounter(name, 1, tags);
+            sut.RecordValue(name, i, tags);
+            sut.RecordDuration(name, TimeSpan.FromMilliseconds(i), tags);
+            using var timer = sut.StartTimer(name, tags);
+        }
+
+        return references;
     }
 
     #endregion

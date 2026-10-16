@@ -31,6 +31,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.20" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.10.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
     <PackageVersion Include="MinVer" Version="8.0.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
