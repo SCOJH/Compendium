@@ -5,7 +5,7 @@
 [![CI](https://github.com/SCOJH/Compendium/actions/workflows/ci.yml/badge.svg)](https://github.com/SCOJH/Compendium/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Compendium.Core.svg)](https://www.nuget.org/packages/Compendium.Core/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
+[![.NET 9 | 10](https://img.shields.io/badge/.NET-9.0%20%7C%2010.0-512BD4.svg)](https://dotnet.microsoft.com/)
 
 Compendium is the framework that powers [Nexus](https://sassy.solutions), Sassy Solutions' multi-tenant platform engineering product. It distills years of building event-sourced SaaS into a small set of focused packages: DDD primitives, CQRS handlers, an event store, multi-tenancy, and ready-to-use adapters for PostgreSQL, Redis, Zitadel, and more.
 

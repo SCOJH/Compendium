@@ -8,7 +8,7 @@ description: A pragmatic .NET framework for building event-sourced, multi-tenant
 
 > A pragmatic .NET framework for building event-sourced, multi-tenant SaaS applications.
 
-Compendium distills years of building event-sourced SaaS into a small set of focused .NET 9 packages: DDD primitives, CQRS handlers, an event store, multi-tenancy, and ready-to-use adapters for PostgreSQL, Redis, Zitadel, Stripe, LemonSqueezy, Listmonk, OpenRouter, and ASP.NET Core.
+Compendium distills years of building event-sourced SaaS into a small set of focused .NET packages (`net9.0` and `net10.0`): DDD primitives, CQRS handlers, an event store, multi-tenancy, and ready-to-use adapters for PostgreSQL, Redis, Zitadel, Stripe, LemonSqueezy, Listmonk, OpenRouter, and ASP.NET Core.
 
 ## Why Compendium?
 

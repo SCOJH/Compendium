@@ -30,10 +30,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="NSubstitute" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Options" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
+    <!-- Microsoft.Extensions.* and HealthChecks come from the Microsoft.AspNetCore.App
+         framework reference above (NU1510 on the .NET 10 SDK otherwise). -->
     <PackageReference Include="StackExchange.Redis" />
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>

@@ -1,7 +1,10 @@
 <Project>
   <PropertyGroup>
-    <!-- Shared Test Framework Settings -->
-    <TargetFramework>net9.0</TargetFramework>
+    <!-- Shared Test Framework Settings.
+         NET10-01: the same two targets as src/ (root Directory.Build.props), so every
+         test runs once per runtime. Load and perf projects are executables and set
+         a single TargetFramework in their own .csproj. -->
+    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <LangVersion>13</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

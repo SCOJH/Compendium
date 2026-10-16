@@ -6,7 +6,7 @@ Thanks for your interest in Compendium! This document explains how to work on th
 
 ### Prerequisites
 
-- .NET 9 SDK (see `global.json` for the exact version).
+- .NET 10 SDK (see `global.json` for the exact version). It builds both targets; to run the `net9.0` half of the tests you also need the .NET 9 runtime, which the .NET 9 SDK brings.
 - Docker (optional, needed to run integration tests with TestContainers).
 - Git.
 
@@ -48,7 +48,7 @@ tests/
 - **Hexagonal architecture**: ports live in `Compendium.Abstractions.*`, adapters live in `Compendium.Adapters.*`.
 - **Zero-dep Core**: `Compendium.Core` must compile with only the .NET BCL — no external NuGet references.
 - File header: MIT copyright, matches `LICENSE`.
-- Target: `.NET 9`, C# 13, nullable enabled.
+- Targets: `net9.0` and `net10.0` — both until .NET 9 leaves support on 2026-11-10 — C# 13, nullable enabled.
 
 Run `dotnet format` before submitting a PR.
 

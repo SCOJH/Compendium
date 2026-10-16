@@ -23,9 +23,14 @@ jobs:
         with:
           fetch-depth: 0 # MinVer needs full history
 
+      # NET10-01 — global.json pins the .NET 10 SDK, which builds both targets;
+      # the .NET 9 SDK is here for its runtime, without which the net9.0 half of
+      # every test project has nothing to run on.
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
       - uses: actions/setup-python@v7
         with:
@@ -44,11 +49,14 @@ jobs:
       - name: Build
         run: dotnet build Compendium.sln -c Release --no-restore
 
-      - name: Test (unit only)
+      # Runs every test project once per target (net9.0 and net10.0). LogFilePrefix
+      # gives one .trx per project and per target; a fixed LogFileName made each
+      # run overwrite the previous one.
+      - name: Test (unit only, net9.0 and net10.0)
         run: |
           dotnet test Compendium.sln -c Release --no-build \
             --filter "FullyQualifiedName!~IntegrationTests&FullyQualifiedName!~LoadTests" \
-            --logger "trx;LogFileName=test-results.trx" \
+            --logger "trx;LogFilePrefix=test-results" \
             --results-directory TestResults/ \
             --collect:"XPlat Code Coverage"
 
