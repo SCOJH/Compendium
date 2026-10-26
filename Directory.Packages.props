@@ -74,17 +74,17 @@
        (NU1605, an error here). Dependabot updates each line on its own; its
        semver-major ignore keeps the net9.0 line on 9.x. -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.20" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.22" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.19" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.20" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.20" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.22" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.22" />
     <!-- Referenced by Compendium.Testing's net9.0 target only, for the nuspec its
          .NET 9 consumers restore (see the comment in its .csproj). -->
     <PackageVersion Include="System.Net.Http" Version="4.3.4" />
