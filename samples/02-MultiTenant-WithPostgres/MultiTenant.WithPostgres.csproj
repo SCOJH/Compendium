@@ -18,6 +18,7 @@
     <PackageReference Include="Compendium.Adapters.PostgreSQL" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   <PackageReference Include="Microsoft.Extensions.Hosting" />
+  <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="10.0.15" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Npgsql" />
   </ItemGroup>
